@@ -1,0 +1,93 @@
+----------------------------------------
+  General Considerations:
+----------------------------------------
+- generic
+  - use (Item []) new Object[10] to create "generic" arrays
+- resizing to relieve client of having to deal with a full stack
+- loitering
+- iteration
+    - implements Iterable<Item>
+    - Iterator<Item> iterator()
+    - boolean Iterator<Item>.hasNext()
+    - Item Iterator<Item>.next()
+- override the following
+    - String toString()
+    - boolean equals(Object p)
+    - int compareTo(Item p)
+    - int hashCode()
+
+
+
+----------------------------------------
+  Implementation Checks:
+----------------------------------------
+- case for only one Item
+- check for null reference for last item
+
+
+
+----------------------------------------
+  Implementation Details:
+----------------------------------------
+- resizing array
+- linked list
+- binary heap
+- array vs recursion implementation
+- divide (by 2) and conquer
+
+
+
+----------------------------------------
+  Basic ADTs:
+----------------------------------------
+- Bag
+- Queue
+- Stack
+- Priority Queue
+
+
+
+----------------------------------------
+  Sorting Algorithms:
+----------------------------------------
+- Selection
+- Insertion
+- ShellSort
+
+
+
+----------------------------------------
+  Development Approach:
+----------------------------------------
+- Specify an API.
+- Develop client code with reference to specific applications.
+- Describe a data structure (representation of the set of values) that can serve as
+  the basis for the instance variables in a class that will implement an ADT that
+  meets the specification in the API.
+- Describe algorithms (approaches to implementing the set of operations) that
+  can serve as the basis for implementing the instance methods in the class.
+- Analyze the performance characteristics of the algorithms.
+
+
+----------------------------------------
+  Analysis of a Program
+----------------------------------------
+- Tilde Approximation - the term with the highest order/exponent
+  as a function of problem size
+- Order of Growth is the tilde approimxation of the run time of a program
+  as a function  of problem size
+- Cost Model is a simpler view of the program with which to make mathematical
+  statements about a program; ie. array accesses
+  - It is important that cost models properly reflect the actual order of growth
+- Proposition is a mathematical truth/statement about a program given the
+  context of a an appropriate cost model
+- Property is a hypothesis that needs to be validated through experimentation
+- Inner loop is the set of statements executed most frequently
+- f(N) is O(g(N)) if g(N) is an upper bound of f(N)
+- f(N) is Omega(g(N)) if g(N) is an upper bound of f(N)
+- f(N) is Theta(g(N)) if f(N) is both O(g(N)) and Omega(g(N))
+- Steps for analyzing a program:
+  - input model
+  - inner loop
+  - cost model
+  - frequency of execution
