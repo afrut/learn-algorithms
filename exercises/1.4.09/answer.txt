@@ -1,0 +1,7 @@
+T(2N) / T(N) = 2^b
+T(2N) = 2^b * T(N)
+T(N) = a * N^b
+
+T(N0) = a * N0^b = t0
+a = t0 / N0^b
+T(N) = (t0 / N0^b) * N^b

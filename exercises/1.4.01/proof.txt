@@ -1,0 +1,43 @@
+The set of all possible permutations of r = 3 unique elements is obtained by
+re-arranging the 3 elements in all possible ways. For example, the set of all
+possible permutations of (0,1,2) is:
+012
+021
+102
+120
+201
+210
+So, the number of possible permutations of r = 3 unique elements is 3!.
+
+The set of possible permutations of r = 3 from n = 5 unique elements (0,1,2,3,4)
+is:
+012     102     201     301     401
+013     103     203     302     402
+014     104     204     304     403
+021     120     210     310     410
+023     123     213     312     412
+024     124     214     314     413
+031     130     230     320     420
+032     132     231     321     421
+034     134     234     324     423
+041     140     240     340     430
+042     142     241     341     431
+043     143     243     342     432
+The number of possible permutations of r = 3 from n = 5 unique elements is
+5 * 4 * 3 = 60.
+
+The set of all possible combinations of r = 3 elements from a set of n = 5
+elements (0,1,2,3,4) is:
+012     123     234
+013     124
+014     134
+023
+024
+034
+The number of all possible combinations of r = 3 elements from a set of n = 5
+elements can be computed by realizing that every combination can have 3!
+permutations. So the number of combinations = 5 * 4 * 3 / 3! = 5 * 4 * 3 / 6.
+
+Now, this can be generalized to a set of n = N elements. The number of all
+possible combinations of r = 3 elements from a set of n = N elements is:
+N * (N - 1) * (N - 2) / 6.

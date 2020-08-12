@@ -1,0 +1,9 @@
+2.1.7 Which method runs faster for an array in reverse order, selection sort or insertion
+sort?
+
+Selection sort always uses the same number of compares regardless of input. This
+uses (N)(N - 1)/2 compares.
+
+When running insertion sort on input in reverse order, it takes the same number
+of compares as selection sort. This is because the "element in consideration"
+is guaranteed to be moved to spot 0 in the array, every single time.

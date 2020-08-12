@@ -1,0 +1,28 @@
+2.2.5 Give the sequence of subarray sizes in the merges performed by both the
+topdown and the bottom-up mergesort algorithms, for N = 39.
+
+TopDownMergeSort Subarray Sizes:
+sort(0, 19)
+    sort(0, 9)
+        sort(0, 4)
+            sort(0, 2)
+                sort(0, 1)
+                    sort(0, 0)
+                    sort(1, 1)
+                    merge(0, 0, 1)                      1, 1
+                sort(2, 2)
+                merge(0, 1, 2)                          2, 1
+            sort(3, 4)
+            merge(0, 2, 4)                              3, 5
+        sort(5, 9)
+        merge(0, 4, 9)                                  5, 5
+    sort(10, 19)
+    merge(0, 9, 19)                                     10, 9
+sort(20, 38)
+merge(0, 19, 38)                                        20, 19
+
+BottomUpMergeSort Subarray Sizes:
+(1, 1), (1, 1), ..., (1, 0)
+(2, 2), (2, 2), ..., (2, 1)
+(4, 4), (4, 4), ..., (4, 3)
+(8, 8), (8, 8), (7, 0)

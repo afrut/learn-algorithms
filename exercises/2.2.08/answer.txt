@@ -1,0 +1,33 @@
+2.2.8 Suppose that Algorithm 2.4 is modified to skip the call on merge()
+whenever a[mid] <= a[mid+1]. Prove that the number of compares used to mergesort
+a sorted array is linear.
+
+The number of compares is the number of calls to sort(a, lo, hi) where lo < hi.
+See the following counts for different N:
+N = 2
+1
+
+N = 4
+2
+1
+
+N = 8
+4
+2
+1
+
+N = 16
+8
+4
+2
+1
+
+N = 32
+16
+8
+4
+2
+1
+
+The pattern is to continuously divide N by 2 and add all such results. The exact
+count is N - 1, which makes the number of compares linear.

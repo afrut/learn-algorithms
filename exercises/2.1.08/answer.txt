@@ -1,0 +1,16 @@
+2.1.8 Suppose that we use insertion sort on a randomly ordered array where elements
+have only one of three values. Is the running time linear, quadratic, or something in
+between?
+
+Insertion sort's running time is linear for an array with repeated elements that
+is already sorted. It is quadratic when the array is in reverse order and
+contains all distinct elements.
+
+For an array in reverse order with repeated elements (since there are only 3
+possible elements), the running time for insertion sort will be less than
+quadratic but greater than linear.
+
+This is because insertion sort will always use at least N - 1 compares before
+the inner loop terminates early. When there are repeated elements, the inner loop
+tends to terminate earlier more often. So, having repeated elements reduces the
+number of compares.

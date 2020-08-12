@@ -1,0 +1,4 @@
+Insertion sort is more efficient than Selection Sort in that it has an inner
+loop that terminates early. Selection Sort always uses the same number of
+compares regardles off input and it has an inner loop that does not termiante
+early.

@@ -1,0 +1,9 @@
+2.2.7 Show that the number of compares used by mergesort is monotonically
+increasing (C(N+1) > C(N) for all N > 0).
+
+It is known that the number of compares within merge is N/2 at best, and N at
+worst. Since merge() is called lgN times, this makes the best-case and
+worst-case N/2*lgN and N*lgN, respectively. Both cases are monotonically
+increasing functions. Furthermore, from examining code, adding more elements can
+only lead to more compares. Adding more elements cannot lead to a decrease in
+the number of compares.

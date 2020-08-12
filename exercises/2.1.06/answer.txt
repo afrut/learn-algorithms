@@ -1,0 +1,8 @@
+2.1.6 Which method runs faster for an array with all keys identical, selection sort or
+insertion sort?
+
+Insertion sort. When running insertion sort on an array of all identical items,
+the inner loop to immediately terminates and only uses N - 1 compares.
+
+When running selection sort on an array of all identical items, the inner loop
+does not terminate but continues as usual. This uses (N)(N - 1)/2 compares.
