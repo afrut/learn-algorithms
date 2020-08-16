@@ -3,9 +3,11 @@
     Quick.sort() that the largest item can be exchanged, for an array of length
     N ?
 */
+import java.util.LinkedList;
 import edu.princeton.cs.algs4.In;
 import edu.princeton.cs.algs4.StdOut;
 import edu.princeton.cs.algs4.StdRandom;
+import mylibs.combinatorics.CountingTechniques;
 public class QuickSortMEE
 {
     // QuickSort repeatedly puts elements in their final position using
@@ -91,7 +93,7 @@ public class QuickSortMEE
         return true;
     }
 
-    public static String toString(Comparable[] a)
+    public static<Item> String toString(Item[] a)
     { // Return a string representation of the array
         StringBuilder sb = new StringBuilder();
         for(int i = 0; i < a.length; i++)
@@ -157,10 +159,10 @@ public class QuickSortMEE
 
     public static void main(String[] args)
     {
+        
         // define the maximum number of array elements in these experiments
-        int numElem = 200;
-
-        for(int N = 2; N < numElem + 1; i++)
+        int numElem = 8;
+        for(int N = 2; N < numElem + 1; N++)
         {
             // create an array of N elements
             Comparable[] a = new Comparable[N];
@@ -172,11 +174,25 @@ public class QuickSortMEE
 
             // for all possible combinations of the elements,
             // find the number of exchanges involving the maximum
-            for(int i = 0; i < 
+            LinkedList<Comparable[]> ls = CountingTechniques.P(a, N);
+            int numP = ls.size();
+            int maxNumExch = 0;
+            Object[] foo = ls.poll();
+            System.out.println(toString(foo));
+
+            /*
+            for(int cnt = 0; cnt < numP; cnt++)
+            {
+                sort(ls.poll());
+                if(numExch > maxNumExch)
+                    maxNumExch = numExch;
+            }
+            System.out.println("N = " + N + "; maxNumExch = " + maxNumExch);
+            */
         }
 
-
-        System.out.println("N, numExch");
+        /*
+        numElem = 200;
         for(int N = 2; N < numElem; N++)
         {
             Comparable[] a = new Comparable[N];
@@ -187,7 +203,8 @@ public class QuickSortMEE
             sort(a);                        // sort again and check that the number of exchanges is N / 2
             assert isSorted(a);
             assert(numExch == N / 2);
-            System.out.println(N + ", " + numExch);
         }
+        System.out.println("Testing rearrange: pass");
+        */
     }
 }

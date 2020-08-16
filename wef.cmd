@@ -23,6 +23,30 @@ cls
 ::java BinarySearch 8KRangeOfInts.txt 4000 5000 6000 8000 0
 ::cd ..
 
+::cd templates
+::javac BasicRecursion.java
+::java BasicRecursion
+::cd ..
+
+:: Test creating a package in the same directory and running it from there
+::cd templates
+::javac -d . Package1Class.java
+::java package1.Package1Class
+::cd ..
+
+:: Test creating a package in a directory in CLASSPATH and run it from there
+::cd templates
+::javac -d ..\bin\ Package2Class.java
+::java package2.Package2Class
+::cd ..
+
+:::: Test creating a package as a jar file in CLASSPATH
+::cd templates
+::javac -d . Package3Class.java
+::jar cvf ..\bin\package3jar.jar .\package3\Package3Class.class
+::rmdir /Q/S package3
+::cd ..
+::java package3.Package3Class
 
 
 :: --------------------------------------------------
@@ -50,6 +74,17 @@ cls
 ::javac DoublingRatio.java
 ::java edu.princeton.cs.algs4.DoublingRatio
 ::cd ..
+
+
+:: --------------------------------------------------
+::  Recompile Packages
+:: --------------------------------------------------
+cd mylibs\combinatorics
+javac CountingTechniques.java
+cd ..\..
+jar cvf .\bin\mylibs.jar .\mylibs\combinatorics\CountingTechniques.class
+del .\mylibs\combinatorics\CountingTechniques.class
+java mylibs.combinatorics.CountingTechniques
 
 
 
@@ -164,7 +199,24 @@ cls
 ::java MergeSortAAC
 ::cd ..\..
 
-cd exercises\2.2.08
-javac TopDownMergeSort.java
-java TopDownMergeSort < input2.txt
-cd ..\..
+::cd exercises\2.2.08
+::javac TopDownMergeSort.java
+::java TopDownMergeSort < input2.txt
+::cd ..\..
+
+::cd exercises\2.3.01
+::javac Partition.java
+::java Partition < input.txt
+::java Partition < input2.txt
+::cd ..\..
+
+::cd exercises\2.3.02
+::javac QuickSort.java
+::java QuickSort < input.txt
+::cd ..\..
+
+::cd exercises\2.3.03
+::javac QuickSortMEE.java
+::java QuickSortMEE
+::del QuickSortMEE.class
+::cd ..\..
