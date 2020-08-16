@@ -4,6 +4,7 @@
     N ?
 */
 import java.util.LinkedList;
+import java.lang.Math;
 import edu.princeton.cs.algs4.In;
 import edu.princeton.cs.algs4.StdOut;
 import edu.princeton.cs.algs4.StdRandom;
@@ -17,8 +18,9 @@ public class QuickSortMEE
     // partitioned ie, they have one remaining element. Once this is complete,
     // the array is guaranteed to be sorted.
 
-    private static Comparable max; // store the element with maximum value
-    private static int numExch;    // track number of exchanges with the maximum element
+    private static Comparable maximum; // store the element with maximum value
+    private static int numExch;         // track number of exchanges with the maximum element
+    private static int maxNumExch;
 
     // Main sort call
     public static void sort(Comparable[] a)
@@ -29,6 +31,7 @@ public class QuickSortMEE
         // partition a[0..length - 1], then recursively sort left and right
         // subarrays.
         sort(a, 0, a.length - 1);
+        //System.out.println("numExch = " + numExch);
     }
 
     private static void sort(Comparable[] a, int lo, int hi)
@@ -74,7 +77,7 @@ public class QuickSortMEE
     private static void exch(Comparable[] a, int i, int j)
     {
         Comparable t = a[i];
-        if(a[i] == max || a[j] == max)
+        if(a[i] == maximum || a[j] == maximum)
             numExch++;
         a[i] = a[j];
         a[j] = t;
@@ -159,9 +162,14 @@ public class QuickSortMEE
 
     public static void main(String[] args)
     {
-        
+        // ----------------------------------------------------------------------
+        // Run an experiment to determine the maximum number of exchanges
+        // involving the maximum element.
+        // ----------------------------------------------------------------------
         // define the maximum number of array elements in these experiments
-        int numElem = 8;
+        int numElem = 10;
+
+        // for different array sizes
         for(int N = 2; N < numElem + 1; N++)
         {
             // create an array of N elements
@@ -169,42 +177,46 @@ public class QuickSortMEE
             for(int cnt = 0; cnt < N; cnt++)
                 a[cnt] = cnt;
 
-            // store the maximum
-            max = a[N - 1];
+            // determine the maximum and initialize the 
+            maximum = a[N - 1];
+            maxNumExch = 0;
 
             // for all possible combinations of the elements,
             // find the number of exchanges involving the maximum
-            LinkedList<Comparable[]> ls = CountingTechniques.P(a, N);
-            int numP = ls.size();
-            int maxNumExch = 0;
-            Object[] foo = ls.poll();
-            System.out.println(toString(foo));
 
-            /*
+            // create a linked list of all the possible permutations of the array
+            LinkedList<Comparable[]> permutations =
+                CountingTechniques.<Comparable>P(a, N, false);
+            int numP = permutations.size();
+
+            // sort every permutation of the array and store the maximum
+            // number of exchanges
             for(int cnt = 0; cnt < numP; cnt++)
             {
-                sort(ls.poll());
+                Comparable[] perm = permutations.poll();
+                sort(perm);
                 if(numExch > maxNumExch)
                     maxNumExch = numExch;
             }
-            System.out.println("N = " + N + "; maxNumExch = " + maxNumExch);
-            */
+            System.out.println(String.format("N = %2d", N)
+                + "; maxNumExch = " + maxNumExch);
         }
+        System.out.println("");
 
-        /*
+        // arrange an array of size N such that the maximum number of exchanges
+        // involving the maximum element is achieved when sorting
         numElem = 200;
         for(int N = 2; N < numElem; N++)
         {
             Comparable[] a = new Comparable[N];
             for(int cnt = 0; cnt < N; cnt++)
                 a[cnt] = cnt;
-            max = a[N - 1];                 // store the maximum element
+            maximum = a[N - 1];             // store the maximum element
             rearrange(a);                   // rearrange to achieve maximum exchanges of the maximum element
             sort(a);                        // sort again and check that the number of exchanges is N / 2
             assert isSorted(a);
             assert(numExch == N / 2);
         }
         System.out.println("Testing rearrange: pass");
-        */
     }
 }
