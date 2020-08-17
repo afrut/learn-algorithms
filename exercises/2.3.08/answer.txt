@@ -1,0 +1,8 @@
+2.3.8 About how many compares will Quick.sort() make when sorting an array of
+N items that are all equal?
+
+When all items are equal, the inner loop of partition only terminates when i >=
+j. This can only occur when at least hi - lo + 1 compares are made. Since hi
+- lo + 1 takes values of N - 1, N - 2, N - 3, ...,  1, the number of compares of
+the inner loop is at least N - 1 + N - 2 + N - 3 + ... + 1 = N(N - 1)/2. So,
+QuickSort is O(N^2) for an array that has all equal elements.
