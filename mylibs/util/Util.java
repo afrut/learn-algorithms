@@ -3,9 +3,15 @@ package mylibs.util;
 public class Util
 {
     public static String toString(Comparable[] a)
+    {
+        String ret = Util.toString(a, 0, a.length - 1);
+        return ret;
+    }
+
+    public static String toString(Comparable[] a, int start, int end)
     { // Return a string representation of the array
         StringBuilder sb = new StringBuilder();
-        for(int i = 0; i < a.length; i++)
+        for(int i = start; i < end; i++)
         {
             sb.append(a[i].toString() + " ");
         }
