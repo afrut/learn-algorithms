@@ -35,7 +35,7 @@ public class MaxPQ<Key extends Comparable<Key>>
     public Key max()
     { return a[1]; }
 
-    public Key delMax()
+    public Key pop()
     {
         Key ret = a[1];
         a[1] = a[N--];
