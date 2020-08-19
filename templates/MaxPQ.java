@@ -12,6 +12,12 @@ public class MaxPQ<Key extends Comparable<Key>>
     private int N;
     private Key[] a;
 
+    public MaxPQ()
+    {
+        a = (Key[]) new Comparable[2];
+        N = 0;
+    }
+
     public MaxPQ(int max)
     {
         a = (Key[]) new Comparable[max + 1];
@@ -30,6 +36,8 @@ public class MaxPQ<Key extends Comparable<Key>>
     {
         a[++N] = k;
         swim(N);
+        if(N >= a.length - 1)
+            resize(2 * N);
     }
 
     public Key max()
@@ -40,6 +48,8 @@ public class MaxPQ<Key extends Comparable<Key>>
         Key ret = a[1];
         a[1] = a[N--];
         sink(1);
+        if(N <= (a.length - 1) / 4)
+            resize((a.length - 1) / 2);
         return ret;
     }
 
@@ -79,6 +89,17 @@ public class MaxPQ<Key extends Comparable<Key>>
         a[j] = temp;
     }
 
+    private void resize(int sz)
+    {
+        Key[] temp = (Key[]) new Comparable[sz + 1];
+        //String str = String.format("Resized from %d", a.length - 1);
+        for(int cnt = 1; cnt <= N; cnt++)
+            temp[cnt] = a[cnt];
+        a = temp;
+        //str = str + String.format(" to %d", a.length - 1);
+        //System.out.println(str);
+    }
+
     public boolean isHeap()
     {
         int i = 1;
@@ -108,13 +129,24 @@ public class MaxPQ<Key extends Comparable<Key>>
 
     public static void main(String[] args)
     {
+        // read in strings from input
         String[] a = In.readStrings();
-        int Nstring = a.length;
         System.out.println(Util.toString(a));
-        MaxPQ<String> mpq = new MaxPQ<String>(Nstring);
+
+        // create a priority queue and insert
+        int Nstring = a.length;
+        MaxPQ<String> mpq = new MaxPQ<String>();
         for(int cnt = 0; cnt < Nstring; cnt++)
             mpq.insert(a[cnt]);
+
+        // check if heap is properly formed
         assert(mpq.isHeap());
+
+        // print out contents of array that represents the heap
         System.out.println(mpq.toString());
+
+        // pop all elements off to test resizing of array
+        for(int cnt = 0; cnt < Nstring; cnt++)
+            mpq.pop();
     }    
 }
