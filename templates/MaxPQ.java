@@ -40,7 +40,7 @@ public class MaxPQ<Key extends Comparable<Key>>
             resize(2 * N);
     }
 
-    public Key max()
+    public Key head()
     { return a[1]; }
 
     public Key pop()
@@ -79,7 +79,7 @@ public class MaxPQ<Key extends Comparable<Key>>
             if(j < N && less(a[j], a[j + 1])) j++;
             if(less(a[j], a[n])) break;
             exch(n, j);
-            n *= 2;
+            n = j;
         }
     }
 
@@ -93,26 +93,49 @@ public class MaxPQ<Key extends Comparable<Key>>
     private void resize(int sz)
     {
         Key[] temp = (Key[]) new Comparable[sz + 1];
-        //String str = String.format("Resized from %d", a.length - 1);
+        // String str = String.format("Resized from %d", a.length - 1);
         for(int cnt = 1; cnt <= N; cnt++)
             temp[cnt] = a[cnt];
         a = temp;
-        //str = str + String.format(" to %d", a.length - 1);
-        //System.out.println(str);
+        // str = str + String.format(" to %d", a.length - 1);
+        // System.out.println(str);
     }
 
     public boolean isHeap()
     {
+        return isHeap(false);
+    }
+
+    public boolean isHeap(boolean debug)
+    {
         int i = 1;
+        boolean ret = true;
         while(2 * i < N)
         {
             int j = 2 * i;
-            if(less(a[i], a[j])) return false;
+            Key parent = a[i];
+            Key child1 = a[j];
             if(j + 1 < N)
-                if(less(a[i], a[j + 1])) return false;
+            {
+                Key child2 = a[j + 1];
+                if(debug)
+                    System.out.println(parent + " - " + child1 + " " + child2);
+                if(less(child1, child2))
+                    child1 = child2;
+            }
+            else
+            {
+                if(debug)
+                    System.out.println(parent + " - " + child1);
+            }
+            if(less(parent, child1))
+            {
+                ret = false;
+                break;
+            }
             i++;
         }
-        return true;
+        return ret;
     }
 
     private boolean less(Key a, Key b)
@@ -123,7 +146,7 @@ public class MaxPQ<Key extends Comparable<Key>>
     public String toString()
     {
         if(!isEmpty())
-            return Util.toString(a, 1, N);
+            return Util.toString(a, 1, N + 1);
         else
             return new String("empty");
     }
@@ -140,14 +163,22 @@ public class MaxPQ<Key extends Comparable<Key>>
         for(int cnt = 0; cnt < Nstring; cnt++)
             mpq.insert(a[cnt]);
 
-        // check if heap is properly formed
-        assert(mpq.isHeap());
-
         // print out contents of array that represents the heap
         System.out.println(mpq.toString());
 
+        // check if heap is properly formed
+        assert(mpq.isHeap());
+
+        System.out.println("Element at head of Priority Queue = " + mpq.head());
+
         // pop all elements off to test resizing of array
+        System.out.println("Popping all elements");
         for(int cnt = 0; cnt < Nstring; cnt++)
-            mpq.pop();
-    }    
+        {
+            System.out.print(mpq.pop() + " ");
+            assert(mpq.isHeap());
+        }
+        System.out.println("");
+        System.out.println("Is Priority Queue empty? " + mpq.isEmpty());
+    }
 }
