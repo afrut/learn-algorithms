@@ -28,6 +28,24 @@ cls
 ::java BasicRecursion
 ::cd ..
 
+::cd templates
+::javac MaxPQ.java
+::java -ea MaxPQ < .\inputs\PQInputLong.txt
+::del MaxPQ.class
+::cd ..
+
+cd templates
+javac MinPQ.java
+java -ea MinPQ < .\inputs\PQInputLong.txt
+del MinPQ.class
+cd ..
+
+::cd templates
+::javac IndexMaxPQ.java
+::java -ea IndexMaxPQ < .\inputs\PQInput.txt
+::del IndexMaxPQ.class
+::cd ..
+
 :: Test creating a package in the same directory and running it from there
 ::cd templates
 ::javac -d . Package1Class.java
@@ -79,12 +97,13 @@ cls
 :: --------------------------------------------------
 ::  Recompile Packages
 :: --------------------------------------------------
-cd mylibs\combinatorics
-javac CountingTechniques.java
-cd ..\..
-jar cvf .\bin\mylibs.jar .\mylibs\combinatorics\CountingTechniques.class
-del .\mylibs\combinatorics\CountingTechniques.class
-java mylibs.combinatorics.CountingTechniques
+::javac mylibs\combinatorics\CountingTechniques.java
+::javac mylibs\util\Util.java
+::jar cvf .\bin\mylibs.jar .\mylibs\combinatorics\CountingTechniques.class .\mylibs\util\Util.class
+::del .\mylibs\combinatorics\CountingTechniques.class
+::del .\mylibs\util\Util.class
+::java mylibs.combinatorics.CountingTechniques
+::java mylibs.util.Util
 
 
 
@@ -219,4 +238,16 @@ java mylibs.combinatorics.CountingTechniques
 ::javac QuickSortMEE.java
 ::java QuickSortMEE
 ::del QuickSortMEE.class
+::cd ..\..
+
+::cd exercises\2.3.05
+::javac SortDistinct2.java
+::java SortDistinct2 < input.txt
+::del SortDistinct2.class
+::cd ..\..
+
+::cd exercises\2.3.06
+::javac Cn.java
+::java Cn
+::del Cn.class
 ::cd ..\..
