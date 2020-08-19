@@ -4,7 +4,7 @@ public class Util
 {
     public static String toString(Comparable[] a)
     {
-        String ret = Util.toString(a, 0, a.length - 1);
+        String ret = Util.toString(a, 0, a.length);
         return ret;
     }
 
