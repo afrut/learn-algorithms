@@ -46,7 +46,8 @@ public class MaxPQ<Key extends Comparable<Key>>
     public Key pop()
     {
         Key ret = a[1];
-        a[1] = a[N--];
+        a[1] = a[N];
+        a[N--] = null; // avoid loitering
         sink(1);
         if(N <= (a.length - 1) / 4)
             resize((a.length - 1) / 2);
