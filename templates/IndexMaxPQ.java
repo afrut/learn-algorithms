@@ -240,7 +240,10 @@ public class IndexMaxPQ<Key extends Comparable<Key>>
         System.out.println("Popping " + impq.size() + " elements");
         int sz = impq.size();
         for(int cnt = 0; cnt < sz; cnt++)
-        {System.out.print(impq.pop() + " ");}
+        {
+            System.out.print(impq.pop() + " ");
+            assert(impq.isHeap());
+        }
         System.out.println("\n");
         System.out.println("Is Priority Queue empty? " + impq.isEmpty());
     }    
