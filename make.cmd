@@ -28,24 +28,6 @@ cls
 ::java BasicRecursion
 ::cd ..
 
-::cd templates
-::javac MaxPQ.java
-::java -ea MaxPQ < .\inputs\PQInputLong.txt
-::del MaxPQ.class
-::cd ..
-
-cd templates
-javac MinPQ.java
-java -ea MinPQ < .\inputs\PQInputLong.txt
-del MinPQ.class
-cd ..
-
-::cd templates
-::javac IndexMaxPQ.java
-::java -ea IndexMaxPQ < .\inputs\PQInput.txt
-::del IndexMaxPQ.class
-::cd ..
-
 :: Test creating a package in the same directory and running it from there
 ::cd templates
 ::javac -d . Package1Class.java
@@ -99,11 +81,20 @@ cd ..
 :: --------------------------------------------------
 ::javac mylibs\combinatorics\CountingTechniques.java
 ::javac mylibs\util\Util.java
-::jar cvf .\bin\mylibs.jar .\mylibs\combinatorics\CountingTechniques.class .\mylibs\util\Util.class
+::javac mylibs\ds\MaxPQ.java
+::javac mylibs\ds\MinPQ.java
+::javac mylibs\ds\IndexMaxPQ.java
+::jar cvf .\bin\mylibs.jar .\mylibs\combinatorics\CountingTechniques.class .\mylibs\util\Util.class .\mylibs\ds\MaxPQ.class .\mylibs\ds\MinPQ.class .\mylibs\ds\IndexMaxPQ.class
 ::del .\mylibs\combinatorics\CountingTechniques.class
 ::del .\mylibs\util\Util.class
-::java mylibs.combinatorics.CountingTechniques
-::java mylibs.util.Util
+::del .\mylibs\ds\MaxPQ.class
+::del .\mylibs\ds\MinPQ.class
+::del .\mylibs\ds\IndexMaxPQ.class
+::java -ea mylibs.combinatorics.CountingTechniques
+::java -ea mylibs.util.Util
+::java -ea mylibs.ds.MaxPQ
+::java -ea mylibs.ds.MinPQ
+::java -ea mylibs.ds.IndexMaxPQ
 
 
 
@@ -251,3 +242,9 @@ cd ..
 ::java Cn
 ::del Cn.class
 ::cd ..\..
+
+cd exercises\2.4.01
+javac PQClient.java
+java PQClient < input.txt
+del PQClient.class
+cd ..\..
