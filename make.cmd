@@ -243,8 +243,20 @@ cls
 ::del Cn.class
 ::cd ..\..
 
-cd exercises\2.4.01
-javac PQClient.java
-java PQClient < input.txt
-del PQClient.class
+::cd exercises\2.4.01
+::javac PQClient.java
+::java PQClient < input.txt
+::del PQClient.class
+::cd ..\..
+
+::cd exercises\2.4.01
+::javac PQClient.java
+::java PQClient < input.txt
+::del PQClient.class
+::cd ..\..
+
+cd exercises\2.4.03
+javac MaxPQUA.java
+java MaxPQUA < input.txt
+del MaxPQUA.class
 cd ..\..
