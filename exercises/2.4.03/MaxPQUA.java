@@ -95,14 +95,5 @@ class MaxPQUA<Key extends Comparable<Key>>
             else
                 mpq.insert(a[cnt]);
         }
-
-        /*
-        for(int cnt = 0; cnt < Nstring; cnt++)
-            mpq.insert(a[cnt]);
-        for(int cnt = 0; cnt < Nstring; cnt++)
-            System.out.print(mpq.pop() + " ");
-        System.out.println("");
-        System.out.println(mpq.isEmpty());
-        */
     }
 }
