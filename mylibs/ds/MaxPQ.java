@@ -28,7 +28,7 @@ public class MaxPQ<Key extends Comparable<Key>>
     {
         N = p.length;
         a = (Key[]) new Comparable[N + 1];
-        for(int cnt = 1; cnt < N; cnt++)
+        for(int cnt = 1; cnt <= N; cnt++)
             a[cnt] = p[cnt];
     }
 
