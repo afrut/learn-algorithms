@@ -256,10 +256,13 @@ cls
 ::cd ..\..
 
 cd exercises\2.4.03
-javac MaxPQUA.java
-java MaxPQUA < input.txt
-del MaxPQUA.class
-javac MaxPQOA.java
-java MaxPQOA < input.txt
-del MaxPQOA.class
+::javac MaxPQUA.java
+::java MaxPQUA < input.txt
+::del MaxPQUA.class
+::javac MaxPQOA.java
+::java MaxPQOA < input.txt
+::del MaxPQOA.class
+javac MaxLLUO.java
+java MaxLLUO < input.txt
+del MaxLLUO.class
 cd ..\..
