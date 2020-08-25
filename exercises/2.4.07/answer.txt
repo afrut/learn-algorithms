@@ -1,0 +1,21 @@
+2.4.7 The largest item in a heap must appear in position 1, and the second
+largest must be in position 2 or position 3. Give the list of positions in a
+heap of size 31 where the kth largest (i) can appear, and (ii) cannot appear,
+for k=2, 3, 4 (assuming the values to be distinct).
+
+A property of heaps is that the largest item is at the root or depth d = 0. The
+2nd and 3rd are at d = 1. The 4th, 5th, 6th, 7th, and 8th, are at depth d = 2.
+
+Translating depths to array positions:
+d = 0               a[1]
+d = 1               a[2], a[3]
+d = 2               a[4], a[5], a[6], a[7]
+
+The 2nd largest item can appear in either a[2] and a[3] only. It cannot appear
+in any other positions.
+
+The 3rd largest item can appear in either a[2] and a[3]. It cannot appear in any
+other position.
+
+The 4th largest item can appear in either a[4..8], inclusive. It cannot appear
+in any other position.
