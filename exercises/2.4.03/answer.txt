@@ -8,7 +8,7 @@ Unordered Array Implementation
     - pop - O(N)
 
 Ordered Array Implementation
-    - insert - O(N^2)
+    - insert - O(N)
     - pop - O(1)
 
 Unordered Linked List Implemenation
@@ -17,4 +17,4 @@ Unordered Linked List Implemenation
 
 Ordered Linked List Implementation
     - insert - O(N)
-    - pop - O(N)
+    - pop - O(1)
