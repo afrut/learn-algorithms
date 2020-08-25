@@ -274,7 +274,13 @@ cls
 ::del MaxLL$Node.class
 ::cd ..\..
 
-cd exercises\2.4.05
+::cd exercises\2.4.05
+::javac MaxPQClient.java
+::java MaxPQClient < input.txt
+::del MaxPQClient.class
+::cd ..\..
+
+cd exercises\2.4.06
 javac MaxPQClient.java
 java MaxPQClient < input.txt
 del MaxPQClient.class
