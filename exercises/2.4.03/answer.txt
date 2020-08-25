@@ -1,0 +1,15 @@
+Unordered Array Implementation
+    - insert - O(1)
+    - pop - O(N)
+
+Ordered Array Implementation
+    - insert - O(N^2)
+    - pop - O(1)
+
+Unordered Linked List Implemenation
+    - insert - O(1)
+    - pop - O(N) or O(2N)
+
+Ordered Linked List Implementation
+    - insert - O(N)
+    - pop - O(N)
