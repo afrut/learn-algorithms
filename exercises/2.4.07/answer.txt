@@ -3,19 +3,47 @@ largest must be in position 2 or position 3. Give the list of positions in a
 heap of size 31 where the kth largest (i) can appear, and (ii) cannot appear,
 for k=2, 3, 4 (assuming the values to be distinct).
 
-A property of heaps is that the largest item is at the root or depth d = 0. The
-2nd and 3rd are at d = 1. The 4th, 5th, 6th, 7th, and 8th, are at depth d = 2.
+A heap of size 3 has 2 depths: d = [0, 1].
+A heap of size 4 has 3 depths: d = [0, 1, 2].
+A heap of size 7 has 3 depths: d = [0, 1, 2].
+A heap of size 8 has 4 depths: d = [0, 1, 2, 3].
+A heap of size N has lg(N) + 1 depths.
+A heap of size 31 has 8 depths: d = [0..6].
 
-Translating depths to array positions:
-d = 0               a[1]
-d = 1               a[2], a[3]
-d = 2               a[4], a[5], a[6], a[7]
+An experiment is run in MaxPQClient where all possible permutations of an array
+of size N = 7 is inserted into a priority queue. The array representation of
+every priority queue corresponding to every permutation is then printed to
+output.txt for manual examination. The following can be stated based on the
+results in output.txt.
 
-The 2nd largest item can appear in either a[2] and a[3] only. It cannot appear
-in any other positions.
+The largest item is always at the root of the heap. This follows from the fact
+that whenever the largest item is added, it will inevitably swim to the top
+position.
 
-The 3rd largest item can appear in either a[2] and a[3]. It cannot appear in any
-other position.
+The second largest item is either at position 2 or 3, and nowhere else. When the
+2nd largest item is added, it will keep swimming to the top until it encounters
+an item larger than it; that is, it encounters the largest item. The only time
+this occurs is when it reaches either positions 2 or 3.
 
-The 4th largest item can appear in either a[4..8], inclusive. It cannot appear
-in any other position.
+The third largest item can take positions 2 or 3, or any other position that is
+a direct child of the second largest item. So, if the second largest item is at
+position 2, the third largest item can be at positions 3, 4, or 5. If the second
+largest item is at position 3, the third largest item can be at positions 2, 6,
+or 7.
+
+The first case where the third largest item takes the same level as the 2nd
+largest item occurs when the third largest item is inserted into a subtree where
+the 2nd largest item is not a parent. So, when it swims to the top, it stops
+only when it encounters the largest item; when it reaches positions 2 or 3. The
+second case occurs when the third largest item is inserted into a subtree where
+the 2nd largest item is a parent. So, when it swims to the top, it will
+encounter the 2nd largest item and stop. In this case, it will take a position
+in the array that is one depth level lower than the 2nd largest item.
+
+The same type of analysis can be applied to the 4th largest item. In the case
+where the 2nd and 3rd largest items occupy the same depth level at positions 2
+and 3, the 4th largest item will necessarily occupy a position one depth level
+lower; either in positions 4, 5, 6, or 7. In the case where the 3rd largest item
+is a child of the 2nd largest item, the 3rd largest item can be a direct child
+of hte largest item, or it can be a direct child of either the 2nd or 3rd
+largest items.
