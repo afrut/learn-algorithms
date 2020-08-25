@@ -2,13 +2,13 @@
 package mylibs.util;
 public class Util
 {
-    public static String toString(Comparable[] a)
+    public static String toString(Object[] a)
     {
         String ret = Util.toString(a, 0, a.length);
         return ret;
     }
 
-    public static String toString(Comparable[] a, int start, int end)
+    public static String toString(Object[] a, int start, int end)
     { // Return a string representation of the array
         StringBuilder sb = new StringBuilder();
         for(int i = start; i < end; i++)
@@ -28,5 +28,10 @@ public class Util
             a[cnt] = cnt;
         }
         System.out.println(Util.toString(a));
+        String[] b = new String[10];
+        N = b.length;
+        for(int cnt = 0; cnt < N; cnt++)
+            b[cnt] = ((Integer)cnt).toString();
+        System.out.println(Util.toString(b));
     }
 }
