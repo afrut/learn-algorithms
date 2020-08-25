@@ -1,0 +1,6 @@
+2.4.8 Answer the previous exercise for the kth smallest item.
+
+For N = 31 items, the binary heap will have depth d = lg[N] + 1 = 4 + 1 = 5. A
+property of full binary heaps is such that N / 2 + 1 is located at the last
+depth. So, the 2nd, 3rd, and 4th smallest items will always be located at
+a[15..31], inclusive.
