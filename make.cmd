@@ -280,8 +280,8 @@ cls
 ::del MaxPQClient.class
 ::cd ..\..
 
-cd exercises\2.4.06
-javac MaxPQClient.java
-java MaxPQClient < input.txt
-del MaxPQClient.class
-cd ..\..
+::cd exercises\2.4.06
+::javac MaxPQClient.java
+::java MaxPQClient < input.txt
+::del MaxPQClient.class
+::cd ..\..

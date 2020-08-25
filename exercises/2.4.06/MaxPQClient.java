@@ -1,3 +1,8 @@
+/*
+    2.4.6 Using the conventions of Exercise 2.4.1, give the sequence of heaps
+    produced when the operations P R I O * R * * I * T * Y * * * Q U E * * * U *
+    E are performed on an initially empty max-oriented heap.
+*/
 import mylibs.ds.MaxPQ;
 import mylibs.util.Util;
 import edu.princeton.cs.algs4.In;
