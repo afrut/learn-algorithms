@@ -262,7 +262,14 @@ cd exercises\2.4.03
 ::javac MaxPQOA.java
 ::java MaxPQOA < input.txt
 ::del MaxPQOA.class
-javac MaxLLUO.java
-java MaxLLUO < input.txt
-del MaxLLUO.class
+::javac MaxLLUO.java
+::java MaxLLUO < input.txt
+::del MaxLLUO.class
+::del MaxLLUO$1.class
+::del MaxLLUO$Node.class
+javac MaxLL.java
+java MaxLL < input.txt
+del MaxLL.class
+del MaxLL$1.class
+del MaxLL$Node.class
 cd ..\..
