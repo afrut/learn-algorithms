@@ -1,3 +1,8 @@
+2.4.3 Provide priority-queue implementations that support insert and remove the
+maximum, one for each of the following underlying data structures: unordered
+array, ordered array, unordered linked list, and linked list. Give a table of
+the worst-case bounds for each operation for each of your four implementations.
+
 Unordered Array Implementation
     - insert - O(1)
     - pop - O(N)

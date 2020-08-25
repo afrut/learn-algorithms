@@ -255,7 +255,7 @@ cls
 ::del PQClient.class
 ::cd ..\..
 
-cd exercises\2.4.03
+::cd exercises\2.4.03
 ::javac MaxPQUA.java
 ::java MaxPQUA < input.txt
 ::del MaxPQUA.class
@@ -267,9 +267,9 @@ cd exercises\2.4.03
 ::del MaxLLUO.class
 ::del MaxLLUO$1.class
 ::del MaxLLUO$Node.class
-javac MaxLL.java
-java MaxLL < input.txt
-del MaxLL.class
-del MaxLL$1.class
-del MaxLL$Node.class
-cd ..\..
+::javac MaxLL.java
+::java MaxLL < input.txt
+::del MaxLL.class
+::del MaxLL$1.class
+::del MaxLL$Node.class
+::cd ..\..

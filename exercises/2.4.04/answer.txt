@@ -1,0 +1,5 @@
+2.4.4 Is an array that is sorted in decreasing order a max-oriented heap?
+
+Yes. If an array is sorted in decreasing order, then necessarily, a[n] >= a[2n]
+and a[n] >= a[2n + 1]. This is fulfills the requirement of being a max-oriented
+heap.
