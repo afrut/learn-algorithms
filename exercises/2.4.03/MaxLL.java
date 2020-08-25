@@ -5,7 +5,6 @@ class MaxLL<Key extends Comparable<Key>>
 {
     private int N;
     private Node first;
-    private Node last;
 
     private class Node
     {
@@ -16,7 +15,6 @@ class MaxLL<Key extends Comparable<Key>>
     public MaxLL()
     {
         first = null;
-        last = null;
         N = 0;
     }
 
@@ -25,7 +23,6 @@ class MaxLL<Key extends Comparable<Key>>
         if(N == 0)
         {
             first = new Node();
-            last = first;
             first.value = k;
         }
         else
@@ -47,8 +44,6 @@ class MaxLL<Key extends Comparable<Key>>
             node.next = newNode;
             if(cnt == 0)
                 first = newNode;
-            else if(cnt == N - 1)
-                last = newNode;
         }
         N++;
         //System.out.println(this.toString());
@@ -61,7 +56,6 @@ class MaxLL<Key extends Comparable<Key>>
         {
             ret = first.value;
             first = null;
-            last = null;
         }
         else
         {
