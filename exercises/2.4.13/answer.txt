@@ -1,0 +1,4 @@
+One way would be to ensure that the largest child is always at pq[2*k]. This can
+be achieved by eliminating the conditional in sink that finds the larger child
+AND modifying the swim operation to swap the children so that the larger child
+is at 2k.

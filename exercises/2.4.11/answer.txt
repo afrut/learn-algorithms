@@ -1,0 +1,6 @@
+A heap is O(lg(N)) for both insert and remove the maximum operations. An
+unordered array is O(1) for insert and O(N) for remove the maximum. An ordered
+array is O(N) for insert and O(1) for remove the maximum.
+
+Given that there are only a few remove the maximum operations, an unordered
+array implementation of the priority is appropriate.
