@@ -79,30 +79,30 @@ cls
 :: --------------------------------------------------
 ::  Recompile Packages
 :: --------------------------------------------------
-javac mylibs\combinatorics\CountingTechniques.java
-javac mylibs\util\Util.java
-javac mylibs\ds\MaxPQ.java
-javac mylibs\ds\MinPQ.java
-javac mylibs\ds\IndexMaxPQ.java
-javac mylibs\ds\Heapsort.java
-jar cvf .\bin\mylibs.jar .\mylibs\combinatorics\CountingTechniques.class .\mylibs\util\Util.class .\mylibs\ds\MaxPQ.class .\mylibs\ds\MinPQ.class .\mylibs\ds\IndexMaxPQ.class
-del .\mylibs\combinatorics\CountingTechniques.class
-del .\mylibs\util\Util.class
-del .\mylibs\ds\MaxPQ.class
-del .\mylibs\ds\MinPQ.class
-del .\mylibs\ds\IndexMaxPQ.class
-del .\mylibs\ds\Heapsort.class
+::javac mylibs\combinatorics\CountingTechniques.java
+::javac mylibs\util\Util.java
+::javac mylibs\ds\MaxPQ.java
+::javac mylibs\ds\MinPQ.java
+::javac mylibs\ds\IndexMaxPQ.java
+::jar cvf .\bin\mylibs.jar .\mylibs\combinatorics\CountingTechniques.class .\mylibs\util\Util.class .\mylibs\ds\MaxPQ.class .\mylibs\ds\MinPQ.class .\mylibs\ds\IndexMaxPQ.class
+::del .\mylibs\combinatorics\CountingTechniques.class
+::del .\mylibs\util\Util.class
+::del .\mylibs\ds\MaxPQ.class
+::del .\mylibs\ds\MinPQ.class
+::del .\mylibs\ds\IndexMaxPQ.class
+::del .\mylibs\ds\Heapsort.class
 ::java -ea mylibs.combinatorics.CountingTechniques
 ::java -ea mylibs.util.Util
 ::java -ea mylibs.ds.MaxPQ < mylibs\ds\input.txt
 ::java -ea mylibs.ds.MinPQ < mylibs\ds\input.txt
 ::java -ea mylibs.ds.IndexMaxPQ < mylibs\ds\input.txt
 ::java -ea mylibs.ds.Heapsort
-java -ea mylibs.util.Util
-::cd mylibs\ds\
-::java Heapsort
-::cd ..\..
+::java -ea mylibs.util.Util
 
+cd mylibs\ds\
+javac Heapsort.java
+java -ea Heapsort
+cd ..\..
 
 
 :: --------------------------------------------------
