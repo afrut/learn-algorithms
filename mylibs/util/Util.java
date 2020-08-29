@@ -4,20 +4,26 @@ import java.util.Random;
 
 public class Util
 {
+    public static<Item> void shuffle(Item[] a)
+    {
+        Random r = new Random();
+        int N = a.length;
+        for(int cnt = 0; cnt < N; cnt++)
+        {
+            int swap = r.nextInt(N - 1);
+            Item temp = a[0];
+            a[0] = a[swap];
+            a[swap] = temp;
+        }
+    }
+
     // generate unique and randomly ordered integers
     public static Integer[] randomInts(int N)
     {
         Integer[] a = new Integer[N];
         for(int cnt = 0; cnt < N; cnt++)
             a[cnt] = cnt;
-        Random r = new Random();
-        for(int cnt = 0; cnt < N; cnt++)
-        {
-            int swap = r.nextInt(N - 1);
-            int temp = a[0];
-            a[0] = a[swap];
-            a[swap] = temp;
-        }
+        Util.<Integer>shuffle(a);
         return a;
     }
 

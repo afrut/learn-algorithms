@@ -28,13 +28,13 @@ cls
 ::java BasicRecursion
 ::cd ..
 
-:: Test creating a package in the same directory and running it from there
+:::: Test creating a package in the same directory and running it from there
 ::cd templates
 ::javac -d . Package1Class.java
 ::java package1.Package1Class
 ::cd ..
 
-:: Test creating a package in a directory in CLASSPATH and run it from there
+:::: Test creating a package in a directory in CLASSPATH and run it from there
 ::cd templates
 ::javac -d ..\bin\ Package2Class.java
 ::java package2.Package2Class
@@ -47,6 +47,19 @@ cls
 ::rmdir /Q/S package3
 ::cd ..
 ::java package3.Package3Class
+
+:::: Test basic reflection
+::cd templates
+::javac BasicReflection.java
+::java BasicReflection
+::cd ..
+
+:::: Test generic array creation
+::cd templates
+::javac GenericArrayCreation.java
+::java GenericArrayCreation
+::del GenericArrayCreation.class
+::cd ..
 
 
 :: --------------------------------------------------
@@ -79,21 +92,21 @@ cls
 :: --------------------------------------------------
 ::  Recompile Packages
 :: --------------------------------------------------
-::javac mylibs\combinatorics\CountingTechniques.java
-::javac mylibs\util\Util.java
-::javac mylibs\ds\MaxPQ.java
-::javac mylibs\ds\MinPQ.java
-::javac mylibs\ds\IndexMaxPQ.java
-::javac mylibs\ds\Heapsort.java
-::jar cvf .\bin\mylibs.jar .\mylibs\combinatorics\CountingTechniques.class .\mylibs\util\Util.class .\mylibs\ds\MaxPQ.class .\mylibs\ds\MinPQ.class .\mylibs\ds\IndexMaxPQ.class .\mylibs\ds\Heapsort.class
-::del .\mylibs\combinatorics\CountingTechniques.class
-::del .\mylibs\util\Util.class
-::del .\mylibs\ds\MaxPQ.class
-::del .\mylibs\ds\MinPQ.class
-::del .\mylibs\ds\IndexMaxPQ.class
-::del .\mylibs\ds\Heapsort.class
+javac mylibs\combinatorics\CountingTechniques.java
+javac mylibs\util\Util.java
+javac mylibs\ds\MaxPQ.java
+javac mylibs\ds\MinPQ.java
+javac mylibs\ds\IndexMaxPQ.java
+javac mylibs\ds\Heapsort.java
+jar cvf .\bin\mylibs.jar .\mylibs\combinatorics\CountingTechniques.class .\mylibs\util\Util.class .\mylibs\ds\MaxPQ.class .\mylibs\ds\MinPQ.class .\mylibs\ds\IndexMaxPQ.class .\mylibs\ds\Heapsort.class
+del .\mylibs\combinatorics\CountingTechniques.class
+del .\mylibs\util\Util.class
+del .\mylibs\ds\MaxPQ.class
+del .\mylibs\ds\MinPQ.class
+del .\mylibs\ds\IndexMaxPQ.class
+del .\mylibs\ds\Heapsort.class
 ::java -ea mylibs.combinatorics.CountingTechniques
-::java -ea mylibs.util.Util
+java -ea mylibs.util.Util
 ::java -ea mylibs.ds.MaxPQ < mylibs\ds\input.txt
 ::java -ea mylibs.ds.MinPQ < mylibs\ds\input.txt
 ::java -ea mylibs.ds.IndexMaxPQ < mylibs\ds\input.txt
@@ -295,8 +308,14 @@ cls
 ::del MaxPQClient.class
 ::cd ..\..
 
-cd exercises\2.5.01
-javac Main.java
-java Main
-del Main.class
-cd ..\..
+::cd exercises\2.5.01
+::javac Main.java
+::java Main
+::del Main.class
+::cd ..\..
+
+::cd exercises\2.5.02
+::javac CompoundWords.java
+::java CompoundWords
+::del CompoundWords.class
+::cd ..\..
