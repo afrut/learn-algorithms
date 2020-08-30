@@ -107,13 +107,13 @@ del .\mylibs\ds\MinPQ.class
 del .\mylibs\ds\IndexMaxPQ.class
 del .\mylibs\ds\Heapsort.class
 del .\mylibs\ds\BinarySearch.class
-java -ea mylibs.combinatorics.CountingTechniques
+::java -ea mylibs.combinatorics.CountingTechniques
 java -ea mylibs.util.Util
-java -ea mylibs.ds.MaxPQ < mylibs\ds\input.txt
-java -ea mylibs.ds.MinPQ < mylibs\ds\input.txt
-java -ea mylibs.ds.IndexMaxPQ < mylibs\ds\input.txt
-java -ea mylibs.ds.Heapsort
-java -ea mylibs.ds.BinarySearch
+::java -ea mylibs.ds.MaxPQ < mylibs\ds\input.txt
+::java -ea mylibs.ds.MinPQ < mylibs\ds\input.txt
+::java -ea mylibs.ds.IndexMaxPQ < mylibs\ds\input.txt
+::java -ea mylibs.ds.Heapsort
+::java -ea mylibs.ds.BinarySearch
 
 
 
@@ -319,6 +319,6 @@ java -ea mylibs.ds.BinarySearch
 
 ::cd exercises\2.5.02
 ::javac CompoundWords.java
-::java CompoundWords
+::java CompoundWords < input.txt
 ::del CompoundWords.class
 ::cd ..\..

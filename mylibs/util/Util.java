@@ -1,6 +1,9 @@
 // Contains various utility functions for conveniently doing things.
 package mylibs.util;
 import java.util.Random;
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.lang.reflect.Array;
 
 public class Util
 {
@@ -15,6 +18,33 @@ public class Util
             a[0] = a[swap];
             a[swap] = temp;
         }
+    }
+
+    public static<Item extends Comparable<Item>> Item[] removeDuplicates(Item[] a)
+    {
+        Arrays.sort(a);
+        int N = a.length;
+        LinkedList<Item> ll = new LinkedList<Item>();
+        int cnt1 = 0;
+        int cnt2 = 0;
+        for(cnt1 = 0; cnt1 < N; cnt1++)
+        {
+            ll.add(a[cnt1]);
+            for(cnt2 = cnt1 + 1; cnt2 < N; cnt2++)
+            {
+                if(a[cnt1].compareTo(a[cnt2]) != 0)
+                {
+                    cnt1 = cnt2 - 1;
+                    break;
+                }
+            }
+            if(cnt2 == N) break;
+        }
+        Item[] ret = (Item[])Array.newInstance(a.getClass().getComponentType(), ll.size());
+        cnt1 = 0;
+        while(ll.size() > 0)
+            ret[cnt1++] = ll.poll();
+        return ret;
     }
 
     // generate unique and randomly ordered integers
@@ -63,5 +93,26 @@ public class Util
         // test random integer shuffling
         Integer[] c = Util.randomInts(16);
         System.out.println(Util.toString(c));
+
+        // test removal of duplicates
+        Integer[] d = new Integer[15];
+        d[0] = 0;
+        d[1] = 0;
+        d[2] = 0;
+        d[3] = 1;
+        d[4] = 1;
+        d[5] = 2;
+        d[6] = 3;
+        d[7] = 4;
+        d[8] = 4;
+        d[9] = 5;
+        d[10] = 6;
+        d[11] = 7;
+        d[12] = 8;
+        d[13] = 9;
+        d[14] = 9;
+        System.out.println(Util.toString(d));
+        Integer[] e = Util.<Integer>removeDuplicates(d);
+        System.out.println(Util.toString(e));
     }
 }
