@@ -13,7 +13,6 @@ public class BinarySearch<Item extends Comparable<Item>>
         a = arr.clone();
         N = a.length;
         Arrays.sort(a);
-        System.out.println(Util.toString(a));
     }
 
     public int search(Item x)
