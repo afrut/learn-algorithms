@@ -92,28 +92,28 @@ cls
 :: --------------------------------------------------
 ::  Recompile Packages
 :: --------------------------------------------------
-javac mylibs\combinatorics\CountingTechniques.java
-javac mylibs\util\Util.java
-javac mylibs\ds\MaxPQ.java
-javac mylibs\ds\MinPQ.java
-javac mylibs\ds\IndexMaxPQ.java
-javac mylibs\ds\Heapsort.java
-javac mylibs\ds\BinarySearch.java
-jar cvf .\bin\mylibs.jar .\mylibs\combinatorics\CountingTechniques.class .\mylibs\util\Util.class .\mylibs\ds\MaxPQ.class .\mylibs\ds\MinPQ.class .\mylibs\ds\IndexMaxPQ.class .\mylibs\ds\Heapsort.class .\mylibs\ds\BinarySearch.class
-del .\mylibs\combinatorics\CountingTechniques.class
-del .\mylibs\util\Util.class
-del .\mylibs\ds\MaxPQ.class
-del .\mylibs\ds\MinPQ.class
-del .\mylibs\ds\IndexMaxPQ.class
-del .\mylibs\ds\Heapsort.class
-del .\mylibs\ds\BinarySearch.class
-java -ea mylibs.combinatorics.CountingTechniques
-java -ea mylibs.util.Util
-java -ea mylibs.ds.MaxPQ < mylibs\ds\input.txt
-java -ea mylibs.ds.MinPQ < mylibs\ds\input.txt
-java -ea mylibs.ds.IndexMaxPQ < mylibs\ds\input.txt
-java -ea mylibs.ds.Heapsort
-java -ea mylibs.ds.BinarySearch
+::javac mylibs\combinatorics\CountingTechniques.java
+::javac mylibs\util\Util.java
+::javac mylibs\ds\MaxPQ.java
+::javac mylibs\ds\MinPQ.java
+::javac mylibs\ds\IndexMaxPQ.java
+::javac mylibs\ds\Heapsort.java
+::javac mylibs\ds\BinarySearch.java
+::jar cvf .\bin\mylibs.jar .\mylibs\combinatorics\CountingTechniques.class .\mylibs\util\Util.class .\mylibs\ds\MaxPQ.class .\mylibs\ds\MinPQ.class .\mylibs\ds\IndexMaxPQ.class .\mylibs\ds\Heapsort.class .\mylibs\ds\BinarySearch.class
+::del .\mylibs\combinatorics\CountingTechniques.class
+::del .\mylibs\util\Util.class
+::del .\mylibs\ds\MaxPQ.class
+::del .\mylibs\ds\MinPQ.class
+::del .\mylibs\ds\IndexMaxPQ.class
+::del .\mylibs\ds\Heapsort.class
+::del .\mylibs\ds\BinarySearch.class
+::java -ea mylibs.combinatorics.CountingTechniques
+::java -ea mylibs.util.Util
+::java -ea mylibs.ds.MaxPQ < mylibs\ds\input.txt
+::java -ea mylibs.ds.MinPQ < mylibs\ds\input.txt
+::java -ea mylibs.ds.IndexMaxPQ < mylibs\ds\input.txt
+::java -ea mylibs.ds.Heapsort
+::java -ea mylibs.ds.BinarySearch
 
 
 
@@ -317,8 +317,8 @@ java -ea mylibs.ds.BinarySearch
 ::del Main.class
 ::cd ..\..
 
-::cd exercises\2.5.02
-::javac CompoundWords.java
-::java CompoundWords < input.txt
-::del CompoundWords.class
-::cd ..\..
+cd exercises\2.5.02
+javac CompoundWords.java
+java CompoundWords < input.txt
+del CompoundWords.class
+cd ..\..
