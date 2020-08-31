@@ -317,8 +317,14 @@ cls
 ::del Main.class
 ::cd ..\..
 
-cd exercises\2.5.02
-javac CompoundWords.java
-java CompoundWords < input.txt
-del CompoundWords.class
+::cd exercises\2.5.02
+::javac CompoundWords.java
+::java CompoundWords < input.txt
+::del CompoundWords.class
+::cd ..\..
+
+cd exercises\2.5.04
+javac Main.java
+java Main < ..\2.5.02\input.txt
+del Main.class
 cd ..\..
