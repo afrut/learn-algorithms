@@ -99,8 +99,8 @@ cls
 ::javac mylibs\ds\IndexMaxPQ.java
 ::javac mylibs\ds\Heapsort.java
 ::javac mylibs\ds\BinarySearch.java
-javac mylibs\ds\LinkedListSequentialSearchST.java
-::javac mylibs\ds\ResizingArraySequentialSearchST.java
+::javac mylibs\ds\LinkedListSequentialSearchST.java
+javac mylibs\ds\ResizingArraySequentialSearchST.java
 ::jar cvf .\bin\mylibs.jar .\mylibs\combinatorics\CountingTechniques.class .\mylibs\util\Util.class .\mylibs\ds\MaxPQ.class .\mylibs\ds\MinPQ.class .\mylibs\ds\IndexMaxPQ.class .\mylibs\ds\Heapsort.class .\mylibs\ds\BinarySearch.class .\mylibs\ds\LinkedListSequentialSearchST.class
 ::java -ea mylibs.combinatorics.CountingTechniques
 ::java -ea mylibs.util.Util
@@ -109,8 +109,8 @@ javac mylibs\ds\LinkedListSequentialSearchST.java
 ::java -ea mylibs.ds.IndexMaxPQ < mylibs\ds\input.txt
 ::java -ea mylibs.ds.Heapsort
 ::java -ea mylibs.ds.BinarySearch
-java -ea mylibs.ds.LinkedListSequentialSearchST < mylibs\ds\STSampleinput.txt
-::java -ea mylibs.ds.ResizingArraySequentialSearchST < mylibs\ds\STSampleinput.txt
+::java -ea mylibs.ds.LinkedListSequentialSearchST < mylibs\ds\STSampleinput.txt
+java -ea mylibs.ds.ResizingArraySequentialSearchST < mylibs\ds\STSampleinput.txt
 ::del .\mylibs\combinatorics\CountingTechniques.class
 ::del .\mylibs\util\Util.class
 ::del .\mylibs\ds\MaxPQ.class
@@ -118,10 +118,10 @@ java -ea mylibs.ds.LinkedListSequentialSearchST < mylibs\ds\STSampleinput.txt
 ::del .\mylibs\ds\IndexMaxPQ.class
 ::del .\mylibs\ds\Heapsort.class
 ::del .\mylibs\ds\BinarySearch.class
-del mylibs\ds\LinkedListSequentialSearchST$1.class
-del mylibs\ds\LinkedListSequentialSearchST$Node.class
-del mylibs\ds\LinkedListSequentialSearchST.class
-::del mylibs\ds\ResizingArraySequentialSearchST.class
+::del mylibs\ds\LinkedListSequentialSearchST$1.class
+::del mylibs\ds\LinkedListSequentialSearchST$Node.class
+::del mylibs\ds\LinkedListSequentialSearchST.class
+del mylibs\ds\ResizingArraySequentialSearchST.class
 
 
 :: --------------------------------------------------
