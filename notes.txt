@@ -44,6 +44,7 @@
 - Queue
 - Stack
 - Priority Queue
+- Symbol Tables
 
 
 
