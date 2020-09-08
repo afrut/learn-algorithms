@@ -7,16 +7,12 @@ public class ResizingArraySequentialSearchST<Key, Value>
     private Key[] keys;
     private Value[] values;
     private int N;
-    private int lo;
-    private int hi;
 
     public ResizingArraySequentialSearchST()
     {
         keys = (Key[]) new Object[1];
         values = (Value[]) new Object[1];
         N = 0;
-        lo = 0;
-        hi = 0;
     }
 
     public void put(Key key, Value value)
@@ -28,9 +24,8 @@ public class ResizingArraySequentialSearchST<Key, Value>
         }
         else
         {
-            keys[hi] = key;
-            values[hi] = value;
-            hi++;
+            keys[N] = key;
+            values[N] = value;
             N++;
             if(N >= keys.length)
                 resize(2 * N);
@@ -50,12 +45,11 @@ public class ResizingArraySequentialSearchST<Key, Value>
         if(idx >= 0)
         {
             // key found
-            hi--;
-            keys[idx] = keys[hi];
-            values[idx] = values[hi];
-            keys[hi] = null;
-            values[hi] = null;
             N--;
+            keys[idx] = keys[N];
+            values[idx] = values[N];
+            keys[N] = null;
+            values[N] = null;
             if(N <= (int)(keys.length / 4))
                 resize(N / 2);
         }
@@ -70,7 +64,7 @@ public class ResizingArraySequentialSearchST<Key, Value>
 
     private int search(Key key)
     {
-        int idx = lo;
+        int idx = 0;
         for(int cnt = 0; cnt < N; cnt++)
         {
             if(key.equals(keys[idx]))
@@ -86,7 +80,7 @@ public class ResizingArraySequentialSearchST<Key, Value>
     {
         Key[] tempkeys = (Key[])new Object[sz];
         Value[] tempvalues = (Value[])new Object[sz];
-        int idx = lo;
+        int idx = 0;
         for(int cnt = 0; cnt < N; cnt++)
         {
             tempkeys[cnt] = keys[idx];
@@ -97,8 +91,6 @@ public class ResizingArraySequentialSearchST<Key, Value>
         }
         keys = tempkeys;
         values = tempvalues;
-        lo = 0;
-        hi = N;
     }
 
     public boolean isEmpty() {return N == 0;}
@@ -109,7 +101,7 @@ public class ResizingArraySequentialSearchST<Key, Value>
         StringBuilder sb = new StringBuilder();
         if(N > 0)
         {
-            int idx = lo;
+            int idx = 0;
             int cnt = 0;
             while(cnt < N)
             {
@@ -137,7 +129,7 @@ public class ResizingArraySequentialSearchST<Key, Value>
             private int n;
             public KeysIterator()
             {
-                idx = lo;
+                idx = 0;
                 n = 0;
             }
             public boolean hasNext() {return n < N;}
