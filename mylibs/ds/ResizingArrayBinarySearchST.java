@@ -116,6 +116,7 @@ public class ResizingArrayBinarySearchST<Key extends Comparable<Key>, Value>
 
     public boolean isEmpty() {return N == 0;}
     public int size() {return N;}
+    // TODO: implement min and max()
 
     public Key floor(Key key)
     {
