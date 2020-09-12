@@ -174,7 +174,16 @@ public class ResizingArrayBinarySearchST<Key extends Comparable<Key>, Value>
     {
         keys[lo] = null;
         values[lo] = null;
-        lo++;
+        int cnt = lo;
+        while(cnt < hi - 1)
+        {
+            keys[cnt] = keys[cnt + 1];
+            values[cnt] = values[cnt + 1];
+            cnt++;
+        }
+        hi--;
+        keys[hi] = null;
+        values[hi] = null;
         N--;
         if(N <= (int)(keys.length / 4))
             resize(N / 2);
@@ -192,7 +201,12 @@ public class ResizingArrayBinarySearchST<Key extends Comparable<Key>, Value>
     }
 
     public int size(Key from, Key to)
-    {return getIdx(to) - getIdx(from);}
+    {
+        int idxTo = getIdx(to);
+        if(isKeyFound(to, idxTo))
+            idxTo++;
+        return idxTo - getIdx(from);
+    }
 
     public String toString()
     {
@@ -263,8 +277,6 @@ public class ResizingArrayBinarySearchST<Key extends Comparable<Key>, Value>
             {
                 idxFrom = getIdx(from);
                 idxTo = getIdx(to);
-                if(!isKeyFound(to, idxTo))
-                    idxTo--;
             }
             public boolean hasNext() {return idxFrom <= idxTo;}
             public Key next()
@@ -311,15 +323,77 @@ public class ResizingArrayBinarySearchST<Key extends Comparable<Key>, Value>
         System.out.println("Number of elements decreased by: " + (sz - st.size()));
         System.out.println("");
 
+        System.out.println("Testing deleteMin() operation");
+        st.deleteMin();
+        System.out.println(st.toString());
+        System.out.println("");
+
+        System.out.println("Testing deleteMax() operation");
+        st.deleteMax();
+        System.out.println(st.toString());
+        System.out.println("");
+
         System.out.println("Testing contains() operation");
         System.out.println("Contains X? " + st.contains("X"));
         System.out.println("Contains R? " + st.contains("R"));
         System.out.println("");
 
-        System.out.println("Testing keys iterator");
+        System.out.println("Testing floor() operation");
+        System.out.println("floor(A) = " + st.floor("A"));
+        System.out.println("floor(B) = " + st.floor("B"));
+        System.out.println("floor(J) = " + st.floor("J"));
+        System.out.println("floor(P) = " + st.floor("P"));
+        System.out.println("floor(W) = " + st.floor("W"));
+        System.out.println("");
+
+        System.out.println("Testing ceiling() operation");
+        System.out.println("ceiling(A) = " + st.ceiling("A"));
+        System.out.println("ceiling(B) = " + st.ceiling("B"));
+        System.out.println("ceiling(J) = " + st.ceiling("J"));
+        System.out.println("ceiling(P) = " + st.ceiling("P"));
+        System.out.println("ceiling(W) = " + st.ceiling("W"));
+        System.out.println("");
+
+        System.out.println("Testing select() operation");
+        System.out.println("select(0) = " + st.select(0));
+        System.out.println("select(2) = " + st.select(2));
+        System.out.println("select(10) = " + st.select(10));
+        System.out.println("");
+
+        System.out.println("Testing size(from, to) operation");
+        System.out.println("size(E, L) = " + st.size("E","L"));
+        System.out.println("size(E, M) = " + st.size("E","M"));
+        System.out.println("size(D, L) = " + st.size("D","L"));
+        System.out.println("size(D, M) = " + st.size("D","M"));
+        System.out.println("");
+
+        System.out.println("Testing keys() iterator");
         for(String str : st.keys())
         {
             System.out.println(str);
+        }
+        System.out.println("");
+
+        System.out.println("Testing keys(from, to) iterator");
+        System.out.println("Keys between [H, P]:");
+        for(String str : st.keys("H", "P"))
+        {
+            System.out.println("    " + str);
+        }
+        System.out.println("Keys between [H, O]:");
+        for(String str : st.keys("H", "O"))
+        {
+            System.out.println("    " + str);
+        }
+        System.out.println("Keys between [F, P]:");
+        for(String str : st.keys("F", "P"))
+        {
+            System.out.println("    " + str);
+        }
+        System.out.println("Keys between [F, O]:");
+        for(String str : st.keys("F", "O"))
+        {
+            System.out.println("    " + str);
         }
         System.out.println("");
     }
