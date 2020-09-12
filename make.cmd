@@ -103,6 +103,7 @@ cls
 ::javac mylibs\ds\LinkedListSequentialSearchST.java
 ::javac mylibs\ds\ResizingArraySequentialSearchST.java
 ::javac mylibs\ds\ResizingArrayBinarySearchST.java
+javac mylibs\ds\LinkedListOrderedSequentialSearchST.java
 :::: Archive
 ::jar cvf ^
 ::.\bin\mylibs.jar ^
@@ -114,7 +115,8 @@ cls
 ::.\mylibs\ds\Heapsort.class ^
 ::.\mylibs\ds\BinarySearch.class ^
 ::.\mylibs\ds\LinkedListSequentialSearchST.class ^
-::.\mylibs\ds\ResizingArrayBinarySearchST.class
+::.\mylibs\ds\ResizingArrayBinarySearchST.class ^
+::.\mylibs\ds\LinkedListOrderedSequentialSearchST.class
 :::: Test
 ::java -ea mylibs.combinatorics.CountingTechniques
 ::java -ea mylibs.util.Util
@@ -126,8 +128,9 @@ cls
 ::java -ea mylibs.ds.LinkedListSequentialSearchST < mylibs\ds\STSampleinput.txt
 ::java -ea mylibs.ds.ResizingArraySequentialSearchST < mylibs\ds\STSampleinput.txt
 ::java -ea mylibs.ds.ResizingArrayBinarySearchST < mylibs\ds\STSampleinput.txt
+java -ea mylibs.ds.LinkedListOrderedSequentialSearchST < mylibs\ds\STSampleinput.txt
 :::: Clean
-::del /s .\mylibs\*.class
+del /s .\mylibs\*.class
 
 
 
@@ -343,8 +346,8 @@ cls
 ::del Main.class
 ::cd ..\..
 
-cd exercises\3.1.01
-javac LetterGrades.java
-java LetterGrades < input.txt
-del LetterGrades.class
-cd ..\..
+::cd exercises\3.1.01
+::javac LetterGrades.java
+::java LetterGrades < input.txt
+::del LetterGrades.class
+::cd ..\..

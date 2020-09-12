@@ -21,6 +21,7 @@
 ----------------------------------------
   Implementation Checks:
 ----------------------------------------
+- case for when empty
 - case for only one Item
 - check for null reference for last item
 
