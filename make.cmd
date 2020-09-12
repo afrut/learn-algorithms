@@ -93,39 +93,39 @@ cls
 ::  Recompile Packages
 :: --------------------------------------------------
 :: Compile
-javac mylibs\combinatorics\CountingTechniques.java
-javac mylibs\util\Util.java
-javac mylibs\ds\MaxPQ.java
-javac mylibs\ds\MinPQ.java
-javac mylibs\ds\IndexMaxPQ.java
-javac mylibs\ds\Heapsort.java
-javac mylibs\ds\BinarySearch.java
-javac mylibs\ds\LinkedListSequentialSearchST.java
-javac mylibs\ds\ResizingArraySequentialSearchST.java
-::javac mylibs\ds\ResizingArrayBinarySearchST.java
+::javac mylibs\combinatorics\CountingTechniques.java
+::javac mylibs\util\Util.java
+::javac mylibs\ds\MaxPQ.java
+::javac mylibs\ds\MinPQ.java
+::javac mylibs\ds\IndexMaxPQ.java
+::javac mylibs\ds\Heapsort.java
+::javac mylibs\ds\BinarySearch.java
+::javac mylibs\ds\LinkedListSequentialSearchST.java
+::javac mylibs\ds\ResizingArraySequentialSearchST.java
+javac mylibs\ds\ResizingArrayBinarySearchST.java
 :: Archive
-jar cvf ^
-.\bin\mylibs.jar ^
-.\mylibs\combinatorics\CountingTechniques.class ^
-.\mylibs\util\Util.class ^
-.\mylibs\ds\MaxPQ.class ^
-.\mylibs\ds\MinPQ.class ^
-.\mylibs\ds\IndexMaxPQ.class ^
-.\mylibs\ds\Heapsort.class ^
-.\mylibs\ds\BinarySearch.class ^
-.\mylibs\ds\LinkedListSequentialSearchST.class
-.\mylibs\ds\ResizingArrayBinarySearchST.class
-:: Test
-java -ea mylibs.combinatorics.CountingTechniques
-java -ea mylibs.util.Util
-java -ea mylibs.ds.MaxPQ < mylibs\ds\input.txt
-java -ea mylibs.ds.MinPQ < mylibs\ds\input.txt
-java -ea mylibs.ds.IndexMaxPQ < mylibs\ds\input.txt
-java -ea mylibs.ds.Heapsort
-java -ea mylibs.ds.BinarySearch
-java -ea mylibs.ds.LinkedListSequentialSearchST < mylibs\ds\STSampleinput.txt
-java -ea mylibs.ds.ResizingArraySequentialSearchST < mylibs\ds\STSampleinput.txt
-::java -ea mylibs.ds.ResizingArrayBinarySearchST < mylibs\ds\STSampleinput.txt
+::jar cvf ^
+::.\bin\mylibs.jar ^
+::.\mylibs\combinatorics\CountingTechniques.class ^
+::.\mylibs\util\Util.class ^
+::.\mylibs\ds\MaxPQ.class ^
+::.\mylibs\ds\MinPQ.class ^
+::.\mylibs\ds\IndexMaxPQ.class ^
+::.\mylibs\ds\Heapsort.class ^
+::.\mylibs\ds\BinarySearch.class ^
+::.\mylibs\ds\LinkedListSequentialSearchST.class
+::.\mylibs\ds\ResizingArrayBinarySearchST.class
+:::: Test
+::java -ea mylibs.combinatorics.CountingTechniques
+::java -ea mylibs.util.Util
+::java -ea mylibs.ds.MaxPQ < mylibs\ds\input.txt
+::java -ea mylibs.ds.MinPQ < mylibs\ds\input.txt
+::java -ea mylibs.ds.IndexMaxPQ < mylibs\ds\input.txt
+::java -ea mylibs.ds.Heapsort
+::java -ea mylibs.ds.BinarySearch
+::java -ea mylibs.ds.LinkedListSequentialSearchST < mylibs\ds\STSampleinput.txt
+::java -ea mylibs.ds.ResizingArraySequentialSearchST < mylibs\ds\STSampleinput.txt
+java -ea mylibs.ds.ResizingArrayBinarySearchST < mylibs\ds\STSampleinput.txt
 :: Clean
 del /s .\mylibs\*.class
 
