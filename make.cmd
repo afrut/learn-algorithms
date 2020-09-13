@@ -129,6 +129,7 @@ javac mylibs\ds\LinkedListOrderedSequentialSearchST.java
 ::java -ea mylibs.ds.ResizingArraySequentialSearchST < mylibs\ds\STSampleinput.txt
 ::java -ea mylibs.ds.ResizingArrayBinarySearchST < mylibs\ds\STSampleinput.txt
 java -ea mylibs.ds.LinkedListOrderedSequentialSearchST -test
+java -ea mylibs.ds.LinkedListOrderedSequentialSearchST < mylibs\ds\STSampleinput.txt
 :::: Clean
 del /s .\mylibs\*.class
 
