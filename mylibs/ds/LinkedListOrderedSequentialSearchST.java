@@ -265,95 +265,104 @@ public class LinkedListOrderedSequentialSearchST<Key extends Comparable<Key>, Va
 
     public static void main(String args[])
     {
-        LinkedListOrderedSequentialSearchST<String, Integer> st =
-            new LinkedListOrderedSequentialSearchST <String, Integer>();
-        System.out.println("Testing all operations on empty symbol table");
-        System.out.println("    isEmpty(): " + st.isEmpty());
-        System.out.println("    size(): " + st.size());
-        System.out.println("    size(C, G): " + st.size("C", "G"));
-        System.out.println("    contains(E): " + st.contains("E"));
-        System.out.println("    get(E): " + st.get("E"));
-        System.out.println("    min(): " + st.min());
-        System.out.println("    max(): " + st.max());
-        System.out.println("    floor(E)(): " + st.floor("E"));
-        System.out.println("    ceiling(E)(): " + st.ceiling("E"));
-        System.out.println("    rank(E): " + st.rank("E"));
-        System.out.println("    select(5): " + st.select(5));
-        st.delete("E"); System.out.println("    delete(E): " + st.toString());
-        st.deleteMin(); System.out.println("    deleteMin(): " + st.toString());
-        st.deleteMax(); System.out.println("    deleteMax(): " + st.toString());
-        System.out.println("    toString(): " + st.toString());
-        System.out.println("");
-
-        System.out.println("Testing all operations with 1 element:");
-        st.put("G", 3); System.out.println("    put(G, 3): " + st.toString());
-        System.out.println("    isEmpty(): " + st.isEmpty());
-        System.out.println("    size(): " + st.size());
-        System.out.println("    size(B, G): " + st.size("B", "G"));
-        System.out.println("    size(B, X): " + st.size("B", "X"));
-        System.out.println("    size(C, D): " + st.size("C", "D"));
-        System.out.println("    contains(G): " + st.contains("G"));
-        System.out.println("    contains(W): " + st.contains("W"));
-        System.out.println("    get(G): " + st.get("G"));
-        System.out.println("    get(W): " + st.get("W"));
-        System.out.println("    min(): " + st.min());
-        System.out.println("    max(): " + st.max());
-        System.out.println("    floor(G): " + st.floor("G"));
-        System.out.println("    floor(W): " + st.floor("w"));
-        System.out.println("    ceiling(G): " + st.ceiling("G"));
-        System.out.println("    ceiling(W): " + st.ceiling("w"));
-        System.out.println("    rank(G): " + st.rank("G"));
-        System.out.println("    rank(W): " + st.rank("w"));
-        System.out.println("    select(0): " + st.select(0));
-        System.out.println("    select(3): " + st.select(3));
-        st.put("A", 3); System.out.println("    put(A, 3): " + st.toString());
-        st.delete("A"); System.out.println("    delete(A): " + st.toString());
-        st.put("B", 2); System.out.println("    put(B, 2): " + st.toString());
-        st.put("C", 7); System.out.println("    put(C, 7): " + st.toString());
-        st.deleteMin(); System.out.println("    deleteMin(): " + st.toString());
-        st.deleteMax(); System.out.println("    deleteMax(): " + st.toString());
-        System.out.println("");
-
-        System.out.println("Testing with multiple elements:");
-        st.put("B", 3); System.out.println("    put(B, 1), size() = " + st.size() + ":  " + st.toString());
-        st.put("W", 3); System.out.println("    put(W, 2), size() = " + st.size() + ":  " + st.toString());
-        st.put("O", 3); System.out.println("    put(O, 3), size() = " + st.size() + ":  " + st.toString());
-        st.put("P", 3); System.out.println("    put(P, 4), size() = " + st.size() + ":  " + st.toString());
-        st.put("F", 3); System.out.println("    put(F, 5), size() = " + st.size() + ":  " + st.toString());
-        st.put("R", 3); System.out.println("    put(R, 6), size() = " + st.size() + ":  " + st.toString());
-        st.put("C", 3); System.out.println("    put(C, 7), size() = " + st.size() + ":  " + st.toString());
-        System.out.println("    isEmpty(): " + st.isEmpty());
-        System.out.println("    size(): " + st.size());
-        System.out.println("    size(C, P): " + st.size("C", "P"));
-        System.out.println("    size(D, P): " + st.size("D", "P"));
-        System.out.println("    size(D, Q): " + st.size("D", "Q"));
-        System.out.println("    contains(C): " + st.contains("C"));
-        System.out.println("    contains(D): " + st.contains("D"));
-        System.out.println("    get(C): " + st.get("C"));
-        System.out.println("    get(D): " + st.get("D"));
-        System.out.println("    min(): " + st.min());
-        System.out.println("    max(): " + st.max());
-        System.out.println("    floor(C): " + st.floor("C"));
-        System.out.println("    floor(E): " + st.floor("E"));
-        System.out.println("    ceiling(C): " + st.ceiling("C"));
-        System.out.println("    ceiling(E): " + st.ceiling("E"));
-        System.out.println("    rank(A): " + st.rank("A"));
-        System.out.println("    rank(F): " + st.rank("F"));
-        System.out.println("    rank(W): " + st.rank("W"));
-        System.out.println("    rank(Z): " + st.rank("Z"));
-        System.out.println("    select(4): " + st.select(4));
-        System.out.println("    select(20): " + st.select(20));
-        System.out.println("    select(-1): " + st.select(-1));
-        st.delete("B"); System.out.println("    delete(B), size() = " + st.size() + ", " + st.toString());
-        st.delete("W"); System.out.println("    delete(W), size() = " + st.size() + ", " + st.toString());
-        st.delete("G"); System.out.println("    delete(G), size() = " + st.size() + ", " + st.toString());
-        st.deleteMin(); System.out.println("    deleteMin(), size() = " + st.size() + ", " + st.toString());
-        st.deleteMax(); System.out.println("    deleteMax(), size() = " + st.size() + ", " + st.toString());
-        st.deleteMin(); System.out.println("    deleteMin(), size() = " + st.size() + ", " + st.toString());
-        st.deleteMax(); System.out.println("    deleteMax(), size() = " + st.size() + ", " + st.toString());
-        st.deleteMin(); System.out.println("    deleteMin(), size() = " + st.size() + ", " + st.toString());
-        st.delete("X"); System.out.println("    delete(X), size() = " + st.size() + ", " + st.toString());
-        st.deleteMin(); System.out.println("    deleteMin(), size() = " + st.size() + ", " + st.toString());
-        st.deleteMax(); System.out.println("    deleteMax(), size() = " + st.size() + ", " + st.toString());
+        if(args.length > 0)
+        {
+            for(String arg : args)
+            {
+                if(arg.equals("-test"))
+                {
+                    LinkedListOrderedSequentialSearchST<String, Integer> st =
+                        new LinkedListOrderedSequentialSearchST <String, Integer>();
+                    System.out.println("Testing all operations on empty symbol table");
+                    System.out.println("    isEmpty(): " + st.isEmpty());
+                    System.out.println("    size(): " + st.size());
+                    System.out.println("    size(C, G): " + st.size("C", "G"));
+                    System.out.println("    contains(E): " + st.contains("E"));
+                    System.out.println("    get(E): " + st.get("E"));
+                    System.out.println("    min(): " + st.min());
+                    System.out.println("    max(): " + st.max());
+                    System.out.println("    floor(E)(): " + st.floor("E"));
+                    System.out.println("    ceiling(E)(): " + st.ceiling("E"));
+                    System.out.println("    rank(E): " + st.rank("E"));
+                    System.out.println("    select(5): " + st.select(5));
+                    st.delete("E"); System.out.println("    delete(E): " + st.toString());
+                    st.deleteMin(); System.out.println("    deleteMin(): " + st.toString());
+                    st.deleteMax(); System.out.println("    deleteMax(): " + st.toString());
+                    System.out.println("    toString(): " + st.toString());
+                    System.out.println("");
+            
+                    System.out.println("Testing all operations with 1 element:");
+                    st.put("G", 3); System.out.println("    put(G, 3): " + st.toString());
+                    System.out.println("    isEmpty(): " + st.isEmpty());
+                    System.out.println("    size(): " + st.size());
+                    System.out.println("    size(B, G): " + st.size("B", "G"));
+                    System.out.println("    size(B, X): " + st.size("B", "X"));
+                    System.out.println("    size(C, D): " + st.size("C", "D"));
+                    System.out.println("    contains(G): " + st.contains("G"));
+                    System.out.println("    contains(W): " + st.contains("W"));
+                    System.out.println("    get(G): " + st.get("G"));
+                    System.out.println("    get(W): " + st.get("W"));
+                    System.out.println("    min(): " + st.min());
+                    System.out.println("    max(): " + st.max());
+                    System.out.println("    floor(G): " + st.floor("G"));
+                    System.out.println("    floor(W): " + st.floor("w"));
+                    System.out.println("    ceiling(G): " + st.ceiling("G"));
+                    System.out.println("    ceiling(W): " + st.ceiling("w"));
+                    System.out.println("    rank(G): " + st.rank("G"));
+                    System.out.println("    rank(W): " + st.rank("w"));
+                    System.out.println("    select(0): " + st.select(0));
+                    System.out.println("    select(3): " + st.select(3));
+                    st.put("A", 3); System.out.println("    put(A, 3): " + st.toString());
+                    st.delete("A"); System.out.println("    delete(A): " + st.toString());
+                    st.put("B", 2); System.out.println("    put(B, 2): " + st.toString());
+                    st.put("C", 7); System.out.println("    put(C, 7): " + st.toString());
+                    st.deleteMin(); System.out.println("    deleteMin(): " + st.toString());
+                    st.deleteMax(); System.out.println("    deleteMax(): " + st.toString());
+                    System.out.println("");
+            
+                    System.out.println("Testing with multiple elements:");
+                    st.put("B", 3); System.out.println("    put(B, 1), size() = " + st.size() + ":  " + st.toString());
+                    st.put("W", 3); System.out.println("    put(W, 2), size() = " + st.size() + ":  " + st.toString());
+                    st.put("O", 3); System.out.println("    put(O, 3), size() = " + st.size() + ":  " + st.toString());
+                    st.put("P", 3); System.out.println("    put(P, 4), size() = " + st.size() + ":  " + st.toString());
+                    st.put("F", 3); System.out.println("    put(F, 5), size() = " + st.size() + ":  " + st.toString());
+                    st.put("R", 3); System.out.println("    put(R, 6), size() = " + st.size() + ":  " + st.toString());
+                    st.put("C", 3); System.out.println("    put(C, 7), size() = " + st.size() + ":  " + st.toString());
+                    System.out.println("    isEmpty(): " + st.isEmpty());
+                    System.out.println("    size(): " + st.size());
+                    System.out.println("    size(C, P): " + st.size("C", "P"));
+                    System.out.println("    size(D, P): " + st.size("D", "P"));
+                    System.out.println("    size(D, Q): " + st.size("D", "Q"));
+                    System.out.println("    contains(C): " + st.contains("C"));
+                    System.out.println("    contains(D): " + st.contains("D"));
+                    System.out.println("    get(C): " + st.get("C"));
+                    System.out.println("    get(D): " + st.get("D"));
+                    System.out.println("    min(): " + st.min());
+                    System.out.println("    max(): " + st.max());
+                    System.out.println("    floor(C): " + st.floor("C"));
+                    System.out.println("    floor(E): " + st.floor("E"));
+                    System.out.println("    ceiling(C): " + st.ceiling("C"));
+                    System.out.println("    ceiling(E): " + st.ceiling("E"));
+                    System.out.println("    rank(A): " + st.rank("A"));
+                    System.out.println("    rank(F): " + st.rank("F"));
+                    System.out.println("    rank(W): " + st.rank("W"));
+                    System.out.println("    rank(Z): " + st.rank("Z"));
+                    System.out.println("    select(4): " + st.select(4));
+                    System.out.println("    select(20): " + st.select(20));
+                    System.out.println("    select(-1): " + st.select(-1));
+                    st.delete("B"); System.out.println("    delete(B), size() = " + st.size() + ", " + st.toString());
+                    st.delete("W"); System.out.println("    delete(W), size() = " + st.size() + ", " + st.toString());
+                    st.delete("G"); System.out.println("    delete(G), size() = " + st.size() + ", " + st.toString());
+                    st.deleteMin(); System.out.println("    deleteMin(), size() = " + st.size() + ", " + st.toString());
+                    st.deleteMax(); System.out.println("    deleteMax(), size() = " + st.size() + ", " + st.toString());
+                    st.deleteMin(); System.out.println("    deleteMin(), size() = " + st.size() + ", " + st.toString());
+                    st.deleteMax(); System.out.println("    deleteMax(), size() = " + st.size() + ", " + st.toString());
+                    st.deleteMin(); System.out.println("    deleteMin(), size() = " + st.size() + ", " + st.toString());
+                    st.delete("X"); System.out.println("    delete(X), size() = " + st.size() + ", " + st.toString());
+                    st.deleteMin(); System.out.println("    deleteMin(), size() = " + st.size() + ", " + st.toString());
+                    st.deleteMax(); System.out.println("    deleteMax(), size() = " + st.size() + ", " + st.toString());
+                }
+            }
+        }
     }
 }
