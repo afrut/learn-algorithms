@@ -1,11 +1,7 @@
-// TODO: improve client in main() to test
 package mylibs.ds;
 import java.util.Iterator;
 import edu.princeton.cs.algs4.StdIn;
 
-// TODO: case when key is not found
-// TODO: case when there are no elements
-// TODO: current node in all loops is null
 // TODO: consistently either use isEmpty() or N == 0 or first == null
 
 public class LinkedListOrderedSequentialSearchST<Key extends Comparable<Key>, Value>
@@ -19,6 +15,52 @@ public class LinkedListOrderedSequentialSearchST<Key extends Comparable<Key>, Va
         Key key;
         Value value;
         Node next;
+    }
+    
+    private class KeysIterable implements Iterable<Key>
+    {
+        private Key lo;
+        private Key hi;
+
+        private class KeysIterator implements Iterator<Key>
+        {
+            private Node node;
+            private Key lo;
+            private Key hi;
+
+            public KeysIterator(Key lo, Key hi)
+            {
+                this.node = first;
+                this.lo = lo;
+                this.hi = hi;
+                while(this.node != null && this.lo != null && this.lo.compareTo(this.node.key) > 0)
+                    this.node = this.node.next;
+                // At the end of this loop, this.node.key >= lo or this.node == null.
+            }
+
+            public boolean hasNext()
+            {
+                if(this.hi == null)
+                    return this.node != null;
+                else
+                    return this.node != null && hi.compareTo(this.node.key) >= 0;
+            }
+
+            public Key next()
+            {
+                Key ret = this.node.key;
+                this.node = this.node.next;
+                return ret;
+            }
+        }
+
+        public KeysIterable(Key lo, Key hi)
+        {
+            this.lo = lo;
+            this.hi = hi;
+        }
+
+        public KeysIterator iterator() {return new KeysIterator(this.lo, this.hi);}
     }
 
     public LinkedListOrderedSequentialSearchST()
@@ -247,6 +289,9 @@ public class LinkedListOrderedSequentialSearchST<Key extends Comparable<Key>, Va
     public boolean isEmpty() {return N == 0;}
     public int size() {return N;}
 
+    public Iterable<Key> keys() {return new KeysIterable(null, null);}
+    public Iterable<Key> keys(Key lo, Key hi) {return new KeysIterable(lo, hi);}
+
     public String toString()
     {
         StringBuilder sb = new StringBuilder();
@@ -288,7 +333,17 @@ public class LinkedListOrderedSequentialSearchST<Key extends Comparable<Key>, Va
                     st.delete("E"); System.out.println("    delete(E): " + st.toString());
                     st.deleteMin(); System.out.println("    deleteMin(): " + st.toString());
                     st.deleteMax(); System.out.println("    deleteMax(): " + st.toString());
-                    System.out.println("    toString(): " + st.toString());
+                    System.out.println("    toString(): " + st.toString());                  
+                    System.out.println("    keys():");
+                    for(String str : st.keys()) System.out.println("        " + str);
+                    System.out.println("    keys(C, P):");
+                    for(String str : st.keys("C", "P")) System.out.println("        " + str);
+                    System.out.println("    keys(D, P):");
+                    for(String str : st.keys("D", "P")) System.out.println("        " + str);
+                    System.out.println("    keys(C, Q):");
+                    for(String str : st.keys("C", "Q")) System.out.println("        " + str);
+                    System.out.println("    keys(D, Q):");
+                    for(String str : st.keys("D", "Q")) System.out.println("        " + str);
                     System.out.println("");
             
                     System.out.println("Testing all operations with 1 element:");
@@ -312,15 +367,28 @@ public class LinkedListOrderedSequentialSearchST<Key extends Comparable<Key>, Va
                     System.out.println("    rank(W): " + st.rank("w"));
                     System.out.println("    select(0): " + st.select(0));
                     System.out.println("    select(3): " + st.select(3));
+                    System.out.println("    keys():");
+                    for(String str : st.keys()) System.out.println("        " + str);
+                    System.out.println("    keys(C, P):");
+                    for(String str : st.keys("C", "P")) System.out.println("        " + str);
+                    System.out.println("    keys(D, P):");
+                    for(String str : st.keys("D", "P")) System.out.println("        " + str);
+                    System.out.println("    keys(C, Q):");
+                    for(String str : st.keys("C", "Q")) System.out.println("        " + str);
+                    System.out.println("    keys(D, Q):");
+                    for(String str : st.keys("D", "Q")) System.out.println("        " + str);
                     st.put("A", 3); System.out.println("    put(A, 3): " + st.toString());
                     st.delete("A"); System.out.println("    delete(A): " + st.toString());
                     st.put("B", 2); System.out.println("    put(B, 2): " + st.toString());
                     st.put("C", 7); System.out.println("    put(C, 7): " + st.toString());
                     st.deleteMin(); System.out.println("    deleteMin(): " + st.toString());
                     st.deleteMax(); System.out.println("    deleteMax(): " + st.toString());
+                    st.deleteMin(); System.out.println("    deleteMin(): " + st.toString());
+                    st.put("Z", 23); System.out.println("    put(Z, 23): " + st.toString());
+                    st.deleteMax(); System.out.println("    deleteMax(): " + st.toString());
                     System.out.println("");
-            
-                    System.out.println("Testing with multiple elements:");
+
+                    System.out.println("Populating symbol table:");
                     st.put("B", 3); System.out.println("    put(B, 1), size() = " + st.size() + ":  " + st.toString());
                     st.put("W", 3); System.out.println("    put(W, 2), size() = " + st.size() + ":  " + st.toString());
                     st.put("O", 3); System.out.println("    put(O, 3), size() = " + st.size() + ":  " + st.toString());
@@ -328,6 +396,22 @@ public class LinkedListOrderedSequentialSearchST<Key extends Comparable<Key>, Va
                     st.put("F", 3); System.out.println("    put(F, 5), size() = " + st.size() + ":  " + st.toString());
                     st.put("R", 3); System.out.println("    put(R, 6), size() = " + st.size() + ":  " + st.toString());
                     st.put("C", 3); System.out.println("    put(C, 7), size() = " + st.size() + ":  " + st.toString());
+                    System.out.println("");
+
+                    System.out.println("Testing iterators:");
+                    System.out.println("keys():");
+                    for(String str : st.keys()) System.out.println("    " + str);
+                    System.out.println("keys(C, P):");
+                    for(String str : st.keys("C", "P")) System.out.println("    " + str);
+                    System.out.println("keys(D, P):");
+                    for(String str : st.keys("D", "P")) System.out.println("    " + str);
+                    System.out.println("keys(C, Q):");
+                    for(String str : st.keys("C", "Q")) System.out.println("    " + str);
+                    System.out.println("keys(D, Q):");
+                    for(String str : st.keys("D", "Q")) System.out.println("    " + str);
+                    System.out.println("");
+
+                    System.out.println("Testing with multiple elements:");
                     System.out.println("    isEmpty(): " + st.isEmpty());
                     System.out.println("    size(): " + st.size());
                     System.out.println("    size(C, P): " + st.size("C", "P"));
