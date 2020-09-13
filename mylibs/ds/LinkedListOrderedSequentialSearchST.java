@@ -1,3 +1,4 @@
+// TODO: improve client in main() to test
 package mylibs.ds;
 import java.util.Iterator;
 import edu.princeton.cs.algs4.StdIn;
@@ -27,54 +28,44 @@ public class LinkedListOrderedSequentialSearchST<Key extends Comparable<Key>, Va
     }
 
     // Return the node such that node.key == key, or floor(key) if not found.
-    // Additionally, return the node before this node.
-    private Node[] search(Key key)
+    // When return is null, either list is empty or key < first.key.
+    private Node search(Key key)
     {
-        Node current = first;
-        Node prev = current;
-        while(current != null)
+        Node node = first;
+        Node prev = null;
+        while(node != null)
         {
-            if(key.equals(current.key))
-                break;
-            if(key.compareTo(current.key) < 0)
-                break;
-            prev = current;
-            current = current.next;
+            if(key.equals(node.key))
+                return node;
+            if(key.compareTo(node.key) < 0)
+                return prev;
+            prev = node;
+            node = node.next;
         }
 
-        // At this point, current and node can take the following values:
-        // current == null, prev == null: symbol table is empty
-        // current == null, prev == last node
-        // current == key, prev == prev node
-        // current != key, current == floor(key), prev == floor(floor(key))
-        Node[] arrnode = (Node[])new Object[2];
-        arrnode[0] = current;
-        arrnode[1] = prev;
-        return arrnode;
+        // At this point, node and prev can take the following values:
+        // node == null, prev == null
+        // -> Symbol table is empty
+        // node == first, prev == null
+        // -> key < first.key
+        // node == null, prev == last node
+        // -> Search reached end. key is not found and key > max().
+        return prev;
     }
 
     public void put(Key key, Value value)
     {
         // Return node that contains key or node = floor(key) if not found.
-        Node[] arrnode = search(key);
-        Node node = arrnode[0];
-        Node prev = arrnode[1];
-
-        if(isEmpty())
+        Node node = search(key);
+        
+        if(node == null)
         {
-            // Symbol table is empty.
             Node temp = new Node();
             temp.key = key;
             temp.value = value;
+            temp.next = first;
             first = temp;
-        }
-        else if(node == null)
-        {
-            // Search reached end of symbol table and key was not found.
-            Node temp = new Node();
-            temp.key = key;
-            temp.value = value;
-            prev.next = temp;
+            N++;
         }
         else if(key.equals(node.key))
         {
@@ -84,87 +75,102 @@ public class LinkedListOrderedSequentialSearchST<Key extends Comparable<Key>, Va
         }
         else
         {
-            // Key not found. node.key < key and node = floor(key)
+            // Key not found. node.key = floor(key). node is the node before
+            // where key should be located
             Node temp = new Node();
             temp.key = key;
             temp.value = value;
             temp.next = node.next;
             node.next = temp;
+            N++;
         }
-        N++;
     }
 
     public Value get(Key key)
     {
-        Node[] arrnode = search(key);
-        Node node = arrnode[0];
-        if(node != null && key.equals(node.key)) return node.value;
+        Node node = search(key);
+        if(!isEmpty() && key.equals(node.key)) return node.value;
         else return null;
     }
 
     public void delete(Key key)
     {
-        Node[] arrnode = search(key);
-        Node node = arrnode[0];
-        Node prev = arrnode[1];
-        
-        if(node != null && key.equals(node.key))
+        Node node = first;
+        Node prev = node;
+        if(!isEmpty())
         {
-            // key found
-            prev.next = node.next;
-            node.next = null;
-            N--;
+            if(key.equals(node.key))
+            {
+                // key to delete is the first
+                Node temp = first;
+                first = first.next;
+                temp.next = null;
+                N--;
+            }
+            node = node.next;
+        }
+        while(node != null)
+        {
+            if(key.equals(node.key))
+            {
+                prev.next = node.next;
+                node.next = null;
+                N--;
+                if(isEmpty()) first = null;
+                break;
+            }
+            prev = node;
+            node = node.next;
         }
     }
 
     public boolean contains(Key key)
     {
-        Node[] arrnode = search(key);
-        Node node = arrnode[0];
-        if(node != null && key.equals(node.key)) return true;
+        Node node = search(key);
+        if(!isEmpty() && key.equals(node.key)) return true;
         else return false;
     }
 
     public Key min()
     {
-        if(first != null) return first.key;
+        if(!isEmpty()) return first.key;
         else return null;
     }
 
     public Key max()
     {
         Node node = first;
-        while(node != null && node.next != null)
+        if(!isEmpty())
         {
-            node = node.next;
+            while(node.next != null) node = node.next;
         }
-        // node == null -> symbol table is empty
         if(node != null) return node.key;
         else return null;
     }
 
     public Key floor(Key key)
     {
-        Node[] arrnode = search(key);
-        Node node = arrnode[0];
-        Node prev = arrnode[1];
-        if(isEmpty())
-            return null;
-        else if(node == null)
-            return prev.key;
-        else if(key.equals(node.key))
-            return prev.key;
-        else
-            return node.key;
+        Node node = first;
+        Node prev = node;
+        if(!isEmpty())
+        {
+            while(node != null)
+            {
+                if(key.equals(node.key)) return prev.key;
+                else if(key.compareTo(node.key) < 0 && key.compareTo(prev.key) > 0) return prev.key;
+                prev = node;
+                node = node.next;
+            }
+        }
+        return null;
     }
 
     public Key ceiling(Key key)
     {
-        Node[] arrnode = search(key);
-        Node node = arrnode[0];
+        Node node = search(key);
+
         if(isEmpty()) return null;
-        else if(node == null) return null;
-        else if(key.equals(node.key)) return node.next.key;
+        else if(node.next == null) return null;
         else return node.next.key;
     }
 
@@ -196,19 +202,20 @@ public class LinkedListOrderedSequentialSearchST<Key extends Comparable<Key>, Va
 
     public void deleteMin()
     {
-        if(first != null)
+        if(!isEmpty())
         {
             Node temp = first;
             first = first.next;
             temp.next = null;
             N--;
+            if(isEmpty()) first = null;
         }
     }
 
     public void deleteMax()
     {
         Node node = first;
-        if(node != null)
+        if(!isEmpty())
         {
             while(node.next != null && node.next.next != null)
             {
@@ -220,7 +227,7 @@ public class LinkedListOrderedSequentialSearchST<Key extends Comparable<Key>, Va
         }
     }
 
-    int size(Key lo, Key hi)
+    public int size(Key lo, Key hi)
     {
         int ret = 0;
         Node node = first;
@@ -240,8 +247,113 @@ public class LinkedListOrderedSequentialSearchST<Key extends Comparable<Key>, Va
     public boolean isEmpty() {return N == 0;}
     public int size() {return N;}
 
+    public String toString()
+    {
+        StringBuilder sb = new StringBuilder();
+        Node node = first;
+        int cnt = 0;
+        while(node != null)
+        {
+            sb.append("(" + node.key + ", " + node.value + "), ");
+            node = node.next;
+            cnt++;
+        }
+        if(cnt > 0)
+            sb.setLength(sb.length() - 2);
+        return sb.toString();
+    }
+
     public static void main(String args[])
     {
-        System.out.println("Hello World");
+        LinkedListOrderedSequentialSearchST<String, Integer> st =
+            new LinkedListOrderedSequentialSearchST <String, Integer>();
+        System.out.println("Testing all operations on empty symbol table");
+        System.out.println("    isEmpty(): " + st.isEmpty());
+        System.out.println("    size(): " + st.size());
+        System.out.println("    size(C, G): " + st.size("C", "G"));
+        System.out.println("    contains(E): " + st.contains("E"));
+        System.out.println("    get(E): " + st.get("E"));
+        System.out.println("    min(): " + st.min());
+        System.out.println("    max(): " + st.max());
+        System.out.println("    floor(E)(): " + st.floor("E"));
+        System.out.println("    ceiling(E)(): " + st.ceiling("E"));
+        System.out.println("    rank(E): " + st.rank("E"));
+        System.out.println("    select(5): " + st.select(5));
+        st.delete("E"); System.out.println("    delete(E): " + st.toString());
+        st.deleteMin(); System.out.println("    deleteMin(): " + st.toString());
+        st.deleteMax(); System.out.println("    deleteMax(): " + st.toString());
+        System.out.println("    toString(): " + st.toString());
+        System.out.println("");
+
+        System.out.println("Testing all operations with 1 element:");
+        st.put("G", 3); System.out.println("    put(G, 3): " + st.toString());
+        System.out.println("    isEmpty(): " + st.isEmpty());
+        System.out.println("    size(): " + st.size());
+        System.out.println("    size(B, G): " + st.size("B", "G"));
+        System.out.println("    size(B, X): " + st.size("B", "X"));
+        System.out.println("    size(C, D): " + st.size("C", "D"));
+        System.out.println("    contains(G): " + st.contains("G"));
+        System.out.println("    contains(W): " + st.contains("W"));
+        System.out.println("    get(G): " + st.get("G"));
+        System.out.println("    get(W): " + st.get("W"));
+        System.out.println("    min(): " + st.min());
+        System.out.println("    max(): " + st.max());
+        System.out.println("    floor(G): " + st.floor("G"));
+        System.out.println("    floor(W): " + st.floor("w"));
+        System.out.println("    ceiling(G): " + st.ceiling("G"));
+        System.out.println("    ceiling(W): " + st.ceiling("w"));
+        System.out.println("    rank(G): " + st.rank("G"));
+        System.out.println("    rank(W): " + st.rank("w"));
+        System.out.println("    select(0): " + st.select(0));
+        System.out.println("    select(3): " + st.select(3));
+        st.put("A", 3); System.out.println("    put(A, 3): " + st.toString());
+        st.delete("A"); System.out.println("    delete(A): " + st.toString());
+        st.put("B", 2); System.out.println("    put(B, 2): " + st.toString());
+        st.put("C", 7); System.out.println("    put(C, 7): " + st.toString());
+        st.deleteMin(); System.out.println("    deleteMin(): " + st.toString());
+        st.deleteMax(); System.out.println("    deleteMax(): " + st.toString());
+        System.out.println("");
+
+        System.out.println("Testing with multiple elements:");
+        st.put("B", 3); System.out.println("    put(B, 1), size() = " + st.size() + ":  " + st.toString());
+        st.put("W", 3); System.out.println("    put(W, 2), size() = " + st.size() + ":  " + st.toString());
+        st.put("O", 3); System.out.println("    put(O, 3), size() = " + st.size() + ":  " + st.toString());
+        st.put("P", 3); System.out.println("    put(P, 4), size() = " + st.size() + ":  " + st.toString());
+        st.put("F", 3); System.out.println("    put(F, 5), size() = " + st.size() + ":  " + st.toString());
+        st.put("R", 3); System.out.println("    put(R, 6), size() = " + st.size() + ":  " + st.toString());
+        st.put("C", 3); System.out.println("    put(C, 7), size() = " + st.size() + ":  " + st.toString());
+        System.out.println("    isEmpty(): " + st.isEmpty());
+        System.out.println("    size(): " + st.size());
+        System.out.println("    size(C, P): " + st.size("C", "P"));
+        System.out.println("    size(D, P): " + st.size("D", "P"));
+        System.out.println("    size(D, Q): " + st.size("D", "Q"));
+        System.out.println("    contains(C): " + st.contains("C"));
+        System.out.println("    contains(D): " + st.contains("D"));
+        System.out.println("    get(C): " + st.get("C"));
+        System.out.println("    get(D): " + st.get("D"));
+        System.out.println("    min(): " + st.min());
+        System.out.println("    max(): " + st.max());
+        System.out.println("    floor(C): " + st.floor("C"));
+        System.out.println("    floor(E): " + st.floor("E"));
+        System.out.println("    ceiling(C): " + st.ceiling("C"));
+        System.out.println("    ceiling(E): " + st.ceiling("E"));
+        System.out.println("    rank(A): " + st.rank("A"));
+        System.out.println("    rank(F): " + st.rank("F"));
+        System.out.println("    rank(W): " + st.rank("W"));
+        System.out.println("    rank(Z): " + st.rank("Z"));
+        System.out.println("    select(4): " + st.select(4));
+        System.out.println("    select(20): " + st.select(20));
+        System.out.println("    select(-1): " + st.select(-1));
+        st.delete("B"); System.out.println("    delete(B), size() = " + st.size() + ", " + st.toString());
+        st.delete("W"); System.out.println("    delete(W), size() = " + st.size() + ", " + st.toString());
+        st.delete("G"); System.out.println("    delete(G), size() = " + st.size() + ", " + st.toString());
+        st.deleteMin(); System.out.println("    deleteMin(), size() = " + st.size() + ", " + st.toString());
+        st.deleteMax(); System.out.println("    deleteMax(), size() = " + st.size() + ", " + st.toString());
+        st.deleteMin(); System.out.println("    deleteMin(), size() = " + st.size() + ", " + st.toString());
+        st.deleteMax(); System.out.println("    deleteMax(), size() = " + st.size() + ", " + st.toString());
+        st.deleteMin(); System.out.println("    deleteMin(), size() = " + st.size() + ", " + st.toString());
+        st.delete("X"); System.out.println("    delete(X), size() = " + st.size() + ", " + st.toString());
+        st.deleteMin(); System.out.println("    deleteMin(), size() = " + st.size() + ", " + st.toString());
+        st.deleteMax(); System.out.println("    deleteMax(), size() = " + st.size() + ", " + st.toString());
     }
 }
