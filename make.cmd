@@ -92,62 +92,62 @@ cls
 :: --------------------------------------------------
 ::  Recompile Packages
 :: --------------------------------------------------
-:: Compile
-javac mylibs\combinatorics\CountingTechniques.java
-javac mylibs\util\Util.java
-javac mylibs\ds\MaxPQ.java
-javac mylibs\ds\MinPQ.java
-javac mylibs\ds\IndexMaxPQ.java
-javac mylibs\ds\Heapsort.java
-javac mylibs\ds\BinarySearch.java
-javac mylibs\ds\LinkedListSequentialSearchST.java
-javac mylibs\ds\ResizingArraySequentialSearchST.java
-javac mylibs\ds\ResizingArrayBinarySearchST.java
-javac mylibs\ds\LinkedListOrderedSequentialSearchST.java
-:: Archive
-BinarySearch.class
-jar cvf ^
-.\bin\mylibs.jar ^
-.\mylibs\combinatorics\CountingTechniques.class ^
-.\mylibs\util\Util.class ^
-.\mylibs\ds\Heapsort.class ^
-.\mylibs\ds\IndexMaxPQ.class ^
-.\mylibs\ds\LinkedListOrderedSequentialSearchST$1.class ^
-.\mylibs\ds\LinkedListOrderedSequentialSearchST$KeysIterable$KeysIterator.class ^
-.\mylibs\ds\LinkedListOrderedSequentialSearchST$KeysIterable.class ^
-.\mylibs\ds\LinkedListOrderedSequentialSearchST$Node.class ^
-.\mylibs\ds\LinkedListOrderedSequentialSearchST.class ^
-.\mylibs\ds\LinkedListSequentialSearchST$1.class ^
-.\mylibs\ds\LinkedListSequentialSearchST$Keys$KeysIterator.class ^
-.\mylibs\ds\LinkedListSequentialSearchST$Keys.class ^
-.\mylibs\ds\LinkedListSequentialSearchST$Node.class ^
-.\mylibs\ds\LinkedListSequentialSearchST.class ^
-.\mylibs\ds\MaxPQ.class ^
-.\mylibs\ds\MinPQ.class ^
-.\mylibs\ds\ResizingArrayBinarySearchST$KeysIterable$KeysIterator.class ^
-.\mylibs\ds\ResizingArrayBinarySearchST$KeysIterable.class ^
-.\mylibs\ds\ResizingArrayBinarySearchST.class ^
-.\mylibs\ds\ResizingArraySequentialSearchST$Keys$KeysIterator.class ^
-.\mylibs\ds\ResizingArraySequentialSearchST$Keys.class ^
-.\mylibs\ds\ResizingArraySequentialSearchST.class
-:: Test
-java -ea mylibs.combinatorics.CountingTechniques
-java -ea mylibs.util.Util
-java -ea mylibs.ds.MaxPQ < mylibs\ds\input.txt
-java -ea mylibs.ds.MinPQ < mylibs\ds\input.txt
-java -ea mylibs.ds.IndexMaxPQ < mylibs\ds\input.txt
-java -ea mylibs.ds.Heapsort
-java -ea mylibs.ds.BinarySearch
-java -ea mylibs.ds.LinkedListSequentialSearchST -test
-java -ea mylibs.ds.LinkedListSequentialSearchST < mylibs\ds\STSampleinput.txt
-java -ea mylibs.ds.ResizingArraySequentialSearchST -test
-java -ea mylibs.ds.ResizingArraySequentialSearchST < mylibs\ds\STSampleinput.txt
-java -ea mylibs.ds.ResizingArrayBinarySearchST -test
-java -ea mylibs.ds.ResizingArrayBinarySearchST < mylibs\ds\STSampleinput.txt
-java -ea mylibs.ds.LinkedListOrderedSequentialSearchST -test
-java -ea mylibs.ds.LinkedListOrderedSequentialSearchST < mylibs\ds\STSampleinput.txt
-:: Clean
-del /s .\mylibs\*.class
+:::: Compile
+::javac mylibs\combinatorics\CountingTechniques.java
+::javac mylibs\util\Util.java
+::javac mylibs\ds\MaxPQ.java
+::javac mylibs\ds\MinPQ.java
+::javac mylibs\ds\IndexMaxPQ.java
+::javac mylibs\ds\Heapsort.java
+::javac mylibs\ds\BinarySearch.java
+::javac mylibs\ds\LinkedListSequentialSearchST.java
+::javac mylibs\ds\ResizingArraySequentialSearchST.java
+::javac mylibs\ds\ResizingArrayBinarySearchST.java
+::javac mylibs\ds\LinkedListOrderedSequentialSearchST.java
+:::: Archive
+::BinarySearch.class
+::jar cvf ^
+::.\bin\mylibs.jar ^
+::.\mylibs\combinatorics\CountingTechniques.class ^
+::.\mylibs\util\Util.class ^
+::.\mylibs\ds\Heapsort.class ^
+::.\mylibs\ds\IndexMaxPQ.class ^
+::.\mylibs\ds\LinkedListOrderedSequentialSearchST$1.class ^
+::.\mylibs\ds\LinkedListOrderedSequentialSearchST$KeysIterable$KeysIterator.class ^
+::.\mylibs\ds\LinkedListOrderedSequentialSearchST$KeysIterable.class ^
+::.\mylibs\ds\LinkedListOrderedSequentialSearchST$Node.class ^
+::.\mylibs\ds\LinkedListOrderedSequentialSearchST.class ^
+::.\mylibs\ds\LinkedListSequentialSearchST$1.class ^
+::.\mylibs\ds\LinkedListSequentialSearchST$Keys$KeysIterator.class ^
+::.\mylibs\ds\LinkedListSequentialSearchST$Keys.class ^
+::.\mylibs\ds\LinkedListSequentialSearchST$Node.class ^
+::.\mylibs\ds\LinkedListSequentialSearchST.class ^
+::.\mylibs\ds\MaxPQ.class ^
+::.\mylibs\ds\MinPQ.class ^
+::.\mylibs\ds\ResizingArrayBinarySearchST$KeysIterable$KeysIterator.class ^
+::.\mylibs\ds\ResizingArrayBinarySearchST$KeysIterable.class ^
+::.\mylibs\ds\ResizingArrayBinarySearchST.class ^
+::.\mylibs\ds\ResizingArraySequentialSearchST$Keys$KeysIterator.class ^
+::.\mylibs\ds\ResizingArraySequentialSearchST$Keys.class ^
+::.\mylibs\ds\ResizingArraySequentialSearchST.class
+:::: Test
+::java -ea mylibs.combinatorics.CountingTechniques
+::java -ea mylibs.util.Util
+::java -ea mylibs.ds.MaxPQ < mylibs\ds\input.txt
+::java -ea mylibs.ds.MinPQ < mylibs\ds\input.txt
+::java -ea mylibs.ds.IndexMaxPQ < mylibs\ds\input.txt
+::java -ea mylibs.ds.Heapsort
+::java -ea mylibs.ds.BinarySearch
+::java -ea mylibs.ds.LinkedListSequentialSearchST -test
+::java -ea mylibs.ds.LinkedListSequentialSearchST < mylibs\ds\STSampleinput.txt
+::java -ea mylibs.ds.ResizingArraySequentialSearchST -test
+::java -ea mylibs.ds.ResizingArraySequentialSearchST < mylibs\ds\STSampleinput.txt
+::java -ea mylibs.ds.ResizingArrayBinarySearchST -test
+::java -ea mylibs.ds.ResizingArrayBinarySearchST < mylibs\ds\STSampleinput.txt
+::java -ea mylibs.ds.LinkedListOrderedSequentialSearchST -test
+::java -ea mylibs.ds.LinkedListOrderedSequentialSearchST < mylibs\ds\STSampleinput.txt
+:::: Clean
+::del /s .\mylibs\*.class
 
 
 
@@ -369,8 +369,12 @@ del /s .\mylibs\*.class
 ::del LetterGrades.class
 ::cd ..\..
 
-::cd exercises\3.1.04
-::javac Client.java
-::java Client
-::del *.class
-::cd ..\..
+cd exercises\3.1.04
+javac Time.java
+javac Event.java
+javac Client.java
+java Time
+java Event
+java Client
+del *.class
+cd ..\..
