@@ -2,8 +2,6 @@ package mylibs.ds;
 import java.util.Iterator;
 import edu.princeton.cs.algs4.StdIn;
 
-// TODO: update client to be similar to ordered linked list implementation
-
 // ordered symbol table implementation
 public class ResizingArrayBinarySearchST<Key extends Comparable<Key>, Value>
 {
