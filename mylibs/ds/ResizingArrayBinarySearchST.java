@@ -13,6 +13,37 @@ public class ResizingArrayBinarySearchST<Key extends Comparable<Key>, Value>
     private int lo; // index to the smallest element in the array
     private int hi; // index into an empty position in the array; hi - 1 contains largest
 
+    private class KeysIterable implements Iterable<Key>
+    {
+        private int idxStart;
+        private int idxEnd;
+
+        private class KeysIterator implements Iterator<Key>
+        {
+            private int idx;
+
+            public KeysIterator() {idx = idxStart;}
+            public boolean hasNext() {return idxStart <= idx && idx <= idxEnd;}
+            public Key next() {return keys[idx++];}
+        }
+
+        public KeysIterable()
+        {
+            this.idxStart = lo;
+            this.idxEnd = hi - 1;
+        }
+
+        public KeysIterable(Key key1, Key key2)
+        {
+            this.idxStart = getIdx(key1);
+            this.idxEnd = getIdx(key2);
+            if(!isKeyFound(key2, this.idxEnd)) {this.idxEnd -= 1;}
+        }
+
+        public KeysIterator iterator()
+        {return new KeysIterator();}
+    }
+
     public ResizingArrayBinarySearchST()
     {
         keys = (Key[]) new Comparable[1];
@@ -261,10 +292,8 @@ public class ResizingArrayBinarySearchST<Key extends Comparable<Key>, Value>
         return sb.toString();
     }
 
-    /*
-    public Iterable<Key> keys() {return new Keys();}
-    public Iterable<Key> keys(Key lo, Key hi) {return new KeysBetween(lo, hi);}
-    */
+    public Iterable<Key> keys() {return new KeysIterable();}
+    public Iterable<Key> keys(Key key1, Key key2) {return new KeysIterable(key1, key2);}
 
     public static void main(String[] args)
     {
@@ -294,7 +323,6 @@ public class ResizingArrayBinarySearchST<Key extends Comparable<Key>, Value>
             st.delete("E"); System.out.println("    delete(E): " + st.toString());
             st.deleteMin(); System.out.println("    deleteMin(): " + st.toString());
             st.deleteMax(); System.out.println("    deleteMax(): " + st.toString());
-            /*
             System.out.println("    keys():");
             for(String str : st.keys()) System.out.println("        " + str);
             System.out.println("    keys(C, P):");
@@ -304,7 +332,7 @@ public class ResizingArrayBinarySearchST<Key extends Comparable<Key>, Value>
             System.out.println("    keys(C, Q):");
             for(String str : st.keys("C", "Q")) System.out.println("        " + str);
             System.out.println("    keys(D, Q):");
-            for(String str : st.keys("D", "Q")) System.out.println("        " + str);*/
+            for(String str : st.keys("D", "Q")) System.out.println("        " + str);
             System.out.println("");
 
             System.out.println("Testing all operations with 1 element:");
@@ -331,7 +359,6 @@ public class ResizingArrayBinarySearchST<Key extends Comparable<Key>, Value>
             System.out.println("    rank(W): " + st.rank("w"));
             System.out.println("    select(0): " + st.select(0));
             System.out.println("    select(3): " + st.select(3));
-            /*
             System.out.println("    keys():");
             for(String str : st.keys()) System.out.println("        " + str);
             System.out.println("    keys(C, P):");
@@ -341,7 +368,7 @@ public class ResizingArrayBinarySearchST<Key extends Comparable<Key>, Value>
             System.out.println("    keys(C, Q):");
             for(String str : st.keys("C", "Q")) System.out.println("        " + str);
             System.out.println("    keys(D, Q):");
-            for(String str : st.keys("D", "Q")) System.out.println("        " + str);*/
+            for(String str : st.keys("D", "Q")) System.out.println("        " + str);
             st.put("A", 3); System.out.println("    put(A, 3): " + st.toString());
             st.delete("A"); System.out.println("    delete(A): " + st.toString());
             st.put("B", 2); System.out.println("    put(B, 2): " + st.toString());
@@ -363,7 +390,6 @@ public class ResizingArrayBinarySearchST<Key extends Comparable<Key>, Value>
             st.put("C", 7); System.out.println("    put(C, 7), size() = " + st.size() + ":  " + st.toString());
             System.out.println("");
 
-            /*
             System.out.println("Testing iterators:");
             System.out.println("    Contents: " + st.toString());
             System.out.println("    keys():");
@@ -375,8 +401,8 @@ public class ResizingArrayBinarySearchST<Key extends Comparable<Key>, Value>
             System.out.println("    keys(C, Q):");
             for(String str : st.keys("C", "Q")) System.out.println("        " + str);
             System.out.println("    keys(D, Q):");
+            for(String str : st.keys("D", "Q")) System.out.println("        " + str);
             System.out.println("");
-            for(String str : st.keys("D", "Q")) System.out.println("        " + str);*/
             
             System.out.println("Testing with multiple elements:");
             System.out.println("    Contents: " + st.toString());
@@ -451,14 +477,12 @@ public class ResizingArrayBinarySearchST<Key extends Comparable<Key>, Value>
             System.out.println("    Contains R? " + st.contains("R"));
             System.out.println("");
 
-            /*
             System.out.println("Testing keys iterator:");
             for(String str : st.keys())
             {
                 System.out.println("    " + str);
             }
             System.out.println("");
-            */
             }
         }
 }
