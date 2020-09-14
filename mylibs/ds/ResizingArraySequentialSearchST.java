@@ -1,7 +1,6 @@
 package mylibs.ds;
 import java.util.Iterator;
 import edu.princeton.cs.algs4.StdIn;
-// TODO: update client to be similar to ordered linked list implementation
 
 public class ResizingArraySequentialSearchST<Key, Value>
 {
