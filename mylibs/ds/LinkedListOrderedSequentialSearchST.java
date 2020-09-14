@@ -179,7 +179,6 @@ public class LinkedListOrderedSequentialSearchST<Key extends Comparable<Key>, Va
         else return null;
     }
 
-    // TODO: add toString at the beginning of every test section
     public Key max()
     {
         Node node = first;
