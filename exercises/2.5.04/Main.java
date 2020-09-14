@@ -1,3 +1,10 @@
+/*
+    2.5.4 Implement a method String[] dedup(String[] a) that returns the objects
+    in a[] in sorted order, with duplicates removed.
+
+    See removeDuplicates() in mylibs\util\Util.java. See client below.
+*/
+
 import edu.princeton.cs.algs4.In;
 import mylibs.util.Util;
 

@@ -369,12 +369,12 @@ cls
 ::del LetterGrades.class
 ::cd ..\..
 
-cd exercises\3.1.04
-javac Time.java
-javac Event.java
-javac Client.java
-java Time
-java Event
-java Client
-del *.class
-cd ..\..
+::cd exercises\3.1.04
+::javac Time.java
+::javac Event.java
+::javac Client.java
+::java Time
+::java Event
+::java Client
+::del *.class
+::cd ..\..
