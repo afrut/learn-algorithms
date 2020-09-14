@@ -1,6 +1,7 @@
 package mylibs.ds;
 import java.util.Iterator;
 import edu.princeton.cs.algs4.StdIn;
+// TODO: update client to be similar to ordered linked list implementation
 
 public class ResizingArraySequentialSearchST<Key, Value>
 {
@@ -150,45 +151,111 @@ public class ResizingArraySequentialSearchST<Key, Value>
 
     public static void main(String[] args)
     {
-        ResizingArraySequentialSearchST<String, Integer> st =
-            new ResizingArraySequentialSearchST<String, Integer>();
-        // sample input is SEARCHEXAMPLE
-        System.out.println("Testing put() operation");
-        System.out.println("Symbol table empty? " + st.isEmpty());
-        int cnt = 0;
-        while(!StdIn.isEmpty())
+        boolean test = false;
+        if(args.length > 0)
         {
-            String key = StdIn.readString();
-            st.put(key, cnt);
-            cnt++;
+            for(String arg : args) {if(arg.equals("-test")) test = true;}
         }
-        System.out.println(st.toString());
-        System.out.println("Symbol table empty? " + st.isEmpty());
-        System.out.println("");
 
-        System.out.println("Testing get() operation");
-        System.out.println("Key X has value " + st.get("X"));
-        System.out.println("Key Z has value " + st.get("Z"));
-        System.out.println("");
-
-        System.out.println("Testing delete() operation");
-        int sz = st.size();
-        st.delete("X");
-        st.delete("M");
-        System.out.println(st.toString());
-        System.out.println("Number of elements decreased by: " + (sz - st.size()));
-        System.out.println("");
-
-        System.out.println("Testing contains() operation");
-        System.out.println("Contains X? " + st.contains("X"));
-        System.out.println("Contains R? " + st.contains("R"));
-        System.out.println("");
-
-        System.out.println("Testing keys iterator");
-        for(String str : st.keys())
+        if(test)
         {
-            System.out.println(str);
+            LinkedListSequentialSearchST<String, Integer> st =
+                new LinkedListSequentialSearchST <String, Integer>();
+            System.out.println("Testing all operations on empty symbol table");
+            System.out.println("    Contents: " + st.toString());
+            System.out.println("    isEmpty(): " + st.isEmpty());
+            System.out.println("    size(): " + st.size());
+            System.out.println("    contains(E): " + st.contains("E"));
+            System.out.println("    get(E): " + st.get("E"));
+            st.delete("E"); System.out.println("    delete(E): " + st.toString());
+            System.out.println("    keys():");
+            System.out.println("");
+
+            System.out.println("Testing all operations with 1 element:");
+            st.put("G", 3); System.out.println("    put(G, 3): " + st.toString());
+            System.out.println("    isEmpty(): " + st.isEmpty());
+            System.out.println("    size(): " + st.size());
+            System.out.println("    contains(G): " + st.contains("G"));
+            System.out.println("    contains(W): " + st.contains("W"));
+            System.out.println("    get(G): " + st.get("G"));
+            System.out.println("    get(W): " + st.get("W"));
+            System.out.println("    keys():");
+            for(String str : st.keys()) System.out.println("        " + str);
+            st.put("A", 3); System.out.println("    put(A, 3): " + st.toString());
+            st.delete("A"); System.out.println("    delete(A): " + st.toString());
+            System.out.println("");
+
+            System.out.println("Populating symbol table:");
+            st.put("B", 3); System.out.println("    put(B, 1), size() = " + st.size() + ":  " + st.toString());
+            st.put("W", 3); System.out.println("    put(W, 2), size() = " + st.size() + ":  " + st.toString());
+            st.put("O", 3); System.out.println("    put(O, 3), size() = " + st.size() + ":  " + st.toString());
+            st.put("P", 4); System.out.println("    put(P, 4), size() = " + st.size() + ":  " + st.toString());
+            st.put("F", 5); System.out.println("    put(F, 5), size() = " + st.size() + ":  " + st.toString());
+            st.put("R", 6); System.out.println("    put(R, 6), size() = " + st.size() + ":  " + st.toString());
+            st.put("C", 7); System.out.println("    put(C, 7), size() = " + st.size() + ":  " + st.toString());
+            System.out.println("");
+
+            System.out.println("Testing iterators:");
+            System.out.println("    Contents: " + st.toString());
+            System.out.println("    keys():");
+            for(String str : st.keys()) System.out.println("        " + str);
+            System.out.println("");
+
+            System.out.println("Testing with multiple elements:");
+            System.out.println("    Contents: " + st.toString());
+            System.out.println("    isEmpty(): " + st.isEmpty());
+            System.out.println("    size(): " + st.size());
+            System.out.println("    contains(C): " + st.contains("C"));
+            System.out.println("    contains(D): " + st.contains("D"));
+            System.out.println("    get(C): " + st.get("C"));
+            System.out.println("    get(D): " + st.get("D"));
+            st.delete("B"); System.out.println("    delete(B), size() = " + st.size() + ", " + st.toString());
+            st.delete("W"); System.out.println("    delete(W), size() = " + st.size() + ", " + st.toString());
+            st.delete("G"); System.out.println("    delete(G), size() = " + st.size() + ", " + st.toString());
+            st.delete("X"); System.out.println("    delete(X), size() = " + st.size() + ", " + st.toString());
         }
-        System.out.println("");
+        else
+        {
+            LinkedListOrderedSequentialSearchST<String, Integer> st =
+                new LinkedListOrderedSequentialSearchST<String, Integer>();
+            // sample input is SEARCHEXAMPLE
+            System.out.println("Symbol table empty? " + st.isEmpty());
+            System.out.println("Testing put() operation:");
+            int cnt = 0;
+            while(!StdIn.isEmpty())
+            {
+                String key = StdIn.readString();
+                st.put(key, cnt);
+                cnt++;
+            }
+            System.out.println("    Contents" + st.toString());
+            System.out.println("Symbol table empty? " + st.isEmpty());
+            System.out.println("");
+
+            System.out.println("Testing get() operation:");
+            System.out.println("    Key X has value " + st.get("X"));
+            System.out.println("    Key Z has value " + st.get("Z"));
+            System.out.println("");
+
+            System.out.println("Testing delete() operation");
+            int sz = st.size();
+            st.delete("X");
+            st.delete("M");
+            System.out.println(st.toString());
+            System.out.println("    Number of elements decreased by: " + (sz - st.size()));
+            System.out.println("");
+
+            System.out.println("Testing contains() operation");
+            System.out.println("    Contains X? " + st.contains("X"));
+            System.out.println("    Contains R? " + st.contains("R"));
+            System.out.println("");
+
+            System.out.println("Testing keys iterator:");
+            for(String str : st.keys())
+            {
+                System.out.println("    " + str);
+            }
+            System.out.println("");
+        }
     }
 }
