@@ -104,24 +104,32 @@ javac mylibs\ds\LinkedListSequentialSearchST.java
 javac mylibs\ds\ResizingArraySequentialSearchST.java
 javac mylibs\ds\ResizingArrayBinarySearchST.java
 javac mylibs\ds\LinkedListOrderedSequentialSearchST.java
-javac mylibs\misc\Time.java
-javac mylibs\misc\Event.java
 :: Archive
+BinarySearch.class
 jar cvf ^
 .\bin\mylibs.jar ^
 .\mylibs\combinatorics\CountingTechniques.class ^
 .\mylibs\util\Util.class ^
+.\mylibs\ds\Heapsort.class ^
+.\mylibs\ds\IndexMaxPQ.class ^
+.\mylibs\ds\LinkedListOrderedSequentialSearchST$1.class ^
+.\mylibs\ds\LinkedListOrderedSequentialSearchST$KeysIterable$KeysIterator.class ^
+.\mylibs\ds\LinkedListOrderedSequentialSearchST$KeysIterable.class ^
+.\mylibs\ds\LinkedListOrderedSequentialSearchST$Node.class ^
+.\mylibs\ds\LinkedListOrderedSequentialSearchST.class ^
+.\mylibs\ds\LinkedListSequentialSearchST$1.class ^
+.\mylibs\ds\LinkedListSequentialSearchST$Keys$KeysIterator.class ^
+.\mylibs\ds\LinkedListSequentialSearchST$Keys.class ^
+.\mylibs\ds\LinkedListSequentialSearchST$Node.class ^
+.\mylibs\ds\LinkedListSequentialSearchST.class ^
 .\mylibs\ds\MaxPQ.class ^
 .\mylibs\ds\MinPQ.class ^
-.\mylibs\ds\IndexMaxPQ.class ^
-.\mylibs\ds\Heapsort.class ^
-.\mylibs\ds\BinarySearch.class ^
-.\mylibs\ds\LinkedListSequentialSearchST.class ^
-.\mylibs\ds\ResizingArraySequentialSearchST.class ^
+.\mylibs\ds\ResizingArrayBinarySearchST$KeysIterable$KeysIterator.class ^
+.\mylibs\ds\ResizingArrayBinarySearchST$KeysIterable.class ^
 .\mylibs\ds\ResizingArrayBinarySearchST.class ^
-.\mylibs\ds\LinkedListOrderedSequentialSearchST.class ^
-.\mylibs\misc\Time.class ^
-.\mylibs\misc\Event.class
+.\mylibs\ds\ResizingArraySequentialSearchST$Keys$KeysIterator.class ^
+.\mylibs\ds\ResizingArraySequentialSearchST$Keys.class ^
+.\mylibs\ds\ResizingArraySequentialSearchST.class
 :: Test
 java -ea mylibs.combinatorics.CountingTechniques
 java -ea mylibs.util.Util
@@ -138,8 +146,6 @@ java -ea mylibs.ds.ResizingArrayBinarySearchST -test
 java -ea mylibs.ds.ResizingArrayBinarySearchST < mylibs\ds\STSampleinput.txt
 java -ea mylibs.ds.LinkedListOrderedSequentialSearchST -test
 java -ea mylibs.ds.LinkedListOrderedSequentialSearchST < mylibs\ds\STSampleinput.txt
-java -ea mylibs.misc.Time
-java -ea mylibs.misc.Event
 :: Clean
 del /s .\mylibs\*.class
 
@@ -364,11 +370,7 @@ del /s .\mylibs\*.class
 ::cd ..\..
 
 ::cd exercises\3.1.04
-::javac Time.java
-::javac Event.java
 ::javac Client.java
-::java Time
-::java Event
 ::java Client
 ::del *.class
 ::cd ..\..
