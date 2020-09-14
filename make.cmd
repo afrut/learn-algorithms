@@ -102,8 +102,8 @@ cls
 ::javac mylibs\ds\BinarySearch.java
 ::javac mylibs\ds\LinkedListSequentialSearchST.java
 ::javac mylibs\ds\ResizingArraySequentialSearchST.java
-::javac mylibs\ds\ResizingArrayBinarySearchST.java
-javac mylibs\ds\LinkedListOrderedSequentialSearchST.java
+javac mylibs\ds\ResizingArrayBinarySearchST.java
+::javac mylibs\ds\LinkedListOrderedSequentialSearchST.java
 :::: Archive
 ::jar cvf ^
 ::.\bin\mylibs.jar ^
@@ -127,9 +127,10 @@ javac mylibs\ds\LinkedListOrderedSequentialSearchST.java
 ::java -ea mylibs.ds.BinarySearch
 ::java -ea mylibs.ds.LinkedListSequentialSearchST < mylibs\ds\STSampleinput.txt
 ::java -ea mylibs.ds.ResizingArraySequentialSearchST < mylibs\ds\STSampleinput.txt
-::java -ea mylibs.ds.ResizingArrayBinarySearchST < mylibs\ds\STSampleinput.txt
-java -ea mylibs.ds.LinkedListOrderedSequentialSearchST -test
-java -ea mylibs.ds.LinkedListOrderedSequentialSearchST < mylibs\ds\STSampleinput.txt
+java -ea mylibs.ds.ResizingArrayBinarySearchST -test
+java -ea mylibs.ds.ResizingArrayBinarySearchST < mylibs\ds\STSampleinput.txt
+::java -ea mylibs.ds.LinkedListOrderedSequentialSearchST -test
+::java -ea mylibs.ds.LinkedListOrderedSequentialSearchST < mylibs\ds\STSampleinput.txt
 :::: Clean
 del /s .\mylibs\*.class
 
