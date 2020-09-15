@@ -33,6 +33,7 @@
 - resizing array
 - linked list
 - binary heap
+- binary search tree
 - array vs recursion implementation
 - divide (by 2) and conquer
 
