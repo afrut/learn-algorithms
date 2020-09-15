@@ -111,6 +111,9 @@ public class RecursiveBST<Key extends Comparable<Key>, Value>
 
     // Eager delete implementation.
     public void delete(Key key)
+    {}
+
+    private void delete(Node node, Key key)
     {
     }
 
@@ -189,8 +192,8 @@ public class RecursiveBST<Key extends Comparable<Key>, Value>
     private void toString(Node node, StringBuilder sb)
     {
         if(node.left != null) toString(node.left, sb);
-        if(node.right != null) toString(node.right, sb);
         sb.append("(" + node.key + ", " + node.value + "), ");
+        if(node.right != null) toString(node.right, sb);
     }
 
     /*
