@@ -97,7 +97,16 @@ public class RecursiveBST<Key extends Comparable<Key>, Value>
 
     public Value get(Key key)
     {
-        return null;
+        if(root == null) return null;
+        else return get(root, key);
+    }
+
+    private Value get(Node node, Key key)
+    {
+        if(node == null) return null;
+        if(key.compareTo(node.key) < 0) return get(node.left, key);
+        else if(key.compareTo(node.key) > 0) return get(node.right, key);
+        else return node.value;
     }
 
     // Eager delete implementation.
@@ -168,9 +177,12 @@ public class RecursiveBST<Key extends Comparable<Key>, Value>
     public String toString()
     {
         StringBuilder sb = new StringBuilder();
-        toString(root, sb);
-        if(sb.length() > 0)
-            sb.setLength(sb.length() - 2);
+        if(root != null)
+        {
+            toString(root, sb);
+            if(sb.length() > 0)
+                sb.setLength(sb.length() - 2);
+        }
         return sb.toString();
     }
 
@@ -199,13 +211,15 @@ public class RecursiveBST<Key extends Comparable<Key>, Value>
         {
             RecursiveBST<String, Integer> st =
                 new RecursiveBST <String, Integer>();
-            /*System.out.println("Testing all operations on empty symbol table:");
+            System.out.println("Testing all operations on empty symbol table:");
             System.out.println("    Contents: " + st.toString());
+            /*
             System.out.println("    isEmpty(): " + st.isEmpty());
             System.out.println("    size(): " + st.size());
             System.out.println("    size(C, G): " + st.size("C", "G"));
-            System.out.println("    contains(E): " + st.contains("E"));
+            System.out.println("    contains(E): " + st.contains("E"));*/
             System.out.println("    get(E): " + st.get("E"));
+            /*
             System.out.println("    min(): " + st.min());
             System.out.println("    max(): " + st.max());
             System.out.println("    floor(E)(): " + st.floor("E"));
@@ -224,8 +238,10 @@ public class RecursiveBST<Key extends Comparable<Key>, Value>
             System.out.println("    keys(C, Q):");
             for(String str : st.keys("C", "Q")) System.out.println("        " + str);
             System.out.println("    keys(D, Q):");
-            for(String str : st.keys("D", "Q")) System.out.println("        " + str);
-            System.out.println("");*/
+            for(String str : st.keys("D", "Q")) System.out.println("        " +
+            str);
+            */
+            System.out.println("");
 
             System.out.println("Testing all operations with 1 element:");
             st.put("G", 3); System.out.println("    put(G, 3): " + st.toString());
@@ -238,8 +254,10 @@ public class RecursiveBST<Key extends Comparable<Key>, Value>
             System.out.println("    size(W, Z): " + st.size("W", "Z"));
             System.out.println("    contains(G): " + st.contains("G"));
             System.out.println("    contains(W): " + st.contains("W"));
+            */
             System.out.println("    get(G): " + st.get("G"));
             System.out.println("    get(W): " + st.get("W"));
+            /*
             System.out.println("    min(): " + st.min());
             System.out.println("    max(): " + st.max());
             System.out.println("    floor(A): " + st.floor("A"));
@@ -296,9 +314,10 @@ public class RecursiveBST<Key extends Comparable<Key>, Value>
             for(String str : st.keys("C", "Q")) System.out.println("        " + str);
             System.out.println("    keys(D, Q):");
             for(String str : st.keys("D", "Q")) System.out.println("        " + str);
-            System.out.println("");
+            System.out.println("");*/
             
             System.out.println("Testing with multiple elements:");
+            /*
             System.out.println("    Contents: " + st.toString());
             System.out.println("    isEmpty(): " + st.isEmpty());
             System.out.println("    size(): " + st.size());
@@ -307,9 +326,10 @@ public class RecursiveBST<Key extends Comparable<Key>, Value>
             System.out.println("    size(D, Q): " + st.size("D", "Q"));
             System.out.println("    size(A, C): " + st.size("A", "C"));
             System.out.println("    contains(C): " + st.contains("C"));
-            System.out.println("    contains(D): " + st.contains("D"));
+            System.out.println("    contains(D): " + st.contains("D"));*/
             System.out.println("    get(C): " + st.get("C"));
             System.out.println("    get(D): " + st.get("D"));
+            /*
             System.out.println("    min(): " + st.min());
             System.out.println("    max(): " + st.max());
             System.out.println("    floor(C): " + st.floor("C"));
