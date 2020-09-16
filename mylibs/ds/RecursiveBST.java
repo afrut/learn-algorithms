@@ -305,9 +305,14 @@ public class RecursiveBST<Key extends Comparable<Key>, Value>
     {
         if(k < 0) return null;
         if(node == null) return null;
-        if(node.left != null && node.left.N > k) return select(node.left, k);
-        else if(node.left != null && node.left.N < k) return select(node.right, k - node.left.N);
-        else return node;
+        if(node.left == null && k == 0) return node;
+        else if(node.left == null) return select(node.right, k);
+        else
+        {
+            if(node.left.N > k) return select(node.left, k);
+            else if(node.left.N < k) return select(node.right, k - node.left.N);
+            else return node;
+        }
     }
 
     // Remove the node with the smallest key.
