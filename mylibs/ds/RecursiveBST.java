@@ -13,12 +13,21 @@ public class RecursiveBST<Key extends Comparable<Key>, Value>
         int N;
     }
 
-    /*
     private class KeysIterable implements Iterable<Key>
     {
         // TODO: implement
+
+        private class KeysIterator implements Iterator<Key>
+        {
+            public KeysIterator() {}
+            public boolean hasNext() {return false;}
+            public Key next() {return null;}
+        }
+
+        public KeysIterable() {}
+        public KeysIterable(Key lo, Key hi) {}
+        public KeysIterator iterator() {return new KeysIterator();}
     }
-    */
 
     private Node root;
 
@@ -95,85 +104,274 @@ public class RecursiveBST<Key extends Comparable<Key>, Value>
         return ret;
     }
 
+    // Return the value associated with key.
     public Value get(Key key)
     {
         if(root == null) return null;
-        else return get(root, key);
+        else return get(root, key).value;
     }
 
-    private Value get(Node node, Key key)
+    // Return the Node associated with key within the binary search tree rooted
+    // at node.
+    private Node get(Node node, Key key)
     {
         if(node == null) return null;
         if(key.compareTo(node.key) < 0) return get(node.left, key);
         else if(key.compareTo(node.key) > 0) return get(node.right, key);
-        else return node.value;
+        else return node;
     }
 
-    // Eager delete implementation.
+    // Remove the node that is associated with key.
     public void delete(Key key)
-    {}
+    {delete(root, key);}
 
-    private void delete(Node node, Key key)
+    // Delete the node associated with key within the binary search tree rooted
+    // at node.
+    private Node delete(Node node, Key key)
     {
+        if(node == null) return null;
+        else if(key.compareTo(node.key) < 0)
+        {
+            Node ret = delete(node.left, key);
+            node.left = ret;
+            return node;
+        }
+        else if(key.compareTo(node.key) > 0)
+        {
+            Node ret = delete(node.right, key);
+            node.right = ret;
+            return node;
+        }
+        else
+        {
+            // Node with key found. Store it in a temporary variable.
+            // node is the Node to delete.
+            // Find the ceiling of this node within its binary tree.
+            Node successor = ceiling(node);
+
+            // The successor should not have a node on its left.
+            // If it did, it would not be the ceiling of node.
+            // Set the successor's left to be the node left of node to delete.
+            successor.left = node.left;
+
+            // Update the counts of successor.
+            successor.N = successor.left.N + successor.right.N + 1;
+
+            // Return the successor so that it can be properly linked to the
+            // node above node to delete.
+            return successor;
+        }
     }
 
+    // Checks if the binary search tree contains a node associated with key.
     public boolean contains(Key key)
     {
-        return false;
+        if(contains(root, key) != null) return true;
+        else return false;
     }
 
-    private void resize(int sz)
+    // Returns the Node associated with key that is within the binary search
+    // tree rooted at node.
+    private Node contains(Node node, Key key)
     {
+        if(node == null) return null;
+        else if(key.compareTo(node.key) < 0) return contains(node.left, key);
+        else if(key.compareTo(node.key) > 0) return contains(node.right, key);
+        else return node;
     }
 
-    public boolean isEmpty() {return root.N == 0;}
-    public int size() {return root.N;}
+    // Check if the binary search tree is null.
+    public boolean isEmpty() {return root == null;}
 
+    // Return the total number of nodes.
+    public int size()
+    {
+        if(root == null) return 0;
+        else return root.N;
+    }
+
+    // Return the smallest Key.
     public Key min()
     {
-        return null;
+        if(root == null) return null;
+        else return min(root).key;
     }
 
+    // Return the node containing the smallest key in the binary tree rooted at
+    // node.
+    private Node min(Node node)
+    {
+        if(node == null) return null;
+        if(node.left != null) return min(node.left);
+        else return node;
+    }
+
+    // Return the largest key.
     public Key max()
     {
-        return null;
+        if(root == null) return null;
+        else return max(root).key;
     }
 
+    // Return the Node that is associated with the largest key within the binary
+    // search tree rooted at node.
+    public Node max(Node node)
+    {
+        if(node == null) return null;
+        if(node.right != null) return max(node.right);
+        else return node;
+    }
+
+    // Return the largest key that is less than key.
     public Key floor(Key key)
     {
-        return null;
+        // Find the node that is associated with key.
+        if(key == null) return null;
+        Node node = contains(root, key);
+        Node ret = floor(node);
+        if(ret == null) return null;
+        else return ret.key;
     }
 
+    // Return the node associated with the largest key that is less than node.key
+    // within the binary search tree rooted at node.
+    private Node floor(Node node)
+    {
+        // The floor must be the maximum of the subtree node.left if it exists.
+        if(node == null) return null;
+        else if(node.left == null) return null;
+        else return max(node.left);
+    }
+
+    // Return the smallest key that is greater than key.
     public Key ceiling(Key key)
     {
-        return null;
+        // Find the node that is associated with key.
+        if(key == null) return key;
+        Node node = contains(root, key);
+        Node ret = ceiling(node);
+        if(ret == null) return null;
+        else return ret.key;
+    }
+
+    // Return the node containing the smallest key greater than node.key within
+    // the binary search tree rooted at node.
+    private Node ceiling(Node node)
+    {
+        if(node == null) return null;
+        else if(node.right == null) return null;
+        else return min(node.right);
     }
 
     // Return the number of keys that are less than key.
     // Keys have to be unique.
     public int rank(Key key)
+    {return rank(root, key);}
+
+    // Returns the number of keys less than key within the binary search tree
+    // at node.
+    private int rank(Node node, Key key)
     {
-        return 0;
+        if(node == null) return 0;
+
+        // key < current node's key.
+        if(key.compareTo(node.key) < 0)
+            // Go down the left subtree until the node's key is greater than key.
+            return rank(node.left, key);
+        // key > current node's key.
+        else if(key.compareTo(node.key) > 0)
+        {
+            int ret;
+            // No keys less than current node's key.
+            if(node.left == null) ret = 0;
+
+            // Count the number of keys less than current node's key.
+            else ret = node.left.N + 1;
+
+            // Then attempt to go down the right subtree to count all keys less
+            // than key.
+
+            // No keys larger than current node's key.
+            if(node.right == null) return ret;
+
+            // Count all keys less than key in the right subtree, add it to the
+            // number of keys in the left subtree and current node, then return.
+            else return ret + rank(node.right, key);
+        }
+        else
+        {
+            // Curren't node's key is equal to key. Return the number of keys in
+            // the left subtree if any.
+            if(node.left == null) return 0;
+            else return node.left.N;
+        }
     }
 
     // Return the key that has k keys less than it.
     public Key select(int k)
     {
-        return null;
+        Node node = select(root, k);
+        if(node == null) return null;
+        else return node.key;
     }
 
-    // Remove the pair with the smallest key.
-    public void deleteMin()
+    // Return the Node that has k keys less than it within the binary search
+    // rooted at node.
+    private Node select(Node node, int k)
     {
+        if(k < 0) return null;
+        if(node == null) return null;
+        if(node.left != null && node.left.N > k) return select(node.left, k);
+        else if(node.left != null && node.left.N < k) return select(node.right, k - node.left.N);
+        else return node;
+    }
+
+    // Remove the node with the smallest key.
+    public void deleteMin() {root = deleteMin(root);}
+
+    // Remove the node with the smallest key within the subtree rooted at node.
+    private Node deleteMin(Node node)
+    {
+        if(node == null) return null;
+        Node ret = deleteMin(node.left);
+        if(ret == null)
+        {
+            // Current node's left link is null. Current node is the minimum.
+            return node.right;
+        }
+        else
+        {
+            // ret is the node at node to delete's right link.
+            // All keys in the ret subtree are less than node.key.
+            node.left = ret;
+            node.N = node.left.N + node.right.N + 1;
+            return node;
+        }
     }
 
     // Remove the pair with the greatest key.
-    public void deleteMax()
+    public void deleteMax() {root = deleteMax(root);}
+
+    // Remove the node with the largest key within the subtree rooted at node.
+    private Node deleteMax(Node node)
     {
+        if(node == null)  return null;
+        Node ret = deleteMax(node.right);
+        if(ret == null)
+        {
+            return node.left;
+        }
+        else
+        {
+            node.right = ret;
+            node.N = node.left.N + node.right.N + 1;
+            return node;
+        }
     }
 
     public int size(Key from, Key to)
     {
+        // TODO: implement
         return 0;
     }
 
@@ -196,11 +394,8 @@ public class RecursiveBST<Key extends Comparable<Key>, Value>
         if(node.right != null) toString(node.right, sb);
     }
 
-    /*
     public Iterable<Key> keys() {return new KeysIterable();}
-    public Iterable<Key> keys(Key key1, Key key2) {return new KeysIterable(key1,
-    key2);}
-    */
+    public Iterable<Key> keys(Key key1, Key key2) {return new KeysIterable(key1,key2);}
 
     public static void main(String[] args)
     {
@@ -216,13 +411,11 @@ public class RecursiveBST<Key extends Comparable<Key>, Value>
                 new RecursiveBST <String, Integer>();
             System.out.println("Testing all operations on empty symbol table:");
             System.out.println("    Contents: " + st.toString());
-            /*
             System.out.println("    isEmpty(): " + st.isEmpty());
             System.out.println("    size(): " + st.size());
             System.out.println("    size(C, G): " + st.size("C", "G"));
-            System.out.println("    contains(E): " + st.contains("E"));*/
+            System.out.println("    contains(E): " + st.contains("E"));
             System.out.println("    get(E): " + st.get("E"));
-            /*
             System.out.println("    min(): " + st.min());
             System.out.println("    max(): " + st.max());
             System.out.println("    floor(E)(): " + st.floor("E"));
@@ -243,12 +436,10 @@ public class RecursiveBST<Key extends Comparable<Key>, Value>
             System.out.println("    keys(D, Q):");
             for(String str : st.keys("D", "Q")) System.out.println("        " +
             str);
-            */
             System.out.println("");
 
             System.out.println("Testing all operations with 1 element:");
             st.put("G", 3); System.out.println("    put(G, 3): " + st.toString());
-            /*
             System.out.println("    isEmpty(): " + st.isEmpty());
             System.out.println("    size(): " + st.size());
             System.out.println("    size(B, G): " + st.size("B", "G"));
@@ -257,10 +448,8 @@ public class RecursiveBST<Key extends Comparable<Key>, Value>
             System.out.println("    size(W, Z): " + st.size("W", "Z"));
             System.out.println("    contains(G): " + st.contains("G"));
             System.out.println("    contains(W): " + st.contains("W"));
-            */
             System.out.println("    get(G): " + st.get("G"));
             System.out.println("    get(W): " + st.get("W"));
-            /*
             System.out.println("    min(): " + st.min());
             System.out.println("    max(): " + st.max());
             System.out.println("    floor(A): " + st.floor("A"));
@@ -292,7 +481,6 @@ public class RecursiveBST<Key extends Comparable<Key>, Value>
             st.deleteMin(); System.out.println("    deleteMin(): " + st.toString());
             st.put("Z", 23); System.out.println("    put(Z, 23): " + st.toString());
             st.deleteMax(); System.out.println("    deleteMax(): " + st.toString());
-            */
             System.out.println("");
 
             System.out.println("Populating symbol table:");
@@ -305,7 +493,7 @@ public class RecursiveBST<Key extends Comparable<Key>, Value>
             st.put("C", 7); System.out.println("    put(C, 7), size() = " + st.size() + ":  " + st.toString());
             System.out.println("");
 
-            /*System.out.println("Testing iterators:");
+            System.out.println("Testing iterators:");
             System.out.println("    Contents: " + st.toString());
             System.out.println("    keys():");
             for(String str : st.keys()) System.out.println("        " + str);
@@ -317,10 +505,9 @@ public class RecursiveBST<Key extends Comparable<Key>, Value>
             for(String str : st.keys("C", "Q")) System.out.println("        " + str);
             System.out.println("    keys(D, Q):");
             for(String str : st.keys("D", "Q")) System.out.println("        " + str);
-            System.out.println("");*/
+            System.out.println("");
             
             System.out.println("Testing with multiple elements:");
-            /*
             System.out.println("    Contents: " + st.toString());
             System.out.println("    isEmpty(): " + st.isEmpty());
             System.out.println("    size(): " + st.size());
@@ -329,10 +516,9 @@ public class RecursiveBST<Key extends Comparable<Key>, Value>
             System.out.println("    size(D, Q): " + st.size("D", "Q"));
             System.out.println("    size(A, C): " + st.size("A", "C"));
             System.out.println("    contains(C): " + st.contains("C"));
-            System.out.println("    contains(D): " + st.contains("D"));*/
+            System.out.println("    contains(D): " + st.contains("D"));
             System.out.println("    get(C): " + st.get("C"));
             System.out.println("    get(D): " + st.get("D"));
-            /*
             System.out.println("    min(): " + st.min());
             System.out.println("    max(): " + st.max());
             System.out.println("    floor(C): " + st.floor("C"));
@@ -356,7 +542,7 @@ public class RecursiveBST<Key extends Comparable<Key>, Value>
             st.deleteMin(); System.out.println("    deleteMin(), size() = " + st.size() + ", " + st.toString());
             st.delete("X"); System.out.println("    delete(X), size() = " + st.size() + ", " + st.toString());
             st.deleteMin(); System.out.println("    deleteMin(), size() = " + st.size() + ", " + st.toString());
-            st.deleteMax(); System.out.println("    deleteMax(), size() = " + st.size() + ", " + st.toString());*/
+            st.deleteMax(); System.out.println("    deleteMax(), size() = " + st.size() + ", " + st.toString());
         }
         else
         {
