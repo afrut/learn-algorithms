@@ -34,22 +34,7 @@ public class RecursiveBST<Key extends Comparable<Key>, Value>
     public RecursiveBST() {root = null;}
 
     // Searches for key and replaces its value. If not found, inserts key and value.
-    public void put(Key key, Value value)
-    {
-        if(root == null)
-        {
-            // Tree is empty.
-            root = new Node();
-            root.key = key;
-            root.value = value;
-            root.N = 1;
-        }
-        else
-        {
-            // Recursive call starting at root.
-            root = put(root, key, value);
-        }
-    }
+    public void put(Key key, Value value) {root = put(root, key, value);}
 
     // Private recursive function to insert a key-value pair.
     private Node put(Node node, Key key, Value value)
@@ -66,14 +51,14 @@ public class RecursiveBST<Key extends Comparable<Key>, Value>
         {
             Node ret = put(node.left, key, value);
             node.left = ret;
-            node.N = node.left.N + node.right.N + 1;
+            updateNodeN(node);
             return node;
         }
         else if(key.compareTo(node.key) > 0)
         {
             Node ret = put(node.right, key, value);
             node.right = ret;
-            node.N = node.left.N + node.right.N + 1;
+            updateNodeN(node);
             return node;
         }
         else
@@ -84,11 +69,20 @@ public class RecursiveBST<Key extends Comparable<Key>, Value>
         }
     }
 
+    private void updateNodeN(Node node)
+    {
+        int ret = 0;
+        if(node.left != null) ret += node.left.N;
+        if(node.right != null) ret += node.right.N;
+        node.N = ret + 1;
+    }
+
     // Return the value associated with key.
     public Value get(Key key)
     {
-        if(root == null) return null;
-        else return get(root, key).value;
+        Node node = get(root, key);
+        if(node == null) return null;
+        else return node.value;
     }
 
     // Return the Node associated with key within the binary search tree rooted
@@ -135,7 +129,7 @@ public class RecursiveBST<Key extends Comparable<Key>, Value>
             successor.left = node.left;
 
             // Update the counts of successor.
-            successor.N = successor.left.N + successor.right.N + 1;
+            updateNodeN(successor);
 
             // Return the successor so that it can be properly linked to the
             // node above node to delete.
@@ -324,7 +318,7 @@ public class RecursiveBST<Key extends Comparable<Key>, Value>
             // ret is the node at node to delete's right link.
             // All keys in the ret subtree are less than node.key.
             node.left = ret;
-            node.N = node.left.N + node.right.N + 1;
+            updateNodeN(node);
             return node;
         }
     }
@@ -344,7 +338,7 @@ public class RecursiveBST<Key extends Comparable<Key>, Value>
         else
         {
             node.right = ret;
-            node.N = node.left.N + node.right.N + 1;
+            updateNodeN(node);
             return node;
         }
     }
