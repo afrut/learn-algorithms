@@ -71,6 +71,7 @@ public class RecursiveBST<Key extends Comparable<Key>, Value>
 
     private void updateNodeN(Node node)
     {
+        if(node == null) return;
         int ret = 0;
         if(node.left != null) ret += node.left.N;
         if(node.right != null) ret += node.right.N;
@@ -123,10 +124,19 @@ public class RecursiveBST<Key extends Comparable<Key>, Value>
             // Find the ceiling of this node within its binary tree.
             Node successor = ceiling(node);
 
-            // The successor should not have a node on its left.
-            // If it did, it would not be the ceiling of node.
-            // Set the successor's left to be the node left of node to delete.
-            successor.left = node.left;
+            if(successor != null)
+            {
+                // The successor should not have a node on its left.
+                // If it did, it would not be the ceiling of node.
+                // Set the successor's left to be the node left of node to delete.
+                successor.left = node.left;
+                node.left = null;
+                node.right = null;
+            }
+            else
+            {
+                successor = node.left;
+            }
 
             // Update the counts of successor.
             updateNodeN(successor);
