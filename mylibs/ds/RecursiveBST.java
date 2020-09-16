@@ -47,61 +47,41 @@ public class RecursiveBST<Key extends Comparable<Key>, Value>
         else
         {
             // Recursive call starting at root.
-            put(root, key, value);
+            root = put(root, key, value);
         }
     }
 
     // Private recursive function to insert a key-value pair.
-    private int put(Node node, Key key, Value value)
+    private Node put(Node node, Key key, Value value)
     {
-        int ret = 0;
-
-        // key < current node's key
-        if(key.compareTo(node.key) < 0)
+        if(node == null)
         {
-            // Left node is not present.
-            if(node.left == null)
-            {
-                // Put new key-value pair to current node's left.
-                node.left = new Node();
-                node.left.key = key;
-                node.left.value = value;
-                node.N++;
-                ret = 1;
-            }
-            else
-            {
-                ret = put(node.left, key, value);
-                node.N += ret;
-            }
+            Node ret = new Node();
+            ret.key = key;
+            ret.value = value;
+            ret.N = 1;
+            return ret;
         }
-        // key > current node's key
+        else if(key.compareTo(node.key) < 0)
+        {
+            Node ret = put(node.left, key, value);
+            node.left = ret;
+            node.N = node.left.N + node.right.N + 1;
+            return node;
+        }
         else if(key.compareTo(node.key) > 0)
         {
-            // Right node is not present.
-            if(node.right == null)
-            {
-                // Put new key-value pair to current node's right.
-                node.right = new Node();
-                node.right.key = key;
-                node.right.value = value;
-                node.N++;
-                ret = 1;
-            }
-            else
-            {
-                ret = put(node.right, key, value);
-                node.N += ret;
-            }
+            Node ret = put(node.right, key, value);
+            node.right = ret;
+            node.N = node.left.N + node.right.N + 1;
+            return node;
         }
         else
         {
-            // key == current node's key
             node.key = key;
             node.value = value;
-            ret = 0;
+            return node;
         }
-        return ret;
     }
 
     // Return the value associated with key.
