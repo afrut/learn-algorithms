@@ -97,7 +97,7 @@ public class RecursiveBST<Key extends Comparable<Key>, Value>
     }
 
     // Remove the node that is associated with key.
-    public void delete(Key key) {delete(root, key);}
+    public void delete(Key key) {root = delete(root, key);}
 
     // Delete the node associated with key within the binary search tree rooted
     // at node.
@@ -130,8 +130,8 @@ public class RecursiveBST<Key extends Comparable<Key>, Value>
                 // The successor should not have a node on its left.
                 // If it did, it would not be the ceiling of node.
                 // Set the successor's left to be the node left of node to delete.
-                successor.left = node.left;
                 successor.right = deleteMin(node.right);
+                successor.left = node.left;
                 node.left = null;
                 node.right = null;
             }
@@ -213,22 +213,34 @@ public class RecursiveBST<Key extends Comparable<Key>, Value>
     // Return the largest key that is less than key.
     public Key floor(Key key)
     {
-        // Find the node that is associated with key.
-        if(key == null) return null;
-        Node node = contains(root, key);
-        Node ret = floor(node);
-        if(ret == null) return null;
-        else return ret.key;
+        Node node = floor(root, key);
+        if(node == null) return null;
+        else return node.key;
     }
 
     // Return the node associated with the largest key that is less than node.key
     // within the binary search tree rooted at node.
-    private Node floor(Node node)
+    private Node floor(Node node, Key key)
     {
-        // The floor must be the maximum of the subtree node.left if it exists.
         if(node == null) return null;
-        else if(node.left == null) return null;
-        else return max(node.left);
+        if(key.compareTo(node.key) < 0)
+        {
+            Node ret = floor(node.left, key);
+            if(ret == null) return null;
+            else return ret;
+        }
+        else if(key.compareTo(node.key) > 0)
+        {
+            Node ret = floor(node.right, key);
+            if(ret == null) return node;
+            else return ret;
+        }
+        else
+        {
+            Node ret = floor(node.left, key);
+            if(ret == null) return null;
+            else return ret;
+        }
     }
 
     // Return the smallest key that is greater than key.
