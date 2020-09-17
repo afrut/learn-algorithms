@@ -177,7 +177,12 @@ public class RecursiveBST<Key extends Comparable<Key>, Value>
     }
 
     // Return the smallest Key.
-    public Key min() {return min(root).key;}
+    public Key min()
+    {
+        Node ret = min(root);
+        if(ret == null) return null;
+        else return ret.key;
+    }
 
     // Return the node containing the smallest key in the binary tree rooted at
     // node.
@@ -189,7 +194,12 @@ public class RecursiveBST<Key extends Comparable<Key>, Value>
     }
 
     // Return the largest key.
-    public Key max() {return max(root).key;}
+    public Key max()
+    {
+        Node ret = max(root);
+        if(ret == null) return null;
+        else return ret.key;
+    }
 
     // Return the Node that is associated with the largest key within the binary
     // search tree rooted at node.
@@ -243,8 +253,7 @@ public class RecursiveBST<Key extends Comparable<Key>, Value>
 
     // Return the number of keys that are less than key.
     // Keys have to be unique.
-    public int rank(Key key)
-    {return rank(root, key);}
+    public int rank(Key key) {return rank(root, key);}
 
     // Returns the number of keys less than key within the binary search tree
     // at node.
