@@ -109,12 +109,14 @@ public class RecursiveBST<Key extends Comparable<Key>, Value>
         {
             Node ret = delete(node.left, key);
             node.left = ret;
+            updateNodeN(node);
             return node;
         }
         else if(key.compareTo(node.key) > 0)
         {
             Node ret = delete(node.right, key);
             node.right = ret;
+            updateNodeN(node);
             return node;
         }
         else
@@ -130,6 +132,7 @@ public class RecursiveBST<Key extends Comparable<Key>, Value>
                 // If it did, it would not be the ceiling of node.
                 // Set the successor's left to be the node left of node to delete.
                 successor.left = node.left;
+                successor.right = deleteMin(node.right);
                 node.left = null;
                 node.right = null;
             }
