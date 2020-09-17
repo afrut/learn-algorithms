@@ -123,7 +123,7 @@ public class RecursiveBST<Key extends Comparable<Key>, Value>
             // Node with key found. Store it in a temporary variable.
             // node is the Node to delete.
             // Find the ceiling of this node within its binary tree.
-            Node successor = ceiling(node);
+            Node successor = ceiling(node.right, node.key);
 
             if(successor != null)
             {
@@ -246,21 +246,34 @@ public class RecursiveBST<Key extends Comparable<Key>, Value>
     // Return the smallest key that is greater than key.
     public Key ceiling(Key key)
     {
-        // Find the node that is associated with key.
-        if(key == null) return key;
-        Node node = contains(root, key);
-        Node ret = ceiling(node);
-        if(ret == null) return null;
-        else return ret.key;
+        Node node = ceiling(root, key);
+        if(node == null) return null;
+        else return node.key;
     }
 
     // Return the node containing the smallest key greater than node.key within
     // the binary search tree rooted at node.
-    private Node ceiling(Node node)
+    private Node ceiling(Node node, Key key)
     {
         if(node == null) return null;
-        else if(node.right == null) return null;
-        else return min(node.right);
+        if(key.compareTo(node.key) < 0)
+        {
+            Node ret = ceiling(node.left, key);
+            if(ret == null) return node;
+            else return ret;
+        }
+        else if(key.compareTo(node.key) > 0)
+        {
+            Node ret = ceiling(node.right, key);
+            if(ret == null) return null;
+            else return ret;
+        }
+        else
+        {
+            Node ret = ceiling(node.right, key);
+            if(ret == null) return null;
+            else return ret;
+        }
     }
 
     // Return the number of keys that are less than key.
@@ -271,6 +284,7 @@ public class RecursiveBST<Key extends Comparable<Key>, Value>
     // at node.
     private int rank(Node node, Key key)
     {
+        // TODO: fix this
         if(node == null) return 0;
 
         // key < current node's key.
