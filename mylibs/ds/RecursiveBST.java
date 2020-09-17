@@ -97,8 +97,7 @@ public class RecursiveBST<Key extends Comparable<Key>, Value>
     }
 
     // Remove the node that is associated with key.
-    public void delete(Key key)
-    {delete(root, key);}
+    public void delete(Key key) {delete(root, key);}
 
     // Delete the node associated with key within the binary search tree rooted
     // at node.
@@ -178,11 +177,7 @@ public class RecursiveBST<Key extends Comparable<Key>, Value>
     }
 
     // Return the smallest Key.
-    public Key min()
-    {
-        if(root == null) return null;
-        else return min(root).key;
-    }
+    public Key min() {return min(root).key;}
 
     // Return the node containing the smallest key in the binary tree rooted at
     // node.
@@ -194,11 +189,7 @@ public class RecursiveBST<Key extends Comparable<Key>, Value>
     }
 
     // Return the largest key.
-    public Key max()
-    {
-        if(root == null) return null;
-        else return max(root).key;
-    }
+    public Key max() {return max(root).key;}
 
     // Return the Node that is associated with the largest key within the binary
     // search tree rooted at node.
