@@ -103,19 +103,16 @@ public class RecursiveBST<Key extends Comparable<Key>, Value>
     // at node.
     private Node delete(Node node, Key key)
     {
-        // TODO: this has a bug
         if(node == null) return null;
         else if(key.compareTo(node.key) < 0)
         {
-            Node ret = delete(node.left, key);
-            node.left = ret;
+            node.left = delete(node.left, key);
             updateNodeN(node);
             return node;
         }
         else if(key.compareTo(node.key) > 0)
         {
-            Node ret = delete(node.right, key);
-            node.right = ret;
+            node.right = delete(node.right, key);
             updateNodeN(node);
             return node;
         }
@@ -125,7 +122,6 @@ public class RecursiveBST<Key extends Comparable<Key>, Value>
             // node is the Node to delete.
             // Find the ceiling of this node within its binary tree.
             Node successor = ceiling(node.right, node.key);
-
             if(successor != null)
             {
                 // The successor should not have a node on its left.
@@ -356,17 +352,15 @@ public class RecursiveBST<Key extends Comparable<Key>, Value>
     private Node deleteMin(Node node)
     {
         if(node == null) return null;
-        Node ret = deleteMin(node.left);
-        if(ret == null)
+        if(node.left == null)
         {
-            // Current node's left link is null. Current node is the minimum.
-            return node.right;
+            Node ret = node.right;
+            node.right = null;
+            return ret;
         }
         else
         {
-            // ret is the node at node to delete's right link.
-            // All keys in the ret subtree are less than node.key.
-            node.left = ret;
+            node.left = deleteMin(node.left);
             updateNodeN(node);
             return node;
         }
@@ -378,15 +372,16 @@ public class RecursiveBST<Key extends Comparable<Key>, Value>
     // Remove the node with the largest key within the subtree rooted at node.
     private Node deleteMax(Node node)
     {
-        if(node == null)  return null;
-        Node ret = deleteMax(node.right);
-        if(ret == null)
+        if(node == null) return null;
+        if(node.right == null)
         {
-            return node.left;
+            Node ret = node.left;
+            node.left = null;
+            return ret;
         }
         else
         {
-            node.right = ret;
+            node.right = deleteMax(node.right);
             updateNodeN(node);
             return node;
         }
@@ -434,8 +429,16 @@ public class RecursiveBST<Key extends Comparable<Key>, Value>
         return sb.toString();
     }
 
+    private String toString(Node node)
+    {
+        StringBuilder sb = new StringBuilder();
+        toString(node, sb);
+        return sb.toString();
+    }
+
     private void toString(Node node, StringBuilder sb)
     {
+        if(node == null) return;
         if(node.left != null) toString(node.left, sb);
         sb.append("(" + node.key + ", " + node.value + "), ");
         if(node.right != null) toString(node.right, sb);
@@ -639,3 +642,4 @@ public class RecursiveBST<Key extends Comparable<Key>, Value>
         }
     }
 }
+
