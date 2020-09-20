@@ -394,8 +394,32 @@ public class RecursiveBST<Key extends Comparable<Key>, Value>
 
     public int size(Key from, Key to)
     {
-        // TODO: implement
-        return 0;
+        return size(root, from, to);
+    }
+
+    private int size(Node node, Key from, Key to)
+    {
+        if(node == null) return 0;
+        if(from.compareTo(node.key) > 0)
+        {
+            return size(node.right, from, to);
+        }
+        else if(from.compareTo(node.key) == 0)
+        {
+            return 1 + size(node.right, from, to);
+        }
+        else if(from.compareTo(node.key) < 0 && to.compareTo(node.key) > 0)
+        {
+            return 1 + size(node.left, from, to) + size(node.right, from, to);
+        }
+        else if(to.compareTo(node.key) == 0)
+        {
+            return 1 + size(node.left, from, to);
+        }
+        else
+        {
+            return size(node.left, from, to);
+        }
     }
 
     public String toString()
