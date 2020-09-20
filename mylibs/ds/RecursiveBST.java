@@ -103,6 +103,7 @@ public class RecursiveBST<Key extends Comparable<Key>, Value>
     // at node.
     private Node delete(Node node, Key key)
     {
+        // TODO: this has a bug
         if(node == null) return null;
         else if(key.compareTo(node.key) < 0)
         {
@@ -278,43 +279,27 @@ public class RecursiveBST<Key extends Comparable<Key>, Value>
 
     // Return the number of keys that are less than key.
     // Keys have to be unique.
-    public int rank(Key key) {return rank(root, key);}
+    public int rank(Key key)
+    {
+        return rank(root, key);
+    }
 
     // Returns the number of keys less than key within the binary search tree
     // at node.
     private int rank(Node node, Key key)
     {
-        // TODO: fix this
         if(node == null) return 0;
-
-        // key < current node's key.
         if(key.compareTo(node.key) < 0)
-            // Go down the left subtree until the node's key is greater than key.
+        {
             return rank(node.left, key);
-        // key > current node's key.
+        }
         else if(key.compareTo(node.key) > 0)
         {
-            int ret;
-            // No keys less than current node's key.
-            if(node.left == null) ret = 0;
-
-            // Count the number of keys less than current node's key.
-            else ret = node.left.N + 1;
-
-            // Then attempt to go down the right subtree to count all keys less
-            // than key.
-
-            // No keys larger than current node's key.
-            if(node.right == null) return ret;
-
-            // Count all keys less than key in the right subtree, add it to the
-            // number of keys in the left subtree and current node, then return.
-            else return ret + rank(node.right, key);
+            if(node.left == null) return 1 + rank(node.right, key);
+            else return 1 + node.left.N + rank(node.right, key);
         }
         else
         {
-            // Curren't node's key is equal to key. Return the number of keys in
-            // the left subtree if any.
             if(node.left == null) return 0;
             else return node.left.N;
         }
