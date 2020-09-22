@@ -15,18 +15,77 @@ public class RecursiveBST<Key extends Comparable<Key>, Value>
 
     private class KeysIterable implements Iterable<Key>
     {
-        // TODO: implement
+        private Key from;
+        private Key to;
 
         private class KeysIterator implements Iterator<Key>
         {
-            public KeysIterator() {}
-            public boolean hasNext() {return false;}
-            public Key next() {return null;}
+            private int idx;
+            private int N;
+            private Key[] keys;
+            private Key key1;
+            private Key key2;
+            public KeysIterator(Node node, Key key1, Key key2)
+            {
+                this.key1 = key1;
+                this.key2 = key2;
+
+                if(node == null) this.N = 0;
+                else
+                {
+                    this.N = node.N;
+                    keys = (Key[]) new Comparable[this.N];
+                    
+                    // populate array of keys
+                    idx = 0;
+                    f(node);
+                }
+                // reset index of array for user
+                idx = 0;
+            }
+            public boolean hasNext() {return idx < N && keys[idx] != null;}
+            public Key next() {return keys[idx++];}
+            public void remove() {}
+            private void f(Node node)
+            {
+                if(node == null) return;
+                f(node.left);
+
+                // check if this key is to be added based on key limits
+                if(this.key1 == null)
+                {
+                    if(this.key2 == null) keys[idx++] = node.key;
+                    else if(this.key2.compareTo(node.key) >= 0) keys[idx++] = node.key;
+                }
+                else
+                {
+                    if(this.key2 == null)
+                    {
+                        if(this.key1.compareTo(node.key) <= 0) {keys[idx++] = node.key;}
+                    }
+                    else
+                    {
+                        if(this.key1.compareTo(node.key) <= 0 && this.key2.compareTo(node.key) >= 0)
+                        {
+                            keys[idx++] = node.key;
+                        }
+                    }
+                }
+                f(node.right);
+                return;
+            }
         }
 
-        public KeysIterable() {}
-        public KeysIterable(Key lo, Key hi) {}
-        public KeysIterator iterator() {return new KeysIterator();}
+        public KeysIterable(Key lo, Key hi)
+        {
+            this.from = lo;
+            this.to = hi;
+        }
+
+        public KeysIterator iterator()
+        {
+            return new KeysIterator(root, this.from, this.to);
+        }
     }
 
     private Node root;
@@ -309,7 +368,7 @@ public class RecursiveBST<Key extends Comparable<Key>, Value>
         else return node.key;
     }
 
-    // Return the Node that has k keys less than it within the binary search
+    // Return the Node that has k keys less than it within the binary search tree
     // rooted at node.
     private Node select(Node node, int k)
     {
@@ -444,8 +503,8 @@ public class RecursiveBST<Key extends Comparable<Key>, Value>
         if(node.right != null) toString(node.right, sb);
     }
 
-    public Iterable<Key> keys() {return new KeysIterable();}
-    public Iterable<Key> keys(Key key1, Key key2) {return new KeysIterable(key1,key2);}
+    public Iterable<Key> keys() {return new KeysIterable(null, null);}
+    public Iterable<Key> keys(Key lo, Key hi) {return new KeysIterable(lo ,hi);}
 
     public static void main(String[] args)
     {
@@ -468,8 +527,8 @@ public class RecursiveBST<Key extends Comparable<Key>, Value>
             System.out.println("    get(E): " + st.get("E"));
             System.out.println("    min(): " + st.min());
             System.out.println("    max(): " + st.max());
-            System.out.println("    floor(E)(): " + st.floor("E"));
-            System.out.println("    ceiling(E)(): " + st.ceiling("E"));
+            System.out.println("    floor(E): " + st.floor("E"));
+            System.out.println("    ceiling(E): " + st.ceiling("E"));
             System.out.println("    rank(E): " + st.rank("E"));
             System.out.println("    select(5): " + st.select(5));
             st.delete("E"); System.out.println("    delete(E): " + st.toString());
