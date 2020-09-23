@@ -205,17 +205,17 @@ public class BST<Key extends Comparable<Key>, Value>
         N--;
     }
 
-
-
-
-
-
-
     // Checks if the binary search tree contains a node associated with key.
     public boolean contains(Key key)
     {
-        if(contains(root, key) != null) return true;
-        else return false;
+        Node node = root;
+        while(true)
+        {
+            if(node == null) return false;
+            else if(key.compareTo(node.key) < 0) node = node.left;
+            else if(key.compareTo(node.key) > 0) node = node.right;
+            else return true;
+        }
     }
 
     // Returns the Node associated with key that is within the binary search
