@@ -163,7 +163,47 @@ public class BST<Key extends Comparable<Key>, Value>
     }
 
     // Remove the node that is associated with key.
-    public void delete(Key key) {root = delete(root, key);}
+    public void delete(Key key)
+    {
+        Node node = root;
+        Node prev = root;
+        boolean leftLink = true;
+        while(true)
+        {
+            if(node == null) return;
+            else if(key.compareTo(node.key) < 0)
+            {
+                prev = node;
+                node = node.left;
+                leftLink = true;
+            }
+            else if(key.compareTo(node.key) > 0)
+            {
+                prev = node;
+                node = node.right;
+                leftLink = false;
+            }
+            else break;
+        }
+        // node now contains the node where node.key == key
+
+        // Determine successor.
+        Node successor = ceiling(node.right, key);
+        if(successor == null) successor = node.left;
+        else
+        {
+            // Modify tree to remove node.
+            successor.left = node.left;
+            successor.right = deleteMin(node.right);
+        }
+
+        // Link successor to parent.
+        node.left = null;
+        node.right = null;
+        if(leftLink) prev.left = successor;
+        else prev.right = successor;
+        N--;
+    }
 
     // Delete the node associated with key within the binary search tree rooted
     // at node.
