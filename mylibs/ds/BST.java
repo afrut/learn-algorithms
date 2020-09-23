@@ -275,9 +275,25 @@ public class BST<Key extends Comparable<Key>, Value>
     // Return the smallest key that is greater than key.
     public Key ceiling(Key key)
     {
-        Node node = ceiling(root, key);
-        if(node == null) return null;
-        else return node.key;
+        Node node = root;
+        Node ret = null;
+        while(true)
+        {
+            if(node == null) break;
+            else if(key.compareTo(node.key) < 0)
+            {
+                ret = node;
+                node = node.left;
+            }
+            else if(key.compareTo(node.key) > 0) node = node.right;
+            else
+            {
+                ret = node.right;
+                break;
+            }
+        }
+        if(ret == null) return null;
+        else return ret.key;
     }
 
     // Return the node containing the smallest key greater than node.key within
