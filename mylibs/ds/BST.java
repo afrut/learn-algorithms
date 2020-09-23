@@ -251,34 +251,25 @@ public class BST<Key extends Comparable<Key>, Value>
     // Return the largest key that is less than key.
     public Key floor(Key key)
     {
-        Node node = floor(root, key);
-        if(node == null) return null;
-        else return node.key;
-    }
-
-    // Return the node associated with the largest key that is less than node.key
-    // within the binary search tree rooted at node.
-    private Node floor(Node node, Key key)
-    {
-        if(node == null) return null;
-        if(key.compareTo(node.key) < 0)
+        Node node = root;
+        Node ret = null;
+        while(true)
         {
-            Node ret = floor(node.left, key);
-            if(ret == null) return null;
-            else return ret;
+            if(node == null) break;
+            else if(key.compareTo(node.key) < 0) node = node.left;
+            else if(key.compareTo(node.key) > 0)
+            {
+                ret = node;
+                node = node.right;
+            }
+            else
+            {
+                ret = node.left;
+                break;
+            }
         }
-        else if(key.compareTo(node.key) > 0)
-        {
-            Node ret = floor(node.right, key);
-            if(ret == null) return node;
-            else return ret;
-        }
-        else
-        {
-            Node ret = floor(node.left, key);
-            if(ret == null) return null;
-            else return ret;
-        }
+        if(ret == null) return null;
+        else return ret.key;
     }
 
     // Return the smallest key that is greater than key.
