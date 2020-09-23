@@ -205,52 +205,11 @@ public class BST<Key extends Comparable<Key>, Value>
         N--;
     }
 
-    // Delete the node associated with key within the binary search tree rooted
-    // at node.
-    private Node delete(Node node, Key key)
-    {
-        if(node == null) return null;
-        else if(key.compareTo(node.key) < 0)
-        {
-            node.left = delete(node.left, key);
-            updateNodeN(node);
-            return node;
-        }
-        else if(key.compareTo(node.key) > 0)
-        {
-            node.right = delete(node.right, key);
-            updateNodeN(node);
-            return node;
-        }
-        else
-        {
-            // Node with key found. Store it in a temporary variable.
-            // node is the Node to delete.
-            // Find the ceiling of this node within its binary tree.
-            Node successor = ceiling(node.right, node.key);
-            if(successor != null)
-            {
-                // The successor should not have a node on its left.
-                // If it did, it would not be the ceiling of node.
-                // Set the successor's left to be the node left of node to delete.
-                successor.right = deleteMin(node.right);
-                successor.left = node.left;
-                node.left = null;
-                node.right = null;
-            }
-            else
-            {
-                successor = node.left;
-            }
 
-            // Update the counts of successor.
-            updateNodeN(successor);
 
-            // Return the successor so that it can be properly linked to the
-            // node above node to delete.
-            return successor;
-        }
-    }
+
+
+
 
     // Checks if the binary search tree contains a node associated with key.
     public boolean contains(Key key)
