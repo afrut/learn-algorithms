@@ -300,25 +300,25 @@ public class BST<Key extends Comparable<Key>, Value>
     // the binary search tree rooted at node.
     private Node ceiling(Node node, Key key)
     {
-        if(node == null) return null;
-        if(key.compareTo(node.key) < 0)
+        Node currentNode = node;
+        Node ret = null;
+        while(true)
         {
-            Node ret = ceiling(node.left, key);
-            if(ret == null) return node;
-            else return ret;
+            if(currentNode == null) break;
+            else if(key.compareTo(currentNode.key) < 0)
+            {
+                ret = node;
+                node = node.left;
+            }
+            else if(key.compareTo(currentNode.key) > 0) {node = node.right;}
+            else
+            {
+                ret = node.right;
+                break;
+            }
         }
-        else if(key.compareTo(node.key) > 0)
-        {
-            Node ret = ceiling(node.right, key);
-            if(ret == null) return null;
-            else return ret;
-        }
-        else
-        {
-            Node ret = ceiling(node.right, key);
-            if(ret == null) return null;
-            else return ret;
-        }
+        if(ret == null) return null;
+        else return ret.key;
     }
 
     // Return the number of keys that are less than key.
