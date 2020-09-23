@@ -152,19 +152,14 @@ public class BST<Key extends Comparable<Key>, Value>
     // Return the value associated with key.
     public Value get(Key key)
     {
-        Node node = get(root, key);
-        if(node == null) return null;
-        else return node.value;
-    }
-
-    // Return the Node associated with key within the binary search tree rooted
-    // at node.
-    private Node get(Node node, Key key)
-    {
-        if(node == null) return null;
-        if(key.compareTo(node.key) < 0) return get(node.left, key);
-        else if(key.compareTo(node.key) > 0) return get(node.right, key);
-        else return node;
+        Node node = root;
+        while(true)
+        {
+            if(node == null) return null;
+            else if(key.compareTo(node.key) < 0) node = node.left;
+            else if(key.compareTo(node.key) > 0) node = node.right;
+            else return node.value;
+        }
     }
 
     // Remove the node that is associated with key.
