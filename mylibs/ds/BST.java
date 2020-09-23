@@ -218,58 +218,34 @@ public class BST<Key extends Comparable<Key>, Value>
         }
     }
 
-    // Returns the Node associated with key that is within the binary search
-    // tree rooted at node.
-    private Node contains(Node node, Key key)
-    {
-        if(node == null) return null;
-        else if(key.compareTo(node.key) < 0) return contains(node.left, key);
-        else if(key.compareTo(node.key) > 0) return contains(node.right, key);
-        else return node;
-    }
-
     // Check if the binary search tree is null.
-    public boolean isEmpty() {return root == null;}
+    public boolean isEmpty() {return N == 0;}
 
     // Return the total number of nodes.
-    public int size()
-    {
-        if(root == null) return 0;
-        else return root.N;
-    }
+    public int size() {return N;}
 
     // Return the smallest Key.
     public Key min()
     {
-        Node ret = min(root);
-        if(ret == null) return null;
-        else return ret.key;
-    }
-
-    // Return the node containing the smallest key in the binary tree rooted at
-    // node.
-    private Node min(Node node)
-    {
-        if(node == null) return null;
-        if(node.left != null) return min(node.left);
-        else return node;
+        Node node = root;
+        while(true)
+        {
+            if(node == null) return null;
+            else if(node.left == null) return node.key;
+            else node = node.left;
+        }
     }
 
     // Return the largest key.
     public Key max()
     {
-        Node ret = max(root);
-        if(ret == null) return null;
-        else return ret.key;
-    }
-
-    // Return the Node that is associated with the largest key within the binary
-    // search tree rooted at node.
-    public Node max(Node node)
-    {
-        if(node == null) return null;
-        if(node.right != null) return max(node.right);
-        else return node;
+        Node node = root;
+        while(true)
+        {
+            if(node == null) return null;
+            else if(node.right == null) return node.key;
+            else node = node.right;
+        }
     }
 
     // Return the largest key that is less than key.
