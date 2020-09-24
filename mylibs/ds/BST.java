@@ -102,7 +102,6 @@ public class BST<Key extends Comparable<Key>, Value>
             root.key = key;
             root.value = value;
             root.N = 1;
-            N = 1;
         }
         else
         {
@@ -114,6 +113,7 @@ public class BST<Key extends Comparable<Key>, Value>
             {
                 if(key.compareTo(node.key) < 0)
                 {
+                    bag.add(node);
                     if(node.left == null)
                     {
                         Node newNode = new Node();
@@ -121,17 +121,16 @@ public class BST<Key extends Comparable<Key>, Value>
                         newNode.value = value;
                         newNode.N = 1;
                         node.left = newNode;
-                        N++;
                         break;
                     }
                     else
                     {
                         node = node.left;
-                        bag.add(node);
                     }
                 }
                 else if(key.compareTo(node.key) > 0)
                 {
+                    bag.add(node);
                     if(node.right == null)
                     {
                         Node newNode = new Node();
@@ -139,13 +138,11 @@ public class BST<Key extends Comparable<Key>, Value>
                         newNode.value = value;
                         newNode.N = 1;
                         node.right = newNode;
-                        N++;
                         break;
                     }
                     else
                     {
                         node = node.right;
-                        bag.add(node);
                     }
                 }
                 else
@@ -184,18 +181,21 @@ public class BST<Key extends Comparable<Key>, Value>
         Node node = root;
         Node prev = root;
         boolean leftLink = true;
+        Bag<Node> bag = new Bag<Node>();
         while(true)
         {
             if(node == null) return;
             else if(key.compareTo(node.key) < 0)
             {
                 prev = node;
+                bag.add(node);
                 node = node.left;
                 leftLink = true;
             }
             else if(key.compareTo(node.key) > 0)
             {
                 prev = node;
+                bag.add(node);
                 node = node.right;
                 leftLink = false;
             }
@@ -211,7 +211,6 @@ public class BST<Key extends Comparable<Key>, Value>
             // Modify tree to remove node.
             successor.left = node.left;
             successor.right = deleteMin(node.right);
-            updateNodeN(successor);
         }
 
         // Link successor to parent.
@@ -219,7 +218,10 @@ public class BST<Key extends Comparable<Key>, Value>
         node.right = null;
         if(leftLink) prev.left = successor;
         else prev.right = successor;
-        updateNodeN(prev);
+
+        // Update Node.N for all relevant nodes in the tree path to the deleted node.
+        for(Node n : bag)
+            n.N--;
     }
 
     // Checks if the binary search tree contains a node associated with key.
@@ -236,10 +238,14 @@ public class BST<Key extends Comparable<Key>, Value>
     }
 
     // Check if the binary search tree is null.
-    public boolean isEmpty() {return N == 0;}
+    public boolean isEmpty() {return root == null;}
 
     // Return the total number of nodes.
-    public int size() {return N;}
+    public int size()
+    {
+        if(root == null) return 0;
+        else return root.N;
+    }
 
     // Return the smallest Key.
     public Key min()
@@ -341,7 +347,24 @@ public class BST<Key extends Comparable<Key>, Value>
     // Keys have to be unique.
     public int rank(Key key)
     {
-        // TODO: implement this when the Node.N is re-instated
+        Node node = root;
+        int ret = 0;
+        while(true)
+        {
+            if(node == null) return ret;
+            else if(key.compareTo(node.key) < 0)
+            {
+                ret += 1;
+                if(node.left != null) ret += node.left.N;
+                node = node.right;
+            }
+            else if(key.compareTo(node.key) > 0) {node = node.left;}
+            else
+            {
+                if(node.left != null) ret += node.left.N;
+                return ret;
+            }
+        }
     }
 
     // Return the key that has k keys less than it.
