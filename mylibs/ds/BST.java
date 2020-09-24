@@ -471,34 +471,6 @@ public class BST<Key extends Comparable<Key>, Value>
             n.N--;
     }
 
-    // Remove the node with the largest key within the subtree rooted at node.
-    private Node deleteMax(Node node)
-    {
-        if(node == null) return null;
-        if(node.right == null)
-        {
-            Node ret = node.left;
-            node.left = null;
-            return ret;
-        }
-        else
-        {
-            node.right = deleteMax(node.right);
-            updateNodeN(node);
-            return node;
-        }
-    }
-
-    // Helper function to update the count of a node.
-    private void updateNodeN(Node node)
-    {
-        if(node == null) return;
-        int ret = 0;
-        if(node.left != null) ret += node.left.N;
-        if(node.right != null) ret += node.right.N;
-        node.N = ret + 1;
-    }
-
     public int size(Key from, Key to)
     {
         return size(root, from, to);
