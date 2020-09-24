@@ -323,17 +323,16 @@ public class BST<Key extends Comparable<Key>, Value>
     // the binary search tree rooted at node.
     private Node ceiling(Node node, Key key)
     {
-        Node currentNode = node;
         Node ret = null;
         while(true)
         {
-            if(currentNode == null) break;
-            else if(key.compareTo(currentNode.key) < 0)
+            if(node == null) break;
+            else if(key.compareTo(node.key) < 0)
             {
                 ret = node;
                 node = node.left;
             }
-            else if(key.compareTo(currentNode.key) > 0) {node = node.right;}
+            else if(key.compareTo(node.key) > 0) {node = node.right;}
             else
             {
                 ret = node.right;
@@ -370,45 +369,33 @@ public class BST<Key extends Comparable<Key>, Value>
     // Return the key that has k keys less than it.
     public Key select(int k)
     {
-        Node node = select(root, k);
-        if(node == null) return null;
-        else return node.key;
-    }
-
-    // Return the Node that has k keys less than it within the binary search tree
-    // rooted at node.
-    private Node select(Node node, int k)
-    {
-        if(k < 0) return null;
-        else if(node == null) return null;
-        int cntleft = 0, cntright = 0;
-        if(node.left != null) cntleft = node.left.N;
-        if(node.right != null) cntright = node.right.N;
-        if(node.left != null)
+        Node node = root;
+        int cnt = 0;
+        while(cnt < k)
         {
-            if(node.left.N > k)
+            if(node == null || node.N <= k) return null;
+            else if(node.left != null)
             {
-                return select(node.left, k);
-            }
-            else if(node.left.N < k)
-            {
-                return select(node.right, k - node.left.N - 1);
+                if(node.left.N > k) node = node.left;
+                else if(node.left.N < k)
+                {
+                    cnt++;
+                    cnt += node.left.N;
+                    node = node.right;
+                }
+                else
+                {
+                    return node.key;
+                }
             }
             else
             {
-                return node;
+                cnt++;
+                node = node.right;
             }
         }
-        else if(k == 0) return node;
-        else if(node.right != null)
-        {
-            if(node.right.N > k)
-            {
-                return select(node.right, k - 1);
-            }
-            else return null;
-        }
-        else return null;
+        if(node == null) return null;
+        else return node.key;
     }
 
     // Remove the node with the smallest key.
