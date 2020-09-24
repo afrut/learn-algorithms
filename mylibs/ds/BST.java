@@ -352,13 +352,13 @@ public class BST<Key extends Comparable<Key>, Value>
         while(true)
         {
             if(node == null) return ret;
-            else if(key.compareTo(node.key) < 0)
+            else if(key.compareTo(node.key) < 0) {node = node.left;}
+            else if(key.compareTo(node.key) > 0)
             {
                 ret += 1;
                 if(node.left != null) ret += node.left.N;
                 node = node.right;
             }
-            else if(key.compareTo(node.key) > 0) {node = node.left;}
             else
             {
                 if(node.left != null) ret += node.left.N;
@@ -475,83 +475,14 @@ public class BST<Key extends Comparable<Key>, Value>
     public int size(Key from, Key to)
     {
         // Find the first node such that from <= node.key <= to.
-        int cnt = 0;
+        int ret = 0;
         Node node = root;
         while(true)
         {
-            if(node == null) return cnt;
-            else if(from.compareTo(node.key) < 0 && to.compareTo(node.key) < 0) node = node.left;
-            else if(from.compareTo(node.key) > 0 && to.compareTo(node.key) > 0) node = node.right;
-            else break;
-        }
-
-        Node minNode = node;
-        while(true)
-        {
-            if(minNode == null) break;
-            else if(from.compareTo(minNode.key) < 0)
-            {
-                cnt += 1;
-                if(minNode.right != null)
-                    cnt += minNode.right.N;
-                minNode = minNode.left;
-            }
-            else if(from.compareTo(minNode.key) > 0) {minNode = minNode.right;}
-            else
-            {
-                cnt += 1;
-                if(minNode.right != null)
-                    cnt += minNode.right.N;
-                break;
-            }
-        }
-
-        Node maxNode = root;
-        while(true)
-        {
-            if(maxNode == null) break;
-            else if(to.compareTo(maxNode.key) < 0) {maxNode = maxNode.left;}
-            else if(to.compareTo(maxNode.key) > 0)
-            {
-                cnt += 1;
-                if(maxNode.left != null)
-                    cnt += maxNode.left.N;
-                maxNode = maxNode.right;
-            }
-            else
-            {
-                cnt += 1;
-                if(maxNode.left != null)
-                    cnt += maxNode.left.N;
-                break;
-            }
-        }
-
-        return cnt;
-    }
-
-    private int size(Node node, Key from, Key to)
-    {
-        if(node == null) return 0;
-        if(from.compareTo(node.key) > 0)
-        {
-            return size(node.right, from, to);
-        }
-        else if(from.compareTo(node.key) == 0)
-        {
-            return 1 + size(node.right, from, to);
-        }
-        else if(from.compareTo(node.key) < 0 && to.compareTo(node.key) > 0)
-        {
-            return 1 + size(node.left, from, to) + size(node.right, from, to);
-        }
-        else if(to.compareTo(node.key) == 0)
-        {
-            return 1 + size(node.left, from, to);
-        }
-        else
-        {
-            return size(node.left, from, to);
+            if(node == null) break;
+            else if(from.compareTo(node.key) > 0) node = node.right;
+            else if(from.compareTo(node.key) <= 0 && to.compareTo(node.key) >= 0) break;
+            
         }
     }
 
