@@ -90,13 +90,8 @@ public class BST<Key extends Comparable<Key>, Value>
     }
 
     private Node root;
-    private int N;
 
-    public BST()
-    {
-        root = null;
-        N = 0;
-    }
+    public BST() {root = null;}
 
     // Searches for key and replaces its value. If not found, inserts key and value.
     public void put(Key key, Value value)
@@ -216,6 +211,7 @@ public class BST<Key extends Comparable<Key>, Value>
             // Modify tree to remove node.
             successor.left = node.left;
             successor.right = deleteMin(node.right);
+            updateNodeN(successor);
         }
 
         // Link successor to parent.
@@ -223,7 +219,7 @@ public class BST<Key extends Comparable<Key>, Value>
         node.right = null;
         if(leftLink) prev.left = successor;
         else prev.right = successor;
-        N--;
+        updateNodeN(prev);
     }
 
     // Checks if the binary search tree contains a node associated with key.
@@ -432,6 +428,16 @@ public class BST<Key extends Comparable<Key>, Value>
             updateNodeN(node);
             return node;
         }
+    }
+
+    // Helper function to update the count of a node.
+    private void updateNodeN(Node node)
+    {
+        if(node == null) return;
+        int ret = 0;
+        if(node.left != null) ret += node.left.N;
+        if(node.right != null) ret += node.right.N;
+        node.N = ret + 1;
     }
 
     public int size(Key from, Key to)
