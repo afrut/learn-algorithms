@@ -438,7 +438,38 @@ public class BST<Key extends Comparable<Key>, Value>
     }
 
     // Remove the pair with the greatest key.
-    public void deleteMax() {root = deleteMax(root);}
+    public void deleteMax()
+    {
+        Node node = root;
+        Node prev = null;
+        Bag<Node> bag = new Bag<Node>();
+        while(true)
+        {
+            if(node == null) return;
+            else if(node.right == null)
+            {
+                if(prev == null)
+                {
+                    root = node.left;
+                    node.left = null;
+                }
+                else
+                {
+                    prev.right = node.left;
+                    node.left = null;
+                }
+                break;
+            }
+            else
+            {
+                prev = node;
+                bag.add(node);
+                node = node.right;
+            }
+        }
+        for(Node n : bag)
+            n.N--;
+    }
 
     // Remove the node with the largest key within the subtree rooted at node.
     private Node deleteMax(Node node)
