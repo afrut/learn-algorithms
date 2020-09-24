@@ -14,6 +14,7 @@ public class BST<Key extends Comparable<Key>, Value>
         int N;
     }
 
+    // TODO: implement this
     private class KeysIterable implements Iterable<Key>
     {
         private Key from;
@@ -473,7 +474,60 @@ public class BST<Key extends Comparable<Key>, Value>
 
     public int size(Key from, Key to)
     {
-        return size(root, from, to);
+        // Find the first node such that from <= node.key <= to.
+        int cnt = 0;
+        Node node = root;
+        while(true)
+        {
+            if(node == null) return cnt;
+            else if(from.compareTo(node.key) < 0 && to.compareTo(node.key) < 0) node = node.left;
+            else if(from.compareTo(node.key) > 0 && to.compareTo(node.key) > 0) node = node.right;
+            else break;
+        }
+
+        Node minNode = node;
+        while(true)
+        {
+            if(minNode == null) break;
+            else if(from.compareTo(minNode.key) < 0)
+            {
+                cnt += 1;
+                if(minNode.right != null)
+                    cnt += minNode.right.N;
+                minNode = minNode.left;
+            }
+            else if(from.compareTo(minNode.key) > 0) {minNode = minNode.right;}
+            else
+            {
+                cnt += 1;
+                if(minNode.right != null)
+                    cnt += minNode.right.N;
+                break;
+            }
+        }
+
+        Node maxNode = root;
+        while(true)
+        {
+            if(maxNode == null) break;
+            else if(to.compareTo(maxNode.key) < 0) {maxNode = maxNode.left;}
+            else if(to.compareTo(maxNode.key) > 0)
+            {
+                cnt += 1;
+                if(maxNode.left != null)
+                    cnt += maxNode.left.N;
+                maxNode = maxNode.right;
+            }
+            else
+            {
+                cnt += 1;
+                if(maxNode.left != null)
+                    cnt += maxNode.left.N;
+                break;
+            }
+        }
+
+        return cnt;
     }
 
     private int size(Node node, Key from, Key to)
