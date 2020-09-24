@@ -404,19 +404,37 @@ public class BST<Key extends Comparable<Key>, Value>
     // Remove the node with the smallest key within the subtree rooted at node.
     private Node deleteMin(Node node)
     {
-        if(node == null) return null;
-        if(node.left == null)
+        Node orig = node;
+        Node prev = null;
+        Bag<Node> bag = new Bag<Node>();
+        while(true)
         {
-            Node ret = node.right;
-            node.right = null;
-            return ret;
+            if(node == null) return null;
+            else if(node.left == null)
+            {
+                if(prev == null)
+                {
+                    root = node.right;
+                    orig = node.right;
+                    node.right = null;
+                }
+                else
+                {
+                    prev.left = node.right;
+                    node.right = null;
+                }
+                break;
+            }
+            else
+            {
+                prev = node;
+                bag.add(node);
+                node = node.left;
+            }
         }
-        else
-        {
-            node.left = deleteMin(node.left);
-            updateNodeN(node);
-            return node;
-        }
+        for(Node n : bag)
+            n.N--;
+        return orig;
     }
 
     // Remove the pair with the greatest key.
