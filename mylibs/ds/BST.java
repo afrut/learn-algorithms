@@ -474,16 +474,13 @@ public class BST<Key extends Comparable<Key>, Value>
 
     public int size(Key from, Key to)
     {
-        // Find the first node such that from <= node.key <= to.
-        int ret = 0;
-        Node node = root;
-        while(true)
-        {
-            if(node == null) break;
-            else if(from.compareTo(node.key) > 0) node = node.right;
-            else if(from.compareTo(node.key) <= 0 && to.compareTo(node.key) >= 0) break;
-            
-        }
+        if(root == null) return 0;
+        int total = root.N;
+        int ltFrom = rank(from);
+        int ltTo = rank(to);
+        int ret = ltTo - ltFrom;
+        if(contains(to)) ret++;
+        return ret;
     }
 
     public String toString()
