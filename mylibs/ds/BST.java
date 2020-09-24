@@ -1,6 +1,7 @@
 package mylibs.ds;
 import java.util.Iterator;
 import edu.princeton.cs.algs4.StdIn;
+import mylibs.ds.Bag;
 
 public class BST<Key extends Comparable<Key>, Value>
 {
@@ -10,7 +11,6 @@ public class BST<Key extends Comparable<Key>, Value>
         Value value;
         Node left;
         Node right;
-        // TOOD: remove this field
         int N;
     }
 
@@ -95,7 +95,7 @@ public class BST<Key extends Comparable<Key>, Value>
     public BST()
     {
         root = null;
-        N = 1;
+        N = 0;
     }
 
     // Searches for key and replaces its value. If not found, inserts key and value.
@@ -106,11 +106,14 @@ public class BST<Key extends Comparable<Key>, Value>
             root = new Node();
             root.key = key;
             root.value = value;
+            root.N = 1;
             N = 1;
         }
         else
         {
             Node node = root;
+            Bag<Node> bag = new Bag<Node>();
+            boolean contained = false;
 
             while(true)
             {
@@ -121,11 +124,16 @@ public class BST<Key extends Comparable<Key>, Value>
                         Node newNode = new Node();
                         newNode.key = key;
                         newNode.value = value;
+                        newNode.N = 1;
                         node.left = newNode;
                         N++;
                         break;
                     }
-                    else node = node.left;
+                    else
+                    {
+                        node = node.left;
+                        bag.add(node);
+                    }
                 }
                 else if(key.compareTo(node.key) > 0)
                 {
@@ -134,17 +142,30 @@ public class BST<Key extends Comparable<Key>, Value>
                         Node newNode = new Node();
                         newNode.key = key;
                         newNode.value = value;
+                        newNode.N = 1;
                         node.right = newNode;
                         N++;
                         break;
                     }
-                    else node = node.right;
+                    else
+                    {
+                        node = node.right;
+                        bag.add(node);
+                    }
                 }
                 else
                 {
                     node.key = key;
                     node.value = value;
+                    contained = true;
+                    break;
                 }
+            }
+
+            if(!contained)
+            {
+                for(Node n : bag)
+                    n.N++;
             }
         }
     }
@@ -317,36 +338,14 @@ public class BST<Key extends Comparable<Key>, Value>
                 break;
             }
         }
-        if(ret == null) return null;
-        else return ret.key;
+        return ret;
     }
 
     // Return the number of keys that are less than key.
     // Keys have to be unique.
     public int rank(Key key)
     {
-        return rank(root, key);
-    }
-
-    // Returns the number of keys less than key within the binary search tree
-    // at node.
-    private int rank(Node node, Key key)
-    {
-        if(node == null) return 0;
-        if(key.compareTo(node.key) < 0)
-        {
-            return rank(node.left, key);
-        }
-        else if(key.compareTo(node.key) > 0)
-        {
-            if(node.left == null) return 1 + rank(node.right, key);
-            else return 1 + node.left.N + rank(node.right, key);
-        }
-        else
-        {
-            if(node.left == null) return 0;
-            else return node.left.N;
-        }
+        // TODO: implement this when the Node.N is re-instated
     }
 
     // Return the key that has k keys less than it.
