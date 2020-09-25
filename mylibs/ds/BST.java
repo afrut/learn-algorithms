@@ -510,6 +510,24 @@ public class BST<Key extends Comparable<Key>, Value>
         if(node.right != null) toString(node.right, sb);
     }
 
+    private String toStringIterator()
+    {
+        StringBuilder sb = new StringBuilder();
+        for(Key key : keys()) sb.append(key.toString() + ", ");
+        if(sb.length() > 0)
+            sb.setLength(sb.length() - 2);
+        return sb.toString();
+    }
+
+    private String toStringIterator(Key from, Key to)
+    {
+        StringBuilder sb = new StringBuilder();
+        for(Key key : keys(from, to)) sb.append(key.toString() + ", ");
+        if(sb.length() > 0)
+            sb.setLength(sb.length() - 2);
+        return sb.toString();
+    }
+
     public Iterable<Key> keys() {return new KeysIterable(null, null);}
     public Iterable<Key> keys(Key lo, Key hi) {return new KeysIterable(lo ,hi);}
 
@@ -523,189 +541,136 @@ public class BST<Key extends Comparable<Key>, Value>
 
         if(test)
         {
+            // TODO: introduce pass/fail to these tests
             BST<String, Integer> st =
                 new BST <String, Integer>();
+            String pf = "fail";
             System.out.println("Testing all operations on empty symbol table:");
-            System.out.println("    Contents: " + st.toString());
-            System.out.println("    isEmpty(): " + st.isEmpty());
-            System.out.println("    size(): " + st.size());
-            System.out.println("    size(C, G): " + st.size("C", "G"));
-            System.out.println("    contains(E): " + st.contains("E"));
-            System.out.println("    get(E): " + st.get("E"));
-            System.out.println("    min(): " + st.min());
-            System.out.println("    max(): " + st.max());
-            System.out.println("    floor(E): " + st.floor("E"));
-            System.out.println("    ceiling(E): " + st.ceiling("E"));
-            System.out.println("    rank(E): " + st.rank("E"));
-            System.out.println("    select(5): " + st.select(5));
-            st.delete("E"); System.out.println("    delete(E): " + st.toString());
-            st.deleteMin(); System.out.println("    deleteMin(): " + st.toString());
-            st.deleteMax(); System.out.println("    deleteMax(): " + st.toString());
-            System.out.println("    keys():");
-            for(String str : st.keys()) System.out.println("        " + str);
-            System.out.println("    keys(C, P):");
-            for(String str : st.keys("C", "P")) System.out.println("        " + str);
-            System.out.println("    keys(D, P):");
-            for(String str : st.keys("D", "P")) System.out.println("        " + str);
-            System.out.println("    keys(C, Q):");
-            for(String str : st.keys("C", "Q")) System.out.println("        " + str);
-            System.out.println("    keys(D, Q):");
-            for(String str : st.keys("D", "Q")) System.out.println("        " +
-            str);
+            System.out.println("Contents: " + st.toString());
+            pf = "fail"; if(st.isEmpty()) pf = "pass"; System.out.println("    " + pf + " - isEmpty(): " + st.isEmpty());
+            pf = "fail"; if(st.size() == 0) pf = "pass"; System.out.println("    " + pf + " - size(): " + st.size());
+            pf = "fail"; if(st.size("C", "G") == 0) pf = "pass"; System.out.println("    " + pf + " - size(C, G): " + st.size("C", "G"));
+            pf = "fail"; if(st.contains("E") == false) pf = "pass"; System.out.println("    " + pf + " - contains(E): " + st.contains("E"));
+            pf = "fail"; if(st.get("E") == null) pf = "pass"; System.out.println("    " + pf + " - get(E): " + st.get("E"));
+            pf = "fail"; if(st.min() == null) pf = "pass"; System.out.println("    " + pf + " - min(): " + st.min());
+            pf = "fail"; if(st.max() == null) pf = "pass"; System.out.println("    " + pf + " - max(): " + st.max());
+            pf = "fail"; if(st.floor("E") == null) pf = "pass"; System.out.println("    " + pf + " - floor(E): " + st.floor("E"));
+            pf = "fail"; if(st.ceiling("E") == null) pf = "pass"; System.out.println("    " + pf + " - ceiling(E): " + st.ceiling("E"));
+            pf = "fail"; if(st.rank("E") == 0) pf = "pass"; System.out.println("    " + pf + " - rank(E): " + st.rank("E"));
+            pf = "fail"; if(st.select(5) == null) pf = "pass"; System.out.println("    " + pf + " - select(5): " + st.select(5));
+            pf = "fail"; st.delete("E"); if(st.toString().isEmpty()) pf = "pass"; System.out.println("    " + pf + " - delete(E): " + st.toString());
+            pf = "fail"; st.deleteMin(); if(st.toString().isEmpty()) pf = "pass"; System.out.println("    " + pf + " - deleteMin(): " + st.toString());
+            pf = "fail"; st.deleteMax(); if(st.toString().isEmpty()) pf = "pass"; System.out.println("    " + pf + " - deleteMax(): " + st.toString());
+            pf = "fail"; if(st.toStringIterator().isEmpty()) pf = "pass"; System.out.println("    " + pf + " - keys(): " + st.toStringIterator());
+            pf = "fail"; if(st.toStringIterator("C", "P").isEmpty()) pf = "pass"; System.out.println("    " + pf + " - keys(C, P): " + st.toStringIterator("C", "P"));
+            pf = "fail"; if(st.toStringIterator("D", "P").isEmpty()) pf = "pass"; System.out.println("    " + pf + " - keys(D, P): " + st.toStringIterator("D", "P"));
+            pf = "fail"; if(st.toStringIterator("C", "Q").isEmpty()) pf = "pass"; System.out.println("    " + pf + " - keys(C, Q): " + st.toStringIterator("C", "Q"));
+            pf = "fail"; if(st.toStringIterator("D", "Q").isEmpty()) pf = "pass"; System.out.println("    " + pf + " - keys(D, Q): " + st.toStringIterator("D", "Q"));
             System.out.println("");
 
             System.out.println("Testing all operations with 1 element:");
-            st.put("G", 3); System.out.println("    put(G, 3): " + st.toString());
-            System.out.println("    isEmpty(): " + st.isEmpty());
-            System.out.println("    size(): " + st.size());
-            System.out.println("    size(B, G): " + st.size("B", "G"));
-            System.out.println("    size(B, X): " + st.size("B", "X"));
-            System.out.println("    size(C, D): " + st.size("C", "D"));
-            System.out.println("    size(W, Z): " + st.size("W", "Z"));
-            System.out.println("    contains(G): " + st.contains("G"));
-            System.out.println("    contains(W): " + st.contains("W"));
-            System.out.println("    get(G): " + st.get("G"));
-            System.out.println("    get(W): " + st.get("W"));
-            System.out.println("    min(): " + st.min());
-            System.out.println("    max(): " + st.max());
-            System.out.println("    floor(A): " + st.floor("A"));
-            System.out.println("    floor(G): " + st.floor("G"));
-            System.out.println("    floor(W): " + st.floor("w"));
-            System.out.println("    ceiling(A): " + st.ceiling("A"));
-            System.out.println("    ceiling(G): " + st.ceiling("G"));
-            System.out.println("    ceiling(W): " + st.ceiling("w"));
-            System.out.println("    rank(G): " + st.rank("G"));
-            System.out.println("    rank(W): " + st.rank("w"));
-            System.out.println("    select(0): " + st.select(0));
-            System.out.println("    select(3): " + st.select(3));
-            System.out.println("    keys():");
-            for(String str : st.keys()) System.out.println("        " + str);
-            System.out.println("    keys(C, P):");
-            for(String str : st.keys("C", "P")) System.out.println("        " + str);
-            System.out.println("    keys(D, P):");
-            for(String str : st.keys("D", "P")) System.out.println("        " + str);
-            System.out.println("    keys(C, Q):");
-            for(String str : st.keys("C", "Q")) System.out.println("        " + str);
-            System.out.println("    keys(D, Q):");
-            for(String str : st.keys("D", "Q")) System.out.println("        " + str);
-            st.put("A", 3); System.out.println("    put(A, 3): " + st.toString());
-            st.delete("A"); System.out.println("    delete(A): " + st.toString());
-            st.put("B", 2); System.out.println("    put(B, 2): " + st.toString());
-            st.put("C", 7); System.out.println("    put(C, 7): " + st.toString());
-            st.deleteMin(); System.out.println("    deleteMin(): " + st.toString());
-            st.deleteMax(); System.out.println("    deleteMax(): " + st.toString());
-            st.deleteMin(); System.out.println("    deleteMin(): " + st.toString());
-            st.put("Z", 23); System.out.println("    put(Z, 23): " + st.toString());
-            st.deleteMax(); System.out.println("    deleteMax(): " + st.toString());
+            pf = "fail"; st.put("G", 3); if(st.toString().equals(st.toString())) pf = "pass"; System.out.println("    " + pf + " - put(G, 3): " + st.toString());
+            pf = "fail"; if(!st.isEmpty()) pf = "pass"; System.out.println("    " + pf + " - isEmpty(): " + st.isEmpty());
+            pf = "fail"; if(st.size() == 1) pf = "pass"; System.out.println("    " + pf + " - size(): " + st.size());
+            pf = "fail"; if(st.size("B", "G") == 1) pf = "pass"; System.out.println("    " + pf + " - size(B, G): " + st.size("B", "G"));
+            pf = "fail"; if(st.size("B", "X") == 1) pf = "pass"; System.out.println("    " + pf + " - size(B, X): " + st.size("B", "X"));
+            pf = "fail"; if(st.size("C", "D") == 0) pf = "pass"; System.out.println("    " + pf + " - size(C, D): " + st.size("C", "D"));
+            pf = "fail"; if(st.size("W", "Z") == 0) pf = "pass"; System.out.println("    " + pf + " - size(W, Z): " + st.size("W", "Z"));
+            pf = "fail"; if(st.contains("G")) pf = "pass"; System.out.println("    " + pf + " - contains(G): " + st.contains("G"));
+            pf = "fail"; if(!st.contains("W")) pf = "pass"; System.out.println("    " + pf + " - contains(W): " + st.contains("W"));
+            pf = "fail"; if(st.get("G") == 3) pf = "pass"; System.out.println("    " + pf + " - get(G): " + st.get("G"));
+            pf = "fail"; if(st.get("W") == null) pf = "pass"; System.out.println("    " + pf + " - get(W): " + st.get("W"));
+            pf = "fail"; if(st.min().equals("G")) pf = "pass"; System.out.println("    " + pf + " - min(): " + st.min());
+            pf = "fail"; if(st.max().equals("G")) pf = "pass"; System.out.println("    " + pf + " - max(): " + st.max());
+            pf = "fail"; if(st.floor("A") == null) pf = "pass"; System.out.println("    " + pf + " - floor(A): " + st.floor("A"));
+            pf = "fail"; if(st.floor("G") == null) pf = "pass"; System.out.println("    " + pf + " - floor(G): " + st.floor("G"));
+            pf = "fail"; if(st.floor("W").equals("G")) pf = "pass"; System.out.println("    " + pf + " - floor(W): " + st.floor("w"));
+            pf = "fail"; if(st.ceiling("A").equals("G")) pf = "pass"; System.out.println("    " + pf + " - ceiling(A): " + st.ceiling("A"));
+            pf = "fail"; if(st.ceiling("G") == null) pf = "pass"; System.out.println("    " + pf + " - ceiling(G): " + st.ceiling("G"));
+            pf = "fail"; if(st.ceiling("W") == null) pf = "pass"; System.out.println("    " + pf + " - ceiling(W): " + st.ceiling("w"));
+            pf = "fail"; if(st.rank("G") == 0) pf = "pass"; System.out.println("    " + pf + " - rank(G): " + st.rank("G"));
+            pf = "fail"; if(st.rank("W") == 1) pf = "pass"; System.out.println("    " + pf + " - rank(W): " + st.rank("w"));
+            pf = "fail"; if(st.select(0).equals("G")) pf = "pass"; System.out.println("    " + pf + " - select(0): " + st.select(0));
+            pf = "fail"; if(st.select(3) == null) pf = "pass"; System.out.println("    " + pf + " - select(3): " + st.select(3));
+            pf = "fail"; if(st.toStringIterator().equals("G")) pf = "pass"; System.out.println("    " + pf + " - keys(): " + st.toStringIterator());
+            pf = "fail"; if(st.toStringIterator("C", "P").equals("G")) pf = "pass"; System.out.println("    " + pf + " - st.keys(C, P): " + st.toStringIterator());
+            pf = "fail"; if(st.toStringIterator("D", "P").equals("G")) pf = "pass"; System.out.println("    " + pf + " - st.keys(D, P): " + st.toStringIterator());
+            pf = "fail"; if(st.toStringIterator("C", "Q").equals("G")) pf = "pass"; System.out.println("    " + pf + " - st.keys(C, Q): " + st.toStringIterator());
+            pf = "fail"; if(st.toStringIterator("D", "Q").equals("G")) pf = "pass"; System.out.println("    " + pf + " - st.keys(D, Q): " + st.toStringIterator());
+            pf = "fail"; st.put("A", 3); if(st.toString().equals("(A, 3), (G, 3)")) pf = "pass"; System.out.println("    " + pf + " - put(A, 3): " + st.toString());
+            pf = "fail"; st.delete("A"); if(st.toString().equals("(G, 3)")) pf = "pass"; System.out.println("    " + pf + " - delete(A): " + st.toString());
+            pf = "fail"; st.put("B", 2); if(st.toString().equals("(B, 2), (G, 3)")) pf = "pass"; System.out.println("    " + pf + " - put(B, 2): " + st.toString());
+            pf = "fail"; st.put("C", 7); if(st.toString().equals("(B, 2), (C, 7), (G, 3)")) pf = "pass"; System.out.println("    " + pf + " - put(C, 7): " + st.toString());
+            pf = "fail"; st.deleteMin(); if(st.toString().equals("(C, 7), (G, 3)")) pf = "pass"; System.out.println("    " + pf + " - deleteMin(): " + st.toString());
+            pf = "fail"; st.deleteMax(); if(st.toString().equals("(C, 7)")) pf = "pass"; System.out.println("    " + pf + " - deleteMax(): " + st.toString());
+            pf = "fail"; st.deleteMin(); if(st.toString().length() == 0) pf = "pass"; System.out.println("    " + pf + " - deleteMin(): " + st.toString());
+            pf = "fail"; st.put("Z", 23); if(st.toString().equals("(Z, 23)")) pf = "pass"; System.out.println("    " + pf + " - put(Z, 23): " + st.toString());
+            pf = "fail"; st.deleteMax(); if(st.toString().length() == 0) pf = "pass"; System.out.println("    " + pf + " - deleteMax(): " + st.toString());
             System.out.println("");
 
             System.out.println("Populating symbol table:");
-            st.put("B", 3); System.out.println("    put(B, 1), size() = " + st.size() + ":  " + st.toString());
-            st.put("W", 3); System.out.println("    put(W, 2), size() = " + st.size() + ":  " + st.toString());
-            st.put("O", 3); System.out.println("    put(O, 3), size() = " + st.size() + ":  " + st.toString());
-            st.put("P", 4); System.out.println("    put(P, 4), size() = " + st.size() + ":  " + st.toString());
-            st.put("F", 5); System.out.println("    put(F, 5), size() = " + st.size() + ":  " + st.toString());
-            st.put("R", 6); System.out.println("    put(R, 6), size() = " + st.size() + ":  " + st.toString());
-            st.put("C", 7); System.out.println("    put(C, 7), size() = " + st.size() + ":  " + st.toString());
+            pf = "fail"; st.put("B", 3); if(st.toString().equals("(B, 3)")) pf = "pass"; System.out.println("    " + pf + " - put(B, 1), size() = " + st.size() + ":  " + st.toString());
+            pf = "fail"; st.put("W", 3); if(st.toString().equals("(B, 3), (W, 3)")) pf = "pass"; System.out.println("    " + pf + " - put(W, 2), size() = " + st.size() + ":  " + st.toString());
+            pf = "fail"; st.put("O", 3); if(st.toString().equals("(B, 3), (O, 3), (W, 3)")) pf = "pass"; System.out.println("    " + pf + " - put(O, 3), size() = " + st.size() + ":  " + st.toString());
+            pf = "fail"; st.put("P", 4); if(st.toString().equals("(B, 3), (O, 3), (P, 4), (W, 3)")) pf = "pass"; System.out.println("    " + pf + " - put(P, 4), size() = " + st.size() + ":  " + st.toString());
+            pf = "fail"; st.put("F", 5); if(st.toString().equals("(B, 3), (F, 5), (O, 3), (P, 4), (W, 3)")) pf = "pass"; System.out.println("    " + pf + " - put(F, 5), size() = " + st.size() + ":  " + st.toString());
+            pf = "fail"; st.put("R", 6); if(st.toString().equals("(B, 3), (F, 5), (O, 3), (P, 4), (R, 6), (W, 3)")) pf = "pass"; System.out.println("    " + pf + " - put(R, 6), size() = " + st.size() + ":  " + st.toString());
+            pf = "fail"; st.put("C", 7); if(st.toString().equals("(B, 3), (C, 7), (F, 5), (O, 3), (P, 4), (R, 6), (W, 3)")) pf = "pass"; System.out.println("    " + pf + " - put(C, 7), size() = " + st.size() + ":  " + st.toString());
             System.out.println("");
 
             System.out.println("Testing iterators:");
-            System.out.println("    Contents: " + st.toString());
-            System.out.println("    keys():");
-            for(String str : st.keys()) System.out.println("        " + str);
-            System.out.println("    keys(C, P):");
-            for(String str : st.keys("C", "P")) System.out.println("        " + str);
-            System.out.println("    keys(D, P):");
-            for(String str : st.keys("D", "P")) System.out.println("        " + str);
-            System.out.println("    keys(C, Q):");
-            for(String str : st.keys("C", "Q")) System.out.println("        " + str);
-            System.out.println("    keys(D, Q):");
-            for(String str : st.keys("D", "Q")) System.out.println("        " + str);
+            System.out.println("Contents: " + st.toString());
+
+            pf = "fail"; if(st.toStringIterator().equals("B, C, F, O, P, R, W")) pf = "pass"; System.out.println("    " + pf + " - keys(): " + st.toStringIterator());
+            pf = "fail"; if(st.toStringIterator("C", "P").equals("C, F, O, P")) pf = "pass"; System.out.println("    " + pf + " - keys(C, P): " + st.toStringIterator("C", "P"));
+            pf = "fail"; if(st.toStringIterator("D", "P").equals("F, O, P")) pf = "pass"; System.out.println("    " + pf + " - keys(D, P): " + st.toStringIterator("D", "P"));
+            pf = "fail"; if(st.toStringIterator("C", "Q").equals("C, F, O, P")) pf = "pass"; System.out.println("    " + pf + " - keys(C, Q): " + st.toStringIterator("C", "Q"));
+            pf = "fail"; if(st.toStringIterator("D", "Q").equals("F, O, P")) pf = "pass"; System.out.println("    " + pf + " - keys(D, Q): " + st.toStringIterator("D", "Q"));
             System.out.println("");
-            
+
             System.out.println("Testing with multiple elements:");
-            System.out.println("    Contents: " + st.toString());
-            System.out.println("    isEmpty(): " + st.isEmpty());
-            System.out.println("    size(): " + st.size());
-            System.out.println("    size(C, P): " + st.size("C", "P"));
-            System.out.println("    size(D, P): " + st.size("D", "P"));
-            System.out.println("    size(D, Q): " + st.size("D", "Q"));
-            System.out.println("    size(A, C): " + st.size("A", "C"));
-            System.out.println("    contains(C): " + st.contains("C"));
-            System.out.println("    contains(D): " + st.contains("D"));
-            System.out.println("    get(C): " + st.get("C"));
-            System.out.println("    get(D): " + st.get("D"));
-            System.out.println("    min(): " + st.min());
-            System.out.println("    max(): " + st.max());
-            System.out.println("    floor(C): " + st.floor("C"));
-            System.out.println("    floor(E): " + st.floor("E"));
-            System.out.println("    ceiling(C): " + st.ceiling("C"));
-            System.out.println("    ceiling(E): " + st.ceiling("E"));
-            System.out.println("    rank(A): " + st.rank("A"));
-            System.out.println("    rank(F): " + st.rank("F"));
-            System.out.println("    rank(W): " + st.rank("W"));
-            System.out.println("    rank(Z): " + st.rank("Z"));
-            System.out.println("    select(4): " + st.select(4));
-            System.out.println("    select(20): " + st.select(20));
-            System.out.println("    select(-1): " + st.select(-1));
-            st.delete("B"); System.out.println("    delete(B), size() = " + st.size() + ", " + st.toString());
-            st.delete("W"); System.out.println("    delete(W), size() = " + st.size() + ", " + st.toString());
-            st.delete("G"); System.out.println("    delete(G), size() = " + st.size() + ", " + st.toString());
-            st.deleteMin(); System.out.println("    deleteMin(), size() = " + st.size() + ", " + st.toString());
-            st.deleteMax(); System.out.println("    deleteMax(), size() = " + st.size() + ", " + st.toString());
-            st.deleteMin(); System.out.println("    deleteMin(), size() = " + st.size() + ", " + st.toString());
-            st.deleteMax(); System.out.println("    deleteMax(), size() = " + st.size() + ", " + st.toString());
-            st.deleteMin(); System.out.println("    deleteMin(), size() = " + st.size() + ", " + st.toString());
-            st.delete("X"); System.out.println("    delete(X), size() = " + st.size() + ", " + st.toString());
-            st.deleteMin(); System.out.println("    deleteMin(), size() = " + st.size() + ", " + st.toString());
-            st.deleteMax(); System.out.println("    deleteMax(), size() = " + st.size() + ", " + st.toString());
-        }
-        else
-        {
+            System.out.println("Contents: " + st.toString());
+            pf = "fail"; if(!st.isEmpty()) pf = "pass"; System.out.println("    " + pf + " - isEmpty(): " + st.isEmpty());
+            pf = "fail"; if(st.size() == 7) pf = "pass"; System.out.println("    " + pf + " - size(): " + st.size());
+            pf = "fail"; if(st.size("C", "P") == 4) pf = "pass"; System.out.println("    " + pf + " - size(C, P): " + st.size("C", "P"));
+            pf = "fail"; if(st.size("D", "P") == 3) pf = "pass"; System.out.println("    " + pf + " - size(D, P): " + st.size("D", "P"));
+            pf = "fail"; if(st.size("D", "Q") == 3) pf = "pass"; System.out.println("    " + pf + " - size(D, Q): " + st.size("D", "Q"));
+            pf = "fail"; if(st.size("A", "C") == 2) pf = "pass"; System.out.println("    " + pf + " - size(A, C): " + st.size("A", "C"));
+            pf = "fail"; if(st.contains("C")) pf = "pass"; System.out.println("    " + pf + " - contains(C): " + st.contains("C"));
+            pf = "fail"; if(!st.contains("D")) pf = "pass"; System.out.println("    " + pf + " - contains(D): " + st.contains("D"));
+            pf = "fail"; if(st.get("C") == 7) pf = "pass"; System.out.println("    " + pf + " - get(C): " + st.get("C"));
+            pf = "fail"; if(st.get("D") == null) pf = "pass"; System.out.println("    " + pf + " - get(D): " + st.get("D"));
+            pf = "fail"; if(st.min().equals("B")) pf = "pass"; System.out.println("    " + pf + " - min(): " + st.min());
+            pf = "fail"; if(st.max().equals("W")) pf = "pass"; System.out.println("    " + pf + " - max(): " + st.max());
+
+            System.out.println(st.floor("C"));
+            pf = "fail"; if(st.floor("C").equals("B")) pf = "pass"; System.out.println("    " + pf + " - floor(C): " + st.floor("C"));
             /*
-            BST<String, Integer> st =
-                new BST<String, Integer>();
-            // sample input is SEARCHEXAMPLE
-            System.out.println("Symbol table empty? " + st.isEmpty());
-            System.out.println("Testing put() operation:");
-            int cnt = 0;
-            while(!StdIn.isEmpty())
-            {
-                String key = StdIn.readString();
-                st.put(key, cnt);
-                cnt++;
-            }
-            System.out.println("    Contents" + st.toString());
-            System.out.println("Symbol table empty? " + st.isEmpty());
-            System.out.println("");
+            pf = "fail"; if(st.floor("E").equals("C")) pf = "pass"; System.out.println("    " + pf + " - floor(E): " + st.floor("E"));
+            pf = "fail"; if(st.ceiling("C").equals("F")) pf = "pass"; System.out.println("    " + pf + " - ceiling(C): " + st.ceiling("C"));
+            pf = "fail"; if(st.ceiling("E").equals("F")) pf = "pass"; System.out.println("    " + pf + " - ceiling(E): " + st.ceiling("E"));
+            pf = "fail"; if(st.rank("A") == 0) pf = "pass"; System.out.println("    " + pf + " - rank(A): " + st.rank("A"));
+            pf = "fail"; if(st.rank("F") == 2) pf = "pass"; System.out.println("    " + pf + " - rank(F): " + st.rank("F"));
+            pf = "fail"; if(st.rank("W") == 6) pf = "pass"; System.out.println("    " + pf + " - rank(W): " + st.rank("W"));
+            pf = "fail"; if(st.rank("Z") == 7) pf = "pass"; System.out.println("    " + pf + " - rank(Z): " + st.rank("Z"));
+            pf = "fail"; if(st.select(4).equals("P")) pf = "pass"; System.out.println("    " + pf + " - select(4): " + st.select(4));
+            pf = "fail"; if(st.select(20) == null) pf = "pass"; System.out.println("    " + pf + " - select(20): " + st.select(20));
+            pf = "fail"; if(st.select(-1) == null) pf = "pass"; System.out.println("    " + pf + " - select(-1): " + st.select(-1));
 
-            System.out.println("Testing get() operation:");
-            System.out.println("    Key X has value " + st.get("X"));
-            System.out.println("    Key Z has value " + st.get("Z"));
-            System.out.println("");
-
-            System.out.println("Testing delete() operation");
-            int sz = st.size();
-            st.delete("X");
-            st.delete("M");
-            System.out.println(st.toString());
-            System.out.println("    Number of elements decreased by: " + (sz - st.size()));
-            System.out.println("");
-
-            System.out.println("Testing contains() operation");
-            System.out.println("    Contains X? " + st.contains("X"));
-            System.out.println("    Contains R? " + st.contains("R"));
-            System.out.println("");
-
-            System.out.println("Testing keys iterator:");
-            for(String str : st.keys())
-            {
-                System.out.println("    " + str);
-            }
-            System.out.println("");
-            }
+            pf = "fail"; st.delete("B"); if(st.toString().equals("")) pf = "pass"; System.out.println("    " + pf + " - delete(B), size() = " + st.size() + ", " + st.toString());
+            pf = "fail"; st.delete("W"); if(st.toString().equals("")) pf = "pass"; System.out.println("    " + pf + " - delete(W), size() = " + st.size() + ", " + st.toString());
+            pf = "fail"; st.delete("G"); if(st.toString().equals("")) pf = "pass"; System.out.println("    " + pf + " - delete(G), size() = " + st.size() + ", " + st.toString());
+            pf = "fail"; st.deleteMin(); if(st.toString().equals("")) pf = "pass"; System.out.println("    " + pf + " - deleteMin(), size() = " + st.size() + ", " + st.toString());
+            pf = "fail"; st.deleteMax(); if(st.toString().equals("")) pf = "pass"; System.out.println("    " + pf + " - deleteMax(), size() = " + st.size() + ", " + st.toString());
+            pf = "fail"; st.deleteMin(); if(st.toString().equals("")) pf = "pass"; System.out.println("    " + pf + " - deleteMin(), size() = " + st.size() + ", " + st.toString());
+            pf = "fail"; st.deleteMax(); if(st.toString().equals("")) pf = "pass"; System.out.println("    " + pf + " - deleteMax(), size() = " + st.size() + ", " + st.toString());
+            pf = "fail"; st.deleteMin(); if(st.toString().equals("")) pf = "pass"; System.out.println("    " + pf + " - deleteMin(), size() = " + st.size() + ", " + st.toString());
+            pf = "fail"; st.delete("X"); if(st.toString().equals("")) pf = "pass"; System.out.println("    " + pf + " - delete(X), size() = " + st.size() + ", " + st.toString());
+            pf = "fail"; st.deleteMin(); if(st.toString().equals("")) pf = "pass"; System.out.println("    " + pf + " - deleteMin(), size() = " + st.size() + ", " + st.toString());
+            pf = "fail"; st.deleteMax(); if(st.toString().equals("")) pf = "pass"; System.out.println("    " + pf + " - deleteMax(), size() = " + st.size() + ", " + st.toString());
             */
         }
     }
+
 }
 
