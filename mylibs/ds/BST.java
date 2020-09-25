@@ -288,7 +288,7 @@ public class BST<Key extends Comparable<Key>, Value>
             }
             else
             {
-                ret = node.left;
+                if(node.left != null) ret = node.left;
                 break;
             }
         }
@@ -312,7 +312,7 @@ public class BST<Key extends Comparable<Key>, Value>
             else if(key.compareTo(node.key) > 0) node = node.right;
             else
             {
-                ret = node.right;
+                if(node.right != null) ret = node.right;
                 break;
             }
         }
@@ -395,7 +395,8 @@ public class BST<Key extends Comparable<Key>, Value>
                 node = node.right;
             }
         }
-        if(node == null) return null;
+        if(k < 0) return null;
+        else if(node == null) return null;
         else return node.key;
     }
 
@@ -643,9 +644,7 @@ public class BST<Key extends Comparable<Key>, Value>
             pf = "fail"; if(st.min().equals("B")) pf = "pass"; System.out.println("    " + pf + " - min(): " + st.min());
             pf = "fail"; if(st.max().equals("W")) pf = "pass"; System.out.println("    " + pf + " - max(): " + st.max());
 
-            System.out.println(st.floor("C"));
             pf = "fail"; if(st.floor("C").equals("B")) pf = "pass"; System.out.println("    " + pf + " - floor(C): " + st.floor("C"));
-            /*
             pf = "fail"; if(st.floor("E").equals("C")) pf = "pass"; System.out.println("    " + pf + " - floor(E): " + st.floor("E"));
             pf = "fail"; if(st.ceiling("C").equals("F")) pf = "pass"; System.out.println("    " + pf + " - ceiling(C): " + st.ceiling("C"));
             pf = "fail"; if(st.ceiling("E").equals("F")) pf = "pass"; System.out.println("    " + pf + " - ceiling(E): " + st.ceiling("E"));
@@ -657,6 +656,7 @@ public class BST<Key extends Comparable<Key>, Value>
             pf = "fail"; if(st.select(20) == null) pf = "pass"; System.out.println("    " + pf + " - select(20): " + st.select(20));
             pf = "fail"; if(st.select(-1) == null) pf = "pass"; System.out.println("    " + pf + " - select(-1): " + st.select(-1));
 
+            /*
             pf = "fail"; st.delete("B"); if(st.toString().equals("")) pf = "pass"; System.out.println("    " + pf + " - delete(B), size() = " + st.size() + ", " + st.toString());
             pf = "fail"; st.delete("W"); if(st.toString().equals("")) pf = "pass"; System.out.println("    " + pf + " - delete(W), size() = " + st.size() + ", " + st.toString());
             pf = "fail"; st.delete("G"); if(st.toString().equals("")) pf = "pass"; System.out.println("    " + pf + " - delete(G), size() = " + st.size() + ", " + st.toString());
