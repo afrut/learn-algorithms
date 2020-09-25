@@ -14,7 +14,6 @@ public class BST<Key extends Comparable<Key>, Value>
         int N;
     }
 
-    // TODO: implement this
     private class KeysIterable implements Iterable<Key>
     {
         private Key from;
@@ -205,13 +204,16 @@ public class BST<Key extends Comparable<Key>, Value>
         // node now contains the node where node.key == key
 
         // Determine successor.
-        Node successor = ceiling(node.right, key);
-        if(successor == null) successor = node.left;
-        else
+        Node successor = null;
+        if(node.right != null)
         {
-            // Modify tree to remove node.
-            successor.left = node.left;
+            successor = ceiling(node.right, key);
             successor.right = deleteMin(node.right);
+            successor.left = node.left;
+        }
+        else if(node.left != null)
+        {
+            successor = node.left;
         }
 
         // Link successor to parent.
@@ -417,9 +419,10 @@ public class BST<Key extends Comparable<Key>, Value>
     // Remove the node with the smallest key within the subtree rooted at node.
     private Node deleteMin(Node node)
     {
-        Node orig = node;
+        Node ret = node;
         Node prev = null;
         Bag<Node> bag = new Bag<Node>();
+        // TODO: bug here
         while(true)
         {
             if(node == null) return null;
@@ -427,8 +430,7 @@ public class BST<Key extends Comparable<Key>, Value>
             {
                 if(prev == null)
                 {
-                    root = node.right;
-                    orig = node.right;
+                    ret = node.right;
                     node.right = null;
                 }
                 else
@@ -447,7 +449,7 @@ public class BST<Key extends Comparable<Key>, Value>
         }
         for(Node n : bag)
             n.N--;
-        return orig;
+        return ret;
     }
 
     // Remove the pair with the greatest key.
@@ -517,9 +519,15 @@ public class BST<Key extends Comparable<Key>, Value>
     private void toString(Node node, StringBuilder sb)
     {
         if(node == null) return;
-        if(node.left != null) toString(node.left, sb);
+        if(node.left != null)
+        {
+            toString(node.left, sb);
+        }
         sb.append("(" + node.key + ", " + node.value + "), ");
-        if(node.right != null) toString(node.right, sb);
+        if(node.right != null)
+        {
+            toString(node.right, sb);
+        }
     }
 
     private String toStringIterator()
@@ -553,7 +561,6 @@ public class BST<Key extends Comparable<Key>, Value>
 
         if(test)
         {
-            // TODO: introduce pass/fail to these tests
             BST<String, Integer> st =
                 new BST <String, Integer>();
             String pf = "fail";
@@ -677,7 +684,48 @@ public class BST<Key extends Comparable<Key>, Value>
             pf = "fail"; st.deleteMin(); if(st.toString().equals("")) pf = "pass"; System.out.println("    " + pf + " - deleteMin(), size() = " + st.size() + ", " + st.toString());
             pf = "fail"; st.deleteMax(); if(st.toString().equals("")) pf = "pass"; System.out.println("    " + pf + " - deleteMax(), size() = " + st.size() + ", " + st.toString());
         }
-    }
+        else
+        {
+            BST<String, Integer> st =
+                new BST<String, Integer>();
+            // sample input is SEARCHEXAMPLE
+            System.out.println("Symbol table empty? " + st.isEmpty());
+            System.out.println("Testing put() operation:");
+            int cnt = 0;
+            while(!StdIn.isEmpty())
+            {
+                String key = StdIn.readString();
+                st.put(key, cnt);
+                cnt++;
+            }
+            System.out.println("    Contents" + st.toString());
+            System.out.println("Symbol table empty? " + st.isEmpty());
+            System.out.println("");
 
+            System.out.println("Testing get() operation:");
+            System.out.println("    Key X has value " + st.get("X"));
+            System.out.println("    Key Z has value " + st.get("Z"));
+            System.out.println("");
+
+            System.out.println("Testing delete() operation");
+            int sz = st.size();
+            st.delete("X");
+            st.delete("M");
+            System.out.println("    Number of elements decreased by: " + (sz - st.size()));
+            System.out.println("");
+
+            System.out.println("Testing contains() operation");
+            System.out.println("    Contains X? " + st.contains("X"));
+            System.out.println("    Contains R? " + st.contains("R"));
+            System.out.println("");
+
+            System.out.println("Testing keys iterator:");
+            for(String str : st.keys())
+            {
+                System.out.println("    " + str);
+            }
+            System.out.println("");
+        }
+    }
 }
 

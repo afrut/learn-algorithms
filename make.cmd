@@ -102,14 +102,13 @@ cls
 ::javac mylibs\ds\BinarySearch.java
 ::javac mylibs\ds\LinkedListSequentialSearchST.java
 ::javac mylibs\ds\ResizingArraySequentialSearchST.java
-
-javac mylibs\ds\ResizingArrayBinarySearchST.java
-
+::javac mylibs\ds\ResizingArrayBinarySearchST.java
 ::javac mylibs\ds\LinkedListOrderedSequentialSearchST.java
 ::javac mylibs\ds\RecursiveBST.java
 ::javac mylibs\ds\Bag.java
 ::javac mylibs\ds\List.java
-::javac mylibs\ds\BST.java
+
+javac mylibs\ds\BST.java
 
 :::: Archive
 ::jar cvf ^
@@ -168,16 +167,15 @@ javac mylibs\ds\ResizingArrayBinarySearchST.java
 ::java -ea mylibs.ds.LinkedListSequentialSearchST < mylibs\ds\STSampleinput.txt
 ::java -ea mylibs.ds.ResizingArraySequentialSearchST -test
 ::java -ea mylibs.ds.ResizingArraySequentialSearchST < mylibs\ds\STSampleinput.txt
-
-java -ea mylibs.ds.ResizingArrayBinarySearchST -test
-java -ea mylibs.ds.ResizingArrayBinarySearchST < mylibs\ds\STSampleinput.txt
-
+::java -ea mylibs.ds.ResizingArrayBinarySearchST -test
+::java -ea mylibs.ds.ResizingArrayBinarySearchST < mylibs\ds\STSampleinput.txt
 ::java -ea mylibs.ds.LinkedListOrderedSequentialSearchST -test
 ::java -ea mylibs.ds.LinkedListOrderedSequentialSearchST < mylibs\ds\STSampleinput.txt
 ::java -ea mylibs.ds.RecursiveBST -test
 ::java -ea mylibs.ds.Bag
 ::java -ea mylibs.ds.List
-::java -ea mylibs.ds.BST -test
+java -ea mylibs.ds.BST -test
+java -ea mylibs.ds.BST < mylibs\ds\STSampleinput.txt
 
 :: Clean
 del /s .\mylibs\*.class
