@@ -422,7 +422,6 @@ public class BST<Key extends Comparable<Key>, Value>
         Node ret = node;
         Node prev = null;
         Bag<Node> bag = new Bag<Node>();
-        // TODO: bug here
         while(true)
         {
             if(node == null) return null;
@@ -698,7 +697,7 @@ public class BST<Key extends Comparable<Key>, Value>
                 st.put(key, cnt);
                 cnt++;
             }
-            System.out.println("    Contents" + st.toString());
+            System.out.println("    Contents: " + st.toString());
             System.out.println("Symbol table empty? " + st.isEmpty());
             System.out.println("");
 
@@ -711,6 +710,7 @@ public class BST<Key extends Comparable<Key>, Value>
             int sz = st.size();
             st.delete("X");
             st.delete("M");
+            System.out.println("    Contents: " + st.toString());
             System.out.println("    Number of elements decreased by: " + (sz - st.size()));
             System.out.println("");
 

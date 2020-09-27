@@ -1,2 +1,2 @@
 cls
-git push %LEARN-ALGORITHMS%
+git push %GITHUB-REPO%/learn-algorithms

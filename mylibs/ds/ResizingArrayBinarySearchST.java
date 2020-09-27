@@ -459,7 +459,7 @@ public class ResizingArrayBinarySearchST<Key extends Comparable<Key>, Value>
                 st.put(key, cnt);
                 cnt++;
             }
-            System.out.println("    Contents" + st.toString());
+            System.out.println("    Contents: " + st.toString());
             System.out.println("Symbol table empty? " + st.isEmpty());
             System.out.println("");
 
@@ -472,7 +472,7 @@ public class ResizingArrayBinarySearchST<Key extends Comparable<Key>, Value>
             int sz = st.size();
             st.delete("X");
             st.delete("M");
-            System.out.println(st.toString());
+            System.out.println("    Contents: " + st.toString());
             System.out.println("    Number of elements decreased by: " + (sz - st.size()));
             System.out.println("");
 
