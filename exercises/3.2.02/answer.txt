@@ -1,0 +1,10 @@
+3.2.2 Inserting the keys in the order A X C S E R H into an initially empty BST
+gives a worst-case tree where every node has one null link, except one at the
+bottom, which has two null links. Give five other orderings of these keys that
+produce worst-case trees.
+
+A C E H R S X
+X S R H E C A
+A X C E H R S
+X A S R H E C
+X A C E H R S
