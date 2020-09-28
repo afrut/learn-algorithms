@@ -1,0 +1,21 @@
+3.2.1 Draw the BST that results when you insert the keys E A S Y Q U E S T I O
+N, in that order (associating the value i with the ith key, as per the
+convention in the text) into an initially empty tree. How many compares are
+needed to build the tree?
+
+E - 0 - 0 compares; compare with null
+A - 1 - 1 compares; compare with E
+S - 2 - 1 compares; compare with E
+Y - 3 - 2 compares; compare with E, S
+Q - 4 - 2 compares; compare with E, S
+U - 5 - 3 compares; compare with E, S, Y
+E - 6 - 1 compares; compare with E
+S - 7 - 2 compares; compare with E, S
+T - 8 - 4 compares; compare with E, S, Y, U
+I - 9 - 3 compares; compare with E, S, Q
+O - 10 - 3 compares; compare with E, S, Q
+N - 11 - 4 compares; compare with E, S, Q, I
+
+Total number of compares = 1 + 1 + 2 + 2 + 3 + 1 + 2 + 4 + 3 + 3 + 4 = 26
+
+See bst.png for the binary search tree representing this symbol table.
