@@ -1,0 +1,8 @@
+3.2.3 Give five orderings of the keys A X C S E R H that, when inserted into an
+initially empty BST, produce the best-case tree.
+
+H E R A C S X
+H E R C A S X
+H E R A C X S
+H E R C A X S
+H R E C A X S
