@@ -1,4 +1,4 @@
-package mylibs.ds;
+package mylibs.algs;
 import java.util.Arrays;
 import mylibs.util.Util;
 

@@ -4,4 +4,4 @@ deleteMax(), and keys() that are given in the text. Start with the standard
 indexing client given on page 370. Add code to take additional command-line
 arguments, as appropriate.
 
-See mylibs\ds\RecursiveBST.java and mylibs\ds\BST.java.
+See mylibs\algs\RecursiveBST.java and mylibs\algs\BST.java.

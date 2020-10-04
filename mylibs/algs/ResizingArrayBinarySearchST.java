@@ -1,554 +1,315 @@
-package mylibs.ds;
+package mylibs.algs;
 import java.util.Iterator;
 import edu.princeton.cs.algs4.StdIn;
-import mylibs.ds.Bag;
 
-public class BST<Key extends Comparable<Key>, Value>
+// ordered symbol table implementation
+public class ResizingArrayBinarySearchST<Key extends Comparable<Key>, Value>
 {
-    private class Node
-    {
-        Key key;
-        Value value;
-        Node left;
-        Node right;
-        int N;
-    }
+    private Key[] keys;
+    private Value[] values;
+    private int N;
+    private int lo; // index to the smallest element in the array
+    private int hi; // index into an empty position in the array; hi - 1 contains largest
 
     private class KeysIterable implements Iterable<Key>
     {
-        private Key from;
-        private Key to;
+        private int idxStart;
+        private int idxEnd;
 
         private class KeysIterator implements Iterator<Key>
         {
             private int idx;
-            private int N;
-            private Key[] keys;
-            private Key key1;
-            private Key key2;
-            public KeysIterator(Node node, Key key1, Key key2)
-            {
-                this.key1 = key1;
-                this.key2 = key2;
 
-                if(node == null) this.N = 0;
-                else
-                {
-                    this.N = node.N;
-                    keys = (Key[]) new Comparable[this.N];
-                    
-                    // populate array of keys
-                    idx = 0;
-                    f(node);
-                }
-                // reset index of array for user
-                idx = 0;
-            }
-            public boolean hasNext() {return idx < N && keys[idx] != null;}
+            public KeysIterator() {idx = idxStart;}
+            public boolean hasNext() {return idxStart <= idx && idx <= idxEnd;}
             public Key next() {return keys[idx++];}
-            public void remove() {}
-            private void f(Node node)
-            {
-                if(node == null) return;
-                f(node.left);
-
-                // check if this key is to be added based on key limits
-                if(this.key1 == null)
-                {
-                    if(this.key2 == null) keys[idx++] = node.key;
-                    else if(this.key2.compareTo(node.key) >= 0) keys[idx++] = node.key;
-                }
-                else
-                {
-                    if(this.key2 == null)
-                    {
-                        if(this.key1.compareTo(node.key) <= 0) {keys[idx++] = node.key;}
-                    }
-                    else
-                    {
-                        if(this.key1.compareTo(node.key) <= 0 && this.key2.compareTo(node.key) >= 0)
-                        {
-                            keys[idx++] = node.key;
-                        }
-                    }
-                }
-                f(node.right);
-                return;
-            }
         }
 
-        public KeysIterable(Key lo, Key hi)
+        public KeysIterable()
         {
-            this.from = lo;
-            this.to = hi;
+            this.idxStart = lo;
+            this.idxEnd = hi - 1;
+        }
+
+        public KeysIterable(Key key1, Key key2)
+        {
+            this.idxStart = getIdx(key1);
+            this.idxEnd = getIdx(key2);
+            if(!isKeyFound(key2, this.idxEnd)) {this.idxEnd -= 1;}
         }
 
         public KeysIterator iterator()
-        {
-            return new KeysIterator(root, this.from, this.to);
-        }
+        {return new KeysIterator();}
     }
 
-    private Node root;
-
-    public BST() {root = null;}
+    public ResizingArrayBinarySearchST()
+    {
+        keys = (Key[]) new Comparable[1];
+        values = (Value[]) new Object[1];
+        N = 0;
+        lo = 0;
+        hi = 0;
+    }
 
     // Searches for key and replaces its value. If not found, inserts key and value.
     public void put(Key key, Value value)
     {
-        if(root == null)
+        int idx = getIdx(key);
+        boolean found = isKeyFound(key, idx);
+
+        if(!found)
         {
-            root = new Node();
-            root.key = key;
-            root.value = value;
-            root.N = 1;
+            int cnt = hi;
+            while(cnt > idx)
+            {
+                keys[cnt] = keys[cnt - 1];
+                values[cnt] = values[cnt - 1];
+                cnt--;
+            }
+            keys[idx] = key;
+            values[idx] = value;
+            hi++;
+            N++;
+            if(N >= keys.length)
+                resize(2 * keys.length);
         }
         else
         {
-            Node node = root;
-            Bag<Node> bag = new Bag<Node>();
-            boolean contained = false;
-
-            while(true)
-            {
-                if(key.compareTo(node.key) < 0)
-                {
-                    bag.add(node);
-                    if(node.left == null)
-                    {
-                        Node newNode = new Node();
-                        newNode.key = key;
-                        newNode.value = value;
-                        newNode.N = 1;
-                        node.left = newNode;
-                        break;
-                    }
-                    else
-                    {
-                        node = node.left;
-                    }
-                }
-                else if(key.compareTo(node.key) > 0)
-                {
-                    bag.add(node);
-                    if(node.right == null)
-                    {
-                        Node newNode = new Node();
-                        newNode.key = key;
-                        newNode.value = value;
-                        newNode.N = 1;
-                        node.right = newNode;
-                        break;
-                    }
-                    else
-                    {
-                        node = node.right;
-                    }
-                }
-                else
-                {
-                    node.key = key;
-                    node.value = value;
-                    contained = true;
-                    break;
-                }
-            }
-
-            if(!contained)
-            {
-                for(Node n : bag)
-                    n.N++;
-            }
+            keys[idx] = key;
+            values[idx] = value;
         }
     }
 
-    // Return the value associated with key.
+    // Helper function to get the index of where a key should be.
+    private int getIdx(Key key)
+    {return rank(key) + lo;}
+
+    // Helper function to check if a key is found at an index.
+    private boolean isKeyFound(Key key, int idx)
+    {return idx < hi && key.compareTo(keys[idx]) == 0;}
+
     public Value get(Key key)
     {
-        Node node = root;
-        while(true)
-        {
-            if(node == null) return null;
-            else if(key.compareTo(node.key) < 0) node = node.left;
-            else if(key.compareTo(node.key) > 0) node = node.right;
-            else return node.value;
-        }
+        int idx = getIdx(key);
+        boolean found = isKeyFound(key, idx);
+        if(found) return values[idx];
+        else return null;
     }
 
-    // Remove the node that is associated with key.
+    // Eager delete implementation.
     public void delete(Key key)
     {
-        Node node = root;
-        Node prev = null;
-        boolean leftLink = true;
-        Bag<Node> bag = new Bag<Node>();
-        while(true)
+        int idx = getIdx(key);
+        boolean found = isKeyFound(key, idx);
+
+        if(found)
         {
-            if(node == null) return;
-            else if(key.compareTo(node.key) < 0)
+            // delete key-value pair at index
+            keys[idx] = null;
+            values[idx] = null;
+
+            // move all elements to fill empty position
+            int cnt = idx;
+            while(cnt < hi - 1)
             {
-                prev = node;
-                bag.add(node);
-                node = node.left;
-                leftLink = true;
+                keys[cnt] = keys[cnt + 1];
+                values[cnt] = values[cnt + 1];
+                cnt++;
             }
-            else if(key.compareTo(node.key) > 0)
-            {
-                prev = node;
-                bag.add(node);
-                node = node.right;
-                leftLink = false;
-            }
-            else break;
-        }
-        // node now contains the node where node.key == key
-
-        // Determine successor.
-        Node successor = null;
-        if(node.right != null)
-        {
-            successor = ceiling(node.right, key);
-            successor.right = deleteMin(node.right);
-            successor.left = node.left;
-        }
-        else if(node.left != null)
-        {
-            successor = node.left;
-        }
-
-        // Link successor to parent.
-        node.left = null;
-        node.right = null;
-        if(prev == null)
-        {
-            root = successor;
-        }
-        else if(leftLink) prev.left = successor;
-        else prev.right = successor;
-
-        // Update Node.N for all relevant nodes in the tree path to the deleted node.
-        for(Node n : bag)
-            n.N--;
-
-        if(successor != null)
-        {
-            successor.N = 1;
-            if(successor.left != null) successor.N += successor.left.N;
-            if(successor.right != null) successor.N += successor.right.N;
+            hi--;
+            
+            // avoid loitering
+            keys[hi] = null;
+            values[hi] = null;
+            N--;
+            if(N <= (int)(keys.length / 4))
+                resize(keys.length / 2);
         }
     }
 
-    // Checks if the binary search tree contains a node associated with key.
     public boolean contains(Key key)
     {
-        Node node = root;
-        while(true)
+        int idx = getIdx(key);
+        return isKeyFound(key, idx);
+    }
+
+    private void resize(int sz)
+    {
+        if(sz == 0)
         {
-            if(node == null) return false;
-            else if(key.compareTo(node.key) < 0) node = node.left;
-            else if(key.compareTo(node.key) > 0) node = node.right;
-            else return true;
+            Key[] keystemp = (Key[]) new Comparable[1];
+            Value[] valuestemp = (Value[]) new Object[1];
+            keys = keystemp;
+            values = valuestemp;
+            lo = 0;
+            hi = lo;
+        }
+        else
+        {
+            Key[] keystemp = (Key[]) new Comparable[sz];
+            Value[] valuestemp = (Value[]) new Object[sz];
+            int idx = lo;
+            for(int cnt = 0; cnt < N; cnt++)
+            {
+                keystemp[cnt] = keys[idx];
+                valuestemp[cnt] = values[idx];
+                idx++;
+            }
+            keys = keystemp;
+            values = valuestemp;
+            lo = 0;
+            hi = N;
         }
     }
 
-    // Check if the binary search tree is null.
-    public boolean isEmpty() {return root == null;}
+    public boolean isEmpty() {return N == 0;}
+    public int size() {return N;}
 
-    // Return the total number of nodes.
-    public int size()
-    {
-        if(root == null) return 0;
-        else return root.N;
-    }
-
-    // Return the smallest Key.
-    public Key min()
-    {
-        Node node = root;
-        while(true)
-        {
-            if(node == null) return null;
-            else if(node.left == null) return node.key;
-            else node = node.left;
-        }
-    }
-
-    // Return the largest key.
+    public Key min() {return keys[lo];}
     public Key max()
     {
-        Node node = root;
-        while(true)
-        {
-            if(node == null) return null;
-            else if(node.right == null) return node.key;
-            else node = node.right;
-        }
+        if(hi - 1 >= lo) return keys[hi - 1];
+        else return null;
     }
 
-    // Return the largest key that is less than key.
     public Key floor(Key key)
     {
-        Node node = root;
-        Node ret = null;
-        while(true)
-        {
-            if(node == null) break;
-            else if(key.compareTo(node.key) < 0) node = node.left;
-            else if(key.compareTo(node.key) > 0)
-            {
-                ret = node;
-                node = node.right;
-            }
-            else
-            {
-                if(node.left != null) ret = node.left;
-                break;
-            }
-        }
-        if(ret == null) return null;
-        else return ret.key;
+        int idx = getIdx(key);
+        Key ret = null;
+        if(idx > lo) ret = keys[idx - 1];
+        return ret;
     }
 
-    // Return the smallest key that is greater than key.
     public Key ceiling(Key key)
     {
-        Node node = root;
-        Node ret = null;
-        while(true)
-        {
-            if(node == null) break;
-            else if(key.compareTo(node.key) < 0)
-            {
-                ret = node;
-                node = node.left;
-            }
-            else if(key.compareTo(node.key) > 0) node = node.right;
-            else
-            {
-                if(node.right != null) ret = node.right;
-                break;
-            }
-        }
-        if(ret == null) return null;
-        else return ret.key;
-    }
+        int idx = getIdx(key);
+        boolean found = isKeyFound(key, idx);
 
-    // Return the node containing the smallest key greater than node.key within
-    // the binary search tree rooted at node.
-    private Node ceiling(Node node, Key key)
-    {
-        Node ret = null;
-        while(true)
-        {
-            if(node == null) break;
-            else if(key.compareTo(node.key) < 0)
-            {
-                ret = node;
-                node = node.left;
-            }
-            else if(key.compareTo(node.key) > 0) {node = node.right;}
-            else
-            {
-                ret = node.right;
-                break;
-            }
-        }
-        return ret;
+        if(found && idx < hi - 1) return keys[idx + 1];
+        else if(!found && idx < hi) return keys[idx];
+        else return null;
     }
 
     // Return the number of keys that are less than key.
     // Keys have to be unique.
     public int rank(Key key)
     {
-        Node node = root;
-        int ret = 0;
-        while(true)
+        int a = lo;
+        int b = hi - 1;
+        int mid;
+
+        // key is in between smallest and largest key
+        while(a <= b)
         {
-            if(node == null) return ret;
-            else if(key.compareTo(node.key) < 0) {node = node.left;}
-            else if(key.compareTo(node.key) > 0)
-            {
-                ret += 1;
-                if(node.left != null) ret += node.left.N;
-                node = node.right;
-            }
+            mid = (a + b) / 2;
+            int res = key.compareTo(keys[mid]);
+            if(res < 0)
+                b = mid - 1;
+            else if(res > 0)
+                a = mid + 1;
             else
-            {
-                if(node.left != null) ret += node.left.N;
-                return ret;
-            }
+                return mid - lo;
         }
+
+        // After this loop, key is not found.
+        // This means b < a.
+        // If keys[lo] < key and keys[hi] > key, keys[b] < key and keys[a] > key.
+        // Therefore, a = rank(key).
+        // If a == lo, then key < keys[lo].
+        // If a > hi, then key > keys[hi].
+        // Number of elements is hi - lo + 1.
+        return a - lo;
     }
 
     // Return the key that has k keys less than it.
     public Key select(int k)
     {
-        Node node = root;
-        int cnt = 0;
-        while(cnt < k)
-        {
-            if(node == null || node.N <= k) return null;
-            else if(node.left != null)
-            {
-                if(node.left.N > k) node = node.left;
-                else if(node.left.N < k)
-                {
-                    cnt++;
-                    cnt += node.left.N;
-                    node = node.right;
-                }
-                else
-                {
-                    return node.key;
-                }
-            }
-            else
-            {
-                cnt++;
-                node = node.right;
-            }
-        }
-        if(k < 0) return null;
-        else if(node == null) return null;
-        else return node.key;
+        if(k >= 0 && k < N) return keys[k + lo];
+        else return null;
     }
 
-    // Remove the node with the smallest key.
-    public void deleteMin() {root = deleteMin(root);}
-
-    // Remove the node with the smallest key within the subtree rooted at node.
-    private Node deleteMin(Node node)
+    // Remove the pair with the smallest key.
+    public void deleteMin()
     {
-        Node ret = node;
-        Node prev = null;
-        Bag<Node> bag = new Bag<Node>();
-        while(true)
+        if(N > 0)
         {
-            if(node == null) return null;
-            else if(node.left == null)
+            keys[lo] = null;
+            values[lo] = null;
+            N--;
+
+            int idx = lo;
+            while(idx < hi - 1)
             {
-                if(prev == null)
-                {
-                    ret = node.right;
-                    node.right = null;
-                }
-                else
-                {
-                    prev.left = node.right;
-                    node.right = null;
-                }
-                break;
+                keys[idx] = keys[idx + 1];
+                values[idx] = values[idx + 1];
+                idx++;
             }
-            else
-            {
-                prev = node;
-                bag.add(node);
-                node = node.left;
-            }
+            hi--;
+
+            if(N <= (keys.length / 4))
+                resize(2 * keys.length);
         }
-        for(Node n : bag)
-            n.N--;
-        return ret;
     }
 
     // Remove the pair with the greatest key.
     public void deleteMax()
     {
-        Node node = root;
-        Node prev = null;
-        Bag<Node> bag = new Bag<Node>();
-        while(true)
+        if(N > 0)
         {
-            if(node == null) return;
-            else if(node.right == null)
-            {
-                if(prev == null)
-                {
-                    root = node.left;
-                    node.left = null;
-                }
-                else
-                {
-                    prev.right = node.left;
-                    node.left = null;
-                }
-                break;
-            }
-            else
-            {
-                prev = node;
-                bag.add(node);
-                node = node.right;
-            }
+            keys[--hi] = null;
+            values[hi] = null;
+            N--;
+            if(N <= (keys.length / 4))
+                resize(2 * keys.length);
         }
-        for(Node n : bag)
-            n.N--;
     }
 
     public int size(Key from, Key to)
     {
-        if(root == null) return 0;
-        int total = root.N;
-        int ltFrom = rank(from);
-        int ltTo = rank(to);
-        int ret = ltTo - ltFrom;
-        if(contains(to)) ret++;
-        return ret;
+        int idxTo = getIdx(to);
+        if(isKeyFound(to, idxTo))
+            idxTo++;
+        return idxTo - getIdx(from);
     }
 
     public String toString()
     {
         StringBuilder sb = new StringBuilder();
-        if(root != null)
+        if(N > 0)
         {
-            toString(root, sb);
-            if(sb.length() > 0)
-                sb.setLength(sb.length() - 2);
+            int idx = lo;
+            int cnt = 0;
+            while(cnt < N)
+            {
+                sb.append("(" + keys[idx] + ", " + values[idx] + "), ");
+                cnt++;
+                idx++;
+            }
+            sb.setLength(sb.length() - 2);
         }
         return sb.toString();
-    }
-
-    private String toString(Node node)
-    {
-        StringBuilder sb = new StringBuilder();
-        toString(node, sb);
-        return sb.toString();
-    }
-
-    private void toString(Node node, StringBuilder sb)
-    {
-        if(node == null) return;
-        if(node.left != null)
-        {
-            toString(node.left, sb);
-        }
-        sb.append("(" + node.key + ", " + node.value + "), ");
-        if(node.right != null)
-        {
-            toString(node.right, sb);
-        }
     }
 
     private String toStringIterator()
     {
         StringBuilder sb = new StringBuilder();
-        for(Key key : keys()) sb.append(key.toString() + ", ");
-        if(sb.length() > 0)
-            sb.setLength(sb.length() - 2);
+        for(Key key : keys())
+            sb.append(key.toString() + ", ");
+        if(sb.length() > 0) sb.setLength(sb.length() - 2);
         return sb.toString();
     }
 
-    private String toStringIterator(Key from, Key to)
+    private String toStringIterator(Key key1, Key key2)
     {
         StringBuilder sb = new StringBuilder();
-        for(Key key : keys(from, to)) sb.append(key.toString() + ", ");
-        if(sb.length() > 0)
-            sb.setLength(sb.length() - 2);
+        for(Key key : keys(key1, key2))
+            sb.append(key.toString() + ", ");
+        if(sb.length() > 0) sb.setLength(sb.length() - 2);
         return sb.toString();
     }
 
-    public Iterable<Key> keys() {return new KeysIterable(null, null);}
-    public Iterable<Key> keys(Key lo, Key hi) {return new KeysIterable(lo ,hi);}
+    public Iterable<Key> keys() {return new KeysIterable();}
+    public Iterable<Key> keys(Key key1, Key key2) {return new KeysIterable(key1, key2);}
 
     public static void main(String[] args)
     {
@@ -560,8 +321,9 @@ public class BST<Key extends Comparable<Key>, Value>
 
         if(test)
         {
-            BST<String, Integer> st =
-                new BST <String, Integer>();
+            ResizingArrayBinarySearchST<String, Integer> st =
+                new ResizingArrayBinarySearchST <String, Integer>();
+
             String pf = "fail";
             System.out.println("Testing all operations on empty symbol table:");
             System.out.println("Contents: " + st.toString());
@@ -685,8 +447,8 @@ public class BST<Key extends Comparable<Key>, Value>
         }
         else
         {
-            BST<String, Integer> st =
-                new BST<String, Integer>();
+            ResizingArrayBinarySearchST<String, Integer> st =
+                new ResizingArrayBinarySearchST<String, Integer>();
             // sample input is SEARCHEXAMPLE
             System.out.println("Symbol table empty? " + st.isEmpty());
             System.out.println("Testing put() operation:");
@@ -725,7 +487,6 @@ public class BST<Key extends Comparable<Key>, Value>
                 System.out.println("    " + str);
             }
             System.out.println("");
+            }
         }
-    }
 }
-

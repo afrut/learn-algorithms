@@ -1,4 +1,4 @@
-package mylibs.ds;
+package mylibs.algs;
 import java.util.Iterator;
 import edu.princeton.cs.algs4.StdIn;
 

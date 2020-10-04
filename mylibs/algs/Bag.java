@@ -1,4 +1,4 @@
-package mylibs.ds;
+package mylibs.algs;
 import java.util.Iterator;
 
 public class Bag<T> implements Iterable<T>

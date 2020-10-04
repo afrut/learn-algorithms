@@ -2,4 +2,4 @@
 an ordered linked list as the underlying data structure to implement our ordered
 symbol-table API.
 
-See mylibs\ds\LinkedListOrderedSequentialSearchST.java.
+See mylibs\algs\LinkedListOrderedSequentialSearchST.java.

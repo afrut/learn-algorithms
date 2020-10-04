@@ -7,7 +7,7 @@
 
 import edu.princeton.cs.algs4.In;
 import mylibs.util.Util;
-import mylibs.ds.MaxPQ;
+import mylibs.algs.MaxPQ;
 
 public class PQClient
 {

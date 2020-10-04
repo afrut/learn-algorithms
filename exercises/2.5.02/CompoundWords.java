@@ -10,7 +10,7 @@
 */
 
 import edu.princeton.cs.algs4.In;
-import mylibs.ds.BinarySearch;
+import mylibs.algs.BinarySearch;
 import mylibs.util.Util;
 
 public class CompoundWords
