@@ -1,4 +1,4 @@
-import mylibs.util.Util;
+import libs.util.Util;
 import edu.princeton.cs.algs4.In;
 
 class MaxPQUA<Key extends Comparable<Key>>

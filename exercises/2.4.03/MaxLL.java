@@ -1,4 +1,4 @@
-import mylibs.util.Util;
+import libs.util.Util;
 import edu.princeton.cs.algs4.In;
 
 class MaxLL<Key extends Comparable<Key>>

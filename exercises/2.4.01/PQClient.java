@@ -6,8 +6,8 @@
 */
 
 import edu.princeton.cs.algs4.In;
-import mylibs.util.Util;
-import mylibs.algs.MaxPQ;
+import libs.util.Util;
+import libs.algs.MaxPQ;
 
 public class PQClient
 {

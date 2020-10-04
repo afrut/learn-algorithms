@@ -1,7 +1,7 @@
-package mylibs.algs;
+package libs.algs;
 import java.util.Iterator;
 import edu.princeton.cs.algs4.StdIn;
-import mylibs.algs.Bag;
+import libs.algs.Bag;
 
 public class BST<Key extends Comparable<Key>, Value>
 {

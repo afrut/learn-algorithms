@@ -4,7 +4,7 @@
 */
 
 import edu.princeton.cs.algs4.In;
-import mylibs.util.Util;
+import libs.util.Util;
 
 class SortDistinct2
 {

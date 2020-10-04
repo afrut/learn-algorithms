@@ -1,4 +1,4 @@
-package mylibs.algs;
+package libs.algs;
 import java.util.Iterator;
 
 public class List<T> implements Iterable<T>

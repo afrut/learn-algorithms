@@ -2,9 +2,9 @@
     This class implements a maximum priority queue using a binary heap according
     to the API specified by Sedgewick 4ed.
 */
-package mylibs.algs;
+package libs.algs;
 import edu.princeton.cs.algs4.In;
-import mylibs.util.Util;
+import libs.util.Util;
 
 // generics - allow any subclass of Comparable to be use
 public class MinPQ<Key extends Comparable<Key>>

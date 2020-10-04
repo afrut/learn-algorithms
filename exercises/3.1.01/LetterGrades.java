@@ -6,7 +6,7 @@
     A+, A, A-, B+, B, B-, C+, C, C-, D, F
     4.33, 4.00, 3.67, 3.33, 3.00, 2.67, 2.33, 2.00, 1.67, 1.00, 0.00
 */
-import mylibs.algs.ResizingArrayBinarySearchST;
+import libs.algs.ResizingArrayBinarySearchST;
 import edu.princeton.cs.algs4.StdIn;
 
 public class LetterGrades

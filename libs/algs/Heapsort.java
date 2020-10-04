@@ -1,6 +1,6 @@
-package mylibs.algs;
+package libs.algs;
 import java.lang.reflect.Array; // use reflection since java does not allow generic array creation
-import mylibs.util.Util;
+import libs.util.Util;
 
 public class Heapsort
 {

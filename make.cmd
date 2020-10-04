@@ -1,8 +1,8 @@
 cls
 
-:: --------------------------------------------------
-::  Testing and Experimentation
-:: --------------------------------------------------
+:::: --------------------------------------------------
+::::  Testing and Experimentation
+:::: --------------------------------------------------
 ::cd templates
 ::javac HelloWorld.java
 ::java HelloWorld
@@ -16,11 +16,6 @@ cls
 ::cd templates
 ::javac IterableTest.java
 ::java IterableTest
-::cd ..
-
-::cd templates
-::javac BinarySearch.java
-::java BinarySearch 8KRangeOfInts.txt 4000 5000 6000 8000 0
 ::cd ..
 
 ::cd templates
@@ -63,9 +58,9 @@ cls
 
 
 
-:: --------------------------------------------------
-::  Testing Textbook Code
-:: --------------------------------------------------
+:::: --------------------------------------------------
+::::  Testing Textbook Code
+:::: --------------------------------------------------
 ::cd algs4
 ::javac BinarySearch.java
 ::java edu.princeton.cs.algs4.BinarySearch tinyW.txt < tinyT.txt
@@ -90,64 +85,64 @@ cls
 ::cd ..
 
 
-:: --------------------------------------------------
-::  Recompile Packages
-:: --------------------------------------------------
+:::: --------------------------------------------------
+::::  Recompile Packages
+:::: --------------------------------------------------
 :::: Compile
-::javac mylibs\combinatorics\CountingTechniques.java
-::javac mylibs\util\Util.java
-::javac mylibs\algs\MaxPQ.java
-::javac mylibs\algs\MinPQ.java
-::javac mylibs\algs\IndexMaxPQ.java
-::javac mylibs\algs\Heapsort.java
-::javac mylibs\algs\BinarySearch.java
-::javac mylibs\algs\LinkedListSequentialSearchST.java
-::javac mylibs\algs\ResizingArraySequentialSearchST.java
-::javac mylibs\algs\ResizingArrayBinarySearchST.java
-::javac mylibs\algs\LinkedListOrderedSequentialSearchST.java
-::javac mylibs\algs\RecursiveBST.java
-::javac mylibs\algs\Bag.java
-::javac mylibs\algs\List.java
-::javac mylibs\algs\BST.java
+::javac libs\combinatorics\CountingTechniques.java
+::javac libs\util\Util.java
+::javac libs\algs\MaxPQ.java
+::javac libs\algs\MinPQ.java
+::javac libs\algs\IndexMaxPQ.java
+::javac libs\algs\Heapsort.java
+::javac libs\algs\BinarySearch.java
+::javac libs\algs\LinkedListSequentialSearchST.java
+::javac libs\algs\ResizingArraySequentialSearchST.java
+::javac libs\algs\ResizingArrayBinarySearchST.java
+::javac libs\algs\LinkedListOrderedSequentialSearchST.java
+::javac libs\algs\RecursiveBST.java
+::javac libs\algs\Bag.java
+::javac libs\algs\List.java
+::javac libs\algs\BST.java
 
 :::: Archive
 ::del .\bin\mylibs.jar
 ::jar cvf ^
-::.\bin\mylibs.jar ^
-::.\mylibs\combinatorics\*.class ^
-::.\mylibs\util\*.class ^
-::.\mylibs\algs\*.class
+::.\bin\libs.jar ^
+::.\libs\combinatorics\*.class ^
+::.\libs\util\*.class ^
+::.\libs\algs\*.class
 
 :::: Test
-::java -ea mylibs.combinatorics.CountingTechniques
-::java -ea mylibs.util.Util
-::java -ea mylibs.algs.MaxPQ < mylibs\algs\input.txt
-::java -ea mylibs.algs.MinPQ < mylibs\algs\input.txt
-::java -ea mylibs.algs.IndexMaxPQ < mylibs\algs\input.txt
-::java -ea mylibs.algs.Heapsort
-::java -ea mylibs.algs.BinarySearch
-::java -ea mylibs.algs.LinkedListSequentialSearchST -test
-::java -ea mylibs.algs.LinkedListSequentialSearchST < mylibs\algs\STSampleinput.txt
-::java -ea mylibs.algs.ResizingArraySequentialSearchST -test
-::java -ea mylibs.algs.ResizingArraySequentialSearchST < mylibs\algs\STSampleinput.txt
-::java -ea mylibs.algs.ResizingArrayBinarySearchST -test
-::java -ea mylibs.algs.ResizingArrayBinarySearchST < mylibs\algs\STSampleinput.txt
-::java -ea mylibs.algs.LinkedListOrderedSequentialSearchST -test
-::java -ea mylibs.algs.LinkedListOrderedSequentialSearchST < mylibs\algs\STSampleinput.txt
-::java -ea mylibs.algs.RecursiveBST -test
-::java -ea mylibs.algs.RecursiveBST < mylibs\algs\STSampleinput.txt
-::java -ea mylibs.algs.Bag
-::java -ea mylibs.algs.List
-::java -ea mylibs.algs.BST -test
-::java -ea mylibs.algs.BST < mylibs\algs\STSampleinput.txt
+::java -ea libs.combinatorics.CountingTechniques
+::java -ea libs.util.Util
+::java -ea libs.algs.MaxPQ < libs\algs\input.txt
+::java -ea libs.algs.MinPQ < libs\algs\input.txt
+::java -ea libs.algs.IndexMaxPQ < libs\algs\input.txt
+::java -ea libs.algs.Heapsort
+::java -ea libs.algs.BinarySearch
+::java -ea libs.algs.LinkedListSequentialSearchST -test
+::java -ea libs.algs.LinkedListSequentialSearchST < libs\algs\STSampleinput.txt
+::java -ea libs.algs.ResizingArraySequentialSearchST -test
+::java -ea libs.algs.ResizingArraySequentialSearchST < libs\algs\STSampleinput.txt
+::java -ea libs.algs.ResizingArrayBinarySearchST -test
+::java -ea libs.algs.ResizingArrayBinarySearchST < libs\algs\STSampleinput.txt
+::java -ea libs.algs.LinkedListOrderedSequentialSearchST -test
+::java -ea libs.algs.LinkedListOrderedSequentialSearchST < libs\algs\STSampleinput.txt
+::java -ea libs.algs.RecursiveBST -test
+::java -ea libs.algs.RecursiveBST < libs\algs\STSampleinput.txt
+::java -ea libs.algs.Bag
+::java -ea libs.algs.List
+::java -ea libs.algs.BST -test
+::java -ea libs.algs.BST < libs\algs\STSampleinput.txt
 
 :::: Clean
-::del /s .\mylibs\*.class
+::del /s .\libs\*.class
 
 
-:: --------------------------------------------------
-::  Exercises
-:: --------------------------------------------------
+:::: --------------------------------------------------
+::::  Exercises
+:::: --------------------------------------------------
 ::cd exercises\1.3.32
 ::javac Steque.java
 ::java Steque

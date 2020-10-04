@@ -3,5 +3,5 @@ Develop two implementations: a recursive method (which takes linear time and
 space proportional to the height), and a method like size() that adds a field
 to each node in the tree (and takes linear space and constant time per query).
 
-See mylibs\algs\RecursiveBST.java. heightCompute() and height() are the relevant
+See libs\algs\RecursiveBST.java. heightCompute() and height() are the relevant
 methods.

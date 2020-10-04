@@ -10,8 +10,8 @@
 */
 
 import edu.princeton.cs.algs4.In;
-import mylibs.algs.BinarySearch;
-import mylibs.util.Util;
+import libs.algs.BinarySearch;
+import libs.util.Util;
 
 public class CompoundWords
 {
