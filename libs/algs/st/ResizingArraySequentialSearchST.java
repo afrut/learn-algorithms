@@ -1,114 +1,96 @@
-package libs.algs;
+package libs.algs.st;
 import java.util.Iterator;
 import edu.princeton.cs.algs4.StdIn;
 
-public class LinkedListSequentialSearchST<Key, Value>
+public class ResizingArraySequentialSearchST<Key, Value>
 {
-    private Node first;
+    private Key[] keys;
+    private Value[] values;
     private int N;
 
-    private class Node
+    public ResizingArraySequentialSearchST()
     {
-        Key key;
-        Value value;
-        Node next;
-    }
-
-    public LinkedListSequentialSearchST()
-    {
-        first = null;
+        keys = (Key[]) new Object[1];
+        values = (Value[]) new Object[1];
         N = 0;
     }
 
     public void put(Key key, Value value)
     {
-        Node current = search(key); // current == null if key not found
-        if(current == null)
+        int idx = search(key);
+        if(idx >= 0)
         {
-            // key not found
-            Node temp = new Node();
-            temp.key = key;
-            temp.value = value;
-            temp.next = first;
-            first = temp;
+            values[idx] = value;
         }
         else
-            // key found
-            current.value = value;
-        N++;
+        {
+            keys[N] = key;
+            values[N] = value;
+            N++;
+            if(N >= keys.length)
+                resize(2 * N);
+        }
     }
 
     public Value get(Key key)
     {
-        Node current = search(key); // current == null if key not found
-        if(current != null) return current.value;
+        int idx = search(key);
+        if(idx >= 0) return values[idx];
         else return null;
     }
 
     public void delete(Key key)
     {
-        // eager delete implementation
-        if(first != null)
+        int idx = search(key);
+        if(idx >= 0)
         {
-            if(key.equals(first.key))
-            {
-                // first node contains key
-                Node temp;
-                temp = first;
-                first = first.next;
-                temp.next = null;
-                N--;
-            }
-            else
-            {
-                // search for node before the node that contains key
-                Node current = first;
-                while(current.next != null)
-                {
-                    if(key.equals(current.next.key))
-                    {
-                        // node before node that contains key found
-                        break;
-                    }
-                    current = current.next;
-                }
-
-                if(current.next == null)
-                {
-                    // last node reached and key not found; do nothing
-                }
-                else
-                {
-                    // current.next is the node that contains key
-                    Node temp = current.next;
-                    current.next = current.next.next;
-                    temp.next = null;
-                    N--;
-                }
-            }
+            // key found
+            N--;
+            keys[idx] = keys[N];
+            values[idx] = values[N];
+            keys[N] = null;
+            values[N] = null;
+            if(N <= (int)(keys.length / 4))
+                resize(N / 2);
         }
     }
 
     public boolean contains(Key key)
     {
-        Node current = search(key); // current == null if key not found
-        if(current != null) return true;
+        int idx = search(key);
+        if(idx >= 0) return true;
         else return false;
     }
 
-    private Node search(Key key)
+    private int search(Key key)
     {
-        // search if a node with the key already exists
-        Node current = first;
-        while(current != null)
+        int idx = 0;
+        for(int cnt = 0; cnt < N; cnt++)
         {
-            if(key.equals(current.key))
-                break;
-            current = current.next;
+            if(key.equals(keys[idx]))
+                return idx;
+            idx++;
+            if(idx >= keys.length)
+                idx = 0;
         }
+        return -1;
+    }
 
-        // return is null if key is not found
-        return current;
+    private void resize(int sz)
+    {
+        Key[] tempkeys = (Key[])new Object[sz];
+        Value[] tempvalues = (Value[])new Object[sz];
+        int idx = 0;
+        for(int cnt = 0; cnt < N; cnt++)
+        {
+            tempkeys[cnt] = keys[idx];
+            tempvalues[cnt] = values[idx];
+            idx++;
+            if(idx >= keys.length)
+                idx = 0;
+        }
+        keys = tempkeys;
+        values = tempvalues;
     }
 
     public boolean isEmpty() {return N == 0;}
@@ -117,14 +99,17 @@ public class LinkedListSequentialSearchST<Key, Value>
     public String toString()
     {
         StringBuilder sb = new StringBuilder();
-        if(first != null)
+        if(N > 0)
         {
-            Node current = first;
-            while(current != null)
+            int idx = 0;
+            int cnt = 0;
+            while(cnt < N)
             {
-                sb.append("(" + current.key.toString() + ", " +
-                    current.value.toString() + "), ");
-                current = current.next;
+                sb.append("(" + keys[idx] + ", " + values[idx] + "), ");
+                cnt++;
+                idx++;
+                if(idx >= keys.length)
+                    idx = 0;
             }
             sb.setLength(sb.length() - 2);
         }
@@ -140,18 +125,21 @@ public class LinkedListSequentialSearchST<Key, Value>
 
         private class KeysIterator implements Iterator<Key>
         {
+            private int idx;
             private int n;
-            private Node node;
             public KeysIterator()
             {
-                node = new Node();
-                node.next = first;
+                idx = 0;
+                n = 0;
             }
-            public boolean hasNext() {return (node.next != null);}
+            public boolean hasNext() {return n < N;}
             public Key next()
             {
-                node = node.next;
-                Key ret = node.key;
+                Key ret = keys[idx];
+                n++;
+                idx++;
+                if(idx >= keys.length)
+                    idx = 0;
                 return ret;
             }
             public void remove() {}
@@ -170,8 +158,8 @@ public class LinkedListSequentialSearchST<Key, Value>
 
         if(test)
         {
-            LinkedListSequentialSearchST<String, Integer> st =
-                new LinkedListSequentialSearchST <String, Integer>();
+            ResizingArraySequentialSearchST<String, Integer> st =
+                new ResizingArraySequentialSearchST <String, Integer>();
             System.out.println("Testing all operations on empty symbol table");
             System.out.println("    Contents: " + st.toString());
             System.out.println("    isEmpty(): " + st.isEmpty());
@@ -227,8 +215,8 @@ public class LinkedListSequentialSearchST<Key, Value>
         }
         else
         {
-            LinkedListSequentialSearchST<String, Integer> st =
-                new LinkedListSequentialSearchST<String, Integer>();
+            ResizingArraySequentialSearchST<String, Integer> st =
+                new ResizingArraySequentialSearchST<String, Integer>();
             // sample input is SEARCHEXAMPLE
             System.out.println("Symbol table empty? " + st.isEmpty());
             System.out.println("Testing put() operation:");

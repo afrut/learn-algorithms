@@ -3,7 +3,7 @@
     example illustrated on page 367.
 */
 
-import libs.algs.ResizingArrayBinarySearchST;
+import libs.algs.st.ResizingArrayBinarySearchST;
 
 public class Client
 {

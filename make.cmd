@@ -85,59 +85,61 @@ cls
 ::cd ..
 
 
-:::: --------------------------------------------------
-::::  Recompile Packages
-:::: --------------------------------------------------
-:::: Compile
-::javac libs\combinatorics\CountingTechniques.java
-::javac libs\util\Util.java
-::javac libs\algs\MaxPQ.java
-::javac libs\algs\MinPQ.java
-::javac libs\algs\IndexMaxPQ.java
-::javac libs\algs\Heapsort.java
-::javac libs\algs\BinarySearch.java
-::javac libs\algs\LinkedListSequentialSearchST.java
-::javac libs\algs\ResizingArraySequentialSearchST.java
-::javac libs\algs\ResizingArrayBinarySearchST.java
-::javac libs\algs\LinkedListOrderedSequentialSearchST.java
-::javac libs\algs\RecursiveBST.java
-::javac libs\algs\Bag.java
-::javac libs\algs\List.java
-::javac libs\algs\BST.java
+:: --------------------------------------------------
+::  Recompile Packages
+:: --------------------------------------------------
+:: Compile
+javac libs\combinatorics\CountingTechniques.java
+javac libs\util\Util.java
+javac libs\algs\MaxPQ.java
+javac libs\algs\MinPQ.java
+javac libs\algs\IndexMaxPQ.java
+javac libs\algs\Heapsort.java
+javac libs\algs\BinarySearch.java
+javac libs\algs\st\LinkedListSequentialSearchST.java
+javac libs\algs\st\ResizingArraySequentialSearchST.java
+javac libs\algs\st\ResizingArrayBinarySearchST.java
+javac libs\algs\st\LinkedListOrderedSequentialSearchST.java
+javac libs\algs\st\RecursiveBST.java
+javac libs\algs\Bag.java
+javac libs\algs\List.java
+javac libs\algs\st\BST.java
 
-:::: Archive
-::del .\bin\mylibs.jar
-::jar cvf ^
-::.\bin\libs.jar ^
-::.\libs\combinatorics\*.class ^
-::.\libs\util\*.class ^
-::.\libs\algs\*.class
+:: Archive
+del .\bin\libs.jar
+jar cvf ^
+.\bin\libs.jar ^
+.\libs\combinatorics\*.class ^
+.\libs\util\*.class ^
+.\libs\algs\st\*.class ^
+.\libs\algs\*.class
 
-:::: Test
-::java -ea libs.combinatorics.CountingTechniques
-::java -ea libs.util.Util
-::java -ea libs.algs.MaxPQ < libs\algs\input.txt
-::java -ea libs.algs.MinPQ < libs\algs\input.txt
-::java -ea libs.algs.IndexMaxPQ < libs\algs\input.txt
-::java -ea libs.algs.Heapsort
-::java -ea libs.algs.BinarySearch
-::java -ea libs.algs.LinkedListSequentialSearchST -test
-::java -ea libs.algs.LinkedListSequentialSearchST < libs\algs\STSampleinput.txt
-::java -ea libs.algs.ResizingArraySequentialSearchST -test
-::java -ea libs.algs.ResizingArraySequentialSearchST < libs\algs\STSampleinput.txt
-::java -ea libs.algs.ResizingArrayBinarySearchST -test
-::java -ea libs.algs.ResizingArrayBinarySearchST < libs\algs\STSampleinput.txt
-::java -ea libs.algs.LinkedListOrderedSequentialSearchST -test
-::java -ea libs.algs.LinkedListOrderedSequentialSearchST < libs\algs\STSampleinput.txt
-::java -ea libs.algs.RecursiveBST -test
-::java -ea libs.algs.RecursiveBST < libs\algs\STSampleinput.txt
-::java -ea libs.algs.Bag
-::java -ea libs.algs.List
-::java -ea libs.algs.BST -test
-::java -ea libs.algs.BST < libs\algs\STSampleinput.txt
+:: Test
+java -ea libs.combinatorics.CountingTechniques
+java -ea libs.util.Util
+java -ea libs.algs.MaxPQ < libs\algs\input.txt
+java -ea libs.algs.MinPQ < libs\algs\input.txt
+java -ea libs.algs.IndexMaxPQ < libs\algs\input.txt
+java -ea libs.algs.Heapsort
+java -ea libs.algs.BinarySearch
+java -ea libs.algs.st.LinkedListSequentialSearchST -test
+java -ea libs.algs.st.LinkedListSequentialSearchST < libs\algs\STSampleinput.txt
+java -ea libs.algs.st.ResizingArraySequentialSearchST -test
+java -ea libs.algs.st.ResizingArraySequentialSearchST < libs\algs\STSampleinput.txt
+java -ea libs.algs.st.ResizingArrayBinarySearchST -test
+java -ea libs.algs.st.ResizingArrayBinarySearchST < libs\algs\STSampleinput.txt
+java -ea libs.algs.st.LinkedListOrderedSequentialSearchST -test
+java -ea libs.algs.st.LinkedListOrderedSequentialSearchST < libs\algs\STSampleinput.txt
+java -ea libs.algs.st.RecursiveBST -test
+java -ea libs.algs.st.RecursiveBST < libs\algs\STSampleinput.txt
+java -ea libs.algs.Bag
+java -ea libs.algs.List
+java -ea libs.algs.st.BST -test
+java -ea libs.algs.st.BST < libs\algs\STSampleinput.txt
 
-:::: Clean
-::del /s .\libs\*.class
+:: Clean
+del /s .\libs\*.class
+
 
 
 :::: --------------------------------------------------
