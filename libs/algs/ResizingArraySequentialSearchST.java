@@ -158,8 +158,8 @@ public class ResizingArraySequentialSearchST<Key, Value>
 
         if(test)
         {
-            LinkedListSequentialSearchST<String, Integer> st =
-                new LinkedListSequentialSearchST <String, Integer>();
+            ResizingArraySequentialSearchST<String, Integer> st =
+                new ResizingArraySequentialSearchST <String, Integer>();
             System.out.println("Testing all operations on empty symbol table");
             System.out.println("    Contents: " + st.toString());
             System.out.println("    isEmpty(): " + st.isEmpty());
@@ -215,8 +215,8 @@ public class ResizingArraySequentialSearchST<Key, Value>
         }
         else
         {
-            LinkedListOrderedSequentialSearchST<String, Integer> st =
-                new LinkedListOrderedSequentialSearchST<String, Integer>();
+            ResizingArraySequentialSearchST<String, Integer> st =
+                new ResizingArraySequentialSearchST<String, Integer>();
             // sample input is SEARCHEXAMPLE
             System.out.println("Symbol table empty? " + st.isEmpty());
             System.out.println("Testing put() operation:");

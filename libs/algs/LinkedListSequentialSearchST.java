@@ -227,8 +227,8 @@ public class LinkedListSequentialSearchST<Key, Value>
         }
         else
         {
-            LinkedListOrderedSequentialSearchST<String, Integer> st =
-                new LinkedListOrderedSequentialSearchST<String, Integer>();
+            LinkedListSequentialSearchST<String, Integer> st =
+                new LinkedListSequentialSearchST<String, Integer>();
             // sample input is SEARCHEXAMPLE
             System.out.println("Symbol table empty? " + st.isEmpty());
             System.out.println("Testing put() operation:");
