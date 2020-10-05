@@ -3,7 +3,7 @@
     produced when the operations P R I O * R * * I * T * Y * * * Q U E * * * U *
     E are performed on an initially empty max-oriented heap.
 */
-import libs.algs.MaxPQ;
+import libs.algs.pq.MaxPQ;
 import libs.util.Util;
 import edu.princeton.cs.algs4.In;
 

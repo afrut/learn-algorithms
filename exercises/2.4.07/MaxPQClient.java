@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.util.LinkedList;
 import edu.princeton.cs.algs4.In;
 import edu.princeton.cs.algs4.StdRandom;
-import libs.algs.MaxPQ;
+import libs.algs.pq.MaxPQ;
 import libs.util.Util;
 import libs.combinatorics.CountingTechniques;
 

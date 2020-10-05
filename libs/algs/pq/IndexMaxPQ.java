@@ -2,7 +2,7 @@
     This class implements a maximum priority queue that supports indexing using
     a binary heap according to the API specified by Sedgewick 4ed.
 */
-package libs.algs;
+package libs.algs.pq;
 import edu.princeton.cs.algs4.In;
 import libs.util.Util;
 

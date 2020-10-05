@@ -2,7 +2,7 @@
     2.4.5 Give the heap that results when the keys E A S Y Q U E S T I O N are
     inserted in that order into an initially empty max-oriented heap.
 */
-import libs.algs.MaxPQ;
+import libs.algs.pq.MaxPQ;
 import libs.util.Util;
 import edu.princeton.cs.algs4.In;
 
