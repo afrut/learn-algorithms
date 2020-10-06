@@ -103,7 +103,7 @@ cls
 ::javac libs\algs\st\RecursiveBST.java
 ::javac libs\algs\Bag.java
 ::javac libs\algs\List.java
-::javac libs\algs\st\BST.java
+javac libs\algs\st\BST.java
 
 :::: Archive
 ::del .\bin\libs.jar
@@ -135,7 +135,7 @@ cls
 ::java -ea libs.algs.st.RecursiveBST < libs\algs\STSampleinput.txt
 ::java -ea libs.algs.Bag
 ::java -ea libs.algs.List
-::java -ea libs.algs.st.BST -test
+java -ea libs.algs.st.BST -test
 ::java -ea libs.algs.st.BST < libs\algs\STSampleinput.txt
 
 :::: Clean
