@@ -1,9 +1,8 @@
 package libs.algs.st;
 import java.util.Iterator;
 import edu.princeton.cs.algs4.StdIn;
-import libs.algs.Bag;
-import libs.algs.List;
 import java.util.LinkedList;
+import java.util.Stack;
 
 public class BST<Key extends Comparable<Key>, Value>
 {
@@ -13,6 +12,7 @@ public class BST<Key extends Comparable<Key>, Value>
         Value value;
         Node left;
         Node right;
+        int height;
         int N;
     }
 
@@ -104,24 +104,26 @@ public class BST<Key extends Comparable<Key>, Value>
             root.key = key;
             root.value = value;
             root.N = 1;
+            root.height = 1;
         }
         else
         {
             Node node = root;
-            Bag<Node> bag = new Bag<Node>();
+            Stack<Node> nodestack = new Stack<Node>();
             boolean contained = false;
 
             while(true)
             {
                 if(key.compareTo(node.key) < 0)
                 {
-                    bag.add(node);
+                    nodestack.push(node);
                     if(node.left == null)
                     {
                         Node newNode = new Node();
                         newNode.key = key;
                         newNode.value = value;
                         newNode.N = 1;
+                        newNode.height = 1;
                         node.left = newNode;
                         break;
                     }
@@ -132,13 +134,14 @@ public class BST<Key extends Comparable<Key>, Value>
                 }
                 else if(key.compareTo(node.key) > 0)
                 {
-                    bag.add(node);
+                    nodestack.push(node);
                     if(node.right == null)
                     {
                         Node newNode = new Node();
                         newNode.key = key;
                         newNode.value = value;
                         newNode.N = 1;
+                        newNode.height = 1;
                         node.right = newNode;
                         break;
                     }
@@ -158,10 +161,26 @@ public class BST<Key extends Comparable<Key>, Value>
 
             if(!contained)
             {
-                for(Node n : bag)
+                while(!nodestack.empty())
+                {
+                    Node n = nodestack.pop();
+                    updateNodeHeight(n);
                     n.N++;
+                }
             }
         }
+    }
+
+    private void updateNodeHeight(Node node)
+    {
+        int lefth;
+        int righth;
+        if(node.left == null) lefth = 0;
+        else lefth = node.left.height;
+        if(node.right == null) righth = 0;
+        else righth = node.right.height;
+        if(lefth > righth) node.height = lefth + 1;
+        else node.height = righth + 1;
     }
 
     // Return the value associated with key.
@@ -183,21 +202,21 @@ public class BST<Key extends Comparable<Key>, Value>
         Node node = root;
         Node prev = null;
         boolean leftLink = true;
-        Bag<Node> bag = new Bag<Node>();
+        Stack<Node> nodestack = new Stack<Node>();
         while(true)
         {
             if(node == null) return;
             else if(key.compareTo(node.key) < 0)
             {
                 prev = node;
-                bag.add(node);
+                nodestack.push(node);
                 node = node.left;
                 leftLink = true;
             }
             else if(key.compareTo(node.key) > 0)
             {
                 prev = node;
-                bag.add(node);
+                nodestack.push(node);
                 node = node.right;
                 leftLink = false;
             }
@@ -229,8 +248,11 @@ public class BST<Key extends Comparable<Key>, Value>
         else prev.right = successor;
 
         // Update Node.N for all relevant nodes in the tree path to the deleted node.
-        for(Node n : bag)
+        while(!nodestack.empty())
+        {
+            Node n = nodestack.pop();
             n.N--;
+        }
 
         if(successor != null)
         {
@@ -423,7 +445,7 @@ public class BST<Key extends Comparable<Key>, Value>
     {
         Node ret = node;
         Node prev = null;
-        Bag<Node> bag = new Bag<Node>();
+        Stack<Node> nodestack = new Stack<Node>();
         while(true)
         {
             if(node == null) return null;
@@ -444,12 +466,15 @@ public class BST<Key extends Comparable<Key>, Value>
             else
             {
                 prev = node;
-                bag.add(node);
+                nodestack.push(node);
                 node = node.left;
             }
         }
-        for(Node n : bag)
+        while(!nodestack.empty())
+        {
+            Node n = nodestack.pop();
             n.N--;
+        }
         return ret;
     }
 
@@ -458,7 +483,7 @@ public class BST<Key extends Comparable<Key>, Value>
     {
         Node node = root;
         Node prev = null;
-        Bag<Node> bag = new Bag<Node>();
+        Stack<Node> nodestack = new Stack<Node>();
         while(true)
         {
             if(node == null) return;
@@ -479,12 +504,15 @@ public class BST<Key extends Comparable<Key>, Value>
             else
             {
                 prev = node;
-                bag.add(node);
+                nodestack.push(node);
                 node = node.right;
             }
         }
-        for(Node n : bag)
+        while(!nodestack.empty())
+        {
+            Node n = nodestack.pop();
             n.N--;
+        }
     }
 
     public int size(Key from, Key to)
@@ -501,8 +529,8 @@ public class BST<Key extends Comparable<Key>, Value>
     // Return the height of the binary search tree using Node.H.
     public int height()
     {
-        // TODO: implement this
-        return 0;
+        if(root == null) return 0;
+        else return root.height;
     }
 
     // Determine the height of the BST by examining every element.
