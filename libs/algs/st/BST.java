@@ -175,6 +175,7 @@ public class BST<Key extends Comparable<Key>, Value>
     {
         int lefth;
         int righth;
+        if(node == null) return;
         if(node.left == null) lefth = 0;
         else lefth = node.left.height;
         if(node.right == null) righth = 0;
@@ -236,6 +237,7 @@ public class BST<Key extends Comparable<Key>, Value>
         {
             successor = node.left;
         }
+        updateNodeHeight(successor);
 
         // Link successor to parent.
         node.left = null;
@@ -247,19 +249,21 @@ public class BST<Key extends Comparable<Key>, Value>
         else if(leftLink) prev.left = successor;
         else prev.right = successor;
 
-        // Update Node.N for all relevant nodes in the tree path to the deleted node.
-        while(!nodestack.empty())
-        {
-            Node n = nodestack.pop();
-            n.N--;
-        }
-
         if(successor != null)
         {
             successor.N = 1;
             if(successor.left != null) successor.N += successor.left.N;
             if(successor.right != null) successor.N += successor.right.N;
         }
+
+        // Update Node.N for all relevant nodes in the tree path to the deleted node.
+        while(!nodestack.empty())
+        {
+            Node n = nodestack.pop();
+            n.N--;
+            updateNodeHeight(n);
+        }
+
     }
 
     // Checks if the binary search tree contains a node associated with key.
@@ -474,6 +478,7 @@ public class BST<Key extends Comparable<Key>, Value>
         {
             Node n = nodestack.pop();
             n.N--;
+            updateNodeHeight(n);
         }
         return ret;
     }
@@ -512,6 +517,7 @@ public class BST<Key extends Comparable<Key>, Value>
         {
             Node n = nodestack.pop();
             n.N--;
+            updateNodeHeight(n);
         }
     }
 
