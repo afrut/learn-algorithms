@@ -1,48 +1,85 @@
+// TODO: list all cases of inserting into 2-3 trees
+// TODO: translate them in terms of red-black trees
+// TODO: map out all cases on red-black trees
 package libs.algs.st;
 import java.util.Iterator;
 import edu.princeton.cs.algs4.StdIn;
+import libs.algs.st.SymbolTable;
 
 // --------------------------------------------------------------------------------
 //
-// 2-3 Tree/Red-Black BST Construction
-// Inserting into a 2-node: create a 3-node. Always insert as a red node. If
-// the new key is greater than the 2-node key, a left-leaning red node is
-// obtained. Rotating left makes this a left-leaning red node. If the new key
-// is less than the 2-node key, a left-leaning red node is obtained.
+// 2-3 Tree Construction
 //
-// Inserting into a 3-node: create a 4-node (either a node connecting to 2 red
-// nodes, or 2 consecutive red nodes). In the 3-node, the red node must be
-// left-leaning by virtue of the invariant.
+// Inserting into a single 2-node: Make it a 3-node.
 //
-// Case 1: if the new key is larger than both of the 3-node keys, insert a red
-// node to the right of the middle key thus making the middle node
-// connect to 2 red nodes. Change the color of both left and right nodes. Then,
-// change the color of the middle node to red, effectively passing up a red node.
+// Inserting into a single 3-node: Make it a 4-node. Then split the 4-node into
+// 3 2-nodes where the middle key is the parent, the lesser key is the left child
+// and the larger key is the right child.
 //
-// Case 2: if the new key is less than both 3-node keys, insert it as a red
-// node to the left of the smallest 3-node key. This creates 2 consecutive
-// left-leaning red nodes. Performing a right rotation on the largest node
-// positions the middle node such that it connects to 2 red nodes, one on the
-// left, and one on the right. Flipping the colors of both red nodes to black,
-// and flipping the color of the middle node to red, passes up the red node to
-// the parent.
+// Inserting into a child that is a 2-node: Make it a 3-node.
 //
-// Case 3: if the new key is in between both 3-node keys, insert it to the
-// right of the smallest node thus creating a right-leaning red node. A left
-// rotation on the smallest node positions the middle node to the left of the
-// largest, and smallest node to the left of the middle node. The situation
-// reduces to one where there are 2 consecutive left-leaning red nodes. A right
-// rotation makes the middle node a black node connected to two red nodes.
-// Flipping colors of the 2 red nodes and the black middle node passes up the
-// red node to the parent.
+// Inserting into a child that is a 3-node: Make it a 4-node. Then split the 4-node
+// into 3 2-nodes. Pass up the middle key to the parent. If the parent becomes
+// a 4-node, repeat this operation of splitting and passing up the middle key.
+// Worst case, the root becomes a 4-node, which then gets split into 3 2-nodes
+// with the middle key becoming the new root.
 //
 // --------------------------------------------------------------------------------
 
-public class RedBlackBST<Key extends Comparable<Key>, Value>
+// --------------------------------------------------------------------------------
+//
+// Red-Black BST Construction
+// A 3-node is encoded by specifying that the link to a node is red. A red node
+// is a node pointed to by a red link.
+//
+// Invariants:
+// - Red links always lean left.
+// - No node has two red links connected to it.
+// - The tree has perfect black balance: the number of black links to every
+//   from root to any null link is the same.
+//
+// ----------------------------------------
+// Inserting into a single 2-node: Make it a 3-node. Always insert as a red node.
+// Case 1: If the new node is less than the parent, the red node is naturally
+// the left child.
+//
+// Case 2: If the new node is greater than the parent, the red node leans right.
+// rotateLeft() fixes this.
+// ----------------------------------------
+// Inserting into a single 3-node: Always insert as a red node and make a 4-node.
+// Case 1: If the new node is greater than the parent, the red node leans right and
+// we obtain a node whose left and right child are both red nodes. This is remedied
+// by making both children black and making the parent red, effectively passing up
+// the middle key. flipColors(parent) fixes this.
+//
+// Case 2: If the new node is less than the two keys in the 3-node, it is inserted
+// as a red node that is the left child of the already-existing red node. We now
+// have a node whose left branch contains two subsequent red nodes. That is,
+// parent.left is red and parent.left.left is also red. rotateRight(parent) followed
+// by flipColors(parent) fixes this.
+//
+// Case 3: If the new node is between the two keys in the 3-node, it is inserted
+// as a red node that is the right child of the already-existing red node. We now
+// have a node whose left branch contains two subsequent red nodes. That is,
+// parent.left is red and parent.left.right is also red. rotateLeft(parent.left),
+// rotateRight(parent), and flipColors(parent) fixes this.
+// ----------------------------------------
+// Inserting into a child that is a 2-node: Same as inserting into a single 2-node.
+// ----------------------------------------
+// Inserting into a child that is a 3-node: Same as inserting into a single 3-node.
+// But, keep in mind that turning the parent red will mean it has to be processed
+// going back up the recursive calls.
+//
+// --------------------------------------------------------------------------------
+
+public class RedBlackBST<Key extends Comparable<Key>, Value> implements SymbolTable<Key, Value>
 {
     private static final boolean RED = true;
     private static final boolean BLACK = false;
 
+    // ----------------------------------------
+    // Private classes
+    // ----------------------------------------
     private class Node
     {
         Key key;
@@ -129,56 +166,14 @@ public class RedBlackBST<Key extends Comparable<Key>, Value>
         }
     }
 
+    // ----------------------------------------
+    // Private members
+    // ----------------------------------------
     private Node root;
 
-    public RedBlackBST() {root = null;}
-
-    // Searches for key and replaces its value. If not found, inserts key and value.
-    public void put(Key key, Value value)
-    {
-        root = put(root, key, value);
-        root.color = BLACK;
-    }
-
-    // Private recursive function to insert a key-value pair.
-    private Node put(Node node, Key key, Value value)
-    {
-        if(node == null)
-        {
-            Node ret = new Node();
-            ret.key = key;
-            ret.value = value;
-            ret.N = 1;
-            ret.H = 1;
-            ret.color = RED;
-            return ret;
-        }
-        else if(key.compareTo(node.key) < 0)
-        {
-            Node ret = put(node.left, key, value);
-            node.left = ret;
-            node = rotateRight(node);
-            node = flipColors(node);
-            updateNodeN(node);
-            return node;
-        }
-        else if(key.compareTo(node.key) > 0)
-        {
-            Node ret = put(node.right, key, value);
-            node.right = ret;
-            node = rotateLeft(node);
-            node = flipColors(node);
-            updateNodeN(node);
-            return node;
-        }
-        else
-        {
-            node.key = key;
-            node.value = value;
-            return node;
-        }
-    }
-
+    // ----------------------------------------
+    // Private helper functions
+    // ----------------------------------------
     private boolean isRed(Node node)
     {
         if(node == null) return BLACK;
@@ -246,12 +241,46 @@ public class RedBlackBST<Key extends Comparable<Key>, Value>
         node.N = ret + 1;
     }
 
-    // Return the value associated with key.
-    public Value get(Key key)
+    // ----------------------------------------
+    // Private sub-tree functions
+    // ----------------------------------------
+    // Return the root of the tree after executing insert of (key, value)
+    private Node put(Node node, Key key, Value value)
     {
-        Node node = get(root, key);
-        if(node == null) return null;
-        else return node.value;
+        if(node == null)
+        {
+            Node ret = new Node();
+            ret.key = key;
+            ret.value = value;
+            ret.N = 1;
+            ret.H = 1;
+            ret.color = RED;
+            return ret;
+        }
+        else if(key.compareTo(node.key) < 0)
+        {
+            Node ret = put(node.left, key, value);
+            node.left = ret;
+            node = rotateRight(node);
+            node = flipColors(node);
+            updateNodeN(node);
+            return node;
+        }
+        else if(key.compareTo(node.key) > 0)
+        {
+            Node ret = put(node.right, key, value);
+            node.right = ret;
+            node = rotateLeft(node);
+            node = flipColors(node);
+            updateNodeN(node);
+            return node;
+        }
+        else
+        {
+            node.key = key;
+            node.value = value;
+            return node;
+        }
     }
 
     // Return the Node associated with key within the binary search tree rooted
@@ -263,9 +292,6 @@ public class RedBlackBST<Key extends Comparable<Key>, Value>
         else if(key.compareTo(node.key) > 0) return get(node.right, key);
         else return node;
     }
-
-    // Remove the node that is associated with key.
-    public void delete(Key key) {root = delete(root, key);}
 
     // Delete the node associated with key within the binary search tree rooted
     // at node.
@@ -314,13 +340,6 @@ public class RedBlackBST<Key extends Comparable<Key>, Value>
         }
     }
 
-    // Checks if the binary search tree contains a node associated with key.
-    public boolean contains(Key key)
-    {
-        if(contains(root, key) != null) return true;
-        else return false;
-    }
-
     // Returns the Node associated with key that is within the binary search
     // tree rooted at node.
     private Node contains(Node node, Key key)
@@ -329,24 +348,6 @@ public class RedBlackBST<Key extends Comparable<Key>, Value>
         else if(key.compareTo(node.key) < 0) return contains(node.left, key);
         else if(key.compareTo(node.key) > 0) return contains(node.right, key);
         else return node;
-    }
-
-    // Check if the binary search tree is null.
-    public boolean isEmpty() {return root == null;}
-
-    // Return the total number of nodes.
-    public int size()
-    {
-        if(root == null) return 0;
-        else return root.N;
-    }
-
-    // Return the smallest Key.
-    public Key min()
-    {
-        Node ret = min(root);
-        if(ret == null) return null;
-        else return ret.key;
     }
 
     // Return the node containing the smallest key in the binary tree rooted at
@@ -358,29 +359,13 @@ public class RedBlackBST<Key extends Comparable<Key>, Value>
         else return node;
     }
 
-    // Return the largest key.
-    public Key max()
-    {
-        Node ret = max(root);
-        if(ret == null) return null;
-        else return ret.key;
-    }
-
     // Return the Node that is associated with the largest key within the binary
     // search tree rooted at node.
-    public Node max(Node node)
+    private Node max(Node node)
     {
         if(node == null) return null;
         if(node.right != null) return max(node.right);
         else return node;
-    }
-
-    // Return the largest key that is less than key.
-    public Key floor(Key key)
-    {
-        Node node = floor(root, key);
-        if(node == null) return null;
-        else return node.key;
     }
 
     // Return the node associated with the largest key that is less than node.key
@@ -408,14 +393,6 @@ public class RedBlackBST<Key extends Comparable<Key>, Value>
         }
     }
 
-    // Return the smallest key that is greater than key.
-    public Key ceiling(Key key)
-    {
-        Node node = ceiling(root, key);
-        if(node == null) return null;
-        else return node.key;
-    }
-
     // Return the node containing the smallest key greater than node.key within
     // the binary search tree rooted at node.
     private Node ceiling(Node node, Key key)
@@ -441,13 +418,6 @@ public class RedBlackBST<Key extends Comparable<Key>, Value>
         }
     }
 
-    // Return the number of keys that are less than key.
-    // Keys have to be unique.
-    public int rank(Key key)
-    {
-        return rank(root, key);
-    }
-
     // Returns the number of keys less than key within the binary search tree
     // at node.
     private int rank(Node node, Key key)
@@ -467,14 +437,6 @@ public class RedBlackBST<Key extends Comparable<Key>, Value>
             if(node.left == null) return 0;
             else return node.left.N;
         }
-    }
-
-    // Return the key that has k keys less than it.
-    public Key select(int k)
-    {
-        Node node = select(root, k);
-        if(node == null) return null;
-        else return node.key;
     }
 
     // Return the Node that has k keys less than it within the binary search tree
@@ -513,9 +475,6 @@ public class RedBlackBST<Key extends Comparable<Key>, Value>
         else return null;
     }
 
-    // Remove the node with the smallest key.
-    public void deleteMin() {root = deleteMin(root);}
-
     // Remove the node with the smallest key within the subtree rooted at node.
     private Node deleteMin(Node node)
     {
@@ -534,9 +493,6 @@ public class RedBlackBST<Key extends Comparable<Key>, Value>
         }
     }
 
-    // Remove the pair with the greatest key.
-    public void deleteMax() {root = deleteMax(root);}
-
     // Remove the node with the largest key within the subtree rooted at node.
     private Node deleteMax(Node node)
     {
@@ -553,12 +509,6 @@ public class RedBlackBST<Key extends Comparable<Key>, Value>
             updateNodeN(node);
             return node;
         }
-    }
-
-    // Get the number of Keys between from and to, inclusive.
-    public int size(Key from, Key to)
-    {
-        return size(root, from, to);
     }
 
     // Get the number of Keys between from and to, inclusive starting from Node.
@@ -587,18 +537,8 @@ public class RedBlackBST<Key extends Comparable<Key>, Value>
         }
     }
 
-    // Return the height of the binary search tree using Node.H.
-    public int height()
-    {
-        if(root == null) return 0;
-        else return root.H;
-    }
-
-    // Determine the height of the BST by examining every element.
-    public int heightCompute() {return heightCompute(root);}
-
     // Determine the height of the BST by examining every element rooted at node.
-    public int heightCompute(Node node)
+    private int heightCompute(Node node)
     {
         if(node == null) return 0;
         else
@@ -608,18 +548,6 @@ public class RedBlackBST<Key extends Comparable<Key>, Value>
             if(heightLeft > heightRight) return 1 + heightLeft;
             else return 1 + heightRight;
         }
-    }
-
-    public String toString()
-    {
-        StringBuilder sb = new StringBuilder();
-        if(root != null)
-        {
-            toString(root, sb);
-            if(sb.length() > 0)
-                sb.setLength(sb.length() - 2);
-        }
-        return sb.toString();
     }
 
     private String toString(Node node)
@@ -652,6 +580,127 @@ public class RedBlackBST<Key extends Comparable<Key>, Value>
         for(Key key : keys(from, to)) sb.append(key.toString() + ", ");
         if(sb.length() > 0)
             sb.setLength(sb.length() - 2);
+        return sb.toString();
+    }
+
+    // ----------------------------------------
+    // Public api
+    // ----------------------------------------
+    public RedBlackBST() {root = null;}
+
+    // Searches for key and replaces its value. If not found, inserts key and value.
+    public void put(Key key, Value value)
+    {
+        root = put(root, key, value);
+        root.color = BLACK;
+    }
+
+    // Return the value associated with key.
+    public Value get(Key key)
+    {
+        Node node = get(root, key);
+        if(node == null) return null;
+        else return node.value;
+    }
+
+    // Remove the node that is associated with key.
+    public void delete(Key key) {root = delete(root, key);}
+
+    // Checks if the binary search tree contains a node associated with key.
+    public boolean contains(Key key)
+    {
+        if(contains(root, key) != null) return true;
+        else return false;
+    }
+
+    // Check if the binary search tree is null.
+    public boolean isEmpty() {return root == null;}
+
+    // Return the total number of nodes.
+    public int size()
+    {
+        if(root == null) return 0;
+        else return root.N;
+    }
+
+    // Return the smallest Key.
+    public Key min()
+    {
+        Node ret = min(root);
+        if(ret == null) return null;
+        else return ret.key;
+    }
+
+    // Return the largest key.
+    public Key max()
+    {
+        Node ret = max(root);
+        if(ret == null) return null;
+        else return ret.key;
+    }
+
+    // Return the largest key that is less than key.
+    public Key floor(Key key)
+    {
+        Node node = floor(root, key);
+        if(node == null) return null;
+        else return node.key;
+    }
+
+    // Return the smallest key that is greater than key.
+    public Key ceiling(Key key)
+    {
+        Node node = ceiling(root, key);
+        if(node == null) return null;
+        else return node.key;
+    }
+
+    // Return the number of keys that are less than key.
+    // Keys have to be unique.
+    public int rank(Key key)
+    {
+        return rank(root, key);
+    }
+
+    // Return the key that has k keys less than it.
+    public Key select(int k)
+    {
+        Node node = select(root, k);
+        if(node == null) return null;
+        else return node.key;
+    }
+
+    // Remove the node with the smallest key.
+    public void deleteMin() {root = deleteMin(root);}
+
+    // Remove the pair with the greatest key.
+    public void deleteMax() {root = deleteMax(root);}
+
+    // Get the number of Keys between from and to, inclusive.
+    public int size(Key from, Key to)
+    {
+        return size(root, from, to);
+    }
+
+    // Return the height of the binary search tree using Node.H.
+    public int height()
+    {
+        if(root == null) return 0;
+        else return root.H;
+    }
+
+    // Determine the height of the BST by examining every element.
+    public int heightCompute() {return heightCompute(root);}
+
+    public String toString()
+    {
+        StringBuilder sb = new StringBuilder();
+        if(root != null)
+        {
+            toString(root, sb);
+            if(sb.length() > 0)
+                sb.setLength(sb.length() - 2);
+        }
         return sb.toString();
     }
 
