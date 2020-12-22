@@ -1,6 +1,7 @@
 // TODO: list all cases of inserting into 2-3 trees
 // TODO: translate them in terms of red-black trees
 // TODO: map out all cases on red-black trees
+// TODO: create a Client.java for all symbol tables
 package libs.algs.st;
 import java.util.Iterator;
 import edu.princeton.cs.algs4.StdIn;
@@ -584,10 +585,13 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> implements SymbolTa
     }
 
     // ----------------------------------------
-    // Public api
+    // Public methods
     // ----------------------------------------
     public RedBlackBST() {root = null;}
 
+    // ----------------------------------------
+    // tree operations
+    // ----------------------------------------
     // Searches for key and replaces its value. If not found, inserts key and value.
     public void put(Key key, Value value)
     {
@@ -611,16 +615,6 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> implements SymbolTa
     {
         if(contains(root, key) != null) return true;
         else return false;
-    }
-
-    // Check if the binary search tree is null.
-    public boolean isEmpty() {return root == null;}
-
-    // Return the total number of nodes.
-    public int size()
-    {
-        if(root == null) return 0;
-        else return root.N;
     }
 
     // Return the smallest Key.
@@ -682,15 +676,28 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> implements SymbolTa
         return size(root, from, to);
     }
 
+    // Determine the height of the BST by examining every element.
+    public int heightCompute() {return heightCompute(root);}
+
+    // ----------------------------------------
+    // convenience
+    // ----------------------------------------
+    // Check if the binary search tree is null.
+    public boolean isEmpty() {return root == null;}
+
+    // Return the total number of nodes.
+    public int size()
+    {
+        if(root == null) return 0;
+        else return root.N;
+    }
+
     // Return the height of the binary search tree using Node.H.
     public int height()
     {
         if(root == null) return 0;
         else return root.H;
     }
-
-    // Determine the height of the BST by examining every element.
-    public int heightCompute() {return heightCompute(root);}
 
     public String toString()
     {
@@ -718,8 +725,7 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> implements SymbolTa
         if(test)
         {
             int ret;
-            RedBlackBST<String, Integer> st =
-                new RedBlackBST <String, Integer>();
+            RedBlackBST<String, Integer> st = new RedBlackBST <String, Integer>();
             String pf = "fail";
             System.out.println("Testing all operations on empty symbol table:");
             System.out.println("Contents: " + st.toString());
