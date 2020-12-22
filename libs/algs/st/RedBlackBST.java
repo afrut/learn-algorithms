@@ -192,6 +192,7 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> implements SymbolTa
             temp.color = node.color;
             node.color = RED;
             node = temp;
+            updateNodeN(node);
         }
         return node;
     }
@@ -205,6 +206,7 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> implements SymbolTa
             mid.right = node;
             node.left = temp;
             updateNodeN(node);
+            updateNodeN(mid);
             mid.color = node.color;
             node.color = RED;
             node = mid;
@@ -223,29 +225,31 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> implements SymbolTa
         return node;
     }
 
+    // update count and height of nodes
     private void updateNodeN(Node node)
     {
         if(node == null) return;
-        int ret = 0;
+        int cnt = 0;
         node.H = 1;
         if(node.left != null)
         {
             node.H += node.left.H;
-            ret += node.left.N;
+            cnt += node.left.N;
         }
         if(node.right != null)
         {
             int rightH = 1 + node.right.H;
             if(node.H < rightH) node.H = rightH;
-            ret += node.right.N;
+            cnt += node.right.N;
         }
-        node.N = ret + 1;
+        node.N = cnt + 1;
     }
 
     // ----------------------------------------
     // Private sub-tree functions
     // ----------------------------------------
-    // Return the root of the tree after executing insert of (key, value)
+    // Insert (key, value) in the sub-tree rooted at node and return the root
+    // of the sub-tree
     private Node put(Node node, Key key, Value value)
     {
         if(node == null)
@@ -260,11 +264,9 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> implements SymbolTa
         }
         else if(key.compareTo(node.key) < 0)
         {
-            Node ret = put(node.left, key, value);
-            node.left = ret;
+            node.left = put(node.left, key, value);
             node = rotateRight(node);
             node = flipColors(node);
-            updateNodeN(node);
             return node;
         }
         else if(key.compareTo(node.key) > 0)
@@ -273,7 +275,6 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> implements SymbolTa
             node.right = ret;
             node = rotateLeft(node);
             node = flipColors(node);
-            updateNodeN(node);
             return node;
         }
         else
