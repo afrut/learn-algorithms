@@ -1,7 +1,6 @@
 // TODO: list all cases of inserting into 2-3 trees
 // TODO: translate them in terms of red-black trees
 // TODO: map out all cases on red-black trees
-// TODO: create a Client.java for all symbol tables
 package libs.algs.st;
 import java.util.Iterator;
 import edu.princeton.cs.algs4.StdIn;
@@ -228,6 +227,7 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> implements SymbolTa
     // update count and height of nodes
     private void updateNodeN(Node node)
     {
+        // TODO: account for red nodes
         if(node == null) return;
         int cnt = 0;
         node.H = 1;
@@ -290,8 +290,9 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> implements SymbolTa
     private Node get(Node node, Key key)
     {
         if(node == null) return null;
-        if(key.compareTo(node.key) < 0) return get(node.left, key);
-        else if(key.compareTo(node.key) > 0) return get(node.right, key);
+        int res = key.compareTo(node.key);
+        if(res < 0) return get(node.left, key);
+        else if(res > 0) return get(node.right, key);
         else return node;
     }
 
@@ -317,6 +318,7 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> implements SymbolTa
             // Node with key found. Store it in a temporary variable.
             // node is the Node to delete.
             // Find the ceiling of this node within its binary tree.
+            // TODO: write a function that finds the ceiling and deletes it in one function
             Node successor = ceiling(node.right, node.key);
             if(successor != null)
             {
@@ -331,6 +333,7 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> implements SymbolTa
             else
             {
                 successor = node.left;
+                node.left = null;
             }
 
             // Update the counts of successor.
@@ -346,9 +349,12 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> implements SymbolTa
     // tree rooted at node.
     private Node contains(Node node, Key key)
     {
+        int res;
         if(node == null) return null;
-        else if(key.compareTo(node.key) < 0) return contains(node.left, key);
-        else if(key.compareTo(node.key) > 0) return contains(node.right, key);
+        else res = key.compareTo(node.key);
+
+        if(res < 0) return contains(node.left, key);
+        else if(res > 0) return contains(node.right, key);
         else return node;
     }
 
@@ -370,29 +376,20 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> implements SymbolTa
         else return node;
     }
 
-    // Return the node associated with the largest key that is less than node.key
+    // Return the node with the largest key that is less than node.key
     // within the binary search tree rooted at node.
     private Node floor(Node node, Key key)
     {
         if(node == null) return null;
-        if(key.compareTo(node.key) < 0)
-        {
-            Node ret = floor(node.left, key);
-            if(ret == null) return null;
-            else return ret;
-        }
-        else if(key.compareTo(node.key) > 0)
+        int res = key.compareTo(node.key);
+        if(res < 0) {return floor(node.left, key);}
+        else if(res > 0)
         {
             Node ret = floor(node.right, key);
             if(ret == null) return node;
             else return ret;
         }
-        else
-        {
-            Node ret = floor(node.left, key);
-            if(ret == null) return null;
-            else return ret;
-        }
+        else {return floor(node.left, key);}
     }
 
     // Return the node containing the smallest key greater than node.key within
@@ -400,24 +397,15 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> implements SymbolTa
     private Node ceiling(Node node, Key key)
     {
         if(node == null) return null;
-        if(key.compareTo(node.key) < 0)
+        int res = key.compareTo(node.key);
+        if(res < 0)
         {
             Node ret = ceiling(node.left, key);
             if(ret == null) return node;
             else return ret;
         }
-        else if(key.compareTo(node.key) > 0)
-        {
-            Node ret = ceiling(node.right, key);
-            if(ret == null) return null;
-            else return ret;
-        }
-        else
-        {
-            Node ret = ceiling(node.right, key);
-            if(ret == null) return null;
-            else return ret;
-        }
+        else if(res > 0) {return ceiling(node.right, key);}
+        else {return ceiling(node.right, key);}
     }
 
     // Returns the number of keys less than key within the binary search tree
@@ -425,11 +413,12 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> implements SymbolTa
     private int rank(Node node, Key key)
     {
         if(node == null) return 0;
-        if(key.compareTo(node.key) < 0)
+        int res = key.compareTo(node.key);
+        if(res < 0)
         {
             return rank(node.left, key);
         }
-        else if(key.compareTo(node.key) > 0)
+        else if(res > 0)
         {
             if(node.left == null) return 1 + rank(node.right, key);
             else return 1 + node.left.N + rank(node.right, key);
@@ -445,8 +434,8 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> implements SymbolTa
     // rooted at node.
     private Node select(Node node, int k)
     {
-        if(k < 0) return null;
-        else if(node == null) return null;
+        // TODO: refactor this
+        if(k < 0 || node == null) return null;
         int cntleft = 0, cntright = 0;
         if(node.left != null) cntleft = node.left.N;
         if(node.right != null) cntright = node.right.N;
@@ -517,19 +506,21 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> implements SymbolTa
     private int size(Node node, Key from, Key to)
     {
         if(node == null) return 0;
-        if(from.compareTo(node.key) > 0)
+        int fromRes = from.compareTo(node.key);
+        int toRes = to.compareTo(node.key);
+        if(fromRes > 0)
         {
             return size(node.right, from, to);
         }
-        else if(from.compareTo(node.key) == 0)
+        else if(fromRes == 0)
         {
             return 1 + size(node.right, from, to);
         }
-        else if(from.compareTo(node.key) < 0 && to.compareTo(node.key) > 0)
+        else if(fromRes < 0 &&  toRes > 0)
         {
             return 1 + size(node.left, from, to) + size(node.right, from, to);
         }
-        else if(to.compareTo(node.key) == 0)
+        else if(toRes == 0)
         {
             return 1 + size(node.left, from, to);
         }
@@ -542,6 +533,7 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> implements SymbolTa
     // Determine the height of the BST by examining every element rooted at node.
     private int heightCompute(Node node)
     {
+        // TODO: account for red nodes
         if(node == null) return 0;
         else
         {
@@ -552,6 +544,7 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> implements SymbolTa
         }
     }
 
+    // Return a string representation of all nodes rooted at node, in ascending order
     private String toString(Node node)
     {
         StringBuilder sb = new StringBuilder();
@@ -559,6 +552,8 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> implements SymbolTa
         return sb.toString();
     }
 
+    // Uses StringBuilder to construct a string representation of all nodes
+    // rooted at node, in ascending order
     private void toString(Node node, StringBuilder sb)
     {
         if(node == null) return;
@@ -567,6 +562,7 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> implements SymbolTa
         if(node.right != null) toString(node.right, sb);
     }
 
+    // Returns a string representation of the keys of all nodes, in ascending order
     private String toStringIterator()
     {
         StringBuilder sb = new StringBuilder();
@@ -576,6 +572,8 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> implements SymbolTa
         return sb.toString();
     }
 
+    // Returns a string representation of the keys of all nodes between from
+    // and to in ascending order
     private String toStringIterator(Key from, Key to)
     {
         StringBuilder sb = new StringBuilder();
@@ -652,10 +650,7 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> implements SymbolTa
 
     // Return the number of keys that are less than key.
     // Keys have to be unique.
-    public int rank(Key key)
-    {
-        return rank(root, key);
-    }
+    public int rank(Key key) {return rank(root, key);}
 
     // Return the key that has k keys less than it.
     public Key select(int k)
@@ -672,10 +667,7 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> implements SymbolTa
     public void deleteMax() {root = deleteMax(root);}
 
     // Get the number of Keys between from and to, inclusive.
-    public int size(Key from, Key to)
-    {
-        return size(root, from, to);
-    }
+    public int size(Key from, Key to) {return size(root, from, to);}
 
     // Determine the height of the BST by examining every element.
     public int heightCompute() {return heightCompute(root);}
