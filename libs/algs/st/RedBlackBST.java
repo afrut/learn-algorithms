@@ -1,6 +1,3 @@
-// TODO: list all cases of inserting into 2-3 trees
-// TODO: translate them in terms of red-black trees
-// TODO: map out all cases on red-black trees
 package libs.algs.st;
 import java.util.Iterator;
 import edu.princeton.cs.algs4.StdIn;
@@ -86,8 +83,9 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> implements SymbolTa
         Value value;
         Node left;
         Node right;
-        int N;
-        int H;
+        int N;          // number of 2-nodes
+        int H;          // height in terms of only 2-nodes
+        int H23;        // height in terms of both 2-nodes and 3-nodes
         boolean color;
     }
 
@@ -180,22 +178,24 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> implements SymbolTa
         else return node.color == RED;
     }
 
+    // Method to fix a right-leaning red node
     private Node rotateLeft(Node node)
     {
         if(isRed(node.right) && !isRed(node.left))
         {
             Node temp = node.right;
             node.right = temp.left;
-            updateNodeN(node);
             temp.left = node;
             temp.color = node.color;
             node.color = RED;
-            node = temp;
             updateNodeN(node);
+            updateNodeN(temp);
+            node = temp;
         }
         return node;
     }
 
+    // Method to fix two consecutive left-leaning red nodes
     private Node rotateRight(Node node)
     {
         if(isRed(node.left) && node.left.left != null && isRed(node.left.left))
@@ -204,15 +204,16 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> implements SymbolTa
             Node temp = mid.right;
             mid.right = node;
             node.left = temp;
-            updateNodeN(node);
-            updateNodeN(mid);
             mid.color = node.color;
             node.color = RED;
+            updateNodeN(node);
+            updateNodeN(mid);
             node = mid;
         }
         return node;
     }
 
+    // Method to fix a node whose left and right children are red
     private Node flipColors(Node node)
     {
         if(node.left != null && node.right != null && isRed(node.left) && isRed(node.right))
@@ -225,22 +226,39 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> implements SymbolTa
     }
 
     // update count and height of nodes
+    // NOTE: all calls to updateNodeN must be done after flipping colors
     private void updateNodeN(Node node)
     {
         // TODO: account for red nodes
         if(node == null) return;
         int cnt = 0;
         node.H = 1;
+        node.H23 = 1;
         if(node.left != null)
         {
             node.H += node.left.H;
             cnt += node.left.N;
+
+            // properly update the 2-3 height
+            if(isRed(node.left))
+            {
+                Node left = node.left.left;
+                Node mid = node.left.right;
+                if(left != null) node.H23 = left.H23;
+                if(mid != null && node.H23 < 1 + mid.H23) node.H23 = 1 + mid.H23;
+            }
+            else
+                node.H23 = 1 + node.left.H23;
         }
         if(node.right != null)
         {
             int rightH = 1 + node.right.H;
             if(node.H < rightH) node.H = rightH;
             cnt += node.right.N;
+
+            // properly update the 2-3 height
+            if(isRed(node.left))
+                if(node.H23 < 1 + node.right.H23) node.H23 = 1 + node.right.H23;
         }
         node.N = cnt + 1;
     }
@@ -259,6 +277,7 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> implements SymbolTa
             ret.value = value;
             ret.N = 1;
             ret.H = 1;
+            ret.H23 = 1;
             ret.color = RED;
             return ret;
         }
@@ -717,6 +736,7 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> implements SymbolTa
 
         if(test)
         {
+            // TODO: add test for 2-3 height
             int ret;
             RedBlackBST<String, Integer> st = new RedBlackBST <String, Integer>();
             String pf = "fail";
