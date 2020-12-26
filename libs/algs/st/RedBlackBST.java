@@ -197,7 +197,7 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> implements SymbolTa
     // Method to fix two consecutive left-leaning red nodes
     private Node rotateRight(Node node)
     {
-        if(isRed(node.left) && node.left.left != null && isRed(node.left.left))
+        if(isRed(node.left) && isRed(node.left.left))
         {
             Node mid = node.left;
             Node temp = mid.right;
@@ -214,7 +214,7 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> implements SymbolTa
     // Method to fix a node whose left and right children are red
     private Node flipColors(Node node)
     {
-        if(node.left != null && node.right != null && isRed(node.left) && isRed(node.right))
+        if(isRed(node.left) && isRed(node.right))
         {
             node.left.color = BLACK;
             node.right.color = BLACK;
@@ -314,6 +314,22 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> implements SymbolTa
         else if(res > 0) return get(node.right, key);
         else return node;
     }
+
+    /*
+    // Transform the node into a 3 or 4-node on the way down the tree
+    private Node make34(Node node)
+    {
+        if(node.left != null && !isRed(node.left))
+        {
+            // current node is a 2-node
+
+            // left and right children are 2-nodes
+            // left child is a 3-node
+            // right child is a 3-node
+            // both children are 3-nodes
+        }
+    }
+    */
 
     // Delete the node associated with key within the binary search tree rooted
     // at node.
