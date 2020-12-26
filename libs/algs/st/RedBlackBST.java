@@ -189,7 +189,6 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> implements SymbolTa
             temp.color = node.color;
             node.color = RED;
             updateNodeN(node);
-            updateNodeN(temp);
             node = temp;
         }
         return node;
@@ -207,7 +206,6 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> implements SymbolTa
             mid.color = node.color;
             node.color = RED;
             updateNodeN(node);
-            updateNodeN(mid);
             node = mid;
         }
         return node;
@@ -229,7 +227,6 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> implements SymbolTa
     // NOTE: all calls to updateNodeN must be done after flipping colors
     private void updateNodeN(Node node)
     {
-        // TODO: account for red nodes
         if(node == null) return;
         int cnt = 0;
         node.H = 1;
@@ -281,19 +278,22 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> implements SymbolTa
             ret.color = RED;
             return ret;
         }
-        else if(key.compareTo(node.key) < 0)
+
+        int res = key.compareTo(node.key);
+        if(res < 0)
         {
             node.left = put(node.left, key, value);
             node = rotateRight(node);
             node = flipColors(node);
+            updateNodeN(node);
             return node;
         }
-        else if(key.compareTo(node.key) > 0)
+        else if(res > 0)
         {
-            Node ret = put(node.right, key, value);
-            node.right = ret;
+            node.right = put(node.right, key, value);
             node = rotateLeft(node);
             node = flipColors(node);
+            updateNodeN(node);
             return node;
         }
         else
@@ -320,20 +320,25 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> implements SymbolTa
     private Node delete(Node node, Key key)
     {
         if(node == null) return null;
-        else if(key.compareTo(node.key) < 0)
+
+        if(key.compareTo(node.key) < 0)
         {
+            // TODO: make34(node.left, node)
             node.left = delete(node.left, key);
             updateNodeN(node);
             return node;
         }
         else if(key.compareTo(node.key) > 0)
         {
+            // TODO: make34(node.right, node)
             node.right = delete(node.right, key);
             updateNodeN(node);
             return node;
         }
         else
         {
+            // TODO: key found make sure current node is not a 2-node
+
             // Node with key found. Store it in a temporary variable.
             // node is the Node to delete.
             // Find the ceiling of this node within its binary tree.
@@ -453,33 +458,21 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> implements SymbolTa
     // rooted at node.
     private Node select(Node node, int k)
     {
-        // TODO: refactor this
         if(k < 0 || node == null) return null;
-        int cntleft = 0, cntright = 0;
-        if(node.left != null) cntleft = node.left.N;
-        if(node.right != null) cntright = node.right.N;
+        if(k == 0) return node;
         if(node.left != null)
         {
             if(node.left.N > k)
-            {
                 return select(node.left, k);
-            }
             else if(node.left.N < k)
-            {
                 return select(node.right, k - node.left.N - 1);
-            }
             else
-            {
                 return node;
-            }
         }
-        else if(k == 0) return node;
         else if(node.right != null)
         {
             if(node.right.N > k)
-            {
                 return select(node.right, k - 1);
-            }
             else return null;
         }
         else return null;
@@ -798,10 +791,14 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> implements SymbolTa
             pf = "fail"; ret = st.heightCompute(); if(ret == 1) pf = "pass"; System.out.println("    " + pf + " - heightCompute(): " + ret);
             pf = "fail"; st.put("A", 3); if(st.toString().equals("(A, 3), (G, 3)")) pf = "pass"; System.out.println("    " + pf + " - put(A, 3): " + st.toString());
             pf = "fail"; st.delete("A"); if(st.toString().equals("(G, 3)")) pf = "pass"; System.out.println("    " + pf + " - delete(A): " + st.toString());
+            pf = "fail"; ret = st.height(); if(ret == 1) pf = "pass"; System.out.println("    " + pf + " - height(): " + ret);
+            pf = "fail"; ret = st.heightCompute(); if(ret == 1) pf = "pass"; System.out.println("    " + pf + " - heightCompute(): " + ret);
             pf = "fail"; st.put("B", 2); if(st.toString().equals("(B, 2), (G, 3)")) pf = "pass"; System.out.println("    " + pf + " - put(B, 2): " + st.toString());
+            pf = "fail"; ret = st.height(); if(ret == 2) pf = "pass"; System.out.println("    " + pf + " - height(): " + ret);
+            pf = "fail"; ret = st.heightCompute(); if(ret == 2) pf = "pass"; System.out.println("    " + pf + " - heightCompute(): " + ret);
             pf = "fail"; st.put("C", 7); if(st.toString().equals("(B, 2), (C, 7), (G, 3)")) pf = "pass"; System.out.println("    " + pf + " - put(C, 7): " + st.toString());
-            pf = "fail"; ret = st.height(); if(ret == 3) pf = "pass"; System.out.println("    " + pf + " - height(): " + ret);
-            pf = "fail"; ret = st.heightCompute(); if(ret == 3) pf = "pass"; System.out.println("    " + pf + " - heightCompute(): " + ret);
+            pf = "fail"; ret = st.height(); if(ret == 2) pf = "pass"; System.out.println("    " + pf + " - height(): " + ret);
+            pf = "fail"; ret = st.heightCompute(); if(ret == 2) pf = "pass"; System.out.println("    " + pf + " - heightCompute(): " + ret);
             pf = "fail"; st.deleteMin(); if(st.toString().equals("(C, 7), (G, 3)")) pf = "pass"; System.out.println("    " + pf + " - deleteMin(): " + st.toString());
             pf = "fail"; st.deleteMax(); if(st.toString().equals("(C, 7)")) pf = "pass"; System.out.println("    " + pf + " - deleteMax(): " + st.toString());
             pf = "fail"; st.deleteMin(); if(st.toString().equals("")) pf = "pass"; System.out.println("    " + pf + " - deleteMin(): " + st.toString());
@@ -817,8 +814,8 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> implements SymbolTa
             pf = "fail"; st.put("F", 5); if(st.toString().equals("(B, 3), (F, 5), (O, 3), (P, 4), (W, 3)")) pf = "pass"; System.out.println("    " + pf + " - put(F, 5), size() = " + st.size() + ":  " + st.toString());
             pf = "fail"; st.put("R", 6); if(st.toString().equals("(B, 3), (F, 5), (O, 3), (P, 4), (R, 6), (W, 3)")) pf = "pass"; System.out.println("    " + pf + " - put(R, 6), size() = " + st.size() + ":  " + st.toString());
             pf = "fail"; st.put("C", 7); if(st.toString().equals("(B, 3), (C, 7), (F, 5), (O, 3), (P, 4), (R, 6), (W, 3)")) pf = "pass"; System.out.println("    " + pf + " - put(C, 7), size() = " + st.size() + ":  " + st.toString());
-            pf = "fail"; ret = st.height(); if(ret == 5) pf = "pass"; System.out.println("    " + pf + " - height(): " + ret);
-            pf = "fail"; ret = st.heightCompute(); if(ret == 5) pf = "pass"; System.out.println("    " + pf + " - heightCompute(): " + ret);
+            pf = "fail"; ret = st.height(); if(ret == 3) pf = "pass"; System.out.println("    " + pf + " - height(): " + ret);
+            pf = "fail"; ret = st.heightCompute(); if(ret == 3) pf = "pass"; System.out.println("    " + pf + " - heightCompute(): " + ret);
             System.out.println("");
 
             System.out.println("Testing iterators:");
