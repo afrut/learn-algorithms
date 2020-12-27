@@ -206,12 +206,9 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> implements SymbolTa
     // Method to fix a node whose left and right children are red
     private Node passUpRed(Node node)
     {
-        if(isRed(node.left) && isRed(node.right))
-        {
-            node.left.color = BLACK;
-            node.right.color = BLACK;
-            node.color = RED;
-        }
+        node.left.color = BLACK;
+        node.right.color = BLACK;
+        node.color = RED;
         return node;
     }
 
@@ -275,16 +272,19 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> implements SymbolTa
         if(res < 0)
         {
             node.left = put(node.left, key, value);
-            node = rotateRight(node);
-            node = passUpRed(node);
+            if(isRed(node.left) && isRed(node.left.left))
+            {
+                node = rotateRight(node);
+                node = passUpRed(node);
+            }
             updateNodeN(node);
             return node;
         }
         else if(res > 0)
         {
             node.right = put(node.right, key, value);
-            node = rotateLeft(node);
-            node = passUpRed(node);
+            if(node.left == null && isRed(node.right)) node = rotateLeft(node);
+            if(isRed(node.left) && isRed(node.right)) node = passUpRed(node);
             updateNodeN(node);
             return node;
         }
