@@ -2,9 +2,11 @@ package libs.algs.st;
 import java.util.Iterator;
 import edu.princeton.cs.algs4.StdIn;
 import libs.algs.st.SymbolTable;
-// TODO: write prepareNextNode
+// TODO: finish writing tests
+// TODO: write a function that finds the successor and deletes it in one function
+// TODO: write a height23() function to return the 2-3 height
+// TODO: write a heightCompute23() function to return the 2-3 height
 // TODO: write tests for 2-3 height
-// TODO: write a function that finds the ceiling and deletes it in one function
 // TODO: write a function checkInvariants
 // TODO: write a clone function
 
@@ -78,6 +80,8 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> implements SymbolTa
 {
     private static final boolean RED = true;
     private static final boolean BLACK = false;
+    private static final boolean LEFT = true;
+    private static final boolean RIGHT = false;
 
     // ----------------------------------------
     // Private classes
@@ -177,10 +181,18 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> implements SymbolTa
     // ----------------------------------------
     // Private helper functions
     // ----------------------------------------
+    // Check if a node is red/connected to its parent by a red link
     private boolean isRed(Node node)
     {
         if(node == null) return BLACK;
         else return node.color == RED;
+    }
+
+    // Check if a node is a 3-node or a 4-node
+    private boolean is34Node(Node node)
+    {
+        if(node != null && isRed(node.left)) return true;
+        else return false;
     }
 
     // Method to fix a right-leaning red node
@@ -215,6 +227,14 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> implements SymbolTa
         node.right.color = BLACK;
         node.color = RED;
         return node;
+    }
+
+    // Method to create a 4-node by combining a node in the parent with 2 children
+    private void passDownRed(Node node)
+    {
+        node.color = BLACK;
+        node.left.color = RED;
+        node.right.color = RED;
     }
 
     // Update count and height of nodes
@@ -252,10 +272,6 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> implements SymbolTa
                 if(node.H23 < 1 + node.right.H23) node.H23 = 1 + node.right.H23;
         }
         node.N = cnt + 1;
-    }
-
-    private void prepareNextNode(Node node)
-    {
     }
 
     // ----------------------------------------
@@ -324,15 +340,38 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> implements SymbolTa
 
         if(key.compareTo(node.key) < 0)
         {
+            // Direction of tree traversal is down and left
+            // Ensure that node.left is either a 3-node or a 4-node
+            if(node.left != null && node.left.left != null && !is34Node(node.left))
+            {
+                // node.left has 2 children; make a 4-node
+                passDownRed(node.left);
+            }
             node.left = delete(node.left, key);
-            updateNodeN(node);
-            return node;
         }
         else if(key.compareTo(node.key) > 0)
         {
+            // Direction of tree traversal is down and right
+            // Ensure that node.right is either a 3-node or a 4-node
+            if(node.right != null && node.right.left != null && !is34Node(node.right))
+            {
+                // node.right has 2 children; make a 4-node
+                if(isRed(node.right))
+                {
+                    // current node is a 4-node
+                    passDownRed(node.right);
+                }
+                else
+                {
+                    // current node must be a 3-node as maintained by delete invariant
+                    // the returned node is the parent of the current node
+                    node = rotateRight(node);
+                    node = node.right;
+                    passDownRed(node);
+                    passDownRed(node.right);
+                }
+            }
             node.right = delete(node.right, key);
-            updateNodeN(node);
-            return node;
         }
         else
         {
@@ -349,20 +388,25 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> implements SymbolTa
                 successor.left = node.left;
                 node.left = null;
                 node.right = null;
+                successor.color = node.color;
             }
             else
             {
                 successor = node.left;
                 node.left = null;
             }
-
-            // Update the counts of successor.
-            updateNodeN(successor);
-
-            // Return the successor so that it can be properly linked to the
-            // node above node to delete.
-            return successor;
+            node = successor;
         }
+
+        // Direction of traversal is now up the tree
+        if(node != null)
+        {
+            if(isRed(node.right)) node = rotateLeft(node);
+            if(isRed(node.left) && isRed(node.left.left)) node = rotateRight(node);
+            if(isRed(node.left) && isRed(node.right)) node = passUpRed(node);
+            updateNodeN(node);
+        }
+        return node;
     }
 
     // Returns the Node associated with key that is within the binary search
@@ -478,17 +522,33 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> implements SymbolTa
     private Node deleteMin(Node node)
     {
         if(node == null) return null;
-        if(node.left == null)
+
+        // Direction of tree traversal is down and left
+        // Ensure that node.left is either a 3-node or a 4-node
+        if(node.left != null)
         {
-            Node ret = node.right;
-            node.right = null;
-            return ret;
+            if(node.left.left != null && !is34Node(node.left))
+                // node.left has 2 children; make a 4-node
+                passDownRed(node.left);
+
+            // Recursive call
+            node.left = deleteMin(node.left);
+
+            // Direction of tree traversal is now up
+            // Check for right-leaning red links on the way back up the tree
+            if(isRed(node.right)) node = rotateLeft(node);
+            if(isRed(node.left) && isRed(node.left.left)) node = rotateRight(node);
+            if(isRed(node.left) && isRed(node.right)) node = passUpRed(node);
+            updateNodeN(node);
+            return node;
         }
         else
         {
-            node.left = deleteMin(node.left);
-            updateNodeN(node);
-            return node;
+            // Current node is the node to delete
+            // If node is the minimum, node.left must be null
+            // If node.left is null, node.right must also be null, otherwise, a
+            // rotateLeft() in put would have made the node right-leaning
+            return null;
         }
     }
 
@@ -496,18 +556,42 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> implements SymbolTa
     private Node deleteMax(Node node)
     {
         if(node == null) return null;
-        if(node.right == null)
+        Node ret;
+
+        // Direction of tree traversal is down and right
+        // Ensure that node.right is either a 3-node or a 4-node
+        if(node.right != null)
         {
-            Node ret = node.left;
-            node.left = null;
-            return ret;
+            if(node.right.left != null && !is34Node(node.right))
+            {
+                // node.right has 2 children; make a 4-node
+                if(isRed(node.right))
+                {
+                    // current node is a 4-node
+                    passDownRed(node.right);
+                }
+                else
+                {
+                    // current node must be a 3-node as maintained by delete invariant
+                    // the returned node is the parent of the current node
+                    node = rotateRight(node);
+                    node = node.right;
+                    passDownRed(node);
+                    passDownRed(node.right);
+                }
+            }
+            node.right = deleteMax(node.right);
+            ret = node;
         }
         else
         {
-            node.right = deleteMax(node.right);
-            updateNodeN(node);
-            return node;
+            // Current node is the node to delete
+            // If node is the maximum, node.left may or may not be null
+            if(node.left != null) node.left.color = node.color;
+            ret = node.left;
+            node.left = null;
         }
+        return ret;
     }
 
     // Get the number of Keys between from and to, inclusive starting from Node.
@@ -541,7 +625,6 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> implements SymbolTa
     // Determine the height of the BST by examining every element rooted at node.
     private int heightCompute(Node node)
     {
-        // TODO: account for red nodes
         if(node == null) return 0;
         else
         {
@@ -637,7 +720,23 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> implements SymbolTa
     }
 
     // Remove the node that is associated with key.
-    public void delete(Key key) {root = delete(root, key);}
+    public void delete(Key key)
+    {
+        // Prepare the root node so that it is red and
+        // either a 3-node or a 4-node
+        if(root != null && root.left != null && !is34Node(root) )
+        {
+            // root is a 2-node with 2 children
+            root.left.color = RED;
+            root.right.color = RED;
+        }
+
+        // Recursive call
+        root = delete(root, key);
+
+        // Keep root black
+        if(root != null) root.color = BLACK;
+    }
 
     // Checks if the binary search tree contains a node associated with key.
     public boolean contains(Key key)
