@@ -1041,16 +1041,16 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> implements SymbolTa
             pf = "fail"; ret = st.checkBlackBalance(); if(ret == 3) pf = "pass"; System.out.println("    " + pf + " - checkBlackBalance(): " + ret);
             System.out.println("");
             
-            /*
             System.out.println("Testing iterators:");
             System.out.println("Contents: " + st.toString());
-            pf = "fail"; if(st.toStringIterator().equals("B, C, F, O, P, R, W")) pf = "pass"; System.out.println("    " + pf + " - keys(): " + st.toStringIterator());
-            pf = "fail"; if(st.toStringIterator("C", "P").equals("C, F, O, P")) pf = "pass"; System.out.println("    " + pf + " - keys(C, P): " + st.toStringIterator("C", "P"));
-            pf = "fail"; if(st.toStringIterator("D", "P").equals("F, O, P")) pf = "pass"; System.out.println("    " + pf + " - keys(D, P): " + st.toStringIterator("D", "P"));
-            pf = "fail"; if(st.toStringIterator("C", "Q").equals("C, F, O, P")) pf = "pass"; System.out.println("    " + pf + " - keys(C, Q): " + st.toStringIterator("C", "Q"));
-            pf = "fail"; if(st.toStringIterator("D", "Q").equals("F, O, P")) pf = "pass"; System.out.println("    " + pf + " - keys(D, Q): " + st.toStringIterator("D", "Q"));
+            pf = "fail"; retStr = st.toStringIterator(); if(retStr.equals("3, 5, 10, 11, 13, 15, 20, 25, 27, 30, 31, 35, 45, 60")) pf = "pass"; System.out.println("    " + pf + " - keys(): " + retStr);
+            pf = "fail"; retStr = st.toStringIterator(10, 30); if(retStr.equals("10, 11, 13, 15, 20, 25, 27, 30")) pf = "pass"; System.out.println("    " + pf + " - keys(10, 30): " + retStr);
+            pf = "fail"; retStr = st.toStringIterator(6, 30); if(retStr.equals("10, 11, 13, 15, 20, 25, 27, 30")) pf = "pass"; System.out.println("    " + pf + " - keys(6, 30): " + retStr);
+            pf = "fail"; retStr = st.toStringIterator(10, 32); if(retStr.equals("10, 11, 13, 15, 20, 25, 27, 30, 31")) pf = "pass"; System.out.println("    " + pf + " - keys(10, 32): " + retStr);
+            pf = "fail"; retStr = st.toStringIterator(6, 32); if(retStr.equals("10, 11, 13, 15, 20, 25, 27, 30, 31")) pf = "pass"; System.out.println("    " + pf + " - keys(6, 32): " + retStr);
             System.out.println("");
-
+            
+            /*
             System.out.println("Testing with multiple elements:");
             System.out.println("Contents: " + st.toString());
             pf = "fail"; if(!st.isEmpty()) pf = "pass"; System.out.println("    " + pf + " - isEmpty(): " + st.isEmpty());
