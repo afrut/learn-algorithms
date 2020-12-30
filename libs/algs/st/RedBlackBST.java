@@ -2,13 +2,13 @@ package libs.algs.st;
 import java.util.Iterator;
 import edu.princeton.cs.algs4.StdIn;
 import libs.algs.st.SymbolTable;
+// TODO: write an equals function
 // TODO: finish writing tests
 // TODO: write a function that finds the successor and deletes it in one function
 // TODO: write a height23() function to return the 2-3 height
 // TODO: write a heightCompute23() function to return the 2-3 height
 // TODO: write tests for 2-3 height
 // TODO: write a function checkInvariants
-// TODO: write a clone function
 
 // --------------------------------------------------------------------------------
 //
@@ -641,6 +641,22 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> implements SymbolTa
         }
     }
 
+    // Create a clone of the subtree rooted at node
+    private Node clone(Node node)
+    {
+        if(node == null) return null;
+        Node ret = new Node();
+        ret.key = node.key;
+        ret.value = node.value;
+        ret.color = node.color;
+        ret.N = node.N;
+        ret.H = node.H;
+        ret.H23 = node.H23;
+        ret.left = clone(node.left);
+        ret.right = clone(node.right);
+        return ret;
+    }
+
     // Return a string representation of all nodes rooted at node, in ascending order
     private String toString(Node node)
     {
@@ -862,6 +878,14 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> implements SymbolTa
     {
         if(root == null) return 0;
         else return root.H;
+    }
+
+    // Return a copy of the binary search tree
+    public RedBlackBST clone()
+    {
+        RedBlackBST ret = new RedBlackBST();
+        ret.root = clone(this.root);
+        return ret;
     }
 
     public String toString()
@@ -1106,6 +1130,7 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> implements SymbolTa
             pf = "fail"; ret = st.select(-1); if(ret == null) pf = "pass"; System.out.println("    " + pf + " - select(-1): " + ret);
             pf = "fail"; sz = st.size(); ret = st.min(); st.deleteMin(); retBool = st.contains(ret); if(!retBool && st.size() + 1 == sz) pf = "pass"; System.out.println("    " + pf + " - deleteMin(): " + st.toString());
             pf = "fail"; sz = st.size(); ret = st.max(); st.deleteMax(); retBool = st.contains(ret); if(!retBool && st.size() + 1 == sz) pf = "pass"; System.out.println("    " + pf + " - deleteMax(): " + st.toString());
+            RedBlackBST st2 = st.clone();
             /*
             pf = "fail"; st.delete("B"); if(st.toString().equals("(C, 7), (F, 5), (O, 3), (P, 4), (R, 6), (W, 3)")) pf = "pass"; System.out.println("    " + pf + " - delete(B), size() = " + st.size() + ", " + st.toString());
             pf = "fail"; ret = st.height(); if(ret == 5) pf = "pass"; System.out.println("    " + pf + " - height(): " + ret);
@@ -1134,7 +1159,8 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> implements SymbolTa
             pf = "fail"; st.delete("X"); if(st.toString().equals("")) pf = "pass"; System.out.println("    " + pf + " - delete(X), size() = " + st.size() + ", " + st.toString());
             pf = "fail"; st.deleteMin(); if(st.toString().equals("")) pf = "pass"; System.out.println("    " + pf + " - deleteMin(), size() = " + st.size() + ", " + st.toString());
             pf = "fail"; st.deleteMax(); if(st.toString().equals("")) pf = "pass"; System.out.println("    " + pf + " - deleteMax(), size() = " + st.size() + ", " + st.toString());
-*/
+            */
+
         }
         else
         {
