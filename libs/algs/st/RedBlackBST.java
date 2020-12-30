@@ -657,6 +657,25 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> implements SymbolTa
         return ret;
     }
 
+    // Checks if two subtrees rooted at nodes node1 and node2 are equal
+    private boolean equals(Node node1, Node node2)
+    {
+        if(node1 == null && node2 == null) return true;
+        if
+        (
+            node1.key == node2.key &&
+            node1.value == node2.value &&
+            node1.N == node2.N &&
+            node1.H == node2.H &&
+            node1.H23 == node2.H23
+        )
+        {
+            if(equals(node1.left, node2.left)) return equals(node1.right, node2.right);
+            else return false;
+        }
+        else return false;
+    }
+
     // Return a string representation of all nodes rooted at node, in ascending order
     private String toString(Node node)
     {
@@ -887,6 +906,9 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> implements SymbolTa
         ret.root = clone(this.root);
         return ret;
     }
+
+    // Checks if two trees are equal
+    public boolean equals(RedBlackBST tree) {return equals(this.root, tree.root);}
 
     public String toString()
     {
