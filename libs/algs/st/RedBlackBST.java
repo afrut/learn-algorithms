@@ -366,8 +366,6 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> implements SymbolTa
                     // current node must be a 3-node as maintained by delete invariant
                     // the returned node is the parent of the current node
                     node = rotateRight(node);
-                    node = node.right;
-                    passDownRed(node);
                     passDownRed(node.right);
                 }
             }
@@ -575,8 +573,6 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> implements SymbolTa
                     // current node must be a 3-node as maintained by delete invariant
                     // the returned node is the parent of the current node
                     node = rotateRight(node);
-                    node = node.right;
-                    passDownRed(node);
                     passDownRed(node.right);
                 }
             }
@@ -591,7 +587,17 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> implements SymbolTa
             ret = node.left;
             node.left = null;
         }
-        return ret;
+
+        // Direction of traversal is now up the tree
+        node = ret;
+        if(node != null)
+        {
+            if(isRed(node.right)) node = rotateLeft(node);
+            if(isRed(node.left) && isRed(node.left.left)) node = rotateRight(node);
+            if(isRed(node.left) && isRed(node.right)) node = passUpRed(node);
+            updateNodeN(node);
+        }
+        return node;
     }
 
     // Get the number of Keys between from and to, inclusive starting from Node.
@@ -886,6 +892,7 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> implements SymbolTa
             Integer ret;
             boolean retBool;
             String retStr;
+            Integer sz;
             RedBlackBST<Integer, String> st = new RedBlackBST <Integer, String>();
             String pf = "fail";
             System.out.println("Testing all operations on empty symbol table:");
@@ -1097,6 +1104,8 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> implements SymbolTa
             pf = "fail"; ret = st.select(10); if(ret == 31) pf = "pass"; System.out.println("    " + pf + " - select(10): " + ret);
             pf = "fail"; ret = st.select(13); if(ret == 60) pf = "pass"; System.out.println("    " + pf + " - select(13): " + ret);
             pf = "fail"; ret = st.select(-1); if(ret == null) pf = "pass"; System.out.println("    " + pf + " - select(-1): " + ret);
+            pf = "fail"; sz = st.size(); ret = st.min(); st.deleteMin(); retBool = st.contains(ret); if(!retBool && st.size() + 1 == sz) pf = "pass"; System.out.println("    " + pf + " - deleteMin(): " + st.toString());
+            pf = "fail"; sz = st.size(); ret = st.max(); st.deleteMax(); retBool = st.contains(ret); if(!retBool && st.size() + 1 == sz) pf = "pass"; System.out.println("    " + pf + " - deleteMax(): " + st.toString());
             /*
             pf = "fail"; st.delete("B"); if(st.toString().equals("(C, 7), (F, 5), (O, 3), (P, 4), (R, 6), (W, 3)")) pf = "pass"; System.out.println("    " + pf + " - delete(B), size() = " + st.size() + ", " + st.toString());
             pf = "fail"; ret = st.height(); if(ret == 5) pf = "pass"; System.out.println("    " + pf + " - height(): " + ret);
