@@ -499,7 +499,7 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> implements SymbolTa
     private Node select(Node node, int k)
     {
         if(k < 0 || node == null) return null;
-        if(k == 0) return node;
+        if(k == 0) return min(node);
         if(node.left != null)
         {
             if(node.left.N > k)
@@ -790,6 +790,7 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> implements SymbolTa
             if(node == null) return null;
             else return node.key;
         }
+        else if(k < 0) return null;
         else return this.min();
     }
 
@@ -1095,10 +1096,8 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> implements SymbolTa
             pf = "fail"; ret = st.select(9); if(ret == 30) pf = "pass"; System.out.println("    " + pf + " - select(9): " + ret);
             pf = "fail"; ret = st.select(10); if(ret == 31) pf = "pass"; System.out.println("    " + pf + " - select(10): " + ret);
             pf = "fail"; ret = st.select(13); if(ret == 60) pf = "pass"; System.out.println("    " + pf + " - select(13): " + ret);
+            pf = "fail"; ret = st.select(-1); if(ret == null) pf = "pass"; System.out.println("    " + pf + " - select(-1): " + ret);
             /*
-            pf = "fail"; if(st.select(4).equals("P")) pf = "pass"; System.out.println("    " + pf + " - select(4): " + st.select(4));
-            pf = "fail"; if(st.select(20) == null) pf = "pass"; System.out.println("    " + pf + " - select(20): " + st.select(20));
-            pf = "fail"; if(st.select(-1) == null) pf = "pass"; System.out.println("    " + pf + " - select(-1): " + st.select(-1));
             pf = "fail"; st.delete("B"); if(st.toString().equals("(C, 7), (F, 5), (O, 3), (P, 4), (R, 6), (W, 3)")) pf = "pass"; System.out.println("    " + pf + " - delete(B), size() = " + st.size() + ", " + st.toString());
             pf = "fail"; ret = st.height(); if(ret == 5) pf = "pass"; System.out.println("    " + pf + " - height(): " + ret);
             pf = "fail"; ret = st.heightCompute(); if(ret == 5) pf = "pass"; System.out.println("    " + pf + " - heightCompute(): " + ret);
