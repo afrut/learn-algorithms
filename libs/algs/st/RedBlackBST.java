@@ -429,10 +429,11 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> implements SymbolTa
         // Direction of traversal is now up the tree
         if(node != null)
         {
-            if(isRed(node.right)) node = rotateLeft(node);
+            if(isRed(node.right) && !isRed(node.left)) node = rotateLeft(node);
             if(isRed(node.left) && isRed(node.left.right) && node.left.right != null)
                 node.left = rotateLeft(node.left);
-            if(isRed(node.left) && isRed(node.left.left)) node = rotateRight(node);
+            if(isRed(node.left) && isRed(node.left.left) && !isRed(node.right))
+                node = rotateRight(node);
             if(isRed(node.left) && isRed(node.right)) node = passUpRed(node);
             updateNodeN(node);
         }
@@ -719,6 +720,23 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> implements SymbolTa
         if(node.right != null) toString(node.right, sb);
     }
 
+    // Returns a tree-like string representation of the BST
+    private void treeString(Node node, StringBuilder sb, String space)
+    {
+        if(node == null) return;
+        sb.append(node.key + ", isRed: " + node.color + "\n");
+        if(node.left != null)
+        {
+            sb.append(space + "  left: ");
+            treeString(node.left, sb, space + "  ");
+        }
+        if(node.right != null)
+        {
+            sb.append(space + "  right: ");
+            treeString(node.right, sb, space + "  ");
+        }
+    }
+
     // Returns a string representation of the keys of all nodes, in ascending order
     private String toStringIterator()
     {
@@ -944,6 +962,14 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> implements SymbolTa
             if(sb.length() > 0)
                 sb.setLength(sb.length() - 2);
         }
+        return sb.toString();
+    }
+
+    public String treeString()
+    {
+        StringBuilder sb = new StringBuilder();
+        String space = "";
+        treeString(root, sb, space);
         return sb.toString();
     }
 
@@ -1197,9 +1223,6 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> implements SymbolTa
             pf = "fail"; ret = st.height(); if(ret == 4) pf = "pass"; System.out.println("    " + pf + " - height(): " + ret);
             pf = "fail"; ret = st.heightCompute(); if(ret == 4) pf = "pass"; System.out.println("    " + pf + " - heightCompute(): " + ret);
             pf = "fail"; ret = st.checkBlackBalance(); if(ret == 3) pf = "pass"; System.out.println("    " + pf + " - checkBlackBalance(): " + ret);
-            System.out.println("root: " + st.root.key);
-            System.out.println("  left: " + st.root.left.key + ", " + st.root.left.color);
-            System.out.println("  right: " + st.root.right.key + ", " + st.root.right.color);
             pf = "fail"; sz = st.size(); ret = 5; st.delete(ret); retBool = st.contains(ret); if(!retBool && st.size() + 1 == sz) pf = "pass"; System.out.println("    " + pf + " - delete(" + ret + "): " + st.toString());
             pf = "fail"; ret = st.height(); if(ret == 4) pf = "pass"; System.out.println("    " + pf + " - height(): " + ret);
             pf = "fail"; ret = st.heightCompute(); if(ret == 4) pf = "pass"; System.out.println("    " + pf + " - heightCompute(): " + ret);
