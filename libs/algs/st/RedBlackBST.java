@@ -96,6 +96,19 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> implements SymbolTa
         int H;          // height in terms of only 2-nodes
         int H23;        // height in terms of both 2-nodes and 3-nodes
         boolean color;
+
+        public boolean equals(Node node)
+        {
+            if
+            (
+                this.key == node.key &&
+                this.value == node.value &&
+                this.N == node.N &&
+                this.H == node.H &&
+                this.H23 == node.H23
+            ) return true;
+            else return false;
+        }
     }
 
     private class KeysIterable implements Iterable<Key>
@@ -229,6 +242,40 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> implements SymbolTa
         return node;
     }
 
+    // Method to ensure that the left node is a 3/4-node
+    private Node prepareLeftNode(Node node)
+    {
+        if(node.left != null && node.left.left != null && !is34Node(node.left))
+        {
+            // node.left has 2 children; make a 4-node
+            passDownRed(node.left);
+        }
+        return node;
+    }
+
+    // Method to ensure that the right node is a 3/4-node
+    private Node prepareRightNode(Node node)
+    {
+        if(node.right != null && !is34Node(node.right))
+        {
+            // node.right has 2 children; make a 4-node
+            if(isRed(node.right))
+            {
+                // current node is a 4-node
+                // if the right child has children, pass down red link, if not, do nothing
+                if(node.right.left != null) passDownRed(node.right);
+            }
+            else
+            {
+                // current node must be a 3-node as maintained by delete invariant
+                // the returned node is the parent of the current node
+                node = rotateRight(node);
+                passDownRed(node.right);
+            }
+        }
+        return node;
+    }
+
     // Method to create a 4-node by combining a node in the parent with 2 children
     private void passDownRed(Node node)
     {
@@ -342,33 +389,15 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> implements SymbolTa
         {
             // Direction of tree traversal is down and left
             // Ensure that node.left is either a 3-node or a 4-node
-            if(node.left != null && node.left.left != null && !is34Node(node.left))
-            {
-                // node.left has 2 children; make a 4-node
-                passDownRed(node.left);
-            }
+            node = prepareLeftNode(node);
             node.left = delete(node.left, key);
         }
         else if(key.compareTo(node.key) > 0)
         {
             // Direction of tree traversal is down and right
             // Ensure that node.right is either a 3-node or a 4-node
-            if(node.right != null && node.right.left != null && !is34Node(node.right))
-            {
-                // node.right has 2 children; make a 4-node
-                if(isRed(node.right))
-                {
-                    // current node is a 4-node
-                    passDownRed(node.right);
-                }
-                else
-                {
-                    // current node must be a 3-node as maintained by delete invariant
-                    // the returned node is the parent of the current node
-                    node = rotateRight(node);
-                    passDownRed(node.right);
-                }
-            }
+            //node.right.left != null && 
+            node = prepareRightNode(node);
             node.right = delete(node.right, key);
         }
         else
@@ -376,30 +405,33 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> implements SymbolTa
             // Node with key found. Store it in a temporary variable.
             // node is the Node to delete.
             // Find the ceiling of this node within its binary tree.
-            Node successor = ceiling(node.right, node.key);
-            if(successor != null)
+            // TOOD: prepare next node before deleteMax() or deleteMin()
+            Node minnode = min(node.right);
+            if(minnode == null)
             {
-                // The successor should not have a node on its left.
-                // If it did, it would not be the ceiling of node.
-                // Set the successor's left to be the node left of node to delete.
-                successor.right = deleteMin(node.right);
-                successor.left = node.left;
-                node.left = null;
-                node.right = null;
-                successor.color = node.color;
+                minnode = node.left;
+                node = prepareLeftNode(node);
+                node.left = deleteMax(node.left);
             }
             else
             {
-                successor = node.left;
-                node.left = null;
+                node = prepareRightNode(node);
+                node.right = deleteMin(node.right);
             }
-            node = successor;
+            if(minnode != null)
+            {
+                node.key = minnode.key;
+                node.value = minnode.value;
+            }
+            else node = null;
         }
 
         // Direction of traversal is now up the tree
         if(node != null)
         {
             if(isRed(node.right)) node = rotateLeft(node);
+            if(isRed(node.left) && isRed(node.left.right) && node.left.right != null)
+                node.left = rotateLeft(node.left);
             if(isRed(node.left) && isRed(node.left.left)) node = rotateRight(node);
             if(isRed(node.left) && isRed(node.right)) node = passUpRed(node);
             updateNodeN(node);
@@ -661,14 +693,7 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> implements SymbolTa
     private boolean equals(Node node1, Node node2)
     {
         if(node1 == null && node2 == null) return true;
-        if
-        (
-            node1.key == node2.key &&
-            node1.value == node2.value &&
-            node1.N == node2.N &&
-            node1.H == node2.H &&
-            node1.H23 == node2.H23
-        )
+        if(node1.equals(node2))
         {
             if(equals(node1.left, node2.left)) return equals(node1.right, node2.right);
             else return false;
@@ -1110,6 +1135,8 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> implements SymbolTa
 
             System.out.println("Testing with multiple elements:");
             System.out.println("Contents: " + st.toString());
+            RedBlackBST orig = st.clone();
+            pf = "fail"; retBool = orig.equals(st); if(retBool) pf = "pass"; System.out.println("    " + pf + " - equals(st): " + retBool);
             pf = "fail"; retBool = st.isEmpty(); if(!retBool) pf = "pass"; System.out.println("    " + pf + " - isEmpty(): " + retBool);
             pf = "fail"; ret = st.size(); if(ret == 14) pf = "pass"; System.out.println("    " + pf + " - size(): " + ret);
             pf = "fail"; ret = st.size(10, 30); if(ret == 8) pf = "pass"; System.out.println("    " + pf + " - size(10, 30): " + ret);
@@ -1151,38 +1178,52 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> implements SymbolTa
             pf = "fail"; ret = st.select(13); if(ret == 60) pf = "pass"; System.out.println("    " + pf + " - select(13): " + ret);
             pf = "fail"; ret = st.select(-1); if(ret == null) pf = "pass"; System.out.println("    " + pf + " - select(-1): " + ret);
             pf = "fail"; sz = st.size(); ret = st.min(); st.deleteMin(); retBool = st.contains(ret); if(!retBool && st.size() + 1 == sz) pf = "pass"; System.out.println("    " + pf + " - deleteMin(): " + st.toString());
-            pf = "fail"; sz = st.size(); ret = st.max(); st.deleteMax(); retBool = st.contains(ret); if(!retBool && st.size() + 1 == sz) pf = "pass"; System.out.println("    " + pf + " - deleteMax(): " + st.toString());
-            RedBlackBST st2 = st.clone();
-            /*
-            pf = "fail"; st.delete("B"); if(st.toString().equals("(C, 7), (F, 5), (O, 3), (P, 4), (R, 6), (W, 3)")) pf = "pass"; System.out.println("    " + pf + " - delete(B), size() = " + st.size() + ", " + st.toString());
             pf = "fail"; ret = st.height(); if(ret == 5) pf = "pass"; System.out.println("    " + pf + " - height(): " + ret);
             pf = "fail"; ret = st.heightCompute(); if(ret == 5) pf = "pass"; System.out.println("    " + pf + " - heightCompute(): " + ret);
-            pf = "fail"; st.delete("W"); if(st.toString().equals("(C, 7), (F, 5), (O, 3), (P, 4), (R, 6)")) pf = "pass"; System.out.println("    " + pf + " - delete(W), size() = " + st.size() + ", " + st.toString());
+            pf = "fail"; ret = st.checkBlackBalance(); if(ret == 3) pf = "pass"; System.out.println("    " + pf + " - checkBlackBalance(): " + ret);
+            pf = "fail"; sz = st.size(); ret = st.max(); st.deleteMax(); retBool = st.contains(ret); if(!retBool && st.size() + 1 == sz) pf = "pass"; System.out.println("    " + pf + " - deleteMax(): " + st.toString());
+            pf = "fail"; ret = st.height(); if(ret == 5) pf = "pass"; System.out.println("    " + pf + " - height(): " + ret);
+            pf = "fail"; ret = st.heightCompute(); if(ret == 5) pf = "pass"; System.out.println("    " + pf + " - heightCompute(): " + ret);
+            pf = "fail"; ret = st.checkBlackBalance(); if(ret == 3) pf = "pass"; System.out.println("    " + pf + " - checkBlackBalance(): " + ret);
+            pf = "fail"; sz = st.size(); ret = 35; st.delete(ret); retBool = st.contains(ret); if(!retBool && st.size() + 1 == sz) pf = "pass"; System.out.println("    " + pf + " - delete(" + ret + "): " + st.toString());
             pf = "fail"; ret = st.height(); if(ret == 4) pf = "pass"; System.out.println("    " + pf + " - height(): " + ret);
             pf = "fail"; ret = st.heightCompute(); if(ret == 4) pf = "pass"; System.out.println("    " + pf + " - heightCompute(): " + ret);
-            pf = "fail"; st.delete("G"); if(st.toString().equals("(C, 7), (F, 5), (O, 3), (P, 4), (R, 6)")) pf = "pass"; System.out.println("    " + pf + " - delete(G), size() = " + st.size() + ", " + st.toString());
+            pf = "fail"; ret = st.checkBlackBalance(); if(ret == 3) pf = "pass"; System.out.println("    " + pf + " - checkBlackBalance(): " + ret);
+            pf = "fail"; sz = st.size(); ret = 10; st.delete(ret); retBool = st.contains(ret); if(!retBool && st.size() + 1 == sz) pf = "pass"; System.out.println("    " + pf + " - delete(" + ret + "): " + st.toString());
             pf = "fail"; ret = st.height(); if(ret == 4) pf = "pass"; System.out.println("    " + pf + " - height(): " + ret);
             pf = "fail"; ret = st.heightCompute(); if(ret == 4) pf = "pass"; System.out.println("    " + pf + " - heightCompute(): " + ret);
-            pf = "fail"; st.deleteMin(); if(st.toString().equals("(F, 5), (O, 3), (P, 4), (R, 6)")) pf = "pass"; System.out.println("    " + pf + " - deleteMin(), size() = " + st.size() + ", " + st.toString());
+            pf = "fail"; ret = st.checkBlackBalance(); if(ret == 3) pf = "pass"; System.out.println("    " + pf + " - checkBlackBalance(): " + ret);
+            pf = "fail"; sz = st.size(); ret = 20; st.delete(ret); retBool = st.contains(ret); if(!retBool && st.size() + 1 == sz) pf = "pass"; System.out.println("    " + pf + " - delete(" + ret + "): " + st.toString());
+            pf = "fail"; ret = st.height(); if(ret == 4) pf = "pass"; System.out.println("    " + pf + " - height(): " + ret);
+            pf = "fail"; ret = st.heightCompute(); if(ret == 4) pf = "pass"; System.out.println("    " + pf + " - heightCompute(): " + ret);
+            pf = "fail"; ret = st.checkBlackBalance(); if(ret == 3) pf = "pass"; System.out.println("    " + pf + " - checkBlackBalance(): " + ret);
+            System.out.println("root: " + st.root.key);
+            System.out.println("  left: " + st.root.left.key + ", " + st.root.left.color);
+            System.out.println("  right: " + st.root.right.key + ", " + st.root.right.color);
+            pf = "fail"; sz = st.size(); ret = 5; st.delete(ret); retBool = st.contains(ret); if(!retBool && st.size() + 1 == sz) pf = "pass"; System.out.println("    " + pf + " - delete(" + ret + "): " + st.toString());
+            pf = "fail"; ret = st.height(); if(ret == 4) pf = "pass"; System.out.println("    " + pf + " - height(): " + ret);
+            pf = "fail"; ret = st.heightCompute(); if(ret == 4) pf = "pass"; System.out.println("    " + pf + " - heightCompute(): " + ret);
+            pf = "fail"; ret = st.checkBlackBalance(); if(ret == 2) pf = "pass"; System.out.println("    " + pf + " - checkBlackBalance(): " + ret);
+            pf = "fail"; sz = st.size(); ret = 15; st.delete(ret); retBool = st.contains(ret); if(!retBool && st.size() + 1 == sz) pf = "pass"; System.out.println("    " + pf + " - delete(" + ret + "): " + st.toString());
+            pf = "fail"; ret = st.height(); if(ret == 4) pf = "pass"; System.out.println("    " + pf + " - height(): " + ret);
+            pf = "fail"; ret = st.heightCompute(); if(ret == 4) pf = "pass"; System.out.println("    " + pf + " - heightCompute(): " + ret);
+            pf = "fail"; ret = st.checkBlackBalance(); if(ret == 2) pf = "pass"; System.out.println("    " + pf + " - checkBlackBalance(): " + ret);
+            pf = "fail"; sz = st.size(); ret = 31; st.delete(ret); retBool = st.contains(ret); if(!retBool && st.size() + 1 == sz) pf = "pass"; System.out.println("    " + pf + " - delete(" + ret + "): " + st.toString());
+            pf = "fail"; ret = st.height(); if(ret == 4) pf = "pass"; System.out.println("    " + pf + " - height(): " + ret);
+            pf = "fail"; ret = st.heightCompute(); if(ret == 4) pf = "pass"; System.out.println("    " + pf + " - heightCompute(): " + ret);
+            pf = "fail"; ret = st.checkBlackBalance(); if(ret == 2) pf = "pass"; System.out.println("    " + pf + " - checkBlackBalance(): " + ret);
+            pf = "fail"; sz = st.size(); ret = 25; st.delete(ret); retBool = st.contains(ret); if(!retBool && st.size() + 1 == sz) pf = "pass"; System.out.println("    " + pf + " - delete(" + ret + "): " + st.toString());
             pf = "fail"; ret = st.height(); if(ret == 3) pf = "pass"; System.out.println("    " + pf + " - height(): " + ret);
             pf = "fail"; ret = st.heightCompute(); if(ret == 3) pf = "pass"; System.out.println("    " + pf + " - heightCompute(): " + ret);
-            pf = "fail"; st.deleteMax(); if(st.toString().equals("(F, 5), (O, 3), (P, 4)")) pf = "pass"; System.out.println("    " + pf + " - deleteMax(), size() = " + st.size() + ", " + st.toString());
+            pf = "fail"; ret = st.checkBlackBalance(); if(ret == 2) pf = "pass"; System.out.println("    " + pf + " - checkBlackBalance(): " + ret);
+            pf = "fail"; sz = st.size(); ret = 30; st.delete(ret); retBool = st.contains(ret); if(!retBool && st.size() + 1 == sz) pf = "pass"; System.out.println("    " + pf + " - delete(" + ret + "): " + st.toString());
+            pf = "fail"; ret = st.height(); if(ret == 3) pf = "pass"; System.out.println("    " + pf + " - height(): " + ret);
+            pf = "fail"; ret = st.heightCompute(); if(ret == 3) pf = "pass"; System.out.println("    " + pf + " - heightCompute(): " + ret);
+            pf = "fail"; ret = st.checkBlackBalance(); if(ret == 2) pf = "pass"; System.out.println("    " + pf + " - checkBlackBalance(): " + ret);
+            pf = "fail"; sz = st.size(); ret = 11; st.delete(ret); retBool = st.contains(ret); if(!retBool && st.size() + 1 == sz) pf = "pass"; System.out.println("    " + pf + " - delete(" + ret + "): " + st.toString());
             pf = "fail"; ret = st.height(); if(ret == 2) pf = "pass"; System.out.println("    " + pf + " - height(): " + ret);
             pf = "fail"; ret = st.heightCompute(); if(ret == 2) pf = "pass"; System.out.println("    " + pf + " - heightCompute(): " + ret);
-            pf = "fail"; st.deleteMin(); if(st.toString().equals("(O, 3), (P, 4)")) pf = "pass"; System.out.println("    " + pf + " - deleteMin(), size() = " + st.size() + ", " + st.toString());
-            pf = "fail"; ret = st.height(); if(ret == 2) pf = "pass"; System.out.println("    " + pf + " - height(): " + ret);
-            pf = "fail"; ret = st.heightCompute(); if(ret == 2) pf = "pass"; System.out.println("    " + pf + " - heightCompute(): " + ret);
-            pf = "fail"; st.deleteMax(); if(st.toString().equals("(O, 3)")) pf = "pass"; System.out.println("    " + pf + " - deleteMax(), size() = " + st.size() + ", " + st.toString());
-            pf = "fail"; ret = st.height(); if(ret == 1) pf = "pass"; System.out.println("    " + pf + " - height(): " + ret);
-            pf = "fail"; ret = st.heightCompute(); if(ret == 1) pf = "pass"; System.out.println("    " + pf + " - heightCompute(): " + ret);
-            pf = "fail"; st.deleteMin(); if(st.toString().equals("")) pf = "pass"; System.out.println("    " + pf + " - deleteMin(), size() = " + st.size() + ", " + st.toString());
-            pf = "fail"; ret = st.height(); if(ret == 0) pf = "pass"; System.out.println("    " + pf + " - height(): " + ret);
-            pf = "fail"; ret = st.heightCompute(); if(ret == 0) pf = "pass"; System.out.println("    " + pf + " - heightCompute(): " + ret);
-            pf = "fail"; st.delete("X"); if(st.toString().equals("")) pf = "pass"; System.out.println("    " + pf + " - delete(X), size() = " + st.size() + ", " + st.toString());
-            pf = "fail"; st.deleteMin(); if(st.toString().equals("")) pf = "pass"; System.out.println("    " + pf + " - deleteMin(), size() = " + st.size() + ", " + st.toString());
-            pf = "fail"; st.deleteMax(); if(st.toString().equals("")) pf = "pass"; System.out.println("    " + pf + " - deleteMax(), size() = " + st.size() + ", " + st.toString());
-            */
-
+            pf = "fail"; ret = st.checkBlackBalance(); if(ret == 2) pf = "pass"; System.out.println("    " + pf + " - checkBlackBalance(): " + ret);
         }
         else
         {
