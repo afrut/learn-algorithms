@@ -2,8 +2,6 @@ package libs.algs.st;
 import java.util.Iterator;
 import edu.princeton.cs.algs4.StdIn;
 import libs.algs.st.SymbolTable;
-// TODO: write an equals function
-// TODO: finish writing tests
 // TODO: write a function that finds the successor and deletes it in one function
 // TODO: write a height23() function to return the 2-3 height
 // TODO: write a heightCompute23() function to return the 2-3 height
