@@ -1,0 +1,11 @@
+The state of any 2-3 tree is between two extremes: a 2-3 tree
+comprising purely of either 2-nodes, or one purely of 3-nodes. For a given
+number of elements N, a 2-3 tree is shortest when the N nodes are all 3-nodes
+and it is longest when all the nodes are all 2-nodes. A 2-3 tree of all
+3-nodes becomes one with some 2-nodes after a put operation. This is because a
+4-node will form and will eventually get passed to the root.
+
+A 2-3 tree of all 3-nodes has a height of log3(N) while one with all
+2-nodes has a height of log2(N). Since a 2-3 tree is either all 3-nodes,
+all 2-nodes, or a mixed combination, the height of a 2-3 tree is between
+log3(N) and log2(N).
