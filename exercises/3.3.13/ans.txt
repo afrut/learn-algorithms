@@ -1,0 +1,3 @@
+True. The final height of the red-black BST should be monotonically increasing.
+In fact, inserting keys in any order monotonically increases the height of
+any red-black binary search tree. Tree height cannot decrease with any put operation.
