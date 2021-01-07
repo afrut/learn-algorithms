@@ -1,0 +1,4 @@
+When the power N is a power of 2 - 1 and there are no red links, we are assured
+that the height of the tree is (int)log2(N). The internal path length would then
+be 1 more than the height as this is a perfectly balanced binary search tree.
+Internal path length = (int)log2(N) + 1;
