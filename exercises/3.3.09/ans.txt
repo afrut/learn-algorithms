@@ -1,0 +1,8 @@
+(i) is not a red-black BST because the number of black links from root to every
+null link is not equal for ever path.
+
+(ii) is also not a red-black BST for the same reason as (i).
+
+(iii) is a red-black BST.
+
+(iv) is a red-black BST.
