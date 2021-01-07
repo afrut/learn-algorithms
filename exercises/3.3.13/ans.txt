@@ -1,3 +1,18 @@
-True. The final height of the red-black BST should be monotonically increasing.
-In fact, inserting keys in any order monotonically increases the height of
-any red-black binary search tree. Tree height cannot decrease with any put operation.
+True. The final height of the 2-3 tree represented by the red-black BST should
+be monotonically increasing. In fact, inserting keys in any order monotonically
+increases the height of the 2-3 tree represented by red-black binary search
+tree. The height of the 2-3 tree height cannot decrease with any put operation.
+
+Inserting keys in increasing monotonically increases the height of the red-black
+BST. This is because rotateLeft() will decrease the height of the right subtree
+by 1 while increasing the height of the right subtree by 1.
+
+However, inserting keys in decreasing order does not monotonically increase the
+height of the red-black tree. Take for example a red-black BST with N = 6
+elements. In this tree, the root is part of 3-node whose left-most child is also
+a 3-node. The height of this tree is 3. Inserting the 7th element will result in
+a 4-node, whose red-link is passed up resulting in 2 consecutive red links. When
+rotateRight() is used to fix this, it decreases the height of the left subtree
+by 1 and increases the height of the right subtree by 1 resulting in the left
+and right subtrees having equal heights. The height of the red-black BST having
+N = 7 elements is 2, in contrast with the earlier height of 3 at N = 6.
