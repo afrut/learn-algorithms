@@ -1,6 +1,7 @@
 package libs.algs.st;
 import java.util.Iterator;
 import edu.princeton.cs.algs4.StdIn;
+import libs.algs.Pair;
 
 public class LinkedListSequentialSearchST<Key, Value>
 {
@@ -158,7 +159,36 @@ public class LinkedListSequentialSearchST<Key, Value>
         }
     }
 
+
+    private class Entries implements Iterable<Pair<Key, Value>>
+    {
+        public Entries() {}
+
+        public Iterator<Pair<Key, Value>> iterator()
+        {return new EntriesIterator();}
+
+        private class EntriesIterator implements Iterator<Pair<Key, Value>>
+        {
+            private int n;
+            private Node node;
+            public EntriesIterator()
+            {
+                node = new Node();
+                node.next = first;
+            }
+            public boolean hasNext() {return (node.next != null);}
+            public Pair<Key, Value> next()
+            {
+                node = node.next;
+                Pair<Key, Value> ret = new Pair<Key, Value>(node.key, node.value);
+                return ret;
+            }
+            public void remove() {}
+        }
+    }
+
     public Iterable<Key> keys() {return new Keys();}
+    public Iterable<Pair<Key, Value>> entries() {return new Entries();}
 
     public static void main(String[] args)
     {
@@ -210,6 +240,8 @@ public class LinkedListSequentialSearchST<Key, Value>
             System.out.println("    Contents: " + st.toString());
             System.out.println("    keys():");
             for(String str : st.keys()) System.out.println("        " + str);
+            System.out.println("    entries():");
+            for(Pair<String, Integer> pair : st.entries()) System.out.println("        " + pair.toString());
             System.out.println("");
 
             System.out.println("Testing with multiple elements:");

@@ -14,6 +14,11 @@ public class Pair<Key, Value>
         this.val = v;
     }
 
+    public String toString()
+    {
+        return key.toString() + ", " + val.toString();
+    }
+
     public static void main(String[] args)
     {
         Pair<Integer, String> p = new Pair<Integer, String>(10, "hello");
