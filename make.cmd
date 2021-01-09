@@ -56,6 +56,13 @@ cls
 ::del GenericArrayCreation.class
 ::cd ..
 
+:: Test generics
+cd templates
+javac GenericClass.java
+java GenericClass.java
+del GenericClass.class
+cd ..
+
 
 
 :::: --------------------------------------------------
@@ -103,9 +110,11 @@ cls
 ::javac libs\algs\st\RecursiveBST.java
 ::javac libs\algs\Bag.java
 ::javac libs\algs\List.java
+::javac libs\algs\Pair.java
 ::javac libs\algs\st\BST.java
 ::javac libs\algs\st\RedBlackBST.java
 ::javac libs\algs\st\SymbolTable.java
+::javac libs\algs\st\SeparateChainingHashST.java
 ::
 :::: Archive
 ::del .\bin\libs.jar
@@ -141,6 +150,7 @@ cls
 ::java -ea libs.algs.st.BST < libs\algs\STSampleinput.txt
 ::java -ea libs.algs.st.RedBlackBST -test
 ::java -ea libs.algs.st.RedBlackBST < libs\algs\STSampleinput.txt
+::java -ea libs.algs.st.SeparateChainingHashST -test
 ::
 :::: Clean
 ::del /s .\libs\*.class
