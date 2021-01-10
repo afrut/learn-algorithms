@@ -263,6 +263,49 @@ public class SeparateChainingHashST<Key extends Comparable<Key>, Value> //implem
             pf = "fail"; sz = st.size(); ret = 30; st.delete(ret); retBool = st.contains(ret); if(!retBool && st.size() + 1 == sz) pf = "pass"; System.out.println("    " + pf + " - delete(" + ret + "): " + st.toString());
             pf = "fail"; sz = st.size(); ret = 11; st.delete(ret); retBool = st.contains(ret); if(!retBool && st.size() + 1 == sz) pf = "pass"; System.out.println("    " + pf + " - delete(" + ret + "): " + st.toString());
         }
+        else
+        {
+            SeparateChainingHashST<String, Integer> st = new SeparateChainingHashST<String, Integer>();
+
+            // sample input is SEARCHEXAMPLE
+            System.out.println("Symbol table empty? " + st.isEmpty());
+            System.out.println("Testing put() operation:");
+            int cnt = 0;
+            while(!StdIn.isEmpty())
+            {
+                String key = StdIn.readString();
+                st.put(key, cnt);
+                cnt++;
+            }
+            System.out.println("    Contents: " + st.toString());
+            System.out.println("Symbol table empty? " + st.isEmpty());
+            System.out.println("");
+
+            System.out.println("Testing get() operation:");
+            System.out.println("    Key X has value " + st.get("X"));
+            System.out.println("    Key Z has value " + st.get("Z"));
+            System.out.println("");
+
+            System.out.println("Testing delete() operation");
+            int sz = st.size();
+            st.delete("X");
+            st.delete("M");
+            System.out.println("    Contents: " + st.toString());
+            System.out.println("    Number of elements decreased by: " + (sz - st.size()));
+            System.out.println("");
+
+            System.out.println("Testing contains() operation");
+            System.out.println("    Contains X? " + st.contains("X"));
+            System.out.println("    Contains R? " + st.contains("R"));
+            System.out.println("");
+
+            System.out.println("Testing keys iterator:");
+            for(String str : st.keys())
+            {
+                System.out.println("    " + str);
+            }
+            System.out.println("");
+        }
     }
 
 }
