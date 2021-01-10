@@ -236,6 +236,14 @@ public class SeparateChainingHashST<Key extends Comparable<Key>, Value> //implem
             pf = "fail"; st.put(31, "N"); retStr = st.toString(); if(retStr.equals("(3, J), (5, H), (45, B), (10, C), (11, K), (13, I), (15, D), (20, L), (60, G), (25, E), (27, M), (30, A), (31, N), (35, F)")) pf = "pass"; System.out.println("    " + pf + " - put(31, N), size() = " + st.size() + ": " + retStr);
             System.out.println("");
 
+            System.out.println("Testing iterators:");
+            StringBuilder sb = new StringBuilder();
+            for(Integer i : st.keys())
+                sb.append(i + ", ");
+            if(sb.length() > 0) sb.setLength(sb.length() - 2);
+            pf = "fail"; retStr = sb.toString(); if(retStr.equals("3, 5, 45, 10, 11, 13, 15, 20, 60, 25, 27, 30, 31, 35")) pf = "pass"; System.out.println("    " + pf + " - st.keys(): " + sb.toString());
+            System.out.println("");
+ 
             System.out.println("Testing with multiple elements:");
             System.out.println("Contents: " + st.toString());
             pf = "fail"; retBool = st.isEmpty(); if(!retBool) pf = "pass"; System.out.println("    " + pf + " - isEmpty(): " + retBool);
