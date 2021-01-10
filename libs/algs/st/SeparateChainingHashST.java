@@ -1,3 +1,4 @@
+// TODO: implement array resizing
 package libs.algs.st;
 import java.util.Iterator;
 import edu.princeton.cs.algs4.StdIn;
@@ -11,7 +12,8 @@ public class SeparateChainingHashST<Key extends Comparable<Key>, Value> //implem
     // ----------------------------------------
     // Private members
     // ----------------------------------------
-    int N, M;
+    int N, M, lgM;
+    int[] primes;
     LinkedListSequentialSearchST<Key, Value>[] a;
 
     // ----------------------------------------
@@ -95,7 +97,16 @@ public class SeparateChainingHashST<Key extends Comparable<Key>, Value> //implem
     // ----------------------------------------
     // Private Functions
     // ----------------------------------------
-    private int hash(Key key) {return (key.hashCode() & 0x7fffffff) % M;}
+    private int hash(Key key)
+    {
+        // Get modulo by a prime larger than M first then
+        // get modulo by M.
+        // This is to deal with the fact that M will be a multiple
+        // of 2 when array resizing is used.
+        int ret = key.hashCode() & 0x7fffffff;
+        if(lgM < 26) ret = ret % primes[lgM + 5];
+        return (key.hashCode() & 0x7fffffff) % M;
+    }
 
     // Get the index of the next list that is not empty starting from, and
     // including curr
@@ -115,6 +126,8 @@ public class SeparateChainingHashST<Key extends Comparable<Key>, Value> //implem
     {
         N = 0;
         M = 37;
+        lgM = 4;
+        primes = new int[]{0, 0, 0, 0, 0, 31, 61, 127, 251, 509, 1021, 2039, 4093, 8191, 16381, 32749, 65521, 131071, 262139, 524287, 1048573, 2097143, 4194301, 8388593, 16777213, 33554393, 67108859, 134217689, 268435399, 536870909, 1073741789, 2147483647};
         a = (LinkedListSequentialSearchST<Key,Value>[])
             Array.newInstance(LinkedListSequentialSearchST.class, M);
     }
