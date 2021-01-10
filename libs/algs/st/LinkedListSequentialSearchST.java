@@ -32,11 +32,11 @@ public class LinkedListSequentialSearchST<Key, Value>
             temp.value = value;
             temp.next = first;
             first = temp;
+            N++;
         }
         else
             // key found
             current.value = value;
-        N++;
     }
 
     public Value get(Key key)
