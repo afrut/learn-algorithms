@@ -119,8 +119,8 @@ javac libs\algs\st\SeparateChainingHashST.java
 ::java -ea libs.algs.st.BST < libs\algs\STSampleinput.txt
 ::java -ea libs.algs.st.RedBlackBST -test
 ::java -ea libs.algs.st.RedBlackBST < libs\algs\STSampleinput.txt
-java -ea libs.algs.st.SeparateChainingHashST -test
-::java -ea libs.algs.st.SeparateChainingHashST < libs\algs\STSampleinput.txt
+::java -ea libs.algs.st.SeparateChainingHashST -test
+java -ea libs.algs.st.SeparateChainingHashST < algs4\tale.txt
 ::java -ea libs.algs.st.LinearProbingHashST -test
 ::
 :::: Clean

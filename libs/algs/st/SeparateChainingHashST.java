@@ -12,7 +12,7 @@ public class SeparateChainingHashST<Key extends Comparable<Key>, Value> //implem
     // ----------------------------------------
     // Private members
     // ----------------------------------------
-    int N, M, lgM;
+    int N, oldM, M, lgM;
     int[] primes;
     LinkedListSequentialSearchST<Key, Value>[] a;
 
@@ -67,7 +67,10 @@ public class SeparateChainingHashST<Key extends Comparable<Key>, Value> //implem
             public EntriesIterator()
             {
                 idx = nextList(0);
-                if(idx > 0) it = a[idx].entries().iterator();
+                if(idx >= 0)
+                {
+                    it = a[idx].entries().iterator();
+                }
             }
             public boolean hasNext()
             {
@@ -91,12 +94,14 @@ public class SeparateChainingHashST<Key extends Comparable<Key>, Value> //implem
             public Pair<Key, Value> next() {return it.next();}
             public void remove() {}
         }
+        public void EntriesIterable () {}
         public Iterator<Pair<Key, Value>> iterator() {return new EntriesIterator();}
     }
 
     // ----------------------------------------
     // Private Functions
     // ----------------------------------------
+    // Modular hashing function
     private int hash(Key key)
     {
         // Get modulo by a prime larger than M first then
@@ -121,11 +126,33 @@ public class SeparateChainingHashST<Key extends Comparable<Key>, Value> //implem
         else return curr;
     }
 
+    // Array resizing
+    private void resize(int sz)
+    {
+        LinkedListSequentialSearchST<Key, Value>[] temp = a;
+        M = sz;
+        a = (LinkedListSequentialSearchST<Key, Value>[])
+            Array.newInstance(LinkedListSequentialSearchST.class, M);
+        int i = 0;
+        while(i < temp.length)
+        {
+            if(temp[i] != null)
+            {
+                for(Pair<Key, Value> p : temp[i].entries())
+                    this.put(p.key, p.val);
+            }
+            i++;
+        }
+    }
+
+    // ----------------------------------------
     // Constructor
+    // ----------------------------------------
     public SeparateChainingHashST()
     {
         N = 0;
         M = 37;
+        oldM = M;
         lgM = 4;
         primes = new int[]{0, 0, 0, 0, 0, 31, 61, 127, 251, 509, 1021, 2039, 4093, 8191, 16381, 32749, 65521, 131071, 262139, 524287, 1048573, 2097143, 4194301, 8388593, 16777213, 33554393, 67108859, 134217689, 268435399, 536870909, 1073741789, 2147483647};
         a = (LinkedListSequentialSearchST<Key,Value>[])
@@ -142,7 +169,8 @@ public class SeparateChainingHashST<Key extends Comparable<Key>, Value> //implem
         if(a[i] == null) a[i] = new LinkedListSequentialSearchST<Key, Value>();
         int oldsz = a[i].size();
         a[i].put(key, val);
-        N += a[i].size() - oldsz;
+        if(oldsz != a[i].size()) N++;
+        if(N / M > 8) resize(2 * M);
     }
 
     // Get operation
@@ -186,7 +214,9 @@ public class SeparateChainingHashST<Key extends Comparable<Key>, Value> //implem
     {
         StringBuilder sb = new StringBuilder();
         for(Pair<Key, Value> pair : this.entries())
+        {
             sb.append("(" + pair.key + ", " + pair.val + "), ");
+        }
         if(sb.length() > 0) sb.setLength(sb.length() - 2);
         return sb.toString();
     }
@@ -280,7 +310,6 @@ public class SeparateChainingHashST<Key extends Comparable<Key>, Value> //implem
         {
             SeparateChainingHashST<String, Integer> st = new SeparateChainingHashST<String, Integer>();
 
-            // sample input is SEARCHEXAMPLE
             System.out.println("Symbol table empty? " + st.isEmpty());
             System.out.println("Testing put() operation:");
             int cnt = 0;
@@ -290,6 +319,9 @@ public class SeparateChainingHashST<Key extends Comparable<Key>, Value> //implem
                 st.put(key, cnt);
                 cnt++;
             }
+            System.out.println(st.toString());
+
+            /*
             System.out.println("    Contents: " + st.toString());
             System.out.println("Symbol table empty? " + st.isEmpty());
             System.out.println("");
@@ -318,6 +350,7 @@ public class SeparateChainingHashST<Key extends Comparable<Key>, Value> //implem
                 System.out.println("    " + str);
             }
             System.out.println("");
+            */
         }
     }
 
