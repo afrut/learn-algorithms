@@ -1,4 +1,3 @@
-// TODO: implement array resizing
 package libs.algs.st;
 import java.util.Iterator;
 import java.util.LinkedList;
