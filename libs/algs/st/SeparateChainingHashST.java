@@ -30,7 +30,7 @@ public class SeparateChainingHashST<Key extends Comparable<Key>, Value> //implem
             public KeysIterator()
             {
                 idx = nextList(0);
-                if(idx > 0) it = a[idx].keys().iterator();
+                if(idx >= 0) it = a[idx].keys().iterator();
             }
             public boolean hasNext()
             {
@@ -38,7 +38,7 @@ public class SeparateChainingHashST<Key extends Comparable<Key>, Value> //implem
                 else if(!it.hasNext())
                 {
                     idx = nextList(++idx);
-                    if(idx > 0)
+                    if(idx >= 0)
                     {
                         it = a[idx].keys().iterator();
                         return true;
@@ -67,10 +67,7 @@ public class SeparateChainingHashST<Key extends Comparable<Key>, Value> //implem
             public EntriesIterator()
             {
                 idx = nextList(0);
-                if(idx >= 0)
-                {
-                    it = a[idx].entries().iterator();
-                }
+                if(idx >= 0) it = a[idx].entries().iterator();
             }
             public boolean hasNext()
             {
@@ -319,38 +316,34 @@ public class SeparateChainingHashST<Key extends Comparable<Key>, Value> //implem
                 st.put(key, cnt);
                 cnt++;
             }
-            System.out.println(st.toString());
 
-            /*
-            System.out.println("    Contents: " + st.toString());
+            System.out.println("    Contents: ");
+            for(Pair<String, Integer> pair : st.entries())
+                System.out.println(String.format("        %s: %d", pair.key, pair.val));
             System.out.println("Symbol table empty? " + st.isEmpty());
             System.out.println("");
 
             System.out.println("Testing get() operation:");
-            System.out.println("    Key X has value " + st.get("X"));
-            System.out.println("    Key Z has value " + st.get("Z"));
+            System.out.println("    indebted has value " + st.get("indebted"));
+            System.out.println("    mood has value " + st.get("mood"));
             System.out.println("");
 
             System.out.println("Testing delete() operation");
             int sz = st.size();
-            st.delete("X");
-            st.delete("M");
-            System.out.println("    Contents: " + st.toString());
+            st.delete("indebted");
+            st.delete("mood");
             System.out.println("    Number of elements decreased by: " + (sz - st.size()));
             System.out.println("");
 
             System.out.println("Testing contains() operation");
-            System.out.println("    Contains X? " + st.contains("X"));
-            System.out.println("    Contains R? " + st.contains("R"));
+            System.out.println("    Contains X? " + st.contains("indebted"));
+            System.out.println("    Contains R? " + st.contains("mood"));
             System.out.println("");
 
             System.out.println("Testing keys iterator:");
             for(String str : st.keys())
-            {
                 System.out.println("    " + str);
-            }
             System.out.println("");
-            */
         }
     }
 
