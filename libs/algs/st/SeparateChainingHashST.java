@@ -1,6 +1,7 @@
 // TODO: implement array resizing
 package libs.algs.st;
 import java.util.Iterator;
+import java.util.LinkedList;
 import edu.princeton.cs.algs4.StdIn;
 import libs.algs.st.SymbolTable;
 import libs.algs.st.LinkedListSequentialSearchST;
@@ -131,12 +132,13 @@ public class SeparateChainingHashST<Key extends Comparable<Key>, Value> //implem
         a = (LinkedListSequentialSearchST<Key, Value>[])
             Array.newInstance(LinkedListSequentialSearchST.class, M);
         int i = 0;
+        N = 0;
         while(i < temp.length)
         {
             if(temp[i] != null)
             {
-                for(Pair<Key, Value> p : temp[i].entries())
-                    this.put(p.key, p.val);
+                for(Pair<Key, Value> pair : temp[i].entries())
+                    this.put(pair.key, pair.val);
             }
             i++;
         }
@@ -184,9 +186,11 @@ public class SeparateChainingHashST<Key extends Comparable<Key>, Value> //implem
         int i = hash(key);
         if(a[i] != null)
         {
+            int oldsz = a[i].size();
             a[i].delete(key);
-            N--;
+            if(a[i].size() != oldsz) this.N--;
             if(a[i].size() == 0) a[i] = null;
+            if(M > oldM && N / M < 2) resize(M / 2);
         }
     }
 
@@ -225,9 +229,14 @@ public class SeparateChainingHashST<Key extends Comparable<Key>, Value> //implem
     public static void main(String[] args)
     {
         boolean test = false;
+        boolean resizeTest = false;
         if(args.length > 0)
         {
-            for(String arg : args) {if(arg.equals("-test")) test = true;}
+            for(String arg : args)
+            {
+                if(arg.equals("-test")) test = true;
+                if(arg.equals("-resizeTest")) resizeTest = true;
+            }
         }
 
         if(test)
@@ -302,6 +311,25 @@ public class SeparateChainingHashST<Key extends Comparable<Key>, Value> //implem
             pf = "fail"; sz = st.size(); ret = 25; st.delete(ret); retBool = st.contains(ret); if(!retBool && st.size() + 1 == sz) pf = "pass"; System.out.println("    " + pf + " - delete(" + ret + "): " + st.toString());
             pf = "fail"; sz = st.size(); ret = 30; st.delete(ret); retBool = st.contains(ret); if(!retBool && st.size() + 1 == sz) pf = "pass"; System.out.println("    " + pf + " - delete(" + ret + "): " + st.toString());
             pf = "fail"; sz = st.size(); ret = 11; st.delete(ret); retBool = st.contains(ret); if(!retBool && st.size() + 1 == sz) pf = "pass"; System.out.println("    " + pf + " - delete(" + ret + "): " + st.toString());
+        }
+        else if(resizeTest)
+        {
+            System.out.println("Testing Array Resizing:");
+            SeparateChainingHashST<String, Integer> st = new SeparateChainingHashST<String, Integer>();
+            int cnt = 0;
+            while(!StdIn.isEmpty())
+            {
+                String key = StdIn.readString();
+                st.put(key, cnt);
+                cnt++;
+            }
+            String pf;
+            pf = "fail"; if(st.size() == 10674) pf = "pass"; System.out.println("    " + pf + " - Number of keys added: " + st.size());
+
+            LinkedList<String> ls = new LinkedList<String>();
+            for(String key : st.keys()) ls.add(key);
+            for(String key : ls) st.delete(key);
+            pf = "fail"; if(st.size() == 0) pf = "pass"; System.out.println("    " + pf + " - Number of keys deleted: " + st.size());
         }
         else
         {
