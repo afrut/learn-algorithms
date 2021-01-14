@@ -5,6 +5,10 @@
 package libs.algs.pq;
 import edu.princeton.cs.algs4.In;
 import libs.util.Util;
+import java.util.Scanner;
+import java.util.LinkedList;
+import java.io.File;
+import java.io.FileNotFoundException;
 
 // generics - allow any subclass of Comparable to be use
 public class MaxPQ<Key extends Comparable<Key>>
@@ -151,16 +155,21 @@ public class MaxPQ<Key extends Comparable<Key>>
             return new String("empty");
     }
 
-    public static void main(String[] args)
+    public static void main(String[] args) throws FileNotFoundException
     {
         // read in strings from input
-        String[] a = In.readStrings();
+        Scanner sc = new Scanner(new File(args[0]));
+        LinkedList<String> ll = new LinkedList<String>();
+        while(sc.hasNext())
+            ll.add(sc.next("."));
+        String[] a = new String[ll.size()];
+        a = ll.toArray(a);
         System.out.println(Util.toString(a));
 
         // create a priority queue and insert
         int Nstring = a.length;
         MaxPQ<String> mpq = new MaxPQ<String>();
-        for(int cnt = 0; cnt < Nstring; cnt++)
+        for(int cnt = 0; cnt < a.length; cnt++)
             mpq.insert(a[cnt]);
 
         // print out contents of array that represents the heap
