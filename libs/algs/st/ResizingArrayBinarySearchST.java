@@ -1,6 +1,7 @@
 package libs.algs.st;
 import java.util.Iterator;
-import edu.princeton.cs.algs4.StdIn;
+import java.io.FileNotFoundException;
+import libs.util.Util;
 
 // ordered symbol table implementation
 public class ResizingArrayBinarySearchST<Key extends Comparable<Key>, Value>
@@ -311,7 +312,7 @@ public class ResizingArrayBinarySearchST<Key extends Comparable<Key>, Value>
     public Iterable<Key> keys() {return new KeysIterable();}
     public Iterable<Key> keys(Key key1, Key key2) {return new KeysIterable(key1, key2);}
 
-    public static void main(String[] args)
+    public static void main(String[] args) throws FileNotFoundException
     {
         boolean test = false;
         if(args.length > 0)
@@ -452,10 +453,11 @@ public class ResizingArrayBinarySearchST<Key extends Comparable<Key>, Value>
             // sample input is SEARCHEXAMPLE
             System.out.println("Symbol table empty? " + st.isEmpty());
             System.out.println("Testing put() operation:");
+            String[] a = Util.<String>fromFile(args[0], String.class);
             int cnt = 0;
-            while(!StdIn.isEmpty())
+            while(cnt < a.length)
             {
-                String key = StdIn.readString();
+                String key = a[cnt];
                 st.put(key, cnt);
                 cnt++;
             }

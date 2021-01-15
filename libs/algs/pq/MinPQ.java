@@ -5,6 +5,9 @@
 package libs.algs.pq;
 import edu.princeton.cs.algs4.In;
 import libs.util.Util;
+import java.util.Scanner;
+import java.io.FileNotFoundException;
+import java.io.File;
 
 // generics - allow any subclass of Comparable to be use
 public class MinPQ<Key extends Comparable<Key>>
@@ -151,10 +154,10 @@ public class MinPQ<Key extends Comparable<Key>>
             return new String("empty");
     }
 
-    public static void main(String[] args)
+    public static void main(String[] args) throws FileNotFoundException
     {
         // read in strings from input
-        String[] a = In.readStrings();
+        String[] a = Util.<String>fromFile(args[0], String.class);
         System.out.println(Util.toString(a));
 
         // create a priority queue and insert

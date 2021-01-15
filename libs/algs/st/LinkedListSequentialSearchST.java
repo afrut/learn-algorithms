@@ -1,7 +1,8 @@
 package libs.algs.st;
 import java.util.Iterator;
-import edu.princeton.cs.algs4.StdIn;
 import libs.algs.Pair;
+import libs.util.Util;
+import java.io.FileNotFoundException;
 
 public class LinkedListSequentialSearchST<Key, Value>
 {
@@ -190,7 +191,7 @@ public class LinkedListSequentialSearchST<Key, Value>
     public Iterable<Key> keys() {return new Keys();}
     public Iterable<Pair<Key, Value>> entries() {return new Entries();}
 
-    public static void main(String[] args)
+    public static void main(String[] args) throws FileNotFoundException
     {
         boolean test = false;
         if(args.length > 0)
@@ -265,9 +266,10 @@ public class LinkedListSequentialSearchST<Key, Value>
             System.out.println("Symbol table empty? " + st.isEmpty());
             System.out.println("Testing put() operation:");
             int cnt = 0;
-            while(!StdIn.isEmpty())
+            String[] a = Util.<String>fromFile(args[0], String.class);
+            while(cnt < a.length)
             {
-                String key = StdIn.readString();
+                String key = a[cnt];
                 st.put(key, cnt);
                 cnt++;
             }

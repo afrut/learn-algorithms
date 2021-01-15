@@ -1,6 +1,7 @@
 package libs.algs.st;
 import java.util.Iterator;
-import edu.princeton.cs.algs4.StdIn;
+import java.io.FileNotFoundException;
+import libs.util.Util;
 
 public class ResizingArraySequentialSearchST<Key, Value>
 {
@@ -51,7 +52,7 @@ public class ResizingArraySequentialSearchST<Key, Value>
             keys[N] = null;
             values[N] = null;
             if(N <= (int)(keys.length / 4))
-                resize(N / 2);
+                resize(keys.length / 2);
         }
     }
 
@@ -148,7 +149,7 @@ public class ResizingArraySequentialSearchST<Key, Value>
 
     public Iterable<Key> keys() {return new Keys();}
 
-    public static void main(String[] args)
+    public static void main(String[] args) throws FileNotFoundException
     {
         boolean test = false;
         if(args.length > 0)
@@ -221,9 +222,10 @@ public class ResizingArraySequentialSearchST<Key, Value>
             System.out.println("Symbol table empty? " + st.isEmpty());
             System.out.println("Testing put() operation:");
             int cnt = 0;
-            while(!StdIn.isEmpty())
+            String[] a = Util.<String>fromFile(args[0], String.class);
+            while(cnt < a.length)
             {
-                String key = StdIn.readString();
+                String key = a[cnt];
                 st.put(key, cnt);
                 cnt++;
             }

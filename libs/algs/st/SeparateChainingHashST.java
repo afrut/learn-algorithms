@@ -1,11 +1,12 @@
 package libs.algs.st;
 import java.util.Iterator;
 import java.util.LinkedList;
-import edu.princeton.cs.algs4.StdIn;
 import libs.algs.st.SymbolTable;
 import libs.algs.st.LinkedListSequentialSearchST;
 import java.lang.reflect.Array;
 import libs.algs.Pair;
+import java.io.FileNotFoundException;
+import libs.util.Util;
 
 public class SeparateChainingHashST<Key extends Comparable<Key>, Value> //implements SymbolTable<Key, Value>
 {
@@ -225,7 +226,7 @@ public class SeparateChainingHashST<Key extends Comparable<Key>, Value> //implem
     public KeysIterable keys() {return new KeysIterable();}
     public EntriesIterable entries() {return new EntriesIterable();}
 
-    public static void main(String[] args)
+    public static void main(String[] args) throws FileNotFoundException
     {
         boolean test = false;
         boolean resizeTest = false;
@@ -316,9 +317,10 @@ public class SeparateChainingHashST<Key extends Comparable<Key>, Value> //implem
             System.out.println("Testing Array Resizing:");
             SeparateChainingHashST<String, Integer> st = new SeparateChainingHashST<String, Integer>();
             int cnt = 0;
-            while(!StdIn.isEmpty())
+            String[] a = Util.<String>fromFile(args[1], "\\w+", String.class);
+            while(cnt < a.length)
             {
-                String key = StdIn.readString();
+                String key = a[cnt];
                 st.put(key, cnt);
                 cnt++;
             }
@@ -333,13 +335,13 @@ public class SeparateChainingHashST<Key extends Comparable<Key>, Value> //implem
         else
         {
             SeparateChainingHashST<String, Integer> st = new SeparateChainingHashST<String, Integer>();
-
             System.out.println("Symbol table empty? " + st.isEmpty());
             System.out.println("Testing put() operation:");
+            String[] a = Util.<String>fromFile(args[0], "\\w+", String.class);
             int cnt = 0;
-            while(!StdIn.isEmpty())
+            while(cnt < a.length)
             {
-                String key = StdIn.readString();
+                String key = a[cnt];
                 st.put(key, cnt);
                 cnt++;
             }

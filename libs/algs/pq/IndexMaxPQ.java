@@ -5,6 +5,7 @@
 package libs.algs.pq;
 import edu.princeton.cs.algs4.In;
 import libs.util.Util;
+import java.io.FileNotFoundException;
 
 // generics - allow any subclass of Comparable to be use
 public class IndexMaxPQ<Key extends Comparable<Key>>
@@ -182,10 +183,10 @@ public class IndexMaxPQ<Key extends Comparable<Key>>
             return new String("empty");
     }
 
-    public static void main(String[] args)
+    public static void main(String[] args) throws FileNotFoundException
     {
         // read in strings from input
-        String[] a = In.readStrings();
+        String[] a = Util.<String>fromFile(args[0], String.class);
         int Nstring = a.length;
         System.out.println(String.format("Original %d Elements:", Nstring));
         System.out.println(Util.toString(a) + "\n");

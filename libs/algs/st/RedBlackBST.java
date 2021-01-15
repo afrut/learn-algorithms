@@ -1,7 +1,8 @@
 package libs.algs.st;
 import java.util.Iterator;
-import edu.princeton.cs.algs4.StdIn;
 import libs.algs.st.SymbolTable;
+import java.io.FileNotFoundException;
+import libs.util.Util;
 
 // --------------------------------------------------------------------------------
 //
@@ -990,7 +991,7 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> implements SymbolTa
     public Iterable<Key> keys() {return new KeysIterable(null, null);}
     public Iterable<Key> keys(Key lo, Key hi) {return new KeysIterable(lo ,hi);}
 
-    public static void main(String[] args)
+    public static void main(String[] args) throws FileNotFoundException
     {
         boolean test = false;
         if(args.length > 0)
@@ -1341,10 +1342,11 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> implements SymbolTa
             // sample input is SEARCHEXAMPLE
             System.out.println("Symbol table empty? " + st.isEmpty());
             System.out.println("Testing put() operation:");
+            String[] a = Util.<String>fromFile(args[0], String.class);
             int cnt = 0;
-            while(!StdIn.isEmpty())
+            while(cnt < a.length)
             {
-                String key = StdIn.readString();
+                String key = a[cnt];
                 st.put(key, cnt);
                 cnt++;
             }

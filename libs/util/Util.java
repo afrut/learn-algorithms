@@ -78,12 +78,15 @@ public class Util
     }
 
     public static <T> T[] fromFile(String filepath, Class type) throws FileNotFoundException
+    {return Util.<T>fromFile(filepath, ".", type);}
+
+    public static <T> T[] fromFile(String filepath, String pattern, Class type) throws FileNotFoundException
     {
         // read in strings from input
         Scanner sc = new Scanner(new File(filepath));
         LinkedList<T> ll = new LinkedList<T>();
         while(sc.hasNext())
-            ll.add((T)sc.next("."));
+            ll.add((T)sc.next(pattern));
         T[] a = (T[])(new Object[ll.size()]);
         a = (T[]) Array.newInstance(type, ll.size());
         a = ll.toArray(a);
