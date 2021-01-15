@@ -25,13 +25,21 @@ public class GenericArrayCreation
         System.out.println(a.getClass());
         System.out.println(ret.getClass());
         System.out.println(ret.getClass().getComponentType());
+        System.out.println("");
         return ret;
     }
+
+    public static<Item> Item[] createArray(Class type, int N)
+    {return (Item[])Array.newInstance(type, N);}
 
     public static void main(String args[])
     {
         // create an integer array of length N
         int N = 10;
         Integer[] arr = GenericArrayCreation.<Integer>createArray(N, N);
+        String[] s = GenericArrayCreation.<String>createArray(String.class, N);
+        System.out.println("Output array types:");
+        System.out.println(arr.getClass());
+        System.out.println(s.getClass());
     }
 }
