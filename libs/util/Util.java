@@ -4,6 +4,9 @@ import java.util.Random;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.lang.reflect.Array;
+import java.util.Scanner;
+import java.io.File;
+import java.io.FileNotFoundException;
 
 public class Util
 {
@@ -74,7 +77,20 @@ public class Util
         return sb.toString();
     }
 
-    public static void main(String[] args)
+    public static <T> T[] fromFile(String filepath, Class type) throws FileNotFoundException
+    {
+        // read in strings from input
+        Scanner sc = new Scanner(new File(filepath));
+        LinkedList<T> ll = new LinkedList<T>();
+        while(sc.hasNext())
+            ll.add((T)sc.next("."));
+        T[] a = (T[])(new Object[ll.size()]);
+        a = (T[]) Array.newInstance(type, ll.size());
+        a = ll.toArray(a);
+        return a;
+    }
+
+    public static void main(String[] args) throws FileNotFoundException
     {
         // test Util.toString() for different types
         Comparable[] a = new Comparable[10];
@@ -114,5 +130,10 @@ public class Util
         System.out.println(Util.toString(d));
         Integer[] e = Util.<Integer>removeDuplicates(d);
         System.out.println(Util.toString(e));
+
+        // test fromFile
+        String str = new String();
+        String[] s = Util.<String>fromFile(args[0], String.class);
+        System.out.println(Util.toString(s));
     }
 }
