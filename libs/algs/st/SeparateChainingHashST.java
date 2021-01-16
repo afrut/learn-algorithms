@@ -13,8 +13,8 @@ public class SeparateChainingHashST<Key extends Comparable<Key>, Value> //implem
     // ----------------------------------------
     // Private members
     // ----------------------------------------
-    int N, oldM, M, lgM;
-    int[] primes;
+    private int N, oldM, M, lgM;
+    private int[] primes;
     LinkedListSequentialSearchST<Key, Value>[] a;
 
     // ----------------------------------------
@@ -222,7 +222,7 @@ public class SeparateChainingHashST<Key extends Comparable<Key>, Value> //implem
         return sb.toString();
     }
 
-    // Iterate through keys
+    // iterables
     public KeysIterable keys() {return new KeysIterable();}
     public EntriesIterable entries() {return new EntriesIterable();}
 
@@ -345,6 +345,7 @@ public class SeparateChainingHashST<Key extends Comparable<Key>, Value> //implem
                 st.put(key, cnt);
                 cnt++;
             }
+            System.out.println("    st.size(): " + st.size());
 
             System.out.println("    Contents: ");
             for(Pair<String, Integer> pair : st.entries())
@@ -365,14 +366,16 @@ public class SeparateChainingHashST<Key extends Comparable<Key>, Value> //implem
             System.out.println("");
 
             System.out.println("Testing contains() operation");
-            System.out.println("    Contains X? " + st.contains("indebted"));
-            System.out.println("    Contains R? " + st.contains("mood"));
+            System.out.println("    Contains indebted? " + st.contains("indebted"));
+            System.out.println("    Contains mood? " + st.contains("mood"));
             System.out.println("");
 
             System.out.println("Testing keys iterator:");
             for(String str : st.keys())
                 System.out.println("    " + str);
             System.out.println("");
+            
+            // TODO: add delete to empty
         }
     }
 
