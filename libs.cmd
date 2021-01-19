@@ -26,7 +26,7 @@ javac libs\algs\st\BST.java
 javac libs\algs\st\RedBlackBST.java
 javac libs\algs\st\SymbolTable.java
 javac libs\algs\st\SeparateChainingHashST.java
-::javac libs\algs\st\LinearProbingHashST.java
+javac libs\algs\st\LinearProbingHashST.java
 
 :: Archive
 del .\jar\libs.jar
@@ -66,7 +66,7 @@ java -ea libs.algs.st.RedBlackBST txt\STSampleinput.txt
 java -ea libs.algs.st.SeparateChainingHashST -test
 java -ea libs.algs.st.SeparateChainingHashST algs4-data\tale.txt
 java -ea libs.algs.st.SeparateChainingHashST -resizeTest algs4-data\tale.txt
-::java -ea libs.algs.st.LinearProbingHashST -test
+java -ea libs.algs.st.LinearProbingHashST algs4-data\tale.txt
 
 :: Clean
 del /s .\libs\*.class

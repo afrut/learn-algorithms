@@ -1,4 +1,3 @@
-// TODO: primes array-resizing lgM
 package libs.algs.st;
 import java.util.Iterator;
 import java.util.LinkedList;
