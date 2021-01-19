@@ -13,7 +13,7 @@ public class SeparateChainingHashST<Key extends Comparable<Key>, Value> //implem
     // ----------------------------------------
     // Private members
     // ----------------------------------------
-    private int N, oldM, M, lgM;
+    private int N, baseM, M, lgM;
     private int[] primes;
     LinkedListSequentialSearchST<Key, Value>[] a;
 
@@ -127,21 +127,32 @@ public class SeparateChainingHashST<Key extends Comparable<Key>, Value> //implem
     // Array resizing
     private void resize(int sz)
     {
-        LinkedListSequentialSearchST<Key, Value>[] temp = a;
-        M = sz;
-        a = (LinkedListSequentialSearchST<Key, Value>[])
-            Array.newInstance(LinkedListSequentialSearchST.class, M);
-        int i = 0;
-        N = 0;
-        while(i < temp.length)
-        {
-            if(temp[i] != null)
-            {
-                for(Pair<Key, Value> pair : temp[i].entries())
-                    this.put(pair.key, pair.val);
-            }
-            i++;
-        }
+    	if(sz < baseM)
+    	{
+    		lgM = 5;
+    		sz = baseM;
+    	}
+    	else if(sz == M / 2) lgM--;
+    	else if(sz == M * 2) lgM++;
+
+    	if(M != sz)
+    	{
+	    	M = sz;
+	        LinkedListSequentialSearchST<Key, Value>[] temp = a;
+	        a = (LinkedListSequentialSearchST<Key, Value>[])
+	            Array.newInstance(LinkedListSequentialSearchST.class, M);
+	        int i = 0;
+	        N = 0;
+	        while(i < temp.length)
+	        {
+	            if(temp[i] != null)
+	            {
+	                for(Pair<Key, Value> pair : temp[i].entries())
+	                    this.put(pair.key, pair.val);
+	            }
+	            i++;
+	        }
+    	}
     }
 
     // ----------------------------------------
@@ -150,9 +161,9 @@ public class SeparateChainingHashST<Key extends Comparable<Key>, Value> //implem
     public SeparateChainingHashST()
     {
         N = 0;
-        M = 37;
-        oldM = M;
-        lgM = 4;
+        baseM = 37;
+        M = baseM;
+        lgM = 5;
         primes = new int[]{0, 0, 0, 0, 0, 31, 61, 127, 251, 509, 1021, 2039, 4093, 8191, 16381, 32749, 65521, 131071, 262139, 524287, 1048573, 2097143, 4194301, 8388593, 16777213, 33554393, 67108859, 134217689, 268435399, 536870909, 1073741789, 2147483647};
         a = (LinkedListSequentialSearchST<Key,Value>[])
             Array.newInstance(LinkedListSequentialSearchST.class, M);
@@ -190,7 +201,7 @@ public class SeparateChainingHashST<Key extends Comparable<Key>, Value> //implem
             a[i].delete(key);
             if(a[i].size() != oldsz) this.N--;
             if(a[i].size() == 0) a[i] = null;
-            if(M > oldM && N / M < 2) resize(M / 2);
+            if(N / M < 2) resize(M / 2);
         }
     }
 
@@ -330,7 +341,7 @@ public class SeparateChainingHashST<Key extends Comparable<Key>, Value> //implem
             LinkedList<String> ls = new LinkedList<String>();
             for(String key : st.keys()) ls.add(key);
             for(String key : ls) st.delete(key);
-            pf = "fail"; if(st.size() == 0) pf = "pass"; System.out.println("    " + pf + " - Number of keys deleted: " + st.size());
+            pf = "fail"; if(st.size() == 0) pf = "pass"; System.out.println("    " + pf + " - Number of keys after deletion: " + st.size());
         }
         else
         {
@@ -347,9 +358,13 @@ public class SeparateChainingHashST<Key extends Comparable<Key>, Value> //implem
             }
             System.out.println("    st.size(): " + st.size());
 
-            System.out.println("    Contents: ");
+            System.out.println("    First 5 elements: ");
+            cnt = 0;
             for(Pair<String, Integer> pair : st.entries())
+            {
                 System.out.println(String.format("        %s: %d", pair.key, pair.val));
+                if(++cnt >= 5) break;
+            }
             System.out.println("Symbol table empty? " + st.isEmpty());
             System.out.println("");
 
@@ -371,11 +386,13 @@ public class SeparateChainingHashST<Key extends Comparable<Key>, Value> //implem
             System.out.println("");
 
             System.out.println("Testing keys iterator:");
+            cnt = 0;
             for(String str : st.keys())
+            {
                 System.out.println("    " + str);
-            System.out.println("");
-            
-            // TODO: add delete to empty
+                if(++cnt >= 5) break;
+            }
+            System.out.println("");           
         }
     }
 
