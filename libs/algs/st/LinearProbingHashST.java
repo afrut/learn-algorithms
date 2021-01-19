@@ -1,3 +1,4 @@
+// TODO: primes array-resizing lgM
 package libs.algs.st;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -13,7 +14,7 @@ public class LinearProbingHashST<Key, Value>
 	// ----------------------------------------
     // Private members
     // ----------------------------------------
-    private int N, M, lgM, oldM;
+    private int N, M, lgM, baseM;
     private int[] primes;
     private Key[] keys;
     private Value[] vals;
@@ -97,12 +98,19 @@ public class LinearProbingHashST<Key, Value>
     // Array resizing
     private void resize(int sz)
     {
+    	if(sz < baseM)
+    	{
+    		sz = baseM;
+    		lgM = 5;
+    	}
+    	else if(sz == M / 2) lgM--;
+    	else if(sz == M * 2) lgM++;
+
+    	M = sz;
     	Key[] tempkeys = keys;
     	Value[] tempvals = vals;
-    	keys = (Key[]) new Object[sz];
-    	vals= (Value[]) new Object[sz];
-    	M = sz;
-    	if(M < oldM) M = oldM;
+    	keys = (Key[]) new Object[M];
+    	vals= (Value[]) new Object[M];
     	N = 0;
     	for(int i = 0; i < tempkeys.length; i++)
     	{
@@ -137,8 +145,8 @@ public class LinearProbingHashST<Key, Value>
 	{
 		N = 0;
 		M = 37;
-		oldM = M;
-		lgM = 4;
+		baseM = M;
+		lgM = 5;
 		primes = new int[]{0, 0, 0, 0, 0, 31, 61, 127, 251, 509, 1021, 2039, 4093, 8191, 16381, 32749, 65521, 131071, 262139, 524287, 1048573, 2097143, 4194301, 8388593, 16777213, 33554393, 67108859, 134217689, 268435399, 536870909, 1073741789, 2147483647};
 		keys = (Key[]) new Object[M];
 		vals = (Value[]) new Object[M];
@@ -256,9 +264,13 @@ public class LinearProbingHashST<Key, Value>
         }
         System.out.println("    st.size(): " + st.size());
 
-        System.out.println("    Contents: ");
+        System.out.println("    First 5 elements: ");
+        cnt = 0;
         for(Pair<String, Integer> pair : st.entries())
+        {
             System.out.println(String.format("        %s: %d", pair.key, pair.val));
+            if(++cnt >= 5) break;
+        }
         System.out.println("Symbol table empty? " + st.isEmpty());
         System.out.println("");
 
@@ -280,8 +292,12 @@ public class LinearProbingHashST<Key, Value>
         System.out.println("");
 
         System.out.println("Testing keys iterator:");
+        cnt = 0;
         for(String str : st.keys())
+        {
             System.out.println("    " + str);
+            if(++cnt >= 5) break;
+        }
         System.out.println("");
 
         // TODO: add delete to empty
