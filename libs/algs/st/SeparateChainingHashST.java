@@ -108,7 +108,7 @@ public class SeparateChainingHashST<Key extends Comparable<Key>, Value> //implem
         // of 2 when array resizing is used.
         int ret = key.hashCode() & 0x7fffffff;
         if(lgM < 26) ret = ret % primes[lgM + 5];
-        return (key.hashCode() & 0x7fffffff) % M;
+        return ret % M;
     }
 
     // Get the index of the next list that is not empty starting from, and

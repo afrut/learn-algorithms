@@ -91,7 +91,7 @@ public class LinearProbingHashST<Key, Value>
         // of 2 when array resizing is used.
         int ret = key.hashCode() & 0x7fffffff;
         if(lgM < 26) ret = ret % primes[lgM + 5];
-        return (key.hashCode() & 0x7fffffff) % M;
+        return ret % M;
     }
 
     // Array resizing
@@ -298,8 +298,6 @@ public class LinearProbingHashST<Key, Value>
             if(++cnt >= 5) break;
         }
         System.out.println("");
-
-        // TODO: add delete to empty
 	}
 
 }
