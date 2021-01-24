@@ -47,29 +47,29 @@ jar cvf .\jar\mylibs.jar .\mylibs\*.class
 
 :: Try running the main() function
 java -ea mylibs.CountingTechniques
-java -ea mylibs.Util .\src\main\resources\input.txt
+java -ea mylibs.Util .\src\main\resources\PQSampleInput.txt
 java -ea mylibs.Bag
 java -ea mylibs.List
 java -ea mylibs.Pair
-java -ea mylibs.MaxPQ .\src\main\resources\input.txt
-java -ea mylibs.MinPQ .\src\main\resources\input.txt
-java -ea mylibs.IndexMaxPQ .\src\main\resources\input.txt
+java -ea mylibs.MaxPQ .\src\main\resources\PQSampleInput.txt
+java -ea mylibs.MinPQ .\src\main\resources\PQSampleInput.txt
+java -ea mylibs.IndexMaxPQ .\src\main\resources\PQSampleInput.txt
 java -ea mylibs.Heapsort
 java -ea mylibs.BinarySearch
 java -ea mylibs.LinkedListSequentialSearchST -test
-java -ea mylibs.LinkedListSequentialSearchST .\src\main\resources\STSampleinput.txt
+java -ea mylibs.LinkedListSequentialSearchST .\src\main\resources\STSampleInput.txt
 java -ea mylibs.ResizingArraySequentialSearchST -test
-java -ea mylibs.ResizingArraySequentialSearchST .\src\main\resources\STSampleinput.txt
+java -ea mylibs.ResizingArraySequentialSearchST .\src\main\resources\STSampleInput.txt
 java -ea mylibs.ResizingArrayBinarySearchST -test
-java -ea mylibs.ResizingArrayBinarySearchST .\src\main\resources\STSampleinput.txt
+java -ea mylibs.ResizingArrayBinarySearchST .\src\main\resources\STSampleInput.txt
 java -ea mylibs.LinkedListOrderedSequentialSearchST -test
-java -ea mylibs.LinkedListOrderedSequentialSearchST .\src\main\resources\STSampleinput.txt
+java -ea mylibs.LinkedListOrderedSequentialSearchST .\src\main\resources\STSampleInput.txt
 java -ea mylibs.RecursiveBST -test
-java -ea mylibs.RecursiveBST .\src\main\resources\STSampleinput.txt
+java -ea mylibs.RecursiveBST .\src\main\resources\STSampleInput.txt
 java -ea mylibs.BST -test
-java -ea mylibs.BST .\src\main\resources\STSampleinput.txt
+java -ea mylibs.BST .\src\main\resources\STSampleInput.txt
 java -ea mylibs.RedBlackBST -test
-java -ea mylibs.RedBlackBST .\src\main\resources\STSampleinput.txt
+java -ea mylibs.RedBlackBST .\src\main\resources\STSampleInput.txt
 java -ea mylibs.SeparateChainingHashST -test
 java -ea mylibs.SeparateChainingHashST algs4-data\tale.txt
 java -ea mylibs.SeparateChainingHashST -resizeTest algs4-data\tale.txt

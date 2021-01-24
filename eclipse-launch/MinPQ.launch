@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <launchConfiguration type="org.eclipse.jdt.launching.localJavaApplication">
-    <stringAttribute key="bad_container_name" value=".\src\main\resources\input.txt"/>
+    <stringAttribute key="bad_container_name" value=".\src\main\resources\PQSampleInput.txt"/>
     <listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_PATHS">
         <listEntry value="/learn-algorithms/src/main/java/mylibs/MinPQ.java"/>
     </listAttribute>
@@ -13,6 +13,6 @@
     <booleanAttribute key="org.eclipse.jdt.launching.ATTR_USE_START_ON_FIRST_THREAD" value="true"/>
     <stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="mylibs.MinPQ"/>
     <stringAttribute key="org.eclipse.jdt.launching.MODULE_NAME" value="learn-algorithms"/>
-    <stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value=".\src\main\resources\input.txt"/>
+    <stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value=".\src\main\resources\PQSampleInput.txt"/>
     <stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="learn-algorithms"/>
 </launchConfiguration>
