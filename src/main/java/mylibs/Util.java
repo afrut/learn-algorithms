@@ -85,7 +85,7 @@ public class Util
         // read in strings from input
         Scanner sc = new Scanner(new File(filepath));
         LinkedList<T> ll = new LinkedList<T>();
-        while(sc.hasNext())
+        while(sc.hasNext(pattern))
             ll.add((T)sc.next(pattern));
         T[] a = (T[])(new Object[ll.size()]);
         a = (T[]) Array.newInstance(type, ll.size());
@@ -135,7 +135,6 @@ public class Util
         System.out.println(Util.toString(e));
 
         // test fromFile
-        String str = new String();
         String[] s = Util.<String>fromFile(args[0], String.class);
         System.out.println(Util.toString(s));
     }
