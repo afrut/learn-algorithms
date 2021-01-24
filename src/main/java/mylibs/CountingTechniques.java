@@ -1,5 +1,5 @@
 // Contains various functions related to counting techniques.
-package libs.combinatorics;
+package mylibs;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.lang.reflect.Array; // use reflection since java does not allow generic array creation

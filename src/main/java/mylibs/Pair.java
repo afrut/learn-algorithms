@@ -1,5 +1,5 @@
 // A container for key-value pairs
-package libs.algs;
+package mylibs;
 
 public class Pair<Key, Value>
 {

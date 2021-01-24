@@ -1,8 +1,8 @@
-package libs.algs.st;
+package mylibs;
 import java.util.Iterator;
-import libs.algs.st.SymbolTable;
+import mylibs.SymbolTable;
 import java.io.FileNotFoundException;
-import libs.util.Util;
+import mylibs.Util;
 
 // --------------------------------------------------------------------------------
 //

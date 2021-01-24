@@ -2,9 +2,9 @@
     This class implements a maximum priority queue using a binary heap according
     to the API specified by Sedgewick 4ed.
 */
-package libs.algs.pq;
+package mylibs;
 import edu.princeton.cs.algs4.In;
-import libs.util.Util;
+import mylibs.Util;
 import java.util.Scanner;
 import java.io.FileNotFoundException;
 import java.io.File;

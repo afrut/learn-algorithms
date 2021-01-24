@@ -1,6 +1,6 @@
-package libs.algs;
+package mylibs;
 import java.util.Arrays;
-import libs.util.Util;
+import mylibs.Util;
 
 // Binary search to test for the presence of an element in a collection.
 public class BinarySearch<Item extends Comparable<Item>>

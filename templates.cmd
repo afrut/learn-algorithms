@@ -4,12 +4,12 @@
 :: and run Java programs quickly without the overhead of higher level concepts
 :: like projects in Eclipse.
 ::
+:: Ensure that CLASSPATH environment variable on windows includes the current
+:: directory .\
+::
 :: --------------------------------------------------------------------------------
 
-:: --------------------------------------------------
-::  Testing and Experimentation
-:: --------------------------------------------------
-cd templates
+cd src\main\java\templates
 
 :: Compile and run a hello world program
 javac HelloWorld.java
@@ -36,14 +36,14 @@ java package1.Package1Class
 :: in another directory using the CLASSPATH environment variabl.e
 :: NOTE: CLASSPATH must include the absolute path of the ..\bin\ directory!
 :: NOTE: The package2 directory is created in ..\bin\
-javac -d ..\bin\ Package2Class.java
+javac -d ..\..\..\..\bin\ Package2Class.java
 java package2.Package2Class
 
 :: Compile and add to a jar. Delete the package3 directory and invoke the
 :: program through the jar.
 :: NOTE: The aboslute path of ..\jar\package3jar.jar must be included in CLASSPATH.
 javac -d . Package3Class.java
-jar cvf ..\jar\package3jar.jar .\package3\Package3Class.class
+jar cvf ..\..\..\..\jar\package3jar.jar .\package3\Package3Class.class
 rmdir /Q/S package3
 java package3.Package3Class
 
@@ -60,5 +60,5 @@ javac GenericClass.java
 java GenericClass
 
 :: Clean all files and return to the directory above
-del /s .\*.class
-cd ..
+del /s *.class
+cd ..\..\..\..

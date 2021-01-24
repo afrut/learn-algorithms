@@ -1,12 +1,12 @@
-package libs.algs.st;
+package mylibs;
 import java.util.Iterator;
 import java.util.LinkedList;
-import libs.algs.st.SymbolTable;
-import libs.algs.st.LinkedListSequentialSearchST;
+import mylibs.SymbolTable;
+import mylibs.LinkedListSequentialSearchST;
 import java.lang.reflect.Array;
-import libs.algs.Pair;
+import mylibs.Pair;
 import java.io.FileNotFoundException;
-import libs.util.Util;
+import mylibs.Util;
 
 public class SeparateChainingHashST<Key extends Comparable<Key>, Value> //implements SymbolTable<Key, Value>
 {

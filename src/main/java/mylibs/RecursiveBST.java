@@ -1,11 +1,9 @@
-package libs.algs.st;
+package mylibs;
 import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.Stack;
 import java.io.FileNotFoundException;
-import libs.util.Util;
+import mylibs.Util;
 
-public class BST<Key extends Comparable<Key>, Value>
+public class RecursiveBST<Key extends Comparable<Key>, Value>
 {
     private class Node
     {
@@ -13,8 +11,8 @@ public class BST<Key extends Comparable<Key>, Value>
         Value value;
         Node left;
         Node right;
-        int height;
         int N;
+        int H;
     }
 
     private class KeysIterable implements Iterable<Key>
@@ -94,190 +92,147 @@ public class BST<Key extends Comparable<Key>, Value>
 
     private Node root;
 
-    public BST() {root = null;}
+    public RecursiveBST() {root = null;}
 
     // Searches for key and replaces its value. If not found, inserts key and value.
-    public void put(Key key, Value value)
+    public void put(Key key, Value value) {root = put(root, key, value);}
+
+    // Private recursive function to insert a key-value pair.
+    private Node put(Node node, Key key, Value value)
     {
-        if(root == null)
+        if(node == null)
         {
-            root = new Node();
-            root.key = key;
-            root.value = value;
-            root.N = 1;
-            root.height = 1;
+            Node ret = new Node();
+            ret.key = key;
+            ret.value = value;
+            ret.N = 1;
+            ret.H = 1;
+            return ret;
+        }
+        else if(key.compareTo(node.key) < 0)
+        {
+            Node ret = put(node.left, key, value);
+            node.left = ret;
+            updateNodeN(node);
+            return node;
+        }
+        else if(key.compareTo(node.key) > 0)
+        {
+            Node ret = put(node.right, key, value);
+            node.right = ret;
+            updateNodeN(node);
+            return node;
         }
         else
         {
-            Node node = root;
-            Stack<Node> nodestack = new Stack<Node>();
-            boolean contained = false;
-
-            while(true)
-            {
-                if(key.compareTo(node.key) < 0)
-                {
-                    nodestack.push(node);
-                    if(node.left == null)
-                    {
-                        Node newNode = new Node();
-                        newNode.key = key;
-                        newNode.value = value;
-                        newNode.N = 1;
-                        newNode.height = 1;
-                        node.left = newNode;
-                        break;
-                    }
-                    else
-                    {
-                        node = node.left;
-                    }
-                }
-                else if(key.compareTo(node.key) > 0)
-                {
-                    nodestack.push(node);
-                    if(node.right == null)
-                    {
-                        Node newNode = new Node();
-                        newNode.key = key;
-                        newNode.value = value;
-                        newNode.N = 1;
-                        newNode.height = 1;
-                        node.right = newNode;
-                        break;
-                    }
-                    else
-                    {
-                        node = node.right;
-                    }
-                }
-                else
-                {
-                    node.key = key;
-                    node.value = value;
-                    contained = true;
-                    break;
-                }
-            }
-
-            if(!contained)
-            {
-                while(!nodestack.empty())
-                {
-                    Node n = nodestack.pop();
-                    updateNodeHeight(n);
-                    n.N++;
-                }
-            }
+            node.key = key;
+            node.value = value;
+            return node;
         }
     }
 
-    private void updateNodeHeight(Node node)
+    private void updateNodeN(Node node)
     {
-        int lefth;
-        int righth;
         if(node == null) return;
-        if(node.left == null) lefth = 0;
-        else lefth = node.left.height;
-        if(node.right == null) righth = 0;
-        else righth = node.right.height;
-        if(lefth > righth) node.height = lefth + 1;
-        else node.height = righth + 1;
+        int ret = 0;
+        node.H = 1;
+        if(node.left != null)
+        {
+            node.H += node.left.H;
+            ret += node.left.N;
+        }
+        if(node.right != null)
+        {
+            int rightH = 1 + node.right.H;
+            if(node.H < rightH) node.H = rightH;
+            ret += node.right.N;
+        }
+        node.N = ret + 1;
     }
 
     // Return the value associated with key.
     public Value get(Key key)
     {
-        Node node = root;
-        while(true)
-        {
-            if(node == null) return null;
-            else if(key.compareTo(node.key) < 0) node = node.left;
-            else if(key.compareTo(node.key) > 0) node = node.right;
-            else return node.value;
-        }
+        Node node = get(root, key);
+        if(node == null) return null;
+        else return node.value;
+    }
+
+    // Return the Node associated with key within the binary search tree rooted
+    // at node.
+    private Node get(Node node, Key key)
+    {
+        if(node == null) return null;
+        if(key.compareTo(node.key) < 0) return get(node.left, key);
+        else if(key.compareTo(node.key) > 0) return get(node.right, key);
+        else return node;
     }
 
     // Remove the node that is associated with key.
-    public void delete(Key key)
+    public void delete(Key key) {root = delete(root, key);}
+
+    // Delete the node associated with key within the binary search tree rooted
+    // at node.
+    private Node delete(Node node, Key key)
     {
-        Node node = root;
-        Node prev = null;
-        boolean leftLink = true;
-        Stack<Node> nodestack = new Stack<Node>();
-        while(true)
+        if(node == null) return null;
+        else if(key.compareTo(node.key) < 0)
         {
-            if(node == null) return;
-            else if(key.compareTo(node.key) < 0)
+            node.left = delete(node.left, key);
+            updateNodeN(node);
+            return node;
+        }
+        else if(key.compareTo(node.key) > 0)
+        {
+            node.right = delete(node.right, key);
+            updateNodeN(node);
+            return node;
+        }
+        else
+        {
+            // Node with key found. Store it in a temporary variable.
+            // node is the Node to delete.
+            // Find the ceiling of this node within its binary tree.
+            Node successor = ceiling(node.right, node.key);
+            if(successor != null)
             {
-                prev = node;
-                nodestack.push(node);
-                node = node.left;
-                leftLink = true;
+                // The successor should not have a node on its left.
+                // If it did, it would not be the ceiling of node.
+                // Set the successor's left to be the node left of node to delete.
+                successor.right = deleteMin(node.right);
+                successor.left = node.left;
+                node.left = null;
+                node.right = null;
             }
-            else if(key.compareTo(node.key) > 0)
+            else
             {
-                prev = node;
-                nodestack.push(node);
-                node = node.right;
-                leftLink = false;
+                successor = node.left;
             }
-            else break;
-        }
-        // node now contains the node where node.key == key
 
-        // Determine successor.
-        Node successor = null;
-        if(node.right != null)
-        {
-            successor = ceiling(node.right, key);
-            successor.right = deleteMin(node.right);
-            successor.left = node.left;
-        }
-        else if(node.left != null)
-        {
-            successor = node.left;
-        }
-        updateNodeHeight(successor);
+            // Update the counts of successor.
+            updateNodeN(successor);
 
-        // Link successor to parent.
-        node.left = null;
-        node.right = null;
-        if(prev == null)
-        {
-            root = successor;
+            // Return the successor so that it can be properly linked to the
+            // node above node to delete.
+            return successor;
         }
-        else if(leftLink) prev.left = successor;
-        else prev.right = successor;
-
-        if(successor != null)
-        {
-            successor.N = 1;
-            if(successor.left != null) successor.N += successor.left.N;
-            if(successor.right != null) successor.N += successor.right.N;
-        }
-
-        // Update Node.N for all relevant nodes in the tree path to the deleted node.
-        while(!nodestack.empty())
-        {
-            Node n = nodestack.pop();
-            n.N--;
-            updateNodeHeight(n);
-        }
-
     }
 
     // Checks if the binary search tree contains a node associated with key.
     public boolean contains(Key key)
     {
-        Node node = root;
-        while(true)
-        {
-            if(node == null) return false;
-            else if(key.compareTo(node.key) < 0) node = node.left;
-            else if(key.compareTo(node.key) > 0) node = node.right;
-            else return true;
-        }
+        if(contains(root, key) != null) return true;
+        else return false;
+    }
+
+    // Returns the Node associated with key that is within the binary search
+    // tree rooted at node.
+    private Node contains(Node node, Key key)
+    {
+        if(node == null) return null;
+        else if(key.compareTo(node.key) < 0) return contains(node.left, key);
+        else if(key.compareTo(node.key) > 0) return contains(node.right, key);
+        else return node;
     }
 
     // Check if the binary search tree is null.
@@ -293,153 +248,173 @@ public class BST<Key extends Comparable<Key>, Value>
     // Return the smallest Key.
     public Key min()
     {
-        Node node = root;
-        while(true)
-        {
-            if(node == null) return null;
-            else if(node.left == null) return node.key;
-            else node = node.left;
-        }
+        Node ret = min(root);
+        if(ret == null) return null;
+        else return ret.key;
+    }
+
+    // Return the node containing the smallest key in the binary tree rooted at
+    // node.
+    private Node min(Node node)
+    {
+        if(node == null) return null;
+        if(node.left != null) return min(node.left);
+        else return node;
     }
 
     // Return the largest key.
     public Key max()
     {
-        Node node = root;
-        while(true)
-        {
-            if(node == null) return null;
-            else if(node.right == null) return node.key;
-            else node = node.right;
-        }
+        Node ret = max(root);
+        if(ret == null) return null;
+        else return ret.key;
+    }
+
+    // Return the Node that is associated with the largest key within the binary
+    // search tree rooted at node.
+    public Node max(Node node)
+    {
+        if(node == null) return null;
+        if(node.right != null) return max(node.right);
+        else return node;
     }
 
     // Return the largest key that is less than key.
     public Key floor(Key key)
     {
-        Node node = root;
-        Node ret = null;
-        while(true)
+        Node node = floor(root, key);
+        if(node == null) return null;
+        else return node.key;
+    }
+
+    // Return the node associated with the largest key that is less than node.key
+    // within the binary search tree rooted at node.
+    private Node floor(Node node, Key key)
+    {
+        if(node == null) return null;
+        if(key.compareTo(node.key) < 0)
         {
-            if(node == null) break;
-            else if(key.compareTo(node.key) < 0) node = node.left;
-            else if(key.compareTo(node.key) > 0)
-            {
-                ret = node;
-                node = node.right;
-            }
-            else
-            {
-                if(node.left != null) ret = node.left;
-                break;
-            }
+            Node ret = floor(node.left, key);
+            if(ret == null) return null;
+            else return ret;
         }
-        if(ret == null) return null;
-        else return ret.key;
+        else if(key.compareTo(node.key) > 0)
+        {
+            Node ret = floor(node.right, key);
+            if(ret == null) return node;
+            else return ret;
+        }
+        else
+        {
+            Node ret = floor(node.left, key);
+            if(ret == null) return null;
+            else return ret;
+        }
     }
 
     // Return the smallest key that is greater than key.
     public Key ceiling(Key key)
     {
-        Node node = root;
-        Node ret = null;
-        while(true)
-        {
-            if(node == null) break;
-            else if(key.compareTo(node.key) < 0)
-            {
-                ret = node;
-                node = node.left;
-            }
-            else if(key.compareTo(node.key) > 0) node = node.right;
-            else
-            {
-                if(node.right != null) ret = node.right;
-                break;
-            }
-        }
-        if(ret == null) return null;
-        else return ret.key;
+        Node node = ceiling(root, key);
+        if(node == null) return null;
+        else return node.key;
     }
 
     // Return the node containing the smallest key greater than node.key within
     // the binary search tree rooted at node.
     private Node ceiling(Node node, Key key)
     {
-        Node ret = null;
-        while(true)
+        if(node == null) return null;
+        if(key.compareTo(node.key) < 0)
         {
-            if(node == null) break;
-            else if(key.compareTo(node.key) < 0)
-            {
-                ret = node;
-                node = node.left;
-            }
-            else if(key.compareTo(node.key) > 0) {node = node.right;}
-            else
-            {
-                ret = node.right;
-                break;
-            }
+            Node ret = ceiling(node.left, key);
+            if(ret == null) return node;
+            else return ret;
         }
-        return ret;
+        else if(key.compareTo(node.key) > 0)
+        {
+            Node ret = ceiling(node.right, key);
+            if(ret == null) return null;
+            else return ret;
+        }
+        else
+        {
+            Node ret = ceiling(node.right, key);
+            if(ret == null) return null;
+            else return ret;
+        }
     }
 
     // Return the number of keys that are less than key.
     // Keys have to be unique.
     public int rank(Key key)
     {
-        Node node = root;
-        int ret = 0;
-        while(true)
+        return rank(root, key);
+    }
+
+    // Returns the number of keys less than key within the binary search tree
+    // at node.
+    private int rank(Node node, Key key)
+    {
+        if(node == null) return 0;
+        if(key.compareTo(node.key) < 0)
         {
-            if(node == null) return ret;
-            else if(key.compareTo(node.key) < 0) {node = node.left;}
-            else if(key.compareTo(node.key) > 0)
-            {
-                ret += 1;
-                if(node.left != null) ret += node.left.N;
-                node = node.right;
-            }
-            else
-            {
-                if(node.left != null) ret += node.left.N;
-                return ret;
-            }
+            return rank(node.left, key);
+        }
+        else if(key.compareTo(node.key) > 0)
+        {
+            if(node.left == null) return 1 + rank(node.right, key);
+            else return 1 + node.left.N + rank(node.right, key);
+        }
+        else
+        {
+            if(node.left == null) return 0;
+            else return node.left.N;
         }
     }
 
     // Return the key that has k keys less than it.
     public Key select(int k)
     {
-        Node node = root;
-        int cnt = 0;
-        while(cnt < k)
+        Node node = select(root, k);
+        if(node == null) return null;
+        else return node.key;
+    }
+
+    // Return the Node that has k keys less than it within the binary search tree
+    // rooted at node.
+    private Node select(Node node, int k)
+    {
+        if(k < 0) return null;
+        else if(node == null) return null;
+        int cntleft = 0, cntright = 0;
+        if(node.left != null) cntleft = node.left.N;
+        if(node.right != null) cntright = node.right.N;
+        if(node.left != null)
         {
-            if(node == null || node.N <= k) return null;
-            else if(node.left != null)
+            if(node.left.N > k)
             {
-                if(node.left.N > k) node = node.left;
-                else if(node.left.N < k)
-                {
-                    cnt++;
-                    cnt += node.left.N;
-                    node = node.right;
-                }
-                else
-                {
-                    return node.key;
-                }
+                return select(node.left, k);
+            }
+            else if(node.left.N < k)
+            {
+                return select(node.right, k - node.left.N - 1);
             }
             else
             {
-                cnt++;
-                node = node.right;
+                return node;
             }
         }
-        if(k < 0) return null;
-        else if(node == null) return null;
-        else return node.key;
+        else if(k == 0) return node;
+        else if(node.right != null)
+        {
+            if(node.right.N > k)
+            {
+                return select(node.right, k - 1);
+            }
+            else return null;
+        }
+        else return null;
     }
 
     // Remove the node with the smallest key.
@@ -448,121 +423,95 @@ public class BST<Key extends Comparable<Key>, Value>
     // Remove the node with the smallest key within the subtree rooted at node.
     private Node deleteMin(Node node)
     {
-        Node ret = node;
-        Node prev = null;
-        Stack<Node> nodestack = new Stack<Node>();
-        while(true)
+        if(node == null) return null;
+        if(node.left == null)
         {
-            if(node == null) return null;
-            else if(node.left == null)
-            {
-                if(prev == null)
-                {
-                    ret = node.right;
-                    node.right = null;
-                }
-                else
-                {
-                    prev.left = node.right;
-                    node.right = null;
-                }
-                break;
-            }
-            else
-            {
-                prev = node;
-                nodestack.push(node);
-                node = node.left;
-            }
+            Node ret = node.right;
+            node.right = null;
+            return ret;
         }
-        while(!nodestack.empty())
+        else
         {
-            Node n = nodestack.pop();
-            n.N--;
-            updateNodeHeight(n);
+            node.left = deleteMin(node.left);
+            updateNodeN(node);
+            return node;
         }
-        return ret;
     }
 
     // Remove the pair with the greatest key.
-    public void deleteMax()
+    public void deleteMax() {root = deleteMax(root);}
+
+    // Remove the node with the largest key within the subtree rooted at node.
+    private Node deleteMax(Node node)
     {
-        Node node = root;
-        Node prev = null;
-        Stack<Node> nodestack = new Stack<Node>();
-        while(true)
+        if(node == null) return null;
+        if(node.right == null)
         {
-            if(node == null) return;
-            else if(node.right == null)
-            {
-                if(prev == null)
-                {
-                    root = node.left;
-                    node.left = null;
-                }
-                else
-                {
-                    prev.right = node.left;
-                    node.left = null;
-                }
-                break;
-            }
-            else
-            {
-                prev = node;
-                nodestack.push(node);
-                node = node.right;
-            }
+            Node ret = node.left;
+            node.left = null;
+            return ret;
         }
-        while(!nodestack.empty())
+        else
         {
-            Node n = nodestack.pop();
-            n.N--;
-            updateNodeHeight(n);
+            node.right = deleteMax(node.right);
+            updateNodeN(node);
+            return node;
         }
     }
 
+    // Get the number of Keys between from and to, inclusive.
     public int size(Key from, Key to)
     {
-        if(root == null) return 0;
-        int total = root.N;
-        int ltFrom = rank(from);
-        int ltTo = rank(to);
-        int ret = ltTo - ltFrom;
-        if(contains(to)) ret++;
-        return ret;
+        return size(root, from, to);
+    }
+
+    // Get the number of Keys between from and to, inclusive starting from Node.
+    private int size(Node node, Key from, Key to)
+    {
+        if(node == null) return 0;
+        if(from.compareTo(node.key) > 0)
+        {
+            return size(node.right, from, to);
+        }
+        else if(from.compareTo(node.key) == 0)
+        {
+            return 1 + size(node.right, from, to);
+        }
+        else if(from.compareTo(node.key) < 0 && to.compareTo(node.key) > 0)
+        {
+            return 1 + size(node.left, from, to) + size(node.right, from, to);
+        }
+        else if(to.compareTo(node.key) == 0)
+        {
+            return 1 + size(node.left, from, to);
+        }
+        else
+        {
+            return size(node.left, from, to);
+        }
     }
 
     // Return the height of the binary search tree using Node.H.
     public int height()
     {
         if(root == null) return 0;
-        else return root.height;
+        else return root.H;
     }
 
     // Determine the height of the BST by examining every element.
-    public int heightCompute()
+    public int heightCompute() {return heightCompute(root);}
+
+    // Determine the height of the BST by examining every element rooted at node.
+    public int heightCompute(Node node)
     {
-        int ret = 0;
-        if(root == null) {}
+        if(node == null) return 0;
         else
         {
-            LinkedList<Node> queue = new LinkedList<Node>();
-            queue.add(root);
-            int cnt;
-            while(queue.size() > 0)
-            {
-                cnt = queue.size();
-                for(int i = cnt; i > 0; i--)
-                {
-                    Node node = queue.remove();
-                    if(node.left != null) queue.add(node.left);
-                    if(node.right != null) queue.add(node.right);
-                }
-                ret++;
-            }
+            int heightLeft = heightCompute(node.left);
+            int heightRight = heightCompute(node.right);
+            if(heightLeft > heightRight) return 1 + heightLeft;
+            else return 1 + heightRight;
         }
-        return ret;
     }
 
     public String toString()
@@ -587,15 +536,9 @@ public class BST<Key extends Comparable<Key>, Value>
     private void toString(Node node, StringBuilder sb)
     {
         if(node == null) return;
-        if(node.left != null)
-        {
-            toString(node.left, sb);
-        }
+        if(node.left != null) toString(node.left, sb);
         sb.append("(" + node.key + ", " + node.value + "), ");
-        if(node.right != null)
-        {
-            toString(node.right, sb);
-        }
+        if(node.right != null) toString(node.right, sb);
     }
 
     private String toStringIterator()
@@ -630,8 +573,8 @@ public class BST<Key extends Comparable<Key>, Value>
         if(test)
         {
             int ret;
-            BST<String, Integer> st =
-                new BST <String, Integer>();
+            RecursiveBST<String, Integer> st =
+                new RecursiveBST <String, Integer>();
             String pf = "fail";
             System.out.println("Testing all operations on empty symbol table:");
             System.out.println("Contents: " + st.toString());
@@ -778,8 +721,8 @@ public class BST<Key extends Comparable<Key>, Value>
         }
         else
         {
-            BST<String, Integer> st =
-                new BST<String, Integer>();
+            RecursiveBST<String, Integer> st =
+                new RecursiveBST<String, Integer>();
             // sample input is SEARCHEXAMPLE
             System.out.println("Symbol table empty? " + st.isEmpty());
             System.out.println("Testing put() operation:");

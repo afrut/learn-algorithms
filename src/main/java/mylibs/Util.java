@@ -1,5 +1,5 @@
 // Contains various utility functions for conveniently doing things.
-package libs.util;
+package mylibs;
 import java.util.Random;
 import java.util.Arrays;
 import java.util.LinkedList;

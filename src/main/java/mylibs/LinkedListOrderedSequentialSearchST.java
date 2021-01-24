@@ -1,7 +1,7 @@
-package libs.algs.st;
+package mylibs;
 import java.util.Iterator;
 import java.io.FileNotFoundException;
-import libs.util.Util;
+import mylibs.Util;
 
 public class LinkedListOrderedSequentialSearchST<Key extends Comparable<Key>, Value>
 {

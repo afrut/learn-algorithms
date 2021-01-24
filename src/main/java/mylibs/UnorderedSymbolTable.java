@@ -1,4 +1,4 @@
-package libs.algs.st;
+package mylibs;
 import java.util.Iterator;
 public interface UnorderedSymbolTable<Key, Value>
 {

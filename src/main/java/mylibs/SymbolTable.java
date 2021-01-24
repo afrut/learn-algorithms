@@ -1,5 +1,5 @@
 // Interface for all symbol tables
-package libs.algs.st;
+package mylibs;
 
 public interface SymbolTable<Key extends Comparable<Key>, Value>
 {
