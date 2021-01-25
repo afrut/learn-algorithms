@@ -35,9 +35,7 @@ cls
 
 cd exercises\1.3.37
 javac Josephus.java
-java Josephus 7 2
-java Josephus 10 3
-java Josephus 37 7
+java Josephus input.txt
 del *.class
 cd ..\..
 
