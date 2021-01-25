@@ -77,18 +77,21 @@ public class Util
         return sb.toString();
     }
 
-    public static <T> T[] fromFile(String filepath, Class type) throws FileNotFoundException
-    {return Util.<T>fromFile(filepath, ".", type);}
+    public static String[] fromFile(String filepath) throws FileNotFoundException
+    {return Util.fromFile(filepath, "");}
 
-    public static <T> T[] fromFile(String filepath, String pattern, Class type) throws FileNotFoundException
+    public static String[] fromFile(String filepath, String pattern) throws FileNotFoundException
     {
         // read in strings from input
         Scanner sc = new Scanner(new File(filepath));
-        LinkedList<T> ll = new LinkedList<T>();
-        while(sc.hasNext(pattern))
-            ll.add((T)sc.next(pattern));
-        T[] a = (T[])(new Object[ll.size()]);
-        a = (T[]) Array.newInstance(type, ll.size());
+        LinkedList<String> ll = new LinkedList<String>();
+        if(pattern.length() == 0)
+        	while(sc.hasNext())
+                ll.add(sc.next());
+        else
+	        while(sc.hasNext(pattern))
+	            ll.add(sc.next(pattern));
+        String[] a = new String[ll.size()];
         a = ll.toArray(a);
         return a;
     }
@@ -135,7 +138,7 @@ public class Util
         System.out.println(Util.toString(e));
 
         // test fromFile
-        String[] s = Util.<String>fromFile(args[0], String.class);
+        String[] s = Util.fromFile(args[0]);
         System.out.println(Util.toString(s));
     }
 }

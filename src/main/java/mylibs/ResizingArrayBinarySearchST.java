@@ -453,7 +453,7 @@ public class ResizingArrayBinarySearchST<Key extends Comparable<Key>, Value>
             // sample input is SEARCHEXAMPLE
             System.out.println("Symbol table empty? " + st.isEmpty());
             System.out.println("Testing put() operation:");
-            String[] a = Util.<String>fromFile(args[0], String.class);
+            String[] a = Util.fromFile(args[0]);
             int cnt = 0;
             while(cnt < a.length)
             {

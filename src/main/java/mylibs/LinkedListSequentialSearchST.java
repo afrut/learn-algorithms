@@ -266,7 +266,7 @@ public class LinkedListSequentialSearchST<Key, Value>
             System.out.println("Symbol table empty? " + st.isEmpty());
             System.out.println("Testing put() operation:");
             int cnt = 0;
-            String[] a = Util.<String>fromFile(args[0], String.class);
+            String[] a = Util.fromFile(args[0]);
             while(cnt < a.length)
             {
                 String key = a[cnt];

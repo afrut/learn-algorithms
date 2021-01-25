@@ -253,7 +253,7 @@ public class LinearProbingHashST<Key, Value>
 		LinearProbingHashST<String, Integer> st = new LinearProbingHashST<String, Integer>();
         System.out.println("Symbol table empty? " + st.isEmpty());
         System.out.println("Testing put() operation:");
-        String[] a = Util.<String>fromFile(args[0], "\\w+", String.class);
+        String[] a = Util.fromFile(args[0], "\\w+");
         int cnt = 0;
         while(cnt < a.length)
         {

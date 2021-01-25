@@ -328,7 +328,7 @@ public class SeparateChainingHashST<Key extends Comparable<Key>, Value> //implem
             System.out.println("Testing Array Resizing:");
             SeparateChainingHashST<String, Integer> st = new SeparateChainingHashST<String, Integer>();
             int cnt = 0;
-            String[] a = Util.<String>fromFile(args[1], "\\w+", String.class);
+            String[] a = Util.fromFile(args[1], "\\w+");
             while(cnt < a.length)
             {
                 String key = a[cnt];
@@ -348,7 +348,7 @@ public class SeparateChainingHashST<Key extends Comparable<Key>, Value> //implem
             SeparateChainingHashST<String, Integer> st = new SeparateChainingHashST<String, Integer>();
             System.out.println("Symbol table empty? " + st.isEmpty());
             System.out.println("Testing put() operation:");
-            String[] a = Util.<String>fromFile(args[0], "\\w+", String.class);
+            String[] a = Util.fromFile(args[0], "\\w+");
             int cnt = 0;
             while(cnt < a.length)
             {

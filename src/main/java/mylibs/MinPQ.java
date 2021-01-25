@@ -157,7 +157,7 @@ public class MinPQ<Key extends Comparable<Key>>
     public static void main(String[] args) throws FileNotFoundException
     {
         // read in strings from input
-        String[] a = Util.<String>fromFile(args[0], String.class);
+        String[] a = Util.fromFile(args[0]);
         System.out.println(Util.toString(a));
 
         // create a priority queue and insert

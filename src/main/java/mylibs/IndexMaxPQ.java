@@ -186,7 +186,7 @@ public class IndexMaxPQ<Key extends Comparable<Key>>
     public static void main(String[] args) throws FileNotFoundException
     {
         // read in strings from input
-        String[] a = Util.<String>fromFile(args[0], String.class);
+        String[] a = Util.fromFile(args[0]);
         int Nstring = a.length;
         System.out.println(String.format("Original %d Elements:", Nstring));
         System.out.println(Util.toString(a) + "\n");
