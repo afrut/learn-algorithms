@@ -33,58 +33,65 @@ cls
 ::del *.class
 ::cd ..\..
 
-cd exercises\1.3.37
-javac Josephus.java
-java Josephus input.txt
-del *.class
-cd ..\..
+::cd exercises\1.3.37
+::javac Josephus.java
+::java Josephus input.txt
+::del *.class
+::cd ..\..
 
 ::cd exercises\1.4.02
 ::javac BigThreeSum.java
 ::java BigThreeSum BigInts.txt
+::del *.class
 ::cd ..\..
 
 ::cd exercises\1.4.04
 ::javac TwoSum.java
-::Java TwoSum ..\..\algs4\2Kints.txt
+::Java TwoSum ..\..\algs4-data\2Kints.txt
+::del *.class
 ::cd ..\..
 
 ::cd exercises\1.4.08
 ::javac PairCounter.java
 ::Java PairCounter input.txt
+::del *.class
 ::cd ..\..
 
 ::cd exercises\1.4.10
 ::javac BinarySearchSmallestIndex.java
 ::java BinarySearchSmallestIndex 8KIntsWithEvenReps.txt 2 4 6 8 1998
+::del *.class
 ::cd ..\..
 
 ::cd exercises\1.5.01
 ::javac QuickFindUF.java
-::java QuickFindUF < input.txt
+::java QuickFindUF input.txt
+::del *.class
 ::cd ..\..
 
 ::cd exercises\1.5.02
 ::javac QuickUnionUF.java
-::java QuickUnionUF < input.txt
+::java QuickUnionUF input.txt
+::del *.class
 ::cd ..\..
 
 ::cd exercises\1.5.03
 ::javac WeightedQuickUnionUF.java
-::java WeightedQuickUnionUF < input.txt
+::java WeightedQuickUnionUF input.txt
+::del *.class
 ::cd ..\..
 
 ::cd exercises\1.5.12
 ::javac QuickUnionPCUF.java
-::java QuickUnionPCUF < input.txt
+::java QuickUnionPCUF input.txt
+::del *.class
 ::cd ..\..
 
-::cd exercises\2.1.01
-::javac SelectionSort.java
-::java SelectionSort < input.txt
-::java SelectionSort < input2.txt
-::java SelectionSort < ..\2.1.03\PQSampleInput.txt
-::cd ..\..
+cd exercises\2.1.01
+javac SelectionSort.java
+java SelectionSort input.txt input2.txt ..\..\src\main\resources\PQSampleInput.txt
+del *.class
+cd ..\..
 
 ::cd exercises\2.1.04
 ::javac InsertionSort.java

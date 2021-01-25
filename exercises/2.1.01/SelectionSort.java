@@ -3,8 +3,11 @@
     sorts the array E A S Y Q U E S T I O N.
 */
 
+import java.io.FileNotFoundException;
+
 import edu.princeton.cs.algs4.In;
 import edu.princeton.cs.algs4.StdOut;
+import mylibs.Util;
 public class SelectionSort
 {
     // Selection Sort is the simplest to understand. It first considers all
@@ -15,7 +18,7 @@ public class SelectionSort
     public static void sort(Comparable[] a)
     {
         int N = a.length;
-        System.out.println(toString(a) + "\n");
+        System.out.println(toString(a));
 
         // start at the left most element
         for(int i = 0; i < N; i++)
@@ -77,10 +80,15 @@ public class SelectionSort
         return sb.toString();
     }
 
-    public static void main(String[] args)
+    public static void main(String[] args) throws FileNotFoundException
     { // Read strings from standard input, sort them, and print.
-        String[] a = In.readStrings();
-        sort(a);
-        assert isSorted(a);
+        String[] a = new String[1];
+        for(String str : args)
+        {
+        	a = Util.fromFile(str);
+        	sort(a);
+        	System.out.println("");
+        	assert isSorted(a);
+        }
     }
 }

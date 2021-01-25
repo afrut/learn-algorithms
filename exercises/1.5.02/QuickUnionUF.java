@@ -1,5 +1,8 @@
+import java.io.FileNotFoundException;
+
 import edu.princeton.cs.algs4.StdIn;
 import edu.princeton.cs.algs4.StdOut;
+import mylibs.Util;
 public class QuickUnionUF
 {
     private int[] id; // parent link (site indexed)
@@ -50,16 +53,18 @@ public class QuickUnionUF
         return sb.toString();
     }
 
-    public static void main(String[] args)
+    public static void main(String[] args) throws FileNotFoundException
     { // Solve dynamic connectivity problem on StdIn.
-        int N = StdIn.readInt(); // Read number of sites.
+    	String[] a = Util.fromFile(args[0]);
+    	int cnt = 0;
+        int N = Integer.parseInt(a[cnt++]); // Read number of sites.
 
         // Initialize N components.
         QuickUnionUF uf = new QuickUnionUF(N);
-        while (!StdIn.isEmpty())
+        while (cnt < N)
         {
-            int p = StdIn.readInt();
-            int q = StdIn.readInt(); // Read pair to connect.
+            int p = Integer.parseInt(a[cnt++]);
+            int q = Integer.parseInt(a[cnt++]); // Read pair to connect.
             if (uf.connected(p, q)) {} // do nothing if already connected
             else uf.union(p, q); // Combine components
             // and print connection.
