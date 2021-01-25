@@ -73,7 +73,8 @@ public class Util
         {
             sb.append(a[i].toString() + " ");
         }
-        sb.setLength(sb.length() - 1);
+        if(sb.length() > 0)
+        	sb.setLength(sb.length() - 1);
         return sb.toString();
     }
 
@@ -139,6 +140,8 @@ public class Util
 
         // test fromFile
         String[] s = Util.fromFile(args[0]);
+        System.out.println(Util.toString(s));
+        s = Util.fromFile(args[1]);
         System.out.println(Util.toString(s));
     }
 }
