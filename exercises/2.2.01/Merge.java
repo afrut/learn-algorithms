@@ -3,7 +3,10 @@
     how the keys A E Q S U Y E I N O S T are merged with the abstract in-place
     merge() method.
 */
+import java.io.FileNotFoundException;
+
 import edu.princeton.cs.algs4.In;
+import mylibs.Util;
 public class Merge
 {
     // The purpose of this method is to merge two sorted arrays. The first array
@@ -96,11 +99,14 @@ public class Merge
         return true;
     }
 
-    public static void main(String[] args)
+    public static void main(String[] args) throws FileNotFoundException
     {
-        String[] a = In.readStrings();
-        int mid = (a.length / 2) - 1;
-        merge(a, 0, mid, a.length - 1);
-        assert isSorted(a);
+    	for(String str : args)
+    	{
+	        String[] a = Util.fromFile(str);
+	        int mid = (a.length / 2) - 1;
+	        merge(a, 0, mid, a.length - 1);
+	        assert isSorted(a);
+    	}
     }
 }

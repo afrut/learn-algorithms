@@ -2,9 +2,12 @@
     2.3.1 Show, in the style of the trace given with partition(), how that
     method patitions the array E A S Y Q U E S T I O N.
 */
+import java.io.FileNotFoundException;
+
 import edu.princeton.cs.algs4.In;
 import edu.princeton.cs.algs4.StdOut;
 import edu.princeton.cs.algs4.StdRandom;
+import mylibs.Util;
 public class Partition
 {
     private static int partition(Comparable[] a, int lo, int hi)
@@ -78,10 +81,13 @@ public class Partition
         return sb.toString();
     }
 
-    public static void main(String[] args)
+    public static void main(String[] args) throws FileNotFoundException
     { // Read strings from standard input, sort them, and print.
-        String[] a = In.readStrings();
-        partition(a, 0, a.length - 1);
-        System.out.println(toString(a));
+    	for(String str : args)
+    	{
+	    	String[] a = Util.fromFile(str);
+	        partition(a, 0, a.length - 1);
+	        System.out.println(toString(a));
+    	}
     }
 }

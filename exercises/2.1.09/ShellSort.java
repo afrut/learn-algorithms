@@ -2,8 +2,11 @@
     2.1.9 Show, in the style of the example trace with Algorithm 2.3, how shellsort sorts
     the array E A S Y S H E L L S O R T Q U E S T I O N.
 */
+import java.io.FileNotFoundException;
+
 import edu.princeton.cs.algs4.In;
 import edu.princeton.cs.algs4.StdOut;
+import mylibs.Util;
 public class ShellSort
 {
     // Shell Sort is an extension of Insertion Sort. It comes from the
@@ -109,10 +112,13 @@ public class ShellSort
         return sb.toString();
     }
 
-    public static void main(String[] args)
+    public static void main(String[] args) throws FileNotFoundException
     { // Read strings from standard input, sort them, and print.
-        String[] a = In.readStrings();
-        sort(a);
-        assert isSorted(a);
+    	for(String str : args)
+    	{
+	        String[] a = Util.fromFile(str);
+	        sort(a);
+	        assert isSorted(a);
+    	}
     }
 }

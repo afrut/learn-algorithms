@@ -3,8 +3,10 @@
     sorts the array E A S Y Q U E S T I O N.
 */
 
-import edu.princeton.cs.algs4.In;
+import java.io.FileNotFoundException;
 import edu.princeton.cs.algs4.StdOut;
+
+import mylibs.Util;
 public class InsertionSort
 {
     // Insertion Sort first considers the first 2 elements, and then swaps them
@@ -89,10 +91,15 @@ public class InsertionSort
         return sb.toString();
     }
 
-    public static void main(String[] args)
+    public static void main(String[] args) throws FileNotFoundException
     { // Read strings from standard input, sort them, and print.
-        String[] a = In.readStrings();
-        sort(a);
-        assert isSorted(a);
+        String[] a;
+        for(String str : args)
+        {
+        	a = Util.fromFile(str);
+        	sort(a);
+        	System.out.println("");
+        	assert isSorted(a);
+        }
     }
 }

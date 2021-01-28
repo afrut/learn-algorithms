@@ -4,8 +4,11 @@
     mergesort.
 */
 
+import java.io.FileNotFoundException;
+
 import edu.princeton.cs.algs4.In;
 import edu.princeton.cs.algs4.StdOut;
+import mylibs.Util;
 public class BottomUpMergeSort
 {
     // Refer to Merge.java in 2.2.01 for details on merge().
@@ -141,10 +144,13 @@ public class BottomUpMergeSort
         return sb.toString();
     }
 
-    public static void main(String[] args)
+    public static void main(String[] args) throws FileNotFoundException
     { // Read strings from standard input, sort them, and print.
-        String[] a = In.readStrings();
-        sort(a);
-        assert isSorted(a);
+    	for(String str : args)
+    	{
+	        String[] a = Util.fromFile(str);
+	        sort(a);
+	        assert isSorted(a);
+    	}
     }
 }
