@@ -6,3 +6,7 @@ bin/
 *.pdf
 .vscode/
 algs4-data.zip
+algs4-data/
+algs4-master/
+.metadata/
+jar/
