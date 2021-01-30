@@ -155,14 +155,17 @@ cls
 ::javac LetterGrades.java
 ::java LetterGrades input.txt
 
-cd exercises\3.1.04
-javac Time.java
-javac Event.java
-javac Client.java
-java Time
-java Event
-java Client
+::cd exercises\3.1.04
+::javac Time.java
+::javac Event.java
+::javac Client.java
+::java Time
+::java Event
+::java Client
 
+cd exercises\3.4.01
+javac SeparateChainingHashST_3401.java
+java SeparateChainingHashST_3401 input.txt
 
 
 
