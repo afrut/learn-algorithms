@@ -8,7 +8,8 @@ import java.lang.Math;
 import edu.princeton.cs.algs4.In;
 import edu.princeton.cs.algs4.StdOut;
 import edu.princeton.cs.algs4.StdRandom;
-import libs.combinatorics.CountingTechniques;
+import mylibs.CountingTechniques;
+import mylibs.Util;
 public class QuickSortMEE
 {
     // QuickSort repeatedly puts elements in their final position using

@@ -3,8 +3,10 @@
     items having just two distinct keys.
 */
 
+import java.io.FileNotFoundException;
+
 import edu.princeton.cs.algs4.In;
-import libs.util.Util;
+import mylibs.Util;
 
 class SortDistinct2
 {
@@ -31,11 +33,16 @@ class SortDistinct2
         int i = -1;
         int j = N;
 
-        while(j > i)
+        while(true)
         {
             while(a[++i].compareTo(elems[0]) == 0) if(i >= N - 1) break;
             while(a[--j].compareTo(elems[1]) == 0) if(j <= 0) break;
-            exch(a, i, j);
+            if(j > i)
+            {
+            	exch(a, i, j);
+            	//System.out.println(Util.toString(a));
+            }
+            else break;
         }
     }
 
@@ -54,12 +61,15 @@ class SortDistinct2
         return true;
     }
 
-    public static void main(String[] args)
+    public static void main(String[] args) throws FileNotFoundException
     { // Read strings from standard input, sort them, and print.
-        String[] a = In.readStrings();
-        System.out.println(Util.toString(a));
-        sort(a);
-        assert isSorted(a);
-        System.out.println(Util.toString(a));
+    	for(String str : args)
+    	{
+    		String[] a = Util.fromFile(str);
+    		System.out.println(Util.toString(a));
+    		sort(a);
+    		assert isSorted(a);
+    		System.out.println(Util.toString(a));
+    	}
     }
 }

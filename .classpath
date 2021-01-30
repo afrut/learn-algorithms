@@ -21,6 +21,10 @@
 	<classpathentry kind="src" path="exercises/2.2.06"/>
 	<classpathentry kind="src" path="exercises/2.2.08"/>
 	<classpathentry kind="src" path="exercises/2.3.01"/>
+	<classpathentry kind="src" path="exercises/2.3.02"/>
+	<classpathentry kind="src" path="exercises/2.3.03"/>
+	<classpathentry kind="src" path="exercises/2.3.05"/>
+	<classpathentry kind="src" path="exercises/2.3.06"/>
 	<classpathentry excluding="Package*.java" kind="src" path="src/main/java/templates"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER">
 		<attributes>

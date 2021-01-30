@@ -97,29 +97,21 @@ cls
 ::javac Partition.java
 ::java Partition input.txt input2.txt
 
-cd exercises\2.3.02
-javac QuickSort.java
-java QuickSort < input.txt
+::cd exercises\2.3.02
+::javac QuickSort.java
+::java QuickSort input.txt
 
 ::cd exercises\2.3.03
 ::javac QuickSortMEE.java
 ::java QuickSortMEE
-::del QuickSortMEE.class
 
 ::cd exercises\2.3.05
 ::javac SortDistinct2.java
-::java SortDistinct2 < input.txt
-::del SortDistinct2.class
+::java SortDistinct2 input.txt
 
-::cd exercises\2.3.06
-::javac Cn.java
-::java Cn
-::del Cn.class
-
-::cd exercises\2.4.01
-::javac PQClient.java
-::java PQClient < input.txt
-::del PQClient.class
+cd exercises\2.3.06
+javac Cn.java
+java Cn
 
 ::cd exercises\2.4.01
 ::javac PQClient.java

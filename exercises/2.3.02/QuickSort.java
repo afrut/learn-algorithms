@@ -3,9 +3,12 @@
     quicksort sorts the array E A S Y Q U E S T I O N (for the purposes of this
     exercise, ignore the initial shuffle).
 */
+import java.io.FileNotFoundException;
+
 import edu.princeton.cs.algs4.In;
 import edu.princeton.cs.algs4.StdOut;
 import edu.princeton.cs.algs4.StdRandom;
+import mylibs.Util;
 public class QuickSort
 {
     // QuickSort repeatedly puts elements in their final position using
@@ -115,12 +118,15 @@ public class QuickSort
         return sb.toString();
     }
 
-    public static void main(String[] args)
+    public static void main(String[] args) throws FileNotFoundException
     { // Read strings from standard input, sort them, and print.
-        String[] a = In.readStrings();
-        System.out.println(toString(a));
-        sort(a);
-        assert isSorted(a);
-        System.out.println(toString(a));
+    	for(String str : args)
+    	{
+	        String[] a = Util.fromFile(str);
+	        System.out.println(toString(a));
+	        sort(a);
+	        assert isSorted(a);
+	        System.out.println(toString(a));
+    	}
     }
 }
