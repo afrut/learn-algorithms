@@ -109,75 +109,59 @@ cls
 ::javac SortDistinct2.java
 ::java SortDistinct2 input.txt
 
-cd exercises\2.3.06
-javac Cn.java
-java Cn
+::cd exercises\2.3.06
+::javac Cn.java
+::java Cn
 
 ::cd exercises\2.4.01
 ::javac PQClient.java
-::java PQClient < input.txt
-::del PQClient.class
+::java PQClient input.txt
 
 ::cd exercises\2.4.03
 ::javac MaxPQUA.java
-::java MaxPQUA < input.txt
-::del MaxPQUA.class
+::java MaxPQUA input.txt
 ::javac MaxPQOA.java
-::java MaxPQOA < input.txt
-::del MaxPQOA.class
+::java MaxPQOA input.txt
 ::javac MaxLLUO.java
-::java MaxLLUO < input.txt
-::del MaxLLUO.class
-::del MaxLLUO$1.class
-::del MaxLLUO$Node.class
+::java MaxLLUO input.txt
 ::javac MaxLL.java
-::java MaxLL < input.txt
-::del MaxLL.class
-::del MaxLL$1.class
-::del MaxLL$Node.class
+::java MaxLL input.txt
 
 ::cd exercises\2.4.05
 ::javac MaxPQClient.java
-::java MaxPQClient < input.txt
-::del MaxPQClient.class
+::java MaxPQClient input.txt
 
 ::cd exercises\2.4.06
-::javac MaxPQClient.java
-::java MaxPQClient < input.txt
-::del MaxPQClient.class
+::javac MaxPQClient_2406.java
+::java MaxPQClient_2406 input.txt
 
 ::cd exercises\2.4.07
-::javac MaxPQClient.java
-::java MaxPQClient input.txt
-::del MaxPQClient.class
+::javac MaxPQClient_2407.java
+::java MaxPQClient_2407
 
 ::cd exercises\2.5.01
 ::javac Main.java
 ::java Main
-::del Main.class
 
 ::cd exercises\2.5.02
 ::javac CompoundWords.java
-::java CompoundWords < input.txt
-::del CompoundWords.class
+::java CompoundWords input.txt
 
 ::cd exercises\2.5.04
-::javac Main.java
-::java Main < ..\2.5.02\PQSampleInput.txt
-::del Main.class
+::javac Main_2504.java
+::java Main_2504 ..\..\src\main\resources\PQSampleInput.txt
 
 ::cd exercises\3.1.01
 ::javac LetterGrades.java
-::java LetterGrades < input.txt
-::del LetterGrades.class
+::java LetterGrades input.txt
 
-::cd exercises\3.1.04
-::javac Time.java
-::javac Event.java
-::javac Client.java
-::java Time
-::java Event
-::java Client
+cd exercises\3.1.04
+javac Time.java
+javac Event.java
+javac Client.java
+java Time
+java Event
+java Client
 
 
 

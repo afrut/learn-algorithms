@@ -6,12 +6,13 @@
     A+, A, A-, B+, B, B-, C+, C, C-, D, F
     4.33, 4.00, 3.67, 3.33, 3.00, 2.67, 2.33, 2.00, 1.67, 1.00, 0.00
 */
-import libs.algs.st.ResizingArrayBinarySearchST;
-import edu.princeton.cs.algs4.StdIn;
+import mylibs.ResizingArrayBinarySearchST;
+import mylibs.Util;
+import java.io.FileNotFoundException;
 
 public class LetterGrades
 {
-    public static void main(String args[])
+    public static void main(String args[]) throws FileNotFoundException
     {
         ResizingArrayBinarySearchST<String, Double> st =
             new ResizingArrayBinarySearchST<String, Double>();
@@ -28,9 +29,11 @@ public class LetterGrades
         st.put("F", 0.00);
         int cnt = 0;
         double sum = 0;
-        while(!StdIn.isEmpty())
+        String[] a = Util.fromFile(args[0]);
+        int N = a.length;
+        while(cnt < N)
         {
-            sum += st.get(StdIn.readString());
+            sum += st.get(a[cnt]);
             cnt++;
         }
         System.out.println("GPA = " + String.format("%.02f", sum / cnt));

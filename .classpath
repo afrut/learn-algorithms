@@ -25,6 +25,16 @@
 	<classpathentry kind="src" path="exercises/2.3.03"/>
 	<classpathentry kind="src" path="exercises/2.3.05"/>
 	<classpathentry kind="src" path="exercises/2.3.06"/>
+	<classpathentry kind="src" path="exercises/2.4.01"/>
+	<classpathentry kind="src" path="exercises/2.4.03"/>
+	<classpathentry kind="src" path="exercises/2.4.05"/>
+	<classpathentry kind="src" path="exercises/2.4.06"/>
+	<classpathentry kind="src" path="exercises/2.4.07"/>
+	<classpathentry kind="src" path="exercises/2.5.01"/>
+	<classpathentry kind="src" path="exercises/2.5.02"/>
+	<classpathentry kind="src" path="exercises/2.5.04"/>
+	<classpathentry kind="src" path="exercises/3.1.01"/>
+	<classpathentry kind="src" path="exercises/3.1.04"/>
 	<classpathentry excluding="Package*.java" kind="src" path="src/main/java/templates"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER">
 		<attributes>

@@ -4,16 +4,16 @@ import java.io.IOException;
 import java.util.LinkedList;
 import edu.princeton.cs.algs4.In;
 import edu.princeton.cs.algs4.StdRandom;
-import libs.algs.pq.MaxPQ;
-import libs.util.Util;
-import libs.combinatorics.CountingTechniques;
+import mylibs.MaxPQ;
+import mylibs.Util;
+import mylibs.CountingTechniques;
 
 // This program will run an experiment. Elements of an array of size N will be
 // inserted into a maximum-oriented priority queue. The array of the queue can
 // then be examined for the positions of the k-th largest element. This will be
 // done  for all possible permutations of the array.
 
-public class MaxPQClient
+public class MaxPQClient_2407
 {
     public static void main(String[] args)
     {

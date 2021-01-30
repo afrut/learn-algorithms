@@ -1,4 +1,7 @@
-import libs.util.Util;
+import mylibs.Util;
+
+import java.io.FileNotFoundException;
+
 import edu.princeton.cs.algs4.In;
 
 class MaxPQOA<Key extends Comparable<Key>>
@@ -77,21 +80,24 @@ class MaxPQOA<Key extends Comparable<Key>>
             return new String("empty");
     }
 
-    public static void main(String[] args)
+    public static void main(String[] args) throws FileNotFoundException
     {
         // read in strings from input
-        String[] a = In.readStrings();
-        System.out.println(Util.toString(a));
-
-        // create a priority queue and execute some operations
-        int Nstring = a.length;
-        MaxPQOA<String> mpq = new MaxPQOA<String>();
-        for(int cnt = 0; cnt < Nstring; cnt++)
-        {
-            if(a[cnt].equals("*"))
-                System.out.print(mpq.pop() + " ");
-            else
-                mpq.insert(a[cnt]);
-        }
+    	for(String str : args)
+    	{
+	        String[] a = Util.fromFile(str);
+	        System.out.println(Util.toString(a));
+	
+	        // create a priority queue and execute some operations
+	        int Nstring = a.length;
+	        MaxPQOA<String> mpq = new MaxPQOA<String>();
+	        for(int cnt = 0; cnt < Nstring; cnt++)
+	        {
+	            if(a[cnt].equals("*"))
+	                System.out.print(mpq.pop() + " ");
+	            else
+	                mpq.insert(a[cnt]);
+	        }
+    	}
     }
 }

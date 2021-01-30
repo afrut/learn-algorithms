@@ -9,27 +9,30 @@
     solution that is O(N^2lgN) after removing duplicates.
 */
 
-import edu.princeton.cs.algs4.In;
-import libs.algs.BinarySearch;
-import libs.util.Util;
+import java.io.FileNotFoundException;
+import mylibs.BinarySearch;
+import mylibs.Util;
 
 public class CompoundWords
 {
-    public static void main(String[] args)
+    public static void main(String[] args) throws FileNotFoundException
     {
-        String[] a = In.readStrings();
-        String[] b = Util.removeDuplicates(a);
-        BinarySearch<String> bs = new BinarySearch(b);
-        int N = b.length;
-        for(int cnt1 = 0; cnt1 < N; cnt1++)
-        {
-            for(int cnt2 = cnt1 + 1; cnt2 < N; cnt2++)
-            {
-                if(bs.search(b[cnt1] + b[cnt2]) >= 0)
-                    System.out.println(b[cnt1] + b[cnt2]);
-                if(bs.search(b[cnt2] + b[cnt1]) >= 0)
-                    System.out.println(b[cnt2] + b[cnt1]);
-            }
-        }
+    	for(String str : args)
+    	{
+	        String[] a = Util.fromFile(str);
+	        String[] b = Util.removeDuplicates(a);
+	        BinarySearch<String> bs = new BinarySearch(b);
+	        int N = b.length;
+	        for(int cnt1 = 0; cnt1 < N; cnt1++)
+	        {
+	            for(int cnt2 = cnt1 + 1; cnt2 < N; cnt2++)
+	            {
+	                if(bs.search(b[cnt1] + b[cnt2]) >= 0)
+	                    System.out.println(b[cnt1] + b[cnt2]);
+	                if(bs.search(b[cnt2] + b[cnt1]) >= 0)
+	                    System.out.println(b[cnt2] + b[cnt1]);
+	            }
+	        }
+    	}
     }
 }

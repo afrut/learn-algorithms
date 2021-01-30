@@ -5,25 +5,28 @@
     letters returned by the remove the maximum operations.
 */
 
-import edu.princeton.cs.algs4.In;
-import libs.util.Util;
-import libs.algs.pq.MaxPQ;
+import java.io.FileNotFoundException;
+import mylibs.Util;
+import mylibs.MaxPQ;
 
 public class PQClient
 {
-    public static void main(String[] args)
+    public static void main(String[] args) throws FileNotFoundException
     {
         // read in strings from input
-        String[] a = In.readStrings();
-        int N = a.length;
-        MaxPQ<String> mpq = new MaxPQ<String>();
-        System.out.println(Util.toString(a));
-        for(int cnt = 0; cnt < N; cnt++)
-        {
-            if(a[cnt].equals("*"))
-                System.out.print(mpq.pop() + " ");
-            else
-                mpq.insert(a[cnt]);
-        }
+    	for(String str : args)
+    	{
+	        String[] a = Util.fromFile(str);
+	        int N = a.length;
+	        MaxPQ<String> mpq = new MaxPQ<String>();
+	        System.out.println(Util.toString(a));
+	        for(int cnt = 0; cnt < N; cnt++)
+	        {
+	            if(a[cnt].equals("*"))
+	                System.out.print(mpq.pop() + " ");
+	            else
+	                mpq.insert(a[cnt]);
+	        }
+    	}
     }    
 }
