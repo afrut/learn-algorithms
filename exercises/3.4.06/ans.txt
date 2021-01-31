@@ -1,0 +1,10 @@
+There are 3 "realizations" that go into proving this:
+- In modular hashing, a collision occurs between two keys when the difference
+between the two keys are exactly M.
+- Powers of 2 will never be the multiple of a prime greater than 2.
+- Two t-bit integers that differ by only 1 bit in the same location will differ
+by a power of 2. If they differ by the last bit, then both integers will differ
+by 1.
+
+Since the two integers will always differ by a multiple of 2 or 1, they will
+always have different hash values.

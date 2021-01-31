@@ -1,0 +1,5 @@
+Yes, this is legal but not a good idea. Using this would mean that the
+hashCode() for different instances of a certain type all return 17. When hashing
+instances of this type, all instances would be placed in the same bin and the
+hashing-based symbol table implementations would basically be reduced to linear
+searching.
