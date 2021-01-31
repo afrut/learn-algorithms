@@ -163,9 +163,13 @@ cls
 ::java Event
 ::java Client
 
-cd exercises\3.4.01
-javac SeparateChainingHashST_3401.java
-java SeparateChainingHashST_3401 input.txt
+::cd exercises\3.4.01
+::javac SeparateChainingHashST_3401.java
+::java SeparateChainingHashST_3401 input.txt
+
+cd exercises\3.4.04
+javac PerfectHashFunction.java
+java PerfectHashFunction input.txt
 
 
 
