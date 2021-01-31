@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry including="mylibs/" kind="src" path="src/main/java"/>
+	<classpathentry excluding="Package*.java" kind="src" path="src/main/java/templates"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="jar/algs4eclipse.jar"/>
 	<classpathentry kind="src" path="exercises/1.3.32"/>
 	<classpathentry kind="src" path="exercises/1.3.33"/>
 	<classpathentry kind="src" path="exercises/1.3.37"/>
@@ -35,12 +42,6 @@
 	<classpathentry kind="src" path="exercises/2.5.04"/>
 	<classpathentry kind="src" path="exercises/3.1.01"/>
 	<classpathentry kind="src" path="exercises/3.1.04"/>
-	<classpathentry excluding="Package*.java" kind="src" path="src/main/java/templates"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER">
-		<attributes>
-			<attribute name="module" value="true"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="lib" path="jar/algs4eclipse.jar"/>
+	<classpathentry kind="src" path="exercises/3.4.01"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

@@ -1,21 +1,19 @@
 package mylibs;
 import java.util.Iterator;
 import java.util.LinkedList;
-import mylibs.SymbolTable;
-import mylibs.LinkedListSequentialSearchST;
-import java.lang.reflect.Array;
 import mylibs.Pair;
 import java.io.FileNotFoundException;
+import java.lang.reflect.Array;
 import mylibs.Util;
 
-public class SeparateChainingHashST<Key extends Comparable<Key>, Value> //implements SymbolTable<Key, Value>
+public class SeparateChainingHashST<Key extends Comparable<Key>, Value>
 {
     // ----------------------------------------
     // Private members
     // ----------------------------------------
     private int N, baseM, M, lgM;
     private int[] primes;
-    LinkedListSequentialSearchST<Key, Value>[] a;
+    Node[] a;
 
     // ----------------------------------------
     // Private classes
@@ -25,31 +23,29 @@ public class SeparateChainingHashST<Key extends Comparable<Key>, Value> //implem
     {
         private class KeysIterator implements Iterator<Key>
         {
-            private Iterator<Key> it;
+            private Node node;
             private int idx;
 
             public KeysIterator()
             {
+                node = null;
                 idx = nextList(0);
-                if(idx >= 0) it = a[idx].keys().iterator();
+                if(idx >= 0) node = a[idx];
+                // at this point in construction, if node is null, idx < 0
             }
-            public boolean hasNext()
+            public boolean hasNext() {return node != null;}
+
+            public Key next()
             {
-                if(it == null) return false;
-                else if(!it.hasNext())
+                Key key = node.key;
+                node = node.next;
+                if(node == null)
                 {
                     idx = nextList(++idx);
-                    if(idx >= 0)
-                    {
-                        it = a[idx].keys().iterator();
-                        return true;
-                    }
-                    else return false;
+                    if(idx >= 0) node = a[idx];
                 }
-                else return true;
+                return key;
             }
-
-            public Key next() {return it.next();}
             public void remove() {}
         }
         public KeysIterable() {}
@@ -61,39 +57,40 @@ public class SeparateChainingHashST<Key extends Comparable<Key>, Value> //implem
     {
         private class EntriesIterator implements Iterator<Pair<Key, Value>>
         {
-            private Iterator<Pair<Key, Value>> it;
+            private Node node;
             private int idx;
 
             // Constructor
             public EntriesIterator()
             {
                 idx = nextList(0);
-                if(idx >= 0) it = a[idx].entries().iterator();
+                if(idx >= 0) node = a[idx];
+                // at this point in construction, if idx < 0, node == null
             }
-            public boolean hasNext()
+            public boolean hasNext() {return node != null;}
+            public Pair<Key, Value> next()
             {
-                boolean ret = false;
-                if(it != null )
+                Pair<Key, Value> ret = new Pair<Key, Value>(node.key, node.value);
+                node = node.next;
+                if(node == null)
                 {
-                    if(!it.hasNext())
-                    {
-                        idx = nextList(++idx);
-                        if(idx > 0)
-                        {
-                            it = a[idx].entries().iterator();
-                            ret = true;
-                        }
-                    }
-                    else ret = true;
+                    idx = nextList(++idx);
+                    if(idx >= 0) node = a[idx];
                 }
                 return ret;
             }
-
-            public Pair<Key, Value> next() {return it.next();}
             public void remove() {}
         }
         public void EntriesIterable () {}
         public Iterator<Pair<Key, Value>> iterator() {return new EntriesIterator();}
+    }
+
+    // Private node class
+    private class Node
+    {
+        public Node next;
+        public Key key;
+        public Value value;
     }
 
     // ----------------------------------------
@@ -117,11 +114,10 @@ public class SeparateChainingHashST<Key extends Comparable<Key>, Value> //implem
     {
         while(curr < M)
         {
-            if(a[curr] != null && !a[curr].isEmpty()) break;
+            if(a[curr] != null) return curr;
             else curr++;
         }
-        if(curr >= M) return -1;
-        else return curr;
+        return -1;
     }
 
     // Array resizing
@@ -138,18 +134,18 @@ public class SeparateChainingHashST<Key extends Comparable<Key>, Value> //implem
     	if(M != sz)
     	{
 	    	M = sz;
-	        LinkedListSequentialSearchST<Key, Value>[] temp = a;
-	        a = (LinkedListSequentialSearchST<Key, Value>[])
-	            Array.newInstance(LinkedListSequentialSearchST.class, M);
+	        Node[] old = a;
+	        a = (Node []) Array.newInstance(Node.class, M);
 	        int i = 0;
 	        N = 0;
-	        while(i < temp.length)
+	        while(i < old.length)
 	        {
-	            if(temp[i] != null)
-	            {
-	                for(Pair<Key, Value> pair : temp[i].entries())
-	                    this.put(pair.key, pair.val);
-	            }
+                Node node = old[i];
+                while(node != null)
+                {
+                    this.put(node.key, node.value);
+                    node = node.next;
+                }
 	            i++;
 	        }
     	}
@@ -165,8 +161,7 @@ public class SeparateChainingHashST<Key extends Comparable<Key>, Value> //implem
         M = baseM;
         lgM = 5;
         primes = new int[]{0, 0, 0, 0, 0, 31, 61, 127, 251, 509, 1021, 2039, 4093, 8191, 16381, 32749, 65521, 131071, 262139, 524287, 1048573, 2097143, 4194301, 8388593, 16777213, 33554393, 67108859, 134217689, 268435399, 536870909, 1073741789, 2147483647};
-        a = (LinkedListSequentialSearchST<Key,Value>[])
-            Array.newInstance(LinkedListSequentialSearchST.class, M);
+        a = (Node[])Array.newInstance(Node.class, M);
     }
 
     // ----------------------------------------
@@ -176,32 +171,84 @@ public class SeparateChainingHashST<Key extends Comparable<Key>, Value> //implem
     public void put(Key key, Value val)
     {
         int i = hash(key);
-        if(a[i] == null) a[i] = new LinkedListSequentialSearchST<Key, Value>();
-        int oldsz = a[i].size();
-        a[i].put(key, val);
-        if(oldsz != a[i].size()) N++;
-        if(N / M > 8) resize(2 * M);
+        Node node = a[i];
+        Node prevNode = a[i];
+        if(node == null)
+        {
+            a[i] = new Node();
+            a[i].key = key;
+            a[i].value = val;
+            N++;
+        }
+        else
+        {
+            do
+            {
+                if(node.key.compareTo(key) == 0)
+                {
+                    node.value = val;
+                    break;
+                }
+                prevNode = node;
+                node = node.next;
+            }
+            while(node != null);
+
+            if(node == null)
+            {
+                // key not found in linked list
+                node = new Node();
+                node.key = key;
+                node.value = val;
+                prevNode.next = node;
+                N++;
+            }
+            if(N / M > 8) resize(2 * M);
+        }
     }
 
     // Get operation
     public Value get(Key key)
     {
         int i = hash(key);
-        if(a[i] == null) return null;
-        return a[i].get(key);
+        Node node = a[i];
+        while(node != null)
+        {
+            if(node.key.compareTo(key) == 0) return node.value;
+            node = node.next;
+        }
+        return null;
     }
 
     // Delete operation
     public void delete(Key key)
     {
         int i = hash(key);
-        if(a[i] != null)
+        Node node = a[i];
+        Node prevNode = a[i];
+        while(node != null)
         {
-            int oldsz = a[i].size();
-            a[i].delete(key);
-            if(a[i].size() != oldsz) this.N--;
-            if(a[i].size() == 0) a[i] = null;
-            if(N / M < 2) resize(M / 2);
+            if(node.key.compareTo(key) == 0) break;
+            prevNode = node;
+            node = node.next;
+        }
+
+        if(node != null)
+        {
+            // key found
+            if(node == prevNode)
+            {
+                // node to delete is first node
+                a[i] = node.next;
+                node.next = null;
+            }
+            else
+            {
+
+                prevNode.next = node.next;
+                node.next = null;
+            }
+            N--;
         }
     }
 
@@ -209,7 +256,13 @@ public class SeparateChainingHashST<Key extends Comparable<Key>, Value> //implem
     public boolean contains(Key key)
     {
         int i = hash(key);
-        return a[i] != null && a[i].contains(key);
+        Node node = a[i];
+        while(node != null)
+        {
+            if(node.key.compareTo(key) == 0) return true;
+            node = node.next;
+        }
+        return false;
     }
 
     // ----------------------------------------
