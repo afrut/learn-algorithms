@@ -91,6 +91,7 @@ public class SeparateChainingHashST<Key extends Comparable<Key>, Value>
         public Node next;
         public Key key;
         public Value value;
+        public int order;
     }
 
     // ----------------------------------------
@@ -178,6 +179,7 @@ public class SeparateChainingHashST<Key extends Comparable<Key>, Value>
             a[i] = new Node();
             a[i].key = key;
             a[i].value = val;
+            a[i].order = N;
             N++;
         }
         else
@@ -200,11 +202,12 @@ public class SeparateChainingHashST<Key extends Comparable<Key>, Value>
                 node = new Node();
                 node.key = key;
                 node.value = val;
+                node.order = N;
                 prevNode.next = node;
                 N++;
             }
-            if(N / M > 8) resize(2 * M);
         }
+        if(N / M > 8) resize(2 * M);
     }
 
     // Get operation
@@ -249,6 +252,52 @@ public class SeparateChainingHashST<Key extends Comparable<Key>, Value>
                 node.next = null;
             }
             N--;
+        }
+        if(N / M < 2) resize(M / 2);
+    }
+
+    // Delete all key-value pairs below a certain order k
+    public void deleteK(int k)
+    {
+        int idx = nextList(0);
+        if(idx >= 0)
+        {
+            while(idx < M && idx >= 0)
+            {
+                Node node = a[idx];
+                Node prevNode = node;
+                while(node != null)
+                {
+                    if(node.order > k)
+                    {
+                        if(node == prevNode)
+                        {
+                            // node is the beginning of the list
+                            a[idx] = node.next;
+                            node.next = null;
+                            node = a[idx];
+                            N--;
+                        }
+                        else
+                        {
+                            prevNode.next = node.next;
+                            node.next = null;
+                            node = prevNode.next;
+                            N--;
+                        }
+                    }
+                    else node = node.next;
+                }
+                idx = nextList(++idx);
+            }
+            
+            // TODO: cap at 37
+            int sz = M;
+            if(sz > baseM && N / sz < 2)
+	            while(N / sz < 2) sz = sz / 2;
+            if(N / sz > 8)
+            	while(N / sz > 8) sz = sz * 2;
+            resize(sz);
         }
     }
 
@@ -375,6 +424,7 @@ public class SeparateChainingHashST<Key extends Comparable<Key>, Value>
             pf = "fail"; sz = st.size(); ret = 25; st.delete(ret); retBool = st.contains(ret); if(!retBool && st.size() + 1 == sz) pf = "pass"; System.out.println("    " + pf + " - delete(" + ret + "): " + st.toString());
             pf = "fail"; sz = st.size(); ret = 30; st.delete(ret); retBool = st.contains(ret); if(!retBool && st.size() + 1 == sz) pf = "pass"; System.out.println("    " + pf + " - delete(" + ret + "): " + st.toString());
             pf = "fail"; sz = st.size(); ret = 11; st.delete(ret); retBool = st.contains(ret); if(!retBool && st.size() + 1 == sz) pf = "pass"; System.out.println("    " + pf + " - delete(" + ret + "): " + st.toString());
+            pf = "fail"; sz = st.size(); ret = 2; st.deleteK(ret); retBool = st.size() == 1; if(retBool) pf = "pass"; System.out.println("    " + pf + " - deleteK(" + ret + "): " + st.toString());
         }
         else if(resizeTest)
         {
