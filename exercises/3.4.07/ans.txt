@@ -1,0 +1,14 @@
+A set of hash codes with a uniform distribution is evenly distributed among bins
+by any number M; even if M is not prime.
+
+However, a problem arises when the distribution of hash codes. Take for example
+a set of hash codes where hash codes k that are multiples of 4 are more common
+than other hash codes. Any value M that shares a factor with 4 will be unable
+to uniformly distribute the hash codes. In particular, this means any M that is
+a multiple of 2 or 4.
+
+So, choosing a to be a prime will not be sufficient enough to distribute hash
+codes uniformly among bins. This is because, if M is not prime, it will have a
+higher probability of sharing a common factor with any one of the hash codes.
+This is made worse if hash codes that share a common factor with M are more
+common than others leading uneven distribution when hashing.
