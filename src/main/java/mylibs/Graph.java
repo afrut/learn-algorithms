@@ -5,6 +5,9 @@ import mylibs.Util;
 
 public class Graph
 {
+    // ----------------------------------------
+    // Instance Members
+    // ----------------------------------------
     private final int V; // number of vertices
     private int E; // number of edges
     private Bag<Integer>[] adj; // adjacency lists
@@ -19,11 +22,23 @@ public class Graph
     {
         this(a[0]); // Read V and construct this graph.
         int E = a[1];
-        for (int i = 2; i - 2 < E; i++)
+        for (int i = 2; i - 2 < E; i = i + 2)
         { // Add an edge.
-            int v = a[i + 2]; // Read a vertex,
-            int w = a[i + 3]; // read another vertex,
+            int v = a[i]; // Read a vertex,
+            int w = a[i + 1]; // read another vertex,
             addEdge(v, w); // and add edge connecting them.
+        }
+    }
+    public Graph(Graph graph)
+    {
+        this(graph.V);
+        this.E = graph.E;
+        for(int i = 0; i < adj.length; i++)
+        {
+            Bag<Integer> bag = graph.adj[i];
+            Bag<Integer> thisbag = this.adj[i];
+            for(Integer x : bag)
+                thisbag.add(x);
         }
     }
     public int V() { return V; }
@@ -35,7 +50,12 @@ public class Graph
         E++;
     }
     public Iterable<Integer> adj(int v){ return adj[v]; }
-    
+
+    // ----------------------------------------
+    // Static Graph Methods
+    // ----------------------------------------
+    // TODO: complete this
+
     public static void main(String[] args) throws FileNotFoundException
     {
         String[] in = Util.fromFile(args[0]);
