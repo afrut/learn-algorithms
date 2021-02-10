@@ -98,6 +98,16 @@ public class Graph
     public static int avgDegree(Graph G)
     { return 2 * G.E() / G.V(); }
 
+    // Return the number of self loops in the Graph G
+    public static int numberOfSelfLoops(Graph G)
+    {
+        int count = 0;
+        for (int v = 0; v < G.V(); v++)
+        for (int w : G.adj(v))
+        if (v == w) count++;
+        return count/2; // each edge counted twice
+    }
+
     public static void main(String[] args) throws FileNotFoundException
     {
         // process arguments
@@ -133,7 +143,7 @@ public class Graph
         if(test)
         {
             // test degree() function
-            int[] degrees = {21,10,9,8,11,10,11,13,14,7,5,12,12,8,7,16,11,9,7,10,10,10,6,8,13,5,11,10,11,10,17,5,17,6,6,9,6,8,5,8,10,11,10,12,19,9,4,9,11,17,10,9,10,10,6,11,8,14,15,11,6,6,11,5,13,17,6,7,13,3,11,14,10,6,5,9,8,13,11,11,13,8,11,8,12,6,8,6,6,9,5,12,7,17,7,7,5,18,7,7,8,14,9,7,12,8,10,7,14,12,16,4,9,10,17,8,9,9,12,11,9,11,13,5,10,11,5,2,10,10,7,7,5,6,10,7,6,14,15,12,7,7,13,13,17,12,13,9,11,12,11,12,14,8,7,11,15,13,9,8,15,9,5,12,11,10,7,4,14,8,12,13,13,4,10,7,15,9,6,14,8,15,12,7,14,13,9,13,15,11,9,16,8,7,11,6,11,12,11,5,8,11,19,10,20,13,5,16,11,14,15,12,18,10,17,7,4,10,9,15,13,14,19,11,7,19,13,9,7,8,14,15,11,8,6,10,7,4,9,10,14,7,9,9,13,4,12,7,16,11};
+            int[] degrees = {21,10,9,8,11,10,11,13,14,7,5,12,12,8,7,16,11,9,7,10,10,10,6,8,13,5,11,10,11,10,17,5,17,6,6,9,6,8,5,8,10,11,10,12,19,9,4,9,11,17,12,9,10,10,6,11,8,14,15,11,6,6,11,5,13,17,6,7,13,3,11,14,10,6,5,9,8,13,11,11,13,8,11,8,12,6,8,6,6,9,5,12,7,17,7,7,5,18,7,7,8,14,9,7,12,8,10,7,14,12,16,4,9,10,17,8,9,9,12,11,9,11,13,5,10,11,5,2,10,10,7,7,5,6,10,7,6,14,15,12,7,7,13,13,17,12,13,11,11,12,11,12,14,8,7,11,15,13,9,8,15,9,5,12,11,10,7,4,14,8,12,13,13,4,10,7,15,9,6,14,8,15,12,7,14,13,9,13,15,11,9,16,8,7,11,6,11,12,11,5,8,11,19,10,20,13,5,16,11,14,15,12,18,10,17,7,4,10,9,15,13,14,19,13,7,19,13,9,7,8,14,15,11,8,6,10,7,4,9,10,14,7,9,9,13,4,12,7,16,11};
             for(int v = 0; v < G.V(); v++)
             {
                 // test Graph
@@ -147,14 +157,14 @@ public class Graph
             assert(maxDegree == 21) : String.format("Maximum degree is not %d", maxDegree);
             
             // test the avgDegree() function
-            double avgDegree = Graph.avgDegree(G);
-            assert(avgDegree == (double)(2544/250)) : String.format("Average degree is not %.f", avgDegree);
+            int avgDegree = Graph.avgDegree(G);
+            assert(avgDegree == (int)(2552/250)) : String.format("Average degree is not %d", avgDegree);
             
-            // TODO: modify myMediumG.txt by adding some self-loops
-            // TODO: find the right answers for all the tests above
-            // TODO: re-run tests with myMediumG.txt with the right answers
-            // TODO: implement numberOfSelfLoops
-            // TODO: test numberOfSelfLoops
+            // test the numberOfSelfLoops() function
+            int numberOfSelfLoops = Graph.numberOfSelfLoops(G);
+            assert(numberOfSelfLoops == 3) : String.format("Number of self loops is not %d", numberOfSelfLoops);
+            
+            System.out.println("PASS");
         }
     }
 }
