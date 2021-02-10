@@ -108,6 +108,20 @@ public class Graph
         return count/2; // each edge counted twice
     }
 
+    // Return string representation of the graph
+    public String toString()
+    {
+        String s = V + " vertices, " + E + " edges\n";
+        for (int v = 0; v < V; v++)
+        {
+            s += v + ": ";
+            for (int w : this.adj(v))
+                s += w + " ";
+            s += "\n";
+        }
+        return s;
+    }
+
     public static void main(String[] args) throws FileNotFoundException
     {
         // process arguments
@@ -163,6 +177,8 @@ public class Graph
             // test the numberOfSelfLoops() function
             int numberOfSelfLoops = Graph.numberOfSelfLoops(G);
             assert(numberOfSelfLoops == 3) : String.format("Number of self loops is not %d", numberOfSelfLoops);
+            
+            System.out.println(G.toString());
             
             System.out.println("PASS");
         }
