@@ -108,6 +108,16 @@ public class Graph
         return count/2; // each edge counted twice
     }
 
+    // Check if an edge between two vertices exists
+    public boolean hasEdge(int v, int w)
+    {
+        for(int x : adj(v))
+            if(x == w) return true;
+        return false;
+    }
+
+    // Returns the number of parallel edges in the graph
+
     // Return string representation of the graph
     public String toString()
     {
@@ -152,6 +162,7 @@ public class Graph
             cnt++;
         }
         Graph G = new Graph(a);
+        System.out.println(G.toString());
 
         // perform tests
         if(test)
@@ -177,10 +188,11 @@ public class Graph
             // test the numberOfSelfLoops() function
             int numberOfSelfLoops = Graph.numberOfSelfLoops(G);
             assert(numberOfSelfLoops == 3) : String.format("Number of self loops is not %d", numberOfSelfLoops);
-            
-            System.out.println(G.toString());
-            
             System.out.println("PASS");
+
+            // test hasEdge() function
+            assert(G.hasEdge(116, 190)) : String.format("Graph has edge 116-190");
+            assert(!G.hasEdge(227, 0)) : String.format("Graph does not have edge 227-0");
         }
     }
 }
