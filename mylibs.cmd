@@ -75,8 +75,8 @@ javac src\main\java\mylibs\Graph.java -d .\
 ::java -ea mylibs.SeparateChainingHashST algs4-data\tale.txt
 ::java -ea mylibs.SeparateChainingHashST -resizeTest algs4-data\tale.txt
 ::java -ea mylibs.LinearProbingHashST algs4-data\tale.txt
-java -ea mylibs.Graph algs4-data\mediumG.txt
-java -ea mylibs.Graph -test algs4-data\mediumG.txt
+java -ea mylibs.Graph src\main\resources\myMediumG.txt
+java -ea mylibs.Graph -test src\main\resources\myMediumG.txt
 
 :: Clean
 del /s .\mylibs\*.class
