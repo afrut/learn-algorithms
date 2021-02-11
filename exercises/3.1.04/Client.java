@@ -3,14 +3,14 @@
     example illustrated on page 367.
 */
 
-import mylibs.ResizingArrayBinarySearchST;
+import mylibs.BinarySearchST;
 
 public class Client
 {
     public static void main(String[] args)
     {
-        ResizingArrayBinarySearchST<Time, Event> st =
-            new ResizingArrayBinarySearchST<Time, Event>();
+        BinarySearchST<Time, Event> st =
+            new BinarySearchST<Time, Event>();
         st.put((new Time(9,00,00)), (new Event("Chicago")));
         st.put((new Time(9,00,03)), (new Event("Phoenix")));
         st.put((new Time(9,00,13)), (new Event("Houston")));

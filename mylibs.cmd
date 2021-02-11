@@ -33,7 +33,7 @@ cls
 ::javac src\main\java\mylibs\SymbolTable.java -d .\
 ::javac src\main\java\mylibs\LinkedListSequentialSearchST.java -d .\
 ::javac src\main\java\mylibs\ResizingArraySequentialSearchST.java -d .\
-javac src\main\java\mylibs\ResizingArrayBinarySearchST.java -d .\
+javac src\main\java\mylibs\BinarySearchST.java -d .\
 ::javac src\main\java\mylibs\LinkedListOrderedSequentialSearchST.java -d .\
 ::javac src\main\java\mylibs\RecursiveBST.java -d .\
 ::javac src\main\java\mylibs\BST.java -d .\
@@ -61,8 +61,8 @@ javac src\main\java\mylibs\ResizingArrayBinarySearchST.java -d .\
 ::java -ea mylibs.LinkedListSequentialSearchST .\src\main\resources\STSampleInput.txt
 ::java -ea mylibs.ResizingArraySequentialSearchST -test
 ::java -ea mylibs.ResizingArraySequentialSearchST .\src\main\resources\STSampleInput.txt
-java -ea mylibs.ResizingArrayBinarySearchST -test
-java -ea mylibs.ResizingArrayBinarySearchST .\src\main\resources\STSampleInput.txt
+java -ea mylibs.BinarySearchST -test
+java -ea mylibs.BinarySearchST .\src\main\resources\STSampleInput.txt
 ::java -ea mylibs.LinkedListOrderedSequentialSearchST -test
 ::java -ea mylibs.LinkedListOrderedSequentialSearchST .\src\main\resources\STSampleInput.txt
 ::java -ea mylibs.RecursiveBST -test

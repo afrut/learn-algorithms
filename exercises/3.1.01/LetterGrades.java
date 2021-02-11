@@ -6,7 +6,7 @@
     A+, A, A-, B+, B, B-, C+, C, C-, D, F
     4.33, 4.00, 3.67, 3.33, 3.00, 2.67, 2.33, 2.00, 1.67, 1.00, 0.00
 */
-import mylibs.ResizingArrayBinarySearchST;
+import mylibs.BinarySearchST;
 import mylibs.Util;
 import java.io.FileNotFoundException;
 
@@ -14,8 +14,8 @@ public class LetterGrades
 {
     public static void main(String args[]) throws FileNotFoundException
     {
-        ResizingArrayBinarySearchST<String, Double> st =
-            new ResizingArrayBinarySearchST<String, Double>();
+        BinarySearchST<String, Double> st =
+            new BinarySearchST<String, Double>();
         st.put("A+", 4.33);
         st.put("A", 4.00);
         st.put("A-", 3.67);
