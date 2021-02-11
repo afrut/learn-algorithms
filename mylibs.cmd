@@ -33,14 +33,14 @@ cls
 ::javac src\main\java\mylibs\SymbolTable.java -d .\
 ::javac src\main\java\mylibs\LinkedListSequentialSearchST.java -d .\
 ::javac src\main\java\mylibs\ResizingArraySequentialSearchST.java -d .\
-::javac src\main\java\mylibs\ResizingArrayBinarySearchST.java -d .\
+javac src\main\java\mylibs\ResizingArrayBinarySearchST.java -d .\
 ::javac src\main\java\mylibs\LinkedListOrderedSequentialSearchST.java -d .\
 ::javac src\main\java\mylibs\RecursiveBST.java -d .\
 ::javac src\main\java\mylibs\BST.java -d .\
 ::javac src\main\java\mylibs\RedBlackBST.java -d .\
 ::javac src\main\java\mylibs\SeparateChainingHashST.java -d .\
 ::javac src\main\java\mylibs\LinearProbingHashST.java -d .\
-javac src\main\java\mylibs\Graph.java -d .\
+::javac src\main\java\mylibs\Graph.java -d .\
 ::
 :::: Create a jar in .\jar\ from bytecode .class files in .\mylibs
 ::del .\jar\mylibs.jar
@@ -61,8 +61,8 @@ javac src\main\java\mylibs\Graph.java -d .\
 ::java -ea mylibs.LinkedListSequentialSearchST .\src\main\resources\STSampleInput.txt
 ::java -ea mylibs.ResizingArraySequentialSearchST -test
 ::java -ea mylibs.ResizingArraySequentialSearchST .\src\main\resources\STSampleInput.txt
-::java -ea mylibs.ResizingArrayBinarySearchST -test
-::java -ea mylibs.ResizingArrayBinarySearchST .\src\main\resources\STSampleInput.txt
+java -ea mylibs.ResizingArrayBinarySearchST -test
+java -ea mylibs.ResizingArrayBinarySearchST .\src\main\resources\STSampleInput.txt
 ::java -ea mylibs.LinkedListOrderedSequentialSearchST -test
 ::java -ea mylibs.LinkedListOrderedSequentialSearchST .\src\main\resources\STSampleInput.txt
 ::java -ea mylibs.RecursiveBST -test
@@ -75,8 +75,8 @@ javac src\main\java\mylibs\Graph.java -d .\
 ::java -ea mylibs.SeparateChainingHashST algs4-data\tale.txt
 ::java -ea mylibs.SeparateChainingHashST -resizeTest algs4-data\tale.txt
 ::java -ea mylibs.LinearProbingHashST algs4-data\tale.txt
-java -ea mylibs.Graph src\main\resources\myMediumG.txt
-java -ea mylibs.Graph -test src\main\resources\myMediumG.txt
+::java -ea mylibs.Graph src\main\resources\myMediumG.txt
+::java -ea mylibs.Graph -test src\main\resources\myMediumG.txt
 
 :: Clean
 del /s .\mylibs\*.class

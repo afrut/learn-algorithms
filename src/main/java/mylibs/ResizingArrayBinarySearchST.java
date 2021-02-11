@@ -6,11 +6,11 @@ import mylibs.Util;
 // ordered symbol table implementation
 public class ResizingArrayBinarySearchST<Key extends Comparable<Key>, Value>
 {
+    // NOTE: always maintain the invariant that the smallest key is at keys[0]
+    // and the largest key is at keys[N - 1]
     private Key[] keys;
     private Value[] values;
     private int N;
-    private int lo; // index to the smallest element in the array
-    private int hi; // index into an empty position in the array; hi - 1 contains largest
 
     private class KeysIterable implements Iterable<Key>
     {
@@ -22,21 +22,22 @@ public class ResizingArrayBinarySearchST<Key extends Comparable<Key>, Value>
             private int idx;
 
             public KeysIterator() {idx = idxStart;}
-            public boolean hasNext() {return idxStart <= idx && idx <= idxEnd;}
+            public boolean hasNext() {return idxStart <= idx && idx < idxEnd;}
             public Key next() {return keys[idx++];}
         }
 
         public KeysIterable()
         {
-            this.idxStart = lo;
-            this.idxEnd = hi - 1;
+            this.idxStart = 0;
+            this.idxEnd = N;
         }
 
         public KeysIterable(Key key1, Key key2)
         {
-            this.idxStart = getIdx(key1);
-            this.idxEnd = getIdx(key2);
-            if(!isKeyFound(key2, this.idxEnd)) {this.idxEnd -= 1;}
+            this.idxStart = rank(key1);
+            this.idxEnd = rank(key2);
+            if(isKeyIn(this.idxEnd, key2))
+            	this.idxEnd++;
         }
 
         public KeysIterator iterator()
@@ -48,28 +49,34 @@ public class ResizingArrayBinarySearchST<Key extends Comparable<Key>, Value>
         keys = (Key[]) new Comparable[1];
         values = (Value[]) new Object[1];
         N = 0;
-        lo = 0;
-        hi = 0;
     }
+
+    // Helper function to check if idx is not null
+    // and if keys[idx] == key
+    private boolean isKeyIn(int idx, Key key)
+    {return keys[idx] != null && keys[idx].compareTo(key) == 0;}
 
     // Searches for key and replaces its value. If not found, inserts key and value.
     public void put(Key key, Value value)
     {
-        int idx = getIdx(key);
-        boolean found = isKeyFound(key, idx);
+    	// get the index to insert this key into
+        int idx = rank(key);
 
-        if(!found)
+        // if there is a key that was previously inserted in idx
+        if(!isKeyIn(idx, key))
         {
-            int cnt = hi;
-            while(cnt > idx)
+        	// move all elements one index to the right
+            int cnt = N - 1;
+            while(cnt >= idx)
             {
-                keys[cnt] = keys[cnt - 1];
-                values[cnt] = values[cnt - 1];
+                keys[cnt + 1] = keys[cnt];
+                values[cnt + 1] = values[cnt];
                 cnt--;
             }
+            
+            // idx should now be free, insert
             keys[idx] = key;
             values[idx] = value;
-            hi++;
             N++;
             if(N >= keys.length)
                 resize(2 * keys.length);
@@ -81,29 +88,19 @@ public class ResizingArrayBinarySearchST<Key extends Comparable<Key>, Value>
         }
     }
 
-    // Helper function to get the index of where a key should be.
-    private int getIdx(Key key)
-    {return rank(key) + lo;}
-
-    // Helper function to check if a key is found at an index.
-    private boolean isKeyFound(Key key, int idx)
-    {return idx < hi && key.compareTo(keys[idx]) == 0;}
-
     public Value get(Key key)
     {
-        int idx = getIdx(key);
-        boolean found = isKeyFound(key, idx);
-        if(found) return values[idx];
+        int idx = rank(key);
+        if(isKeyIn(idx, key))
+            return values[idx];
         else return null;
     }
 
     // Eager delete implementation.
     public void delete(Key key)
     {
-        int idx = getIdx(key);
-        boolean found = isKeyFound(key, idx);
-
-        if(found)
+        int idx = rank(key);
+        if(isKeyIn(idx, key))
         {
             // delete key-value pair at index
             keys[idx] = null;
@@ -111,17 +108,16 @@ public class ResizingArrayBinarySearchST<Key extends Comparable<Key>, Value>
 
             // move all elements to fill empty position
             int cnt = idx;
-            while(cnt < hi - 1)
+            while(cnt < N - 1)
             {
                 keys[cnt] = keys[cnt + 1];
                 values[cnt] = values[cnt + 1];
                 cnt++;
             }
-            hi--;
-            
+
             // avoid loitering
-            keys[hi] = null;
-            values[hi] = null;
+            keys[N - 1] = null;
+            values[N - 1] = null;
             N--;
             if(N <= (int)(keys.length / 4))
                 resize(keys.length / 2);
@@ -130,8 +126,9 @@ public class ResizingArrayBinarySearchST<Key extends Comparable<Key>, Value>
 
     public boolean contains(Key key)
     {
-        int idx = getIdx(key);
-        return isKeyFound(key, idx);
+        int idx = rank(key);
+        if(isKeyIn(idx, key)) return true;
+        else return false;
     }
 
     private void resize(int sz)
@@ -142,52 +139,47 @@ public class ResizingArrayBinarySearchST<Key extends Comparable<Key>, Value>
             Value[] valuestemp = (Value[]) new Object[1];
             keys = keystemp;
             values = valuestemp;
-            lo = 0;
-            hi = lo;
         }
         else
         {
             Key[] keystemp = (Key[]) new Comparable[sz];
             Value[] valuestemp = (Value[]) new Object[sz];
-            int idx = lo;
             for(int cnt = 0; cnt < N; cnt++)
             {
-                keystemp[cnt] = keys[idx];
-                valuestemp[cnt] = values[idx];
-                idx++;
+                keystemp[cnt] = keys[cnt];
+                valuestemp[cnt] = values[cnt];
             }
             keys = keystemp;
             values = valuestemp;
-            lo = 0;
-            hi = N;
         }
     }
 
     public boolean isEmpty() {return N == 0;}
     public int size() {return N;}
 
-    public Key min() {return keys[lo];}
+    public Key min() {return keys[0];}
     public Key max()
     {
-        if(hi - 1 >= lo) return keys[hi - 1];
+        if(N > 0) return keys[N - 1];
         else return null;
     }
 
     public Key floor(Key key)
     {
-        int idx = getIdx(key);
+        int idx = rank(key);
         Key ret = null;
-        if(idx > lo) ret = keys[idx - 1];
+        if(idx > 0) ret = keys[idx - 1];
         return ret;
     }
 
     public Key ceiling(Key key)
     {
-        int idx = getIdx(key);
-        boolean found = isKeyFound(key, idx);
+        int idx = rank(key);
 
-        if(found && idx < hi - 1) return keys[idx + 1];
-        else if(!found && idx < hi) return keys[idx];
+        boolean found = isKeyIn(idx, key);
+
+        if(found && idx < N - 1) return keys[idx + 1];
+        else if(!found && idx <= N - 1) return keys[idx];
         else return null;
     }
 
@@ -195,8 +187,8 @@ public class ResizingArrayBinarySearchST<Key extends Comparable<Key>, Value>
     // Keys have to be unique.
     public int rank(Key key)
     {
-        int a = lo;
-        int b = hi - 1;
+        int a = 0;
+        int b = N - 1;
         int mid;
 
         // key is in between smallest and largest key
@@ -209,23 +201,22 @@ public class ResizingArrayBinarySearchST<Key extends Comparable<Key>, Value>
             else if(res > 0)
                 a = mid + 1;
             else
-                return mid - lo;
+                return mid;
         }
 
         // After this loop, key is not found.
         // This means b < a.
-        // If keys[lo] < key and keys[hi] > key, keys[b] < key and keys[a] > key.
+        // If keys[0] < key and keys[N - 1] > key, keys[b] < key and keys[a] > key.
         // Therefore, a = rank(key).
-        // If a == lo, then key < keys[lo].
-        // If a > hi, then key > keys[hi].
-        // Number of elements is hi - lo + 1.
-        return a - lo;
+        // If a == 0, then key < keys[0].
+        // If a > N - 1, then key > keys[N - 1].
+        return a;
     }
 
     // Return the key that has k keys less than it.
     public Key select(int k)
     {
-        if(k >= 0 && k < N) return keys[k + lo];
+        if(k >= 0 && k < N) return keys[k];
         else return null;
     }
 
@@ -234,18 +225,17 @@ public class ResizingArrayBinarySearchST<Key extends Comparable<Key>, Value>
     {
         if(N > 0)
         {
-            keys[lo] = null;
-            values[lo] = null;
-            N--;
-
-            int idx = lo;
-            while(idx < hi - 1)
+            keys[0] = null;
+            values[0] = null;
+            
+            int idx = 0;
+            while(idx < N - 1)
             {
                 keys[idx] = keys[idx + 1];
                 values[idx] = values[idx + 1];
                 idx++;
             }
-            hi--;
+            N--;
 
             if(N <= (keys.length / 4))
                 resize(2 * keys.length);
@@ -257,8 +247,8 @@ public class ResizingArrayBinarySearchST<Key extends Comparable<Key>, Value>
     {
         if(N > 0)
         {
-            keys[--hi] = null;
-            values[hi] = null;
+            keys[N - 1] = null;
+            values[N - 1] = null;
             N--;
             if(N <= (keys.length / 4))
                 resize(2 * keys.length);
@@ -267,10 +257,9 @@ public class ResizingArrayBinarySearchST<Key extends Comparable<Key>, Value>
 
     public int size(Key from, Key to)
     {
-        int idxTo = getIdx(to);
-        if(isKeyFound(to, idxTo))
-            idxTo++;
-        return idxTo - getIdx(from);
+        int idxTo = rank(to);
+        if(isKeyIn(idxTo, to)) idxTo++;
+        return idxTo - rank(from);
     }
 
     public String toString()
@@ -278,7 +267,7 @@ public class ResizingArrayBinarySearchST<Key extends Comparable<Key>, Value>
         StringBuilder sb = new StringBuilder();
         if(N > 0)
         {
-            int idx = lo;
+            int idx = 0;
             int cnt = 0;
             while(cnt < N)
             {
@@ -293,18 +282,20 @@ public class ResizingArrayBinarySearchST<Key extends Comparable<Key>, Value>
 
     private String toStringIterator()
     {
-        StringBuilder sb = new StringBuilder();
+    	StringBuilder sb = new StringBuilder();
         for(Key key : keys())
-            sb.append(key.toString() + ", ");
+        	if(key != null)
+        		sb.append(key.toString() + ", ");
         if(sb.length() > 0) sb.setLength(sb.length() - 2);
-        return sb.toString();
+    	return sb.toString();
     }
 
     private String toStringIterator(Key key1, Key key2)
     {
         StringBuilder sb = new StringBuilder();
         for(Key key : keys(key1, key2))
-            sb.append(key.toString() + ", ");
+        	if(key != null)
+        		sb.append(key.toString() + ", ");
         if(sb.length() > 0) sb.setLength(sb.length() - 2);
         return sb.toString();
     }
