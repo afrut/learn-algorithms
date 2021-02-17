@@ -32,7 +32,7 @@ cls
 ::javac src\main\java\mylibs\BinarySearch.java -d .\
 ::javac src\main\java\mylibs\SymbolTable.java -d .\
 ::javac src\main\java\mylibs\LinkedListSequentialSearchST.java -d .\
-::javac src\main\java\mylibs\ResizingArraySequentialSearchST.java -d .\
+::javac src\main\java\mylibs\SequentialSearchST.java -d .\
 ::javac src\main\java\mylibs\BinarySearchST.java -d .\
 ::javac src\main\java\mylibs\LinkedListOrderedSequentialSearchST.java -d .\
 ::javac src\main\java\mylibs\RecursiveBST.java -d .\
@@ -40,7 +40,9 @@ cls
 ::javac src\main\java\mylibs\RedBlackBST.java -d .\
 ::javac src\main\java\mylibs\SeparateChainingHashST.java -d .\
 ::javac src\main\java\mylibs\LinearProbingHashST.java -d .\
-javac src\main\java\mylibs\Set.java -d .\
+::javac src\main\java\mylibs\Set.java -d .\
+::javac src\main\java\mylibs\HashSet.java -d .\
+javac src\main\java\mylibs\SequentialSearchSet.java -d .\
 ::javac src\main\java\mylibs\Graph.java -d .\
 ::
 :::: Create a jar in .\jar\ from bytecode .class files in .\mylibs
@@ -60,8 +62,8 @@ javac src\main\java\mylibs\Set.java -d .\
 ::java -ea mylibs.BinarySearch
 ::java -ea mylibs.LinkedListSequentialSearchST -test
 ::java -ea mylibs.LinkedListSequentialSearchST .\src\main\resources\STSampleInput.txt
-::java -ea mylibs.ResizingArraySequentialSearchST -test
-::java -ea mylibs.ResizingArraySequentialSearchST .\src\main\resources\STSampleInput.txt
+::java -ea mylibs.SequentialSearchST -test
+::java -ea mylibs.SequentialSearchST .\src\main\resources\STSampleInput.txt
 ::java -ea mylibs.BinarySearchST -test
 ::java -ea mylibs.BinarySearchST .\src\main\resources\STSampleInput.txt
 ::java -ea mylibs.LinkedListOrderedSequentialSearchST -test
@@ -78,7 +80,9 @@ javac src\main\java\mylibs\Set.java -d .\
 ::java -ea mylibs.LinearProbingHashST algs4-data\tale.txt
 ::java -ea mylibs.Set -test
 ::java -ea mylibs.Set .\src\main\resources\STSampleInput.txt
-java -ea mylibs.HashSet algs4-data\tale.txt
+::java -ea mylibs.HashSet algs4-data\tale.txt
+java -ea mylibs.SequentialSearchSet -test
+java -ea mylibs.SequentialSearchSet .\src\main\resources\STSampleInput.txt
 ::java -ea mylibs.Graph src\main\resources\myMediumG.txt
 ::java -ea mylibs.Graph -test src\main\resources\myMediumG.txt
 

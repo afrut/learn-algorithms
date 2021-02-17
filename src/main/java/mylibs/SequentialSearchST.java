@@ -3,13 +3,13 @@ import java.util.Iterator;
 import java.io.FileNotFoundException;
 import mylibs.Util;
 
-public class ResizingArraySequentialSearchST<Key, Value>
+public class SequentialSearchST<Key, Value>
 {
     private Key[] keys;
     private Value[] values;
     private int N;
 
-    public ResizingArraySequentialSearchST()
+    public SequentialSearchST()
     {
         keys = (Key[]) new Object[1];
         values = (Value[]) new Object[1];
@@ -159,8 +159,8 @@ public class ResizingArraySequentialSearchST<Key, Value>
 
         if(test)
         {
-            ResizingArraySequentialSearchST<String, Integer> st =
-                new ResizingArraySequentialSearchST <String, Integer>();
+            SequentialSearchST<String, Integer> st =
+                new SequentialSearchST <String, Integer>();
             System.out.println("Testing all operations on empty symbol table");
             System.out.println("    Contents: " + st.toString());
             System.out.println("    isEmpty(): " + st.isEmpty());
@@ -216,8 +216,8 @@ public class ResizingArraySequentialSearchST<Key, Value>
         }
         else
         {
-            ResizingArraySequentialSearchST<String, Integer> st =
-                new ResizingArraySequentialSearchST<String, Integer>();
+            SequentialSearchST<String, Integer> st =
+                new SequentialSearchST<String, Integer>();
             // sample input is SEARCHEXAMPLE
             System.out.println("Symbol table empty? " + st.isEmpty());
             System.out.println("Testing put() operation:");
