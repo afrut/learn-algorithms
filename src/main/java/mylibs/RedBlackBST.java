@@ -1,6 +1,7 @@
 package mylibs;
+
 import java.util.Iterator;
-import mylibs.SymbolTable;
+import java.util.LinkedList;
 import java.io.FileNotFoundException;
 import mylibs.Util;
 
@@ -70,12 +71,10 @@ import mylibs.Util;
 //
 // --------------------------------------------------------------------------------
 
-public class RedBlackBST<Key extends Comparable<Key>, Value> implements SymbolTable<Key, Value>
+public class RedBlackBST<Key extends Comparable<Key>, Value>
 {
     private static final boolean RED = true;
     private static final boolean BLACK = false;
-    private static final boolean LEFT = true;
-    private static final boolean RIGHT = false;
 
     // ----------------------------------------
     // Private classes
@@ -107,77 +106,81 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> implements SymbolTa
 
     private class KeysIterable implements Iterable<Key>
     {
-        private Key from;
-        private Key to;
-
         private class KeysIterator implements Iterator<Key>
         {
-            private int idx;
-            private int N;
-            private Key[] keys;
-            private Key key1;
-            private Key key2;
-            public KeysIterator(Node node, Key key1, Key key2)
+            private LinkedList<Key> ll;
+            private Key next;
+
+            private KeysIterator()
             {
-                this.key1 = key1;
-                this.key2 = key2;
-
-                if(node == null) this.N = 0;
-                else
-                {
-                    this.N = node.N;
-                    keys = (Key[]) new Comparable[this.N];
-
-                    // populate array of keys
-                    idx = 0;
-                    f(node);
-                }
-                // reset index of array for user
-                idx = 0;
+                ll = new LinkedList<Key>();     // initialize list of keys
+                f(root);                        // recursive call to add all keys to list
+                next = ll.poll();               // initialize the next key to be returned
             }
-            public boolean hasNext() {return idx < N && keys[idx] != null;}
-            public Key next() {return keys[idx++];}
-            public void remove() {}
+
+            public Key next()
+            {
+                Key ret = next;
+                next = ll.poll();
+                return ret;
+            }
+            public boolean hasNext() {return next != null;}
+            public void remove() {};
+
             private void f(Node node)
             {
                 if(node == null) return;
                 f(node.left);
-
-                // check if this key is to be added based on key limits
-                if(this.key1 == null)
-                {
-                    if(this.key2 == null) keys[idx++] = node.key;
-                    else if(this.key2.compareTo(node.key) >= 0) keys[idx++] = node.key;
-                }
-                else
-                {
-                    if(this.key2 == null)
-                    {
-                        if(this.key1.compareTo(node.key) <= 0) {keys[idx++] = node.key;}
-                    }
-                    else
-                    {
-                        if(this.key1.compareTo(node.key) <= 0 && this.key2.compareTo(node.key) >= 0)
-                        {
-                            keys[idx++] = node.key;
-                        }
-                    }
-                }
+                ll.add(node.key);
                 f(node.right);
-                return;
             }
         }
 
-        public KeysIterable(Key lo, Key hi)
+        public KeysIterable() {}
+        public KeysIterator iterator() {return new KeysIterator();}
+    }
+
+    private class KeysRangeIterable implements Iterable<Key>
+    {
+        Key from, to;
+
+        private class KeysIterator implements Iterator<Key>
         {
-            this.from = lo;
-            this.to = hi;
+            private LinkedList<Key> ll;
+            private Key next;
+
+            public KeysIterator()
+            {
+                ll = new LinkedList<Key>();
+                f(root);
+                next = ll.poll();
+            }
+
+            public boolean hasNext() {return next != null;}
+            public Key next()
+            {
+                Key ret = next;
+                next = ll.poll();
+                return ret;
+            }
+            public void remove() {}
+
+            private void f(Node node)
+            {
+                if(node == null) return;
+                f(node.left);
+                if(node.key.compareTo(from) >= 0 && node.key.compareTo(to) <= 0)
+                    ll.add(node.key);
+                f(node.right);
+            }
         }
 
-        public KeysIterator iterator()
+        public KeysRangeIterable(Key from, Key to)
         {
-            return new KeysIterator(root, this.from, this.to);
+            this.from = from;
+            this.to = to;
         }
+        public KeysIterator iterator() {return new KeysIterator();}
     }
 
     // ----------------------------------------
@@ -746,9 +749,12 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> implements SymbolTa
     private String toStringIterator()
     {
         StringBuilder sb = new StringBuilder();
-        for(Key key : keys()) sb.append(key.toString() + ", ");
-        if(sb.length() > 0)
-            sb.setLength(sb.length() - 2);
+        if(this.root != null && this.root.N > 0)
+        {
+            for(Key key : keys()) sb.append(key.toString() + ", ");
+            if(sb.length() > 0)
+                sb.setLength(sb.length() - 2);
+        }
         return sb.toString();
     }
 
@@ -757,9 +763,12 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> implements SymbolTa
     private String toStringIterator(Key from, Key to)
     {
         StringBuilder sb = new StringBuilder();
-        for(Key key : keys(from, to)) sb.append(key.toString() + ", ");
-        if(sb.length() > 0)
-            sb.setLength(sb.length() - 2);
+        if(this.root != null && this.root.N > 0)
+        {
+            for(Key key : keys(from, to)) sb.append(key.toString() + ", ");
+            if(sb.length() > 0)
+                sb.setLength(sb.length() - 2);
+        }
         return sb.toString();
     }
 
@@ -988,8 +997,8 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> implements SymbolTa
         return sb.toString();
     }
 
-    public Iterable<Key> keys() {return new KeysIterable(null, null);}
-    public Iterable<Key> keys(Key lo, Key hi) {return new KeysIterable(lo ,hi);}
+    public Iterable<Key> keys() {return new KeysIterable();}
+    public Iterable<Key> keys(Key lo, Key hi) {return new KeysRangeIterable(lo ,hi);}
 
     public static void main(String[] args) throws FileNotFoundException
     {
