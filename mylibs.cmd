@@ -42,7 +42,8 @@ cls
 ::javac src\main\java\mylibs\LinearProbingHashST.java -d .\
 ::javac src\main\java\mylibs\Set.java -d .\
 ::javac src\main\java\mylibs\HashSet.java -d .\
-javac src\main\java\mylibs\SequentialSearchSet.java -d .\
+::javac src\main\java\mylibs\SequentialSearchSet.java -d .\
+javac src\main\java\mylibs\BinarySearchSet.java -d .\
 ::javac src\main\java\mylibs\Graph.java -d .\
 ::
 :::: Create a jar in .\jar\ from bytecode .class files in .\mylibs
@@ -81,8 +82,10 @@ javac src\main\java\mylibs\SequentialSearchSet.java -d .\
 ::java -ea mylibs.Set -test
 ::java -ea mylibs.Set .\src\main\resources\STSampleInput.txt
 ::java -ea mylibs.HashSet algs4-data\tale.txt
-java -ea mylibs.SequentialSearchSet -test
-java -ea mylibs.SequentialSearchSet .\src\main\resources\STSampleInput.txt
+::java -ea mylibs.SequentialSearchSet -test
+::java -ea mylibs.SequentialSearchSet .\src\main\resources\STSampleInput.txt
+java -ea mylibs.BinarySearchSet -test
+java -ea mylibs.BinarySearchSet .\src\main\resources\STSampleInput.txt
 ::java -ea mylibs.Graph src\main\resources\myMediumG.txt
 ::java -ea mylibs.Graph -test src\main\resources\myMediumG.txt
 
