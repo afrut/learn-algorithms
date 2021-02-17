@@ -37,14 +37,11 @@ cls
 ::javac src\main\java\mylibs\LinkedListOrderedSequentialSearchST.java -d .\
 ::javac src\main\java\mylibs\RecursiveBST.java -d .\
 ::javac src\main\java\mylibs\BST.java -d .\
-javac src\main\java\mylibs\RedBlackBST.java -d .\
+::javac src\main\java\mylibs\RedBlackBST.java -d .\
 ::javac src\main\java\mylibs\SeparateChainingHashST.java -d .\
 ::javac src\main\java\mylibs\LinearProbingHashST.java -d .\
 ::javac src\main\java\mylibs\HashSTint.java -d .\
-
-:: TODO: continue here
-::javac src\main\java\mylibs\HashSTdouble.java -d .\
-
+javac src\main\java\mylibs\HashSTdouble.java -d .\
 ::javac src\main\java\mylibs\Set.java -d .\
 ::javac src\main\java\mylibs\HashSet.java -d .\
 ::javac src\main\java\mylibs\SequentialSearchSet.java -d .\
@@ -78,17 +75,14 @@ javac src\main\java\mylibs\RedBlackBST.java -d .\
 ::java -ea mylibs.RecursiveBST .\src\main\resources\STSampleInput.txt
 ::java -ea mylibs.BST -test
 ::java -ea mylibs.BST .\src\main\resources\STSampleInput.txt
-java -ea mylibs.RedBlackBST -test
-java -ea mylibs.RedBlackBST .\src\main\resources\STSampleInput.txt
+::java -ea mylibs.RedBlackBST -test
+::java -ea mylibs.RedBlackBST .\src\main\resources\STSampleInput.txt
 ::java -ea mylibs.SeparateChainingHashST -test
 ::java -ea mylibs.SeparateChainingHashST algs4-data\tale.txt
 ::java -ea mylibs.SeparateChainingHashST -resizeTest algs4-data\tale.txt
 ::java -ea mylibs.LinearProbingHashST algs4-data\tale.txt
 ::java -ea mylibs.HashSTint .\src\main\resources\8KIntStringPairs.txt
-
-:: TODO: continue here
-::java -ea mylibs.HashSTdouble .\src\main\resources\8KDoubleStringPairs.txt
-
+java -ea mylibs.HashSTdouble .\src\main\resources\8KDoubleStringPairs.txt
 ::java -ea mylibs.Set -test
 ::java -ea mylibs.Set .\src\main\resources\STSampleInput.txt
 ::java -ea mylibs.HashSet algs4-data\tale.txt
