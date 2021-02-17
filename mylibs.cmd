@@ -76,8 +76,9 @@ javac src\main\java\mylibs\Set.java -d .\
 ::java -ea mylibs.SeparateChainingHashST algs4-data\tale.txt
 ::java -ea mylibs.SeparateChainingHashST -resizeTest algs4-data\tale.txt
 ::java -ea mylibs.LinearProbingHashST algs4-data\tale.txt
-java -ea mylibs.Set -test
-java -ea mylibs.Set .\src\main\resources\STSampleInput.txt
+::java -ea mylibs.Set -test
+::java -ea mylibs.Set .\src\main\resources\STSampleInput.txt
+java -ea mylibs.HashSet algs4-data\tale.txt
 ::java -ea mylibs.Graph src\main\resources\myMediumG.txt
 ::java -ea mylibs.Graph -test src\main\resources\myMediumG.txt
 
