@@ -37,7 +37,8 @@ cls
 ::javac src\main\java\mylibs\LinkedListOrderedSequentialSearchST.java -d .\
 ::javac src\main\java\mylibs\RecursiveBST.java -d .\
 ::javac src\main\java\mylibs\BST.java -d .\
-::javac src\main\java\mylibs\RedBlackBST.java -d .\
+javac src\main\java\mylibs\RedBlackBST.java -d .\
+javac src\main\java\mylibs\STint.java -d .\
 ::javac src\main\java\mylibs\SeparateChainingHashST.java -d .\
 ::javac src\main\java\mylibs\LinearProbingHashST.java -d .\
 ::javac src\main\java\mylibs\HashSTint.java -d .\
@@ -75,8 +76,10 @@ javac src\main\java\mylibs\Set.java -d .\
 ::java -ea mylibs.RecursiveBST .\src\main\resources\STSampleInput.txt
 ::java -ea mylibs.BST -test
 ::java -ea mylibs.BST .\src\main\resources\STSampleInput.txt
-::java -ea mylibs.RedBlackBST -test
-::java -ea mylibs.RedBlackBST .\src\main\resources\STSampleInput.txt
+java -ea mylibs.RedBlackBST -test
+java -ea mylibs.RedBlackBST .\src\main\resources\STSampleInput.txt
+java -ea mylibs.STint -test
+java -ea mylibs.STint .\src\main\resources\8KIntStringPairs.txt
 ::java -ea mylibs.SeparateChainingHashST -test
 ::java -ea mylibs.SeparateChainingHashST algs4-data\tale.txt
 ::java -ea mylibs.SeparateChainingHashST -resizeTest algs4-data\tale.txt

@@ -367,7 +367,10 @@ public class Set<Key extends Comparable<Key>>
         {
             if(isRed(node.right) && !isRed(node.left)) node = rotateLeft(node);
             if(isRed(node.left) && isRed(node.left.right) && node.left.right != null)
+            {
                 node.left = rotateLeft(node.left);
+                updateNodeN(node.left);
+            }
             if(isRed(node.left) && isRed(node.left.left) && !isRed(node.right))
                 node = rotateRight(node);
             if(isRed(node.left) && isRed(node.right)) node = passUpRed(node);
