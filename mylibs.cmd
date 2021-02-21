@@ -39,13 +39,15 @@ cls
 ::javac src\main\java\mylibs\BST.java -d .\
 ::javac src\main\java\mylibs\RedBlackBST.java -d .\
 ::javac src\main\java\mylibs\STint.java -d .\
-javac src\main\java\mylibs\STdouble.java -d .\
+::javac src\main\java\mylibs\STdouble.java -d .\
 ::javac src\main\java\mylibs\SeparateChainingHashST.java -d .\
 ::javac src\main\java\mylibs\LinearProbingHashST.java -d .\
 ::javac src\main\java\mylibs\HashSTint.java -d .\
 ::javac src\main\java\mylibs\HashSTdouble.java -d .\
 ::javac src\main\java\mylibs\Set.java -d .\
 ::javac src\main\java\mylibs\HashSet.java -d .\
+javac src\main\java\mylibs\HashSetint.java -d .\
+javac src\main\java\mylibs\HashSetdouble.java -d .\
 ::javac src\main\java\mylibs\SequentialSearchSet.java -d .\
 ::javac src\main\java\mylibs\BinarySearchSet.java -d .\
 ::javac src\main\java\mylibs\Graph.java -d .\
@@ -81,8 +83,8 @@ javac src\main\java\mylibs\STdouble.java -d .\
 ::java -ea mylibs.RedBlackBST .\src\main\resources\STSampleInput.txt
 ::java -ea mylibs.STint -test
 ::java -ea mylibs.STint .\src\main\resources\8KIntStringPairs.txt
-java -ea mylibs.STdouble -test
-java -ea mylibs.STdouble .\src\main\resources\8KDoubleStringPairs.txt
+::java -ea mylibs.STdouble -test
+::java -ea mylibs.STdouble .\src\main\resources\8KDoubleStringPairs.txt
 ::java -ea mylibs.SeparateChainingHashST -test
 ::java -ea mylibs.SeparateChainingHashST algs4-data\tale.txt
 ::java -ea mylibs.SeparateChainingHashST -resizeTest algs4-data\tale.txt
@@ -92,6 +94,8 @@ java -ea mylibs.STdouble .\src\main\resources\8KDoubleStringPairs.txt
 ::java -ea mylibs.Set -test
 ::java -ea mylibs.Set .\src\main\resources\STSampleInput.txt
 ::java -ea mylibs.HashSet algs4-data\tale.txt
+java -ea mylibs.HashSetint src\main\resources\8Kints.txt
+java -ea mylibs.HashSetdouble src\main\resources\8Kdoubles.txt
 ::java -ea mylibs.SequentialSearchSet -test
 ::java -ea mylibs.SequentialSearchSet .\src\main\resources\STSampleInput.txt
 ::java -ea mylibs.BinarySearchSet -test
