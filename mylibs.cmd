@@ -41,11 +41,11 @@ cls
 ::javac src\main\java\mylibs\STint.java -d .\
 ::javac src\main\java\mylibs\STdouble.java -d .\
 ::javac src\main\java\mylibs\SeparateChainingHashST.java -d .\
-::javac src\main\java\mylibs\LinearProbingHashST.java -d .\
-::javac src\main\java\mylibs\HashSTint.java -d .\
-::javac src\main\java\mylibs\HashSTdouble.java -d .\
+javac src\main\java\mylibs\LinearProbingHashST.java -d .\
+javac src\main\java\mylibs\HashSTint.java -d .\
+javac src\main\java\mylibs\HashSTdouble.java -d .\
 ::javac src\main\java\mylibs\Set.java -d .\
-::javac src\main\java\mylibs\HashSet.java -d .\
+javac src\main\java\mylibs\HashSet.java -d .\
 javac src\main\java\mylibs\HashSetint.java -d .\
 javac src\main\java\mylibs\HashSetdouble.java -d .\
 ::javac src\main\java\mylibs\SequentialSearchSet.java -d .\
@@ -88,12 +88,12 @@ javac src\main\java\mylibs\HashSetdouble.java -d .\
 ::java -ea mylibs.SeparateChainingHashST -test
 ::java -ea mylibs.SeparateChainingHashST algs4-data\tale.txt
 ::java -ea mylibs.SeparateChainingHashST -resizeTest algs4-data\tale.txt
-::java -ea mylibs.LinearProbingHashST algs4-data\tale.txt
-::java -ea mylibs.HashSTint .\src\main\resources\8KIntStringPairs.txt
-::java -ea mylibs.HashSTdouble .\src\main\resources\8KDoubleStringPairs.txt
+java -ea mylibs.LinearProbingHashST algs4-data\tale.txt
+java -ea mylibs.HashSTint .\src\main\resources\8KIntStringPairs.txt
+java -ea mylibs.HashSTdouble .\src\main\resources\8KDoubleStringPairs.txt
 ::java -ea mylibs.Set -test
 ::java -ea mylibs.Set .\src\main\resources\STSampleInput.txt
-::java -ea mylibs.HashSet algs4-data\tale.txt
+java -ea mylibs.HashSet algs4-data\tale.txt
 java -ea mylibs.HashSetint src\main\resources\8Kints.txt
 java -ea mylibs.HashSetdouble src\main\resources\8Kdoubles.txt
 ::java -ea mylibs.SequentialSearchSet -test

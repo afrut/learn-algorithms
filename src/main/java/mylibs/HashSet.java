@@ -180,7 +180,10 @@ public class HashSet<Key>
     {
     	int i = hash(key);
     	while(keys[i] != null)
+        {
     		if(keys[i].equals(key)) return true;
+            i = inc(i);
+        }
     	return false;
     }
 

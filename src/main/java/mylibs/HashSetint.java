@@ -184,7 +184,7 @@ public class HashSetint
     	while(keys[i] != 0 || i == zeroloc)
         {
     		if(keys[i] == key) return true;
-            i++;
+            i = inc(i);
         }
     	return false;
     }

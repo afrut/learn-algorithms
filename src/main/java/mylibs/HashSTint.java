@@ -229,7 +229,10 @@ public class HashSTint<Value>
     {
     	int i = hash(key);
     	while(vals[i] != null)
+        {
     		if(keys[i] == key) return true;
+            i = inc(i);
+        }
     	return false;
     }
 
