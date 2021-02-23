@@ -360,12 +360,18 @@ public class Setint
             else
             {
                 node = prepareRightNode(node);
-                node.right = deleteMin(node.right);
+                if(node.key < key)
+                {
+                    node = delete(node, key);
+                }
+                else
+                    node.right = deleteMin(node.right);
                 updateNodeN(node);
             }
             if(minnode != null)
             {
-                node.key = minnode.key;
+                if(node.key == key)
+                    node.key = minnode.key;
             }
             else node = null;
         }

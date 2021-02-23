@@ -409,16 +409,26 @@ public class RedBlackBST<Key extends Comparable<Key>, Value>
                 minnode = node.left;
                 node = prepareLeftNode(node);
                 node.left = deleteMax(node.left);
+                updateNodeN(node);
             }
             else
             {
                 node = prepareRightNode(node);
-                node.right = deleteMin(node.right);
+                if(node.key.compareTo(key) < 0)
+                {
+                    node = delete(node, key);
+                }
+                else
+                    node.right = deleteMin(node.right);
+                updateNodeN(node);
             }
             if(minnode != null)
             {
-                node.key = minnode.key;
-                node.value = minnode.value;
+            	if(node.key.compareTo(key) == 0)
+            	{
+            		node.key = minnode.key;
+            		node.value = minnode.value;
+            	}
             }
             else node = null;
         }
@@ -1334,7 +1344,10 @@ public class RedBlackBST<Key extends Comparable<Key>, Value>
             pf = "fail"; ret = st.height23(); if(ret == 2) pf = "pass"; System.out.println("    " + pf + " - height23(): " + ret);
             pf = "fail"; ret = st.heightCompute23(); if(ret == 2) pf = "pass"; System.out.println("    " + pf + " - heightCompute23(): " + ret);
             pf = "fail"; ret = st.checkBlackBalance(); if(ret == 2) pf = "pass"; System.out.println("    " + pf + " - checkBlackBalance(): " + ret);
-            pf = "fail"; sz = st.size(); ret = 30; st.delete(ret); retBool = st.contains(ret); if(!retBool && st.size() + 1 == sz) pf = "pass"; System.out.println("    " + pf + " - delete(" + ret + "): " + st.toString());
+            pf = "fail"; sz = st.size(); ret = 30;
+            st.delete(ret);
+            retBool = st.contains(ret);
+            if(!retBool && st.size() + 1 == sz) pf = "pass"; System.out.println("    " + pf + " - delete(" + ret + "): " + st.toString());
             pf = "fail"; ret = st.height(); if(ret == 3) pf = "pass"; System.out.println("    " + pf + " - height(): " + ret);
             pf = "fail"; ret = st.heightCompute(); if(ret == 3) pf = "pass"; System.out.println("    " + pf + " - heightCompute(): " + ret);
             pf = "fail"; ret = st.height23(); if(ret == 2) pf = "pass"; System.out.println("    " + pf + " - height23(): " + ret);

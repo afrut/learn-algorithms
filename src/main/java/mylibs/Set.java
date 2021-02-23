@@ -353,11 +353,19 @@ public class Set<Key extends Comparable<Key>>
             else
             {
                 node = prepareRightNode(node);
-                node.right = deleteMin(node.right);
+                if(node.key.compareTo(key) < 0)
+                {
+                    node = delete(node, key);
+                }
+                else
+                    node.right = deleteMin(node.right);
             }
             if(minnode != null)
             {
-                node.key = minnode.key;
+            	if(node.key.compareTo(key) == 0)
+            	{
+            		node.key = minnode.key;
+            	}
             }
             else node = null;
         }

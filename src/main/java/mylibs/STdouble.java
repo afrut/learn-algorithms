@@ -364,13 +364,21 @@ public class STdouble<Value>
             else
             {
                 node = prepareRightNode(node);
-                node.right = deleteMin(node.right);
+                if(node.key < key)
+                {
+                    node = delete(node, key);
+                }
+                else
+                    node.right = deleteMin(node.right);
                 updateNodeN(node);
             }
             if(minnode != null)
             {
-                node.key = minnode.key;
-                node.value = minnode.value;
+                if(node.key == key)
+                {
+                    node.key = minnode.key;
+                    node.value = minnode.value;
+                }
             }
             else node = null;
         }

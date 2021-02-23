@@ -360,12 +360,18 @@ public class Setdouble
             else
             {
                 node = prepareRightNode(node);
-                node.right = deleteMin(node.right);
+                if(node.key < key)
+                {
+                    node = delete(node, key);
+                }
+                else
+                    node.right = deleteMin(node.right);
                 updateNodeN(node);
             }
             if(minnode != null)
             {
-                node.key = minnode.key;
+                if(node.key == key)
+                    node.key = minnode.key;
             }
             else node = null;
         }
@@ -979,7 +985,7 @@ public class Setdouble
             System.out.println("");
 
             System.out.println("Testing all operations with 1 element:");
-            pf = "fail"; st.put(30.398); if(st.toString().equals(st.toString())) pf = "pass"; System.out.println("    " + pf + " - put(30.398, A): " + st.toString());
+            pf = "fail"; st.put(30.398); if(st.toString().equals(st.toString())) pf = "pass"; System.out.println("    " + pf + " - put(30.398): " + st.toString());
             pf = "fail"; ret = st.checkBlackBalance(); if(ret == 1) pf = "pass"; System.out.println("    " + pf + " - checkBlackBalance(): " + ret);
             pf = "fail"; retBool = st.isEmpty(); if(!retBool) pf = "pass"; System.out.println("    " + pf + " - isEmpty(): " + retBool);
             pf = "fail"; ret = st.size(); if(ret == 1) pf = "pass"; System.out.println("    " + pf + " - size(): " + st.size());
@@ -1014,36 +1020,36 @@ public class Setdouble
             pf = "fail"; ret = st.heightCompute(); if(ret == 1) pf = "pass"; System.out.println("    " + pf + " - heightCompute(): " + ret);
             pf = "fail"; ret = st.height23(); if(ret == 1) pf = "pass"; System.out.println("    " + pf + " - height23(): " + ret);
             pf = "fail"; ret = st.heightCompute23(); if(ret == 1) pf = "pass"; System.out.println("    " + pf + " - heightCompute23(): " + ret);
-            pf = "fail"; st.put(10.046); retStr = st.toString(); if(retStr.equals("(10.046, B), (30.398, A)")) pf = "pass"; System.out.println("    " + pf + " - put(10.046, B): " + retStr);
+            pf = "fail"; st.put(10.046); retStr = st.toString(); if(retStr.equals("10.046, 30.398")) pf = "pass"; System.out.println("    " + pf + " - put(10.046): " + retStr);
             pf = "fail"; ret = st.height(); if(ret == 2) pf = "pass"; System.out.println("    " + pf + " - height(): " + ret);
             pf = "fail"; ret = st.heightCompute(); if(ret == 2) pf = "pass"; System.out.println("    " + pf + " - heightCompute(): " + ret);
             pf = "fail"; ret = st.height23(); if(ret == 1) pf = "pass"; System.out.println("    " + pf + " - height23(): " + ret);
             pf = "fail"; ret = st.heightCompute23(); if(ret == 1) pf = "pass"; System.out.println("    " + pf + " - heightCompute23(): " + ret);
             pf = "fail"; ret = st.checkBlackBalance(); if(ret == 1) pf = "pass"; System.out.println("    " + pf + " - checkBlackBalance(): " + ret);
-            pf = "fail"; st.delete(10.046); retStr = st.toString(); if(retStr.equals("(30.398, A)")) pf = "pass"; System.out.println("    " + pf + " - delete(10.046): " + retStr);
+            pf = "fail"; st.delete(10.046); retStr = st.toString(); if(retStr.equals("30.398")) pf = "pass"; System.out.println("    " + pf + " - delete(10.046): " + retStr);
             pf = "fail"; ret = st.height(); if(ret == 1) pf = "pass"; System.out.println("    " + pf + " - height(): " + ret);
             pf = "fail"; ret = st.heightCompute(); if(ret == 1) pf = "pass"; System.out.println("    " + pf + " - heightCompute(): " + ret);
             pf = "fail"; ret = st.height23(); if(ret == 1) pf = "pass"; System.out.println("    " + pf + " - height23(): " + ret);
             pf = "fail"; ret = st.heightCompute23(); if(ret == 1) pf = "pass"; System.out.println("    " + pf + " - heightCompute23(): " + ret);
-            pf = "fail"; st.put(45.454); retStr = st.toString(); if(retStr.equals("(30.398, A), (45.454, C)")) pf = "pass"; System.out.println("    " + pf + " - put(45.454, C): " + retStr);
+            pf = "fail"; st.put(45.454); retStr = st.toString(); if(retStr.equals("30.398, 45.454")) pf = "pass"; System.out.println("    " + pf + " - put(45.454): " + retStr);
             pf = "fail"; ret = st.checkBlackBalance(); if(ret == 1) pf = "pass"; System.out.println("    " + pf + " - checkBlackBalance(): " + ret);
             pf = "fail"; ret = st.height(); if(ret == 2) pf = "pass"; System.out.println("    " + pf + " - height(): " + ret);
             pf = "fail"; ret = st.heightCompute(); if(ret == 2) pf = "pass"; System.out.println("    " + pf + " - heightCompute(): " + ret);
             pf = "fail"; ret = st.height23(); if(ret == 1) pf = "pass"; System.out.println("    " + pf + " - height23(): " + ret);
             pf = "fail"; ret = st.heightCompute23(); if(ret == 1) pf = "pass"; System.out.println("    " + pf + " - heightCompute23(): " + ret);
-            pf = "fail"; st.put(10.046); retStr = st.toString(); if(retStr.equals("(10.046, B), (30.398, A), (45.454, C)")) pf = "pass"; System.out.println("    " + pf + " - put(10.046, B): " + retStr);
+            pf = "fail"; st.put(10.046); retStr = st.toString(); if(retStr.equals("10.046, 30.398, 45.454")) pf = "pass"; System.out.println("    " + pf + " - put(10.046): " + retStr);
             pf = "fail"; ret = st.height(); if(ret == 2) pf = "pass"; System.out.println("    " + pf + " - height(): " + ret);
             pf = "fail"; ret = st.heightCompute(); if(ret == 2) pf = "pass"; System.out.println("    " + pf + " - heightCompute(): " + ret);
             pf = "fail"; ret = st.height23(); if(ret == 2) pf = "pass"; System.out.println("    " + pf + " - height23(): " + ret);
             pf = "fail"; ret = st.heightCompute23(); if(ret == 2) pf = "pass"; System.out.println("    " + pf + " - heightCompute23(): " + ret);
             pf = "fail"; ret = st.checkBlackBalance(); if(ret == 2) pf = "pass"; System.out.println("    " + pf + " - checkBlackBalance(): " + ret);
-            pf = "fail"; st.deleteMin(); retStr = st.toString(); if(retStr.equals("(30.398, A), (45.454, C)")) pf = "pass"; System.out.println("    " + pf + " - deleteMin(): " + retStr);
+            pf = "fail"; st.deleteMin(); retStr = st.toString(); if(retStr.equals("30.398, 45.454")) pf = "pass"; System.out.println("    " + pf + " - deleteMin(): " + retStr);
             pf = "fail"; ret = st.height(); if(ret == 2) pf = "pass"; System.out.println("    " + pf + " - height(): " + ret);
             pf = "fail"; ret = st.heightCompute(); if(ret == 2) pf = "pass"; System.out.println("    " + pf + " - heightCompute(): " + ret);
             pf = "fail"; ret = st.height23(); if(ret == 1) pf = "pass"; System.out.println("    " + pf + " - height23(): " + ret);
             pf = "fail"; ret = st.heightCompute23(); if(ret == 1) pf = "pass"; System.out.println("    " + pf + " - heightCompute23(): " + ret);
             pf = "fail"; ret = st.checkBlackBalance(); if(ret == 1) pf = "pass"; System.out.println("    " + pf + " - checkBlackBalance(): " + ret);
-            pf = "fail"; st.deleteMax(); retStr = st.toString(); if(retStr.equals("(30.398, A)")) pf = "pass"; System.out.println("    " + pf + " - deleteMax(): " + retStr);
+            pf = "fail"; st.deleteMax(); retStr = st.toString(); if(retStr.equals("30.398")) pf = "pass"; System.out.println("    " + pf + " - deleteMax(): " + retStr);
             pf = "fail"; ret = st.height(); if(ret == 1) pf = "pass"; System.out.println("    " + pf + " - height(): " + ret);
             pf = "fail"; ret = st.heightCompute(); if(ret == 1) pf = "pass"; System.out.println("    " + pf + " - heightCompute(): " + ret);
             pf = "fail"; ret = st.height23(); if(ret == 1) pf = "pass"; System.out.println("    " + pf + " - height23(): " + ret);
@@ -1055,7 +1061,7 @@ public class Setdouble
             pf = "fail"; ret = st.height23(); if(ret == 0) pf = "pass"; System.out.println("    " + pf + " - height23(): " + ret);
             pf = "fail"; ret = st.heightCompute23(); if(ret == 0) pf = "pass"; System.out.println("    " + pf + " - heightCompute23(): " + ret);
             pf = "fail"; ret = st.checkBlackBalance(); if(ret == 0) pf = "pass"; System.out.println("    " + pf + " - checkBlackBalance(): " + ret);
-            pf = "fail"; st.put(30.398); retStr = st.toString(); if(retStr.equals("(30.398, A)")) pf = "pass"; System.out.println("    " + pf + " - put(30.398, A): " + retStr);
+            pf = "fail"; st.put(30.398); retStr = st.toString(); if(retStr.equals("30.398")) pf = "pass"; System.out.println("    " + pf + " - put(30.398): " + retStr);
             pf = "fail"; ret = st.height(); if(ret == 1) pf = "pass"; System.out.println("    " + pf + " - height(): " + ret);
             pf = "fail"; ret = st.heightCompute(); if(ret == 1) pf = "pass"; System.out.println("    " + pf + " - heightCompute(): " + ret);
             pf = "fail"; ret = st.height23(); if(ret == 1) pf = "pass"; System.out.println("    " + pf + " - height23(): " + ret);
@@ -1070,85 +1076,85 @@ public class Setdouble
             System.out.println("");
 
             System.out.println("Populating symbol table:");
-            pf = "fail"; st.put(30.398); retStr = st.toString(); if(retStr.equals("(30.398, A)")) pf = "pass"; System.out.println("    " + pf + " - put(30.398, A), size() = " + st.size() + ": " + retStr);
+            pf = "fail"; st.put(30.398); retStr = st.toString(); if(retStr.equals("30.398")) pf = "pass"; System.out.println("    " + pf + " - put(30.398), size() = " + st.size() + ": " + retStr);
             pf = "fail"; ret = st.height(); if(ret == 1) pf = "pass"; System.out.println("    " + pf + " - height(): " + ret);
             pf = "fail"; ret = st.heightCompute(); if(ret == 1) pf = "pass"; System.out.println("    " + pf + " - heightCompute(): " + ret);
             pf = "fail"; ret = st.height23(); if(ret == 1) pf = "pass"; System.out.println("    " + pf + " - height23(): " + ret);
             pf = "fail"; ret = st.heightCompute23(); if(ret == 1) pf = "pass"; System.out.println("    " + pf + " - heightCompute23(): " + ret);
             pf = "fail"; ret = st.checkBlackBalance(); if(ret == 1) pf = "pass"; System.out.println("    " + pf + " - checkBlackBalance(): " + ret);
-            pf = "fail"; st.put(45.454); retStr = st.toString(); if(retStr.equals("(30.398, A), (45.454, B)")) pf = "pass"; System.out.println("    " + pf + " - put(45.454, B), size() = " + st.size() + ": " + retStr);
+            pf = "fail"; st.put(45.454); retStr = st.toString(); if(retStr.equals("30.398, 45.454")) pf = "pass"; System.out.println("    " + pf + " - put(45.454), size() = " + st.size() + ": " + retStr);
             pf = "fail"; ret = st.height(); if(ret == 2) pf = "pass"; System.out.println("    " + pf + " - height(): " + ret);
             pf = "fail"; ret = st.heightCompute(); if(ret == 2) pf = "pass"; System.out.println("    " + pf + " - heightCompute(): " + ret);
             pf = "fail"; ret = st.height23(); if(ret == 1) pf = "pass"; System.out.println("    " + pf + " - height23(): " + ret);
             pf = "fail"; ret = st.heightCompute23(); if(ret == 1) pf = "pass"; System.out.println("    " + pf + " - heightCompute23(): " + ret);
             pf = "fail"; ret = st.checkBlackBalance(); if(ret == 1) pf = "pass"; System.out.println("    " + pf + " - checkBlackBalance(): " + ret);
-            pf = "fail"; st.put(10.046); retStr = st.toString(); if(retStr.equals("(10.046, C), (30.398, A), (45.454, B)")) pf = "pass"; System.out.println("    " + pf + " - put(10.046, C), size() = " + st.size() + ": " + retStr);
+            pf = "fail"; st.put(10.046); retStr = st.toString(); if(retStr.equals("10.046, 30.398, 45.454")) pf = "pass"; System.out.println("    " + pf + " - put(10.046), size() = " + st.size() + ": " + retStr);
             pf = "fail"; ret = st.height(); if(ret == 2) pf = "pass"; System.out.println("    " + pf + " - height(): " + ret);
             pf = "fail"; ret = st.heightCompute(); if(ret == 2) pf = "pass"; System.out.println("    " + pf + " - heightCompute(): " + ret);
             pf = "fail"; ret = st.height23(); if(ret == 2) pf = "pass"; System.out.println("    " + pf + " - height23(): " + ret);
             pf = "fail"; ret = st.heightCompute23(); if(ret == 2) pf = "pass"; System.out.println("    " + pf + " - heightCompute23(): " + ret);
             pf = "fail"; ret = st.checkBlackBalance(); if(ret == 2) pf = "pass"; System.out.println("    " + pf + " - checkBlackBalance(): " + ret);
-            pf = "fail"; st.put(15.983); retStr = st.toString(); if(retStr.equals("(10.046, C), (15.983, D), (30.398, A), (45.454, B)")) pf = "pass"; System.out.println("    " + pf + " - put(15.983, D), size() = " + st.size() + ": " + retStr);
+            pf = "fail"; st.put(15.983); retStr = st.toString(); if(retStr.equals("10.046, 15.983, 30.398, 45.454")) pf = "pass"; System.out.println("    " + pf + " - put(15.983), size() = " + st.size() + ": " + retStr);
             pf = "fail"; ret = st.height(); if(ret == 3) pf = "pass"; System.out.println("    " + pf + " - height(): " + ret);
             pf = "fail"; ret = st.heightCompute(); if(ret == 3) pf = "pass"; System.out.println("    " + pf + " - heightCompute(): " + ret);
             pf = "fail"; ret = st.height23(); if(ret == 2) pf = "pass"; System.out.println("    " + pf + " - height23(): " + ret);
             pf = "fail"; ret = st.heightCompute23(); if(ret == 2) pf = "pass"; System.out.println("    " + pf + " - heightCompute23(): " + ret);
             pf = "fail"; ret = st.checkBlackBalance(); if(ret == 2) pf = "pass"; System.out.println("    " + pf + " - checkBlackBalance(): " + ret);
-            pf = "fail"; st.put(25.501); retStr = st.toString(); if(retStr.equals("(10.046, C), (15.983, D), (25.501, E), (30.398, A), (45.454, B)")) pf = "pass"; System.out.println("    " + pf + " - put(25.501, E), size() = " + st.size() + ": " + retStr);
+            pf = "fail"; st.put(25.501); retStr = st.toString(); if(retStr.equals("10.046, 15.983, 25.501, 30.398, 45.454")) pf = "pass"; System.out.println("    " + pf + " - put(25.501), size() = " + st.size() + ": " + retStr);
             pf = "fail"; ret = st.height(); if(ret == 3) pf = "pass"; System.out.println("    " + pf + " - height(): " + ret);
             pf = "fail"; ret = st.heightCompute(); if(ret == 3) pf = "pass"; System.out.println("    " + pf + " - heightCompute(): " + ret);
             pf = "fail"; ret = st.height23(); if(ret == 2) pf = "pass"; System.out.println("    " + pf + " - height23(): " + ret);
             pf = "fail"; ret = st.heightCompute23(); if(ret == 2) pf = "pass"; System.out.println("    " + pf + " - heightCompute23(): " + ret);
             pf = "fail"; ret = st.checkBlackBalance(); if(ret == 2) pf = "pass"; System.out.println("    " + pf + " - checkBlackBalance(): " + ret);
-            pf = "fail"; st.put(35.556); retStr = st.toString(); if(retStr.equals("(10.046, C), (15.983, D), (25.501, E), (30.398, A), (35.556, F), (45.454, B)")) pf = "pass"; System.out.println("    " + pf + " - put(35.556, F), size() = " + st.size() + ": " + retStr);
+            pf = "fail"; st.put(35.556); retStr = st.toString(); if(retStr.equals("10.046, 15.983, 25.501, 30.398, 35.556, 45.454")) pf = "pass"; System.out.println("    " + pf + " - put(35.556), size() = " + st.size() + ": " + retStr);
             pf = "fail"; ret = st.height(); if(ret == 3) pf = "pass"; System.out.println("    " + pf + " - height(): " + ret);
             pf = "fail"; ret = st.heightCompute(); if(ret == 3) pf = "pass"; System.out.println("    " + pf + " - heightCompute(): " + ret);
             pf = "fail"; ret = st.height23(); if(ret == 2) pf = "pass"; System.out.println("    " + pf + " - height23(): " + ret);
             pf = "fail"; ret = st.heightCompute23(); if(ret == 2) pf = "pass"; System.out.println("    " + pf + " - heightCompute23(): " + ret);
             pf = "fail"; ret = st.checkBlackBalance(); if(ret == 2) pf = "pass"; System.out.println("    " + pf + " - checkBlackBalance(): " + ret);
-            pf = "fail"; st.put(60.333); retStr = st.toString(); if(retStr.equals("(10.046, C), (15.983, D), (25.501, E), (30.398, A), (35.556, F), (45.454, B), (60.333, G)")) pf = "pass"; System.out.println("    " + pf + " - put(60.333, G), size() = " + st.size() + ": " + retStr);
+            pf = "fail"; st.put(60.333); retStr = st.toString(); if(retStr.equals("10.046, 15.983, 25.501, 30.398, 35.556, 45.454, 60.333")) pf = "pass"; System.out.println("    " + pf + " - put(60.333), size() = " + st.size() + ": " + retStr);
             pf = "fail"; ret = st.height(); if(ret == 3) pf = "pass"; System.out.println("    " + pf + " - height(): " + ret);
             pf = "fail"; ret = st.heightCompute(); if(ret == 3) pf = "pass"; System.out.println("    " + pf + " - heightCompute(): " + ret);
             pf = "fail"; ret = st.height23(); if(ret == 3) pf = "pass"; System.out.println("    " + pf + " - height23(): " + ret);
             pf = "fail"; ret = st.heightCompute23(); if(ret == 3) pf = "pass"; System.out.println("    " + pf + " - heightCompute23(): " + ret);
             pf = "fail"; ret = st.checkBlackBalance(); if(ret == 3) pf = "pass"; System.out.println("    " + pf + " - checkBlackBalance(): " + ret);
-            pf = "fail"; st.put(5.192); retStr = st.toString(); if(retStr.equals("(5.192, H), (10.046, C), (15.983, D), (25.501, E), (30.398, A), (35.556, F), (45.454, B), (60.333, G)")) pf = "pass"; System.out.println("    " + pf + " - put(5.192, H), size() = " + st.size() + ": " + retStr);
+            pf = "fail"; st.put(5.192); retStr = st.toString(); if(retStr.equals("5.192, 10.046, 15.983, 25.501, 30.398, 35.556, 45.454, 60.333")) pf = "pass"; System.out.println("    " + pf + " - put(5.192), size() = " + st.size() + ": " + retStr);
             pf = "fail"; ret = st.height(); if(ret == 4) pf = "pass"; System.out.println("    " + pf + " - height(): " + ret);
             pf = "fail"; ret = st.heightCompute(); if(ret == 4) pf = "pass"; System.out.println("    " + pf + " - heightCompute(): " + ret);
             pf = "fail"; ret = st.height23(); if(ret == 3) pf = "pass"; System.out.println("    " + pf + " - height23(): " + ret);
             pf = "fail"; ret = st.heightCompute23(); if(ret == 3) pf = "pass"; System.out.println("    " + pf + " - heightCompute23(): " + ret);
             pf = "fail"; ret = st.checkBlackBalance(); if(ret == 3) pf = "pass"; System.out.println("    " + pf + " - checkBlackBalance(): " + ret);
-            pf = "fail"; st.put(13.267); retStr = st.toString(); if(retStr.equals("(5.192, H), (10.046, C), (13.267, I), (15.983, D), (25.501, E), (30.398, A), (35.556, F), (45.454, B), (60.333, G)")) pf = "pass"; System.out.println("    " + pf + " - put(13.267, I), size() = " + st.size() + ": " + retStr);
+            pf = "fail"; st.put(13.267); retStr = st.toString(); if(retStr.equals("5.192, 10.046, 13.267, 15.983, 25.501, 30.398, 35.556, 45.454, 60.333")) pf = "pass"; System.out.println("    " + pf + " - put(13.267), size() = " + st.size() + ": " + retStr);
             pf = "fail"; ret = st.height(); if(ret == 4) pf = "pass"; System.out.println("    " + pf + " - height(): " + ret);
             pf = "fail"; ret = st.heightCompute(); if(ret == 4) pf = "pass"; System.out.println("    " + pf + " - heightCompute(): " + ret);
             pf = "fail"; ret = st.height23(); if(ret == 3) pf = "pass"; System.out.println("    " + pf + " - height23(): " + ret);
             pf = "fail"; ret = st.heightCompute23(); if(ret == 3) pf = "pass"; System.out.println("    " + pf + " - heightCompute23(): " + ret);
             pf = "fail"; ret = st.checkBlackBalance(); if(ret == 3) pf = "pass"; System.out.println("    " + pf + " - checkBlackBalance(): " + ret);
-            pf = "fail"; st.put(3.002); retStr = st.toString(); if(retStr.equals("(3.002, J), (5.192, H), (10.046, C), (13.267, I), (15.983, D), (25.501, E), (30.398, A), (35.556, F), (45.454, B), (60.333, G)")) pf = "pass"; System.out.println("    " + pf + " - put(3.002, J), size() = " + st.size() + ": " + retStr);
+            pf = "fail"; st.put(3.002); retStr = st.toString(); if(retStr.equals("3.002, 5.192, 10.046, 13.267, 15.983, 25.501, 30.398, 35.556, 45.454, 60.333")) pf = "pass"; System.out.println("    " + pf + " - put(3.002), size() = " + st.size() + ": " + retStr);
             pf = "fail"; ret = st.height(); if(ret == 5) pf = "pass"; System.out.println("    " + pf + " - height(): " + ret);
             pf = "fail"; ret = st.heightCompute(); if(ret == 5) pf = "pass"; System.out.println("    " + pf + " - heightCompute(): " + ret);
             pf = "fail"; ret = st.height23(); if(ret == 3) pf = "pass"; System.out.println("    " + pf + " - height23(): " + ret);
             pf = "fail"; ret = st.heightCompute23(); if(ret == 3) pf = "pass"; System.out.println("    " + pf + " - heightCompute23(): " + ret);
             pf = "fail"; ret = st.checkBlackBalance(); if(ret == 3) pf = "pass"; System.out.println("    " + pf + " - checkBlackBalance(): " + ret);
-            pf = "fail"; st.put(11.742); retStr = st.toString(); if(retStr.equals("(3.002, J), (5.192, H), (10.046, C), (11.742, K), (13.267, I), (15.983, D), (25.501, E), (30.398, A), (35.556, F), (45.454, B), (60.333, G)")) pf = "pass"; System.out.println("    " + pf + " - put(11.742, K), size() = " + st.size() + ": " + retStr);
+            pf = "fail"; st.put(11.742); retStr = st.toString(); if(retStr.equals("3.002, 5.192, 10.046, 11.742, 13.267, 15.983, 25.501, 30.398, 35.556, 45.454, 60.333")) pf = "pass"; System.out.println("    " + pf + " - put(11.742), size() = " + st.size() + ": " + retStr);
             pf = "fail"; ret = st.height(); if(ret == 5) pf = "pass"; System.out.println("    " + pf + " - height(): " + ret);
             pf = "fail"; ret = st.heightCompute(); if(ret == 5) pf = "pass"; System.out.println("    " + pf + " - heightCompute(): " + ret);
             pf = "fail"; ret = st.height23(); if(ret == 3) pf = "pass"; System.out.println("    " + pf + " - height23(): " + ret);
             pf = "fail"; ret = st.heightCompute23(); if(ret == 3) pf = "pass"; System.out.println("    " + pf + " - heightCompute23(): " + ret);
             pf = "fail"; ret = st.checkBlackBalance(); if(ret == 3) pf = "pass"; System.out.println("    " + pf + " - checkBlackBalance(): " + ret);
-            pf = "fail"; st.put(20.773); retStr = st.toString(); if(retStr.equals("(3.002, J), (5.192, H), (10.046, C), (11.742, K), (13.267, I), (15.983, D), (20.773, L), (25.501, E), (30.398, A), (35.556, F), (45.454, B), (60.333, G)")) pf = "pass"; System.out.println("    " + pf + " - put(20.773, L), size() = " + st.size() + ": " + retStr);
+            pf = "fail"; st.put(20.773); retStr = st.toString(); if(retStr.equals("3.002, 5.192, 10.046, 11.742, 13.267, 15.983, 20.773, 25.501, 30.398, 35.556, 45.454, 60.333")) pf = "pass"; System.out.println("    " + pf + " - put(20.773), size() = " + st.size() + ": " + retStr);
             pf = "fail"; ret = st.height(); if(ret == 5) pf = "pass"; System.out.println("    " + pf + " - height(): " + ret);
             pf = "fail"; ret = st.heightCompute(); if(ret == 5) pf = "pass"; System.out.println("    " + pf + " - heightCompute(): " + ret);
             pf = "fail"; ret = st.height23(); if(ret == 3) pf = "pass"; System.out.println("    " + pf + " - height23(): " + ret);
             pf = "fail"; ret = st.heightCompute23(); if(ret == 3) pf = "pass"; System.out.println("    " + pf + " - heightCompute23(): " + ret);
             pf = "fail"; ret = st.checkBlackBalance(); if(ret == 3) pf = "pass"; System.out.println("    " + pf + " - checkBlackBalance(): " + ret);
-            pf = "fail"; st.put(27.277); retStr = st.toString(); if(retStr.equals("(3.002, J), (5.192, H), (10.046, C), (11.742, K), (13.267, I), (15.983, D), (20.773, L), (25.501, E), (27.277, M), (30.398, A), (35.556, F), (45.454, B), (60.333, G)")) pf = "pass"; System.out.println("    " + pf + " - put(27.277, M), size() = " + st.size() + ": " + retStr);
+            pf = "fail"; st.put(27.277); retStr = st.toString(); if(retStr.equals("3.002, 5.192, 10.046, 11.742, 13.267, 15.983, 20.773, 25.501, 27.277, 30.398, 35.556, 45.454, 60.333")) pf = "pass"; System.out.println("    " + pf + " - put(27.277), size() = " + st.size() + ": " + retStr);
             pf = "fail"; ret = st.height(); if(ret == 5) pf = "pass"; System.out.println("    " + pf + " - height(): " + ret);
             pf = "fail"; ret = st.heightCompute(); if(ret == 5) pf = "pass"; System.out.println("    " + pf + " - heightCompute(): " + ret);
             pf = "fail"; ret = st.height23(); if(ret == 3) pf = "pass"; System.out.println("    " + pf + " - height23(): " + ret);
             pf = "fail"; ret = st.heightCompute23(); if(ret == 3) pf = "pass"; System.out.println("    " + pf + " - heightCompute23(): " + ret);
             pf = "fail"; ret = st.checkBlackBalance(); if(ret == 3) pf = "pass"; System.out.println("    " + pf + " - checkBlackBalance(): " + ret);
-            pf = "fail"; st.put(31.111); retStr = st.toString(); if(retStr.equals("(3.002, J), (5.192, H), (10.046, C), (11.742, K), (13.267, I), (15.983, D), (20.773, L), (25.501, E), (27.277, M), (30.398, A), (31.111, N), (35.556, F), (45.454, B), (60.333, G)")) pf = "pass"; System.out.println("    " + pf + " - put(31.111, N), size() = " + st.size() + ": " + retStr);
+            pf = "fail"; st.put(31.111); retStr = st.toString(); if(retStr.equals("3.002, 5.192, 10.046, 11.742, 13.267, 15.983, 20.773, 25.501, 27.277, 30.398, 31.111, 35.556, 45.454, 60.333")) pf = "pass"; System.out.println("    " + pf + " - put(31.111), size() = " + st.size() + ": " + retStr);
             pf = "fail"; ret = st.height(); if(ret == 5) pf = "pass"; System.out.println("    " + pf + " - height(): " + ret);
             pf = "fail"; ret = st.heightCompute(); if(ret == 5) pf = "pass"; System.out.println("    " + pf + " - heightCompute(): " + ret);
             pf = "fail"; ret = st.height23(); if(ret == 3) pf = "pass"; System.out.println("    " + pf + " - height23(): " + ret);
