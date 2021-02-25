@@ -17,6 +17,7 @@ public class LinearProbingHashST<Key, Value>
     private int[] primes;
     private Key[] keys;
     private Value[] vals;
+    private boolean allowDupKeys;
 
     // ----------------------------------------
     // Private classes
@@ -149,7 +150,14 @@ public class LinearProbingHashST<Key, Value>
 		primes = new int[]{0, 0, 0, 0, 0, 31, 61, 127, 251, 509, 1021, 2039, 4093, 8191, 16381, 32749, 65521, 131071, 262139, 524287, 1048573, 2097143, 4194301, 8388593, 16777213, 33554393, 67108859, 134217689, 268435399, 536870909, 1073741789, 2147483647};
 		keys = (Key[]) new Object[M];
 		vals = (Value[]) new Object[M];
+        allowDupKeys = false;
 	}
+
+    public LinearProbingHashST(boolean allowDupKeys)
+    {
+        this();
+        this.allowDupKeys = allowDupKeys;
+    }
 
     // ----------------------------------------
     // Primary operations
@@ -161,12 +169,13 @@ public class LinearProbingHashST<Key, Value>
     	while(keys[i] != null)
     	{
     		// spot in array is occupied; check for equality
-    		if(keys[i].equals(key))
+    		if(keys[i].equals(key) && !allowDupKeys)
     		{
     			keys[i] = key;
     			vals[i] = val;
     			break;
     		}
+            else if(allowDupKeys) {}
     		i = inc(i);
     	}
     	
@@ -199,31 +208,30 @@ public class LinearProbingHashST<Key, Value>
     	int i = hash(key);
     	while(keys[i] != null)
     	{
-    		if(keys[i].equals(key)) break;
+    		if(keys[i].equals(key))
+            {
+                // delete the entry
+                keys[i] = null;
+                vals[i] = null;
+                N--;
+                
+                // execute put(key, value) for all remaining
+                // elements in the cluster
+                int previ = i;
+                int i2 = inc(i);
+                while(keys[i2] != null)
+                {
+                    keys[previ] = keys[i2];
+                    vals[previ] = vals[i2];
+                    keys[i2] = null;
+                    vals[i2] = null;
+                    previ = i2;
+                    i2 = inc(i2);
+                }
+                if(!allowDupKeys) break;
+            }
     		i = inc(i);
-    	}
-    	
-    	if(keys[i] != null)
-    	{
-    		// delete the entry
-    		keys[i] = null;
-    		vals[i] = null;
-    		N--;
-    		
-    		// execute put(key, value) for all remaining
-    		// elements in the cluster
-    		while(keys[i] != null)
-    		{
-    			Key keytemp = keys[i];
-    			Value valtemp = vals[i];
-    			keys[i] = null;
-    			vals[i] = null;
-    			N--;
-    			this.put(keytemp, valtemp);
-    			i = inc(i);
-    		}
-    	}
-    	
+    	}   	
     	if(M / N > 8) resize(M / 2);
     }
 
@@ -301,6 +309,17 @@ public class LinearProbingHashST<Key, Value>
             if(++cnt >= 5) break;
         }
         System.out.println("");
+
+        // Test with duplicates
+        System.out.println("Allowing duplicates:");
+        st = new LinearProbingHashST<String, Integer>(true);
+        cnt = 0;
+        while(cnt < a.length)
+        {
+            st.put(a[cnt], cnt);
+            cnt++;
+        }
+        System.out.println("    st.size(): " + st.size());
 	}
 
 }
