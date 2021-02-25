@@ -106,8 +106,8 @@ javac src\main\java\mylibs\Graph.java -d .\
 ::java -ea mylibs.SequentialSearchSet .\src\main\resources\STSampleInput.txt
 ::java -ea mylibs.BinarySearchSet -test
 ::java -ea mylibs.BinarySearchSet .\src\main\resources\STSampleInput.txt
-java -ea mylibs.Graph src\main\resources\myMediumG.txt
-::java -ea mylibs.Graph -test src\main\resources\myMediumG.txt
+java -ea mylibs.Graph -test src\main\resources\myMediumG.txt
+::java -ea mylibs.Graph src\main\resources\myMediumG.txt
 
 :: Clean
 del /s .\mylibs\*.class

@@ -21,10 +21,13 @@ public class Graph
             adj[v] = new Bag<Integer>();
     }
     public Graph(Integer[] a)
+    {this(a, true, true);}
+    public Graph(Integer[] a, boolean allowParallelEdges, boolean allowSelfLoops)
     {
         this(a[0]);             // Read V and initialize each list in the array of lists.
-        int E = a[1];           // number of edges
-
+        this.allowParallelEdges = allowParallelEdges;
+        this.allowSelfLoops = allowSelfLoops;
+        
         // Loop through the source array a starting with the third element.
         // This loop reads integers two at a time, 2 vertices at a time, which
         // define an edge.
@@ -35,14 +38,6 @@ public class Graph
             int w = a[i + 1];   // read vertex 2 of the edge
             addEdge(v, w);      // add the edge represented by both vertices
         }
-        allowParallelEdges = true;
-        allowSelfLoops = true;
-    }
-    public Graph(Integer[] a, boolean allowParallelEdges, boolean allowSelfLoops)
-    {
-        this(a);
-        this.allowParallelEdges = allowParallelEdges;
-        this.allowSelfLoops = allowSelfLoops;
     }
     public Graph(Graph othergraph)
     {
@@ -71,7 +66,7 @@ public class Graph
     // add an edge by providing the two vertices connected by it
     public void addEdge(int v, int w)
     {
-        if((!allowParallelEdges && adj[v].contains(w)) {}
+        if(!allowParallelEdges && adj[v].contains(w)) {}
         else if((!allowSelfLoops && v == w)) {}
         else
         {
@@ -167,47 +162,76 @@ public class Graph
                 }
             }
         }
-
-        String[] in = Util.fromFile(filename);
-        Integer[] a = new Integer[in.length];
-        int cnt = 0;
-        while(cnt < a.length)
-        {
-            a[cnt] = Integer.parseInt(in[cnt]);
-            cnt++;
-        }
-        Graph G = new Graph(a);
-        System.out.println(G.toString());
-
+        
         // perform tests
         if(test)
         {
+            String[] in = Util.fromFile(filename);
+            Integer[] a = new Integer[in.length];
+
+            System.out.println("Executing basic tests");
+            int cnt = 0;
+            while(cnt < a.length)
+            {
+                a[cnt] = Integer.parseInt(in[cnt]);
+                cnt++;
+            }
+            Graph graph = new Graph(a);
+
             // test degree() function
-            int[] degrees = {21,10,9,8,11,10,11,13,14,7,5,12,12,8,7,16,11,9,7,10,10,10,6,8,13,5,11,10,11,10,17,5,17,6,6,9,6,8,5,8,10,11,10,12,19,9,4,9,11,17,12,9,10,10,6,11,8,14,15,11,6,6,11,5,13,17,6,7,13,3,11,14,10,6,5,9,8,13,11,11,13,8,11,8,12,6,8,6,6,9,5,12,7,17,7,7,5,18,7,7,8,14,9,7,12,8,10,7,14,12,16,4,9,10,17,8,9,9,12,11,9,11,13,5,10,11,5,2,10,10,7,7,5,6,10,7,6,14,15,12,7,7,13,13,17,12,13,11,11,12,11,12,14,8,7,11,15,13,9,8,15,9,5,12,11,10,7,4,14,8,12,13,13,4,10,7,15,9,6,14,8,15,12,7,14,13,9,13,15,11,9,16,8,7,11,6,11,12,11,5,8,11,19,10,20,13,5,16,11,14,15,12,18,10,17,7,4,10,9,15,13,14,19,13,7,19,13,9,7,8,14,15,11,8,6,10,7,4,9,10,14,7,9,9,13,4,12,7,16,11};
-            for(int v = 0; v < G.V(); v++)
+            int[] degrees = {21,10,9,8,11,10,11,13,14,7,5,12,12,8,7,16,11,9,7,10,10,10,6,8,13,5,11,10,11,10,17,5,17,6,6,9,6,8,6,8,10,11,10,12,20,9,4,9,11,17,12,9,10,10,6,11,8,14,15,11,6,6,11,5,13,17,6,7,13,3,11,14,10,6,5,9,8,13,11,12,13,8,11,8,12,6,8,6,6,9,5,12,7,17,7,7,5,18,7,7,8,14,9,7,12,8,10,7,14,13,16,4,9,10,17,8,9,9,12,11,9,11,13,5,10,11,5,2,10,10,7,7,5,6,10,7,6,14,15,12,7,7,13,13,17,12,13,11,11,12,11,12,14,8,7,11,15,13,9,8,15,9,5,12,11,10,7,4,14,8,12,13,13,4,11,7,16,9,6,14,8,15,12,7,14,13,9,13,15,11,9,16,8,7,11,6,11,12,11,5,8,11,19,10,20,13,5,16,11,14,15,12,18,10,17,7,4,10,9,15,13,14,19,13,7,19,13,9,7,8,14,15,11,8,6,10,7,4,9,10,14,7,9,9,13,4,12,7,16,11};
+            for(int v = 0; v < graph.V(); v++)
             {
                 // test Graph
-                int degree = Graph.degree(G, v);
+                int degree = Graph.degree(graph, v);
                 assert(degree == degrees[v]) :
-                    String.format("Degree of vertex %d is not %d but is %d", v, degree, degrees[v]);
+                String.format("Degree of vertex %d is not %d but is %d", v, degree, degrees[v]);
             }
-
+            
             // test maxDegree() function
-            int maxDegree = Graph.maxDegree(G);
+            int maxDegree = Graph.maxDegree(graph);
             assert(maxDegree == 21) : String.format("Maximum degree is not %d", maxDegree);
             
             // test the avgDegree() function
-            int avgDegree = Graph.avgDegree(G);
-            assert(avgDegree == (int)(2552/250)) : String.format("Average degree is not %d", avgDegree);
+            int avgDegree = Graph.avgDegree(graph);
+            assert(avgDegree == (int)(2558/250)) : String.format("Average degree is not %d", avgDegree);
             
             // test the numberOfSelfLoops() function
-            int numberOfSelfLoops = Graph.numberOfSelfLoops(G);
+            int numberOfSelfLoops = Graph.numberOfSelfLoops(graph);
             assert(numberOfSelfLoops == 3) : String.format("Number of self loops is not %d", numberOfSelfLoops);
             System.out.println("PASS");
 
             // test hasEdge() function
-            assert(G.hasEdge(116, 190)) : String.format("Graph has edge 116-190");
-            assert(!G.hasEdge(227, 0)) : String.format("Graph does not have edge 227-0");
+            assert(graph.hasEdge(116, 190)) : String.format("Graph has edge 116-190");
+            assert(!graph.hasEdge(227, 0)) : String.format("Graph does not have edge 227-0");
+            System.out.println("");
+
+            System.out.println("Executing tests disallowing self-loops and parallel edges:");
+            int vertex, deg;
+            graph = new Graph(a, false, false);
+            vertex = 109; deg = Graph.degree(graph, vertex); assert(deg == 12) : String.format("Degree of vertex %d is not %d but should be %d", vertex, deg, 12);
+            vertex = 38; deg = Graph.degree(graph, vertex); assert(deg == 5) : String.format("Degree of vertex %d is not %d but should be %d", vertex, deg, 5);
+            vertex = 174; deg = Graph.degree(graph, vertex); assert(deg == 10) : String.format("Degree of vertex %d is not %d but should be %d", vertex, deg, 10);
+            vertex = 79; deg = Graph.degree(graph, vertex); assert(deg == 11) : String.format("Degree of vertex %d is not %d but should be %d", vertex, deg, 11);
+            vertex = 176; deg = Graph.degree(graph, vertex); assert(deg == 15) : String.format("Degree of vertex %d is not %d but should be %d", vertex, deg, 15);
+            vertex = 44; deg = Graph.degree(graph, vertex); assert(deg == 19) : String.format("Degree of vertex %d is not %d but should be %d", vertex, deg, 19);
+            vertex = 50; deg = Graph.degree(graph, vertex); assert(deg == 10) : String.format("Degree of vertex %d is not %d but should be %d", vertex, deg, 10);
+            vertex = 147; deg = Graph.degree(graph, vertex); assert(deg == 9) : String.format("Degree of vertex %d is not %d but should be %d", vertex, deg, 9);
+            vertex = 223; deg = Graph.degree(graph, vertex); assert(deg == 11) : String.format("Degree of vertex %d is not %d but should be %d", vertex, deg, 11);
+            System.out.println("PASS");
+        }
+        else
+        {
+            String[] in = Util.fromFile(filename);
+            Integer[] a = new Integer[in.length];
+            int cnt = 0;
+            while(cnt < a.length)
+            {
+                a[cnt] = Integer.parseInt(in[cnt]);
+                cnt++;
+            }
+            Graph graph = new Graph(a);
+            System.out.println(graph.toString());
         }
     }
 }
