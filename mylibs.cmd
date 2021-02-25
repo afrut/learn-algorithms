@@ -28,10 +28,10 @@ cls
 ::javac src\main\java\mylibs\MaxPQ.java -d .\
 ::javac src\main\java\mylibs\MinPQ.java -d .\
 ::javac src\main\java\mylibs\IndexMaxPQ.java -d .\
-javac src\main\java\mylibs\QuickFindUF.java -d .\
-javac src\main\java\mylibs\QuickUnionUF.java -d .\
-javac src\main\java\mylibs\WeightedQuickUnionUF.java -d .\
-javac src\main\java\mylibs\QuickUnionPCUF.java -d .\
+::javac src\main\java\mylibs\QuickFindUF.java -d .\
+::javac src\main\java\mylibs\QuickUnionUF.java -d .\
+::javac src\main\java\mylibs\WeightedQuickUnionUF.java -d .\
+::javac src\main\java\mylibs\QuickUnionPCUF.java -d .\
 ::javac src\main\java\mylibs\Heapsort.java -d .\
 ::javac src\main\java\mylibs\BinarySearch.java -d .\
 ::javac src\main\java\mylibs\SymbolTable.java -d .\
@@ -57,6 +57,7 @@ javac src\main\java\mylibs\QuickUnionPCUF.java -d .\
 ::javac src\main\java\mylibs\SequentialSearchSet.java -d .\
 ::javac src\main\java\mylibs\BinarySearchSet.java -d .\
 ::javac src\main\java\mylibs\Graph.java -d .\
+javac src\main\java\mylibs\GraphSearchUF.java -d .\
 ::
 :::: Create a jar in .\jar\ from bytecode .class files in .\mylibs
 ::del .\jar\mylibs.jar
@@ -71,10 +72,10 @@ javac src\main\java\mylibs\QuickUnionPCUF.java -d .\
 ::java -ea mylibs.MaxPQ .\src\main\resources\PQSampleInput.txt
 ::java -ea mylibs.MinPQ .\src\main\resources\PQSampleInput.txt
 ::java -ea mylibs.IndexMaxPQ .\src\main\resources\PQSampleInput.txt
-java -ea mylibs.QuickFindUF .\src\main\resources\UnionFindSampleInput.txt
-java -ea mylibs.QuickUnionUF .\src\main\resources\UnionFindSampleInput.txt
-java -ea mylibs.WeightedQuickUnionUF .\src\main\resources\UnionFindSampleInput.txt
-java -ea mylibs.QuickUnionPCUF .\src\main\resources\UnionFindSampleInput.txt
+::java -ea mylibs.QuickFindUF .\src\main\resources\UnionFindSampleInput.txt
+::java -ea mylibs.QuickUnionUF .\src\main\resources\UnionFindSampleInput.txt
+::java -ea mylibs.WeightedQuickUnionUF .\src\main\resources\UnionFindSampleInput.txt
+::java -ea mylibs.QuickUnionPCUF .\src\main\resources\UnionFindSampleInput.txt
 ::java -ea mylibs.Heapsort
 ::java -ea mylibs.BinarySearch
 ::java -ea mylibs.LinkedListSequentialSearchST -test
@@ -116,6 +117,7 @@ java -ea mylibs.QuickUnionPCUF .\src\main\resources\UnionFindSampleInput.txt
 ::java -ea mylibs.BinarySearchSet .\src\main\resources\STSampleInput.txt
 ::java -ea mylibs.Graph -test src\main\resources\myMediumG.txt
 ::java -ea mylibs.Graph src\main\resources\myMediumG.txt
+java -ea mylibs.GraphSearchUF src\main\resources\myMediumG.txt
 
 :: Clean
 del /s .\mylibs\*.class

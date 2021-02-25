@@ -64,7 +64,7 @@ public class Graph
     public int E() { return E; }    // return number of edges
 
     // add an edge by providing the two vertices connected by it
-    public void addEdge(int v, int w)
+    private void addEdge(int v, int w)
     {
         if(!allowParallelEdges && adj[v].contains(w)) {}
         else if((!allowSelfLoops && v == w)) {}
@@ -187,6 +187,10 @@ public class Graph
                 assert(degree == degrees[v]) :
                 String.format("Degree of vertex %d is not %d but is %d", v, degree, degrees[v]);
             }
+
+            // test number of edges counting
+            int numEdges = graph.E();
+            assert(numEdges == 2558/2) : String.format("Number of edges is not %d should be %d", numEdges, 2558);
             
             // test maxDegree() function
             int maxDegree = Graph.maxDegree(graph);
