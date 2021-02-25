@@ -1,6 +1,5 @@
+package mylibs;
 import java.io.FileNotFoundException;
-import edu.princeton.cs.algs4.StdIn;
-import edu.princeton.cs.algs4.StdOut;
 import mylibs.Util;
 
 public class QuickFindUF
@@ -34,7 +33,7 @@ public class QuickFindUF
         int qID = find(q);
         // Nothing to do if p and q are already in the same component.
         if (pID == qID) return;
-        // Rename pâ€™s component to qâ€™s name.
+        // Rename p’s component to q’s name.
         for (int i = 0; i < id.length; i++)
             if (id[i] == pID) id[i] = qID;
         count--;
@@ -68,8 +67,8 @@ public class QuickFindUF
             if (uf.connected(p, q)) {} // do nothing if already connected
             else uf.union(p, q); // Combine components
             // and print connection.
-            StdOut.println(p + " " + q + " --- " + uf.toString());
+            System.out.println(p + " " + q + " --- " + uf.toString());
         }
-        StdOut.println(uf.count() + " components");
+        System.out.println(uf.count() + " components");
     }
 }

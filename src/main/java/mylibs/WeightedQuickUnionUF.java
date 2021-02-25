@@ -1,7 +1,5 @@
+package mylibs;
 import java.io.FileNotFoundException;
-
-import edu.princeton.cs.algs4.StdIn;
-import edu.princeton.cs.algs4.StdOut;
 import mylibs.Util;
 
 public class WeightedQuickUnionUF
@@ -79,8 +77,8 @@ public class WeightedQuickUnionUF
             else
                 uf.union(p, q); // Combine components
             // and print connection.
-            StdOut.println(p + " " + q + " --- " + uf.toString());
+            System.out.println(p + " " + q + " --- " + uf.toString());
         }
-        StdOut.println(uf.count() + " components");
+        System.out.println(uf.count() + " components");
     }
 }

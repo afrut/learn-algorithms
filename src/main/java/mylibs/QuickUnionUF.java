@@ -1,7 +1,5 @@
+package mylibs;
 import java.io.FileNotFoundException;
-
-import edu.princeton.cs.algs4.StdIn;
-import edu.princeton.cs.algs4.StdOut;
 import mylibs.Util;
 public class QuickUnionUF
 {
@@ -68,8 +66,8 @@ public class QuickUnionUF
             if (uf.connected(p, q)) {} // do nothing if already connected
             else uf.union(p, q); // Combine components
             // and print connection.
-            StdOut.println(p + " " + q + " --- " + uf.toString());
+            System.out.println(p + " " + q + " --- " + uf.toString());
         }
-        StdOut.println(uf.count() + " components");
+        System.out.println(uf.count() + " components");
     }
 }
