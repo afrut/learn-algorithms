@@ -11,6 +11,8 @@ public class Graph
     private final int V;        // number of vertices
     private int E;              // number of edges
     private Bag<Integer>[] adj; // adjacency lists
+    private boolean allowParallelEdges;
+    private boolean allowSelfLoops;
     public Graph(int V)
     {
         this.V = V; this.E = 0;
@@ -33,6 +35,14 @@ public class Graph
             int w = a[i + 1];   // read vertex 2 of the edge
             addEdge(v, w);      // add the edge represented by both vertices
         }
+        allowParallelEdges = true;
+        allowSelfLoops = true;
+    }
+    public Graph(Integer[] a, boolean allowParallelEdges, boolean allowSelfLoops)
+    {
+        this(a);
+        this.allowParallelEdges = allowParallelEdges;
+        this.allowSelfLoops = allowSelfLoops;
     }
     public Graph(Graph othergraph)
     {
@@ -61,8 +71,13 @@ public class Graph
     // add an edge by providing the two vertices connected by it
     public void addEdge(int v, int w)
     {
-        adj[v].add(w); // Add w to v’s list.
-        adj[w].add(v); // Add v to w’s list.
+        if((!allowParallelEdges && adj[v].contains(w)) {}
+        else if((!allowSelfLoops && v == w)) {}
+        else
+        {
+            adj[v].add(w); // Add w to v’s list.
+            adj[w].add(v); // Add v to w’s list.
+        }
         E++;
     }
 

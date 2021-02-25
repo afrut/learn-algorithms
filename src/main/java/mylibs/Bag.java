@@ -43,6 +43,12 @@ public class Bag<T> implements Iterable<T>
 
     public boolean isEmpty() {return N == 0;}
     public int size() {return N;}
+    public boolean contains(T p)
+    {
+        for(T t : this)
+            if(p.equals(t)) return true;
+        return false;
+    }
     public Iterator<T> iterator() {return new BagIterator();}
     public String toString()
     {

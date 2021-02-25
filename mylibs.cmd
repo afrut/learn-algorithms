@@ -41,7 +41,7 @@ cls
 ::javac src\main\java\mylibs\STint.java -d .\
 ::javac src\main\java\mylibs\STdouble.java -d .\
 ::javac src\main\java\mylibs\SeparateChainingHashST.java -d .\
-javac src\main\java\mylibs\LinearProbingHashST.java -d .\
+::javac src\main\java\mylibs\LinearProbingHashST.java -d .\
 ::javac src\main\java\mylibs\HashSTint.java -d .\
 ::javac src\main\java\mylibs\HashSTdouble.java -d .\
 ::javac src\main\java\mylibs\Set.java -d .\
@@ -52,7 +52,7 @@ javac src\main\java\mylibs\LinearProbingHashST.java -d .\
 ::javac src\main\java\mylibs\HashSetdouble.java -d .\
 ::javac src\main\java\mylibs\SequentialSearchSet.java -d .\
 ::javac src\main\java\mylibs\BinarySearchSet.java -d .\
-::javac src\main\java\mylibs\Graph.java -d .\
+javac src\main\java\mylibs\Graph.java -d .\
 ::
 :::: Create a jar in .\jar\ from bytecode .class files in .\mylibs
 ::del .\jar\mylibs.jar
@@ -90,7 +90,7 @@ javac src\main\java\mylibs\LinearProbingHashST.java -d .\
 ::java -ea mylibs.SeparateChainingHashST -test
 ::java -ea mylibs.SeparateChainingHashST algs4-data\tale.txt
 ::java -ea mylibs.SeparateChainingHashST -resizeTest algs4-data\tale.txt
-java -ea mylibs.LinearProbingHashST algs4-data\tale.txt
+::java -ea mylibs.LinearProbingHashST algs4-data\tale.txt
 ::java -ea mylibs.HashSTint .\src\main\resources\8KIntStringPairs.txt
 ::java -ea mylibs.HashSTdouble .\src\main\resources\8KDoubleStringPairs.txt
 ::java -ea mylibs.Set -test
@@ -106,7 +106,7 @@ java -ea mylibs.LinearProbingHashST algs4-data\tale.txt
 ::java -ea mylibs.SequentialSearchSet .\src\main\resources\STSampleInput.txt
 ::java -ea mylibs.BinarySearchSet -test
 ::java -ea mylibs.BinarySearchSet .\src\main\resources\STSampleInput.txt
-::java -ea mylibs.Graph src\main\resources\myMediumG.txt
+java -ea mylibs.Graph src\main\resources\myMediumG.txt
 ::java -ea mylibs.Graph -test src\main\resources\myMediumG.txt
 
 :: Clean
