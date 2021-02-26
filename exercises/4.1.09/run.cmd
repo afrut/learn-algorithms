@@ -1,0 +1,1 @@
+java -ea mylibs.GraphSearchRecursiveDFS ..\..\src\main\resources\tinyGex2.txt -trace

@@ -11,12 +11,17 @@ public class GraphSearchRecursiveDFS
     private int N;              // number of vertices connected to source
 
     public GraphSearchRecursiveDFS(Graph graph, int s)
+    {this(graph, s, false);}
+
+    public GraphSearchRecursiveDFS(Graph graph, int s, boolean trace)
     {
         this.source = s;
         this.graph = graph;
         N = -1; // the first call, dfs(source), unnecessarily increments
         marked = new boolean[graph.V()];
-        dfs(source);
+
+        if(!trace) dfs(source);
+        else dfs(source, "");
 
         // start at source
         // pick a random non-visited vertex to visit
@@ -24,6 +29,7 @@ public class GraphSearchRecursiveDFS
         // if no non-visited vertex exists, return
     }
 
+    // recursive depth-first search
     private void dfs(int v)
     {
         N++;
@@ -32,18 +38,43 @@ public class GraphSearchRecursiveDFS
             if(!marked[x]) dfs(x);
     }
 
+    // recursive depth first search with trace logs
+    private void dfs(int v, String indent)
+    {
+        N++;
+        marked[v] = true;
+        System.out.println(indent + "visiting " + v);
+        for(int x : graph.adj(v))
+        {
+            if(!marked[x])
+            {
+                dfs(x, indent + "| ");
+            }
+            else
+            System.out.println(indent + "| already visited " + x);
+        }
+        System.out.println(indent + "returning from " + v);
+    }
+
     public boolean marked(int v) {return marked[v];}
     public int count() {return N;}
 
     public static void main(String[] args) throws FileNotFoundException
     {
-        String[] in = Util.fromFile(args[0]);
+        boolean trace = false;
+        String filename = "";
+        for(int cnt = 0; cnt < args.length; cnt++)
+        {
+            if(args[cnt].equals("-trace")) trace = true;
+            else filename = args[cnt];
+        }
+        String[] in = Util.fromFile(filename);
         Integer[] a = new Integer[in.length];
         for(int cnt = 0; cnt < in.length; cnt++)
             a[cnt] = Integer.parseInt(in[cnt]);
         Graph graph = new Graph(a, false, false);
-        int source = 150;
-        GraphSearchRecursiveDFS dfs = new GraphSearchRecursiveDFS(graph, source);
+        int source = 0;
+        GraphSearchRecursiveDFS dfs = new GraphSearchRecursiveDFS(graph, source, trace);
         System.out.println(String.format("Number of vertices connected to %d: %d", source, dfs.count()));
     }
 }

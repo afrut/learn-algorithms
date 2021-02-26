@@ -57,7 +57,8 @@ cls
 ::javac src\main\java\mylibs\SequentialSearchSet.java -d .\
 ::javac src\main\java\mylibs\BinarySearchSet.java -d .\
 ::javac src\main\java\mylibs\Graph.java -d .\
-javac src\main\java\mylibs\GraphSearchUF.java -d .\
+::javac src\main\java\mylibs\GraphSearchUF.java -d .\
+javac src\main\java\mylibs\GraphSearchRecursiveDFS.java -d .\
 ::
 :::: Create a jar in .\jar\ from bytecode .class files in .\mylibs
 ::del .\jar\mylibs.jar
@@ -117,7 +118,9 @@ javac src\main\java\mylibs\GraphSearchUF.java -d .\
 ::java -ea mylibs.BinarySearchSet .\src\main\resources\STSampleInput.txt
 ::java -ea mylibs.Graph -test src\main\resources\myMediumG.txt
 ::java -ea mylibs.Graph src\main\resources\myMediumG.txt
-java -ea mylibs.GraphSearchUF src\main\resources\myMediumG.txt
+::java -ea mylibs.GraphSearchUF src\main\resources\myMediumG.txt
+java -ea mylibs.GraphSearchRecursiveDFS src\main\resources\myMediumG.txt
+java -ea mylibs.GraphSearchRecursiveDFS src\main\resources\tinyGex2.txt -trace
 
 :: Clean
 del /s .\mylibs\*.class
