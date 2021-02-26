@@ -49,6 +49,12 @@ public class WeightedQuickUnionUF
         count--;
     }
 
+    // find the number of vertices connected to v
+    public int num(int v)
+    {
+        return sz[find(v)];
+    }
+
     public String toString()
     {
         StringBuilder sb = new StringBuilder();
