@@ -22,7 +22,7 @@ public class GraphSearchUF
     public boolean marked(int v) {return uf.connected(source, v);}
 
     // how many vertices are connected to source?
-    public int count() {return uf.num(source);}
+    public int count() {return uf.num(source) - 1;}
 
     // what is source site?
     public int source() {return source;}
@@ -39,15 +39,14 @@ public class GraphSearchUF
             cnt++;
         }
         Graph graph = new Graph(a, false, false);
-        GraphSearchUF gsu = new GraphSearchUF(graph, 150);
+        GraphSearchUF gsu = new GraphSearchUF(graph, 0);
 
         StringBuilder sb = new StringBuilder();
         for(int i = 0; i < graph.V(); i++)
-            if(gsu.marked(i))
-            sb.append(i + ", ");
+            if(gsu.marked(i) && i != gsu.source())
+                sb.append(i + ", ");
         if(sb.length() > 0)
             sb.setLength(sb.length() - 2);
-        System.out.println("Vertices connected to source " + gsu.source() + ": " + sb.toString());
         System.out.println(String.format("%d vertices connected to source: %s", gsu.count(), sb.toString()));
     }
 }
