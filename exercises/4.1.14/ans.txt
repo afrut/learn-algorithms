@@ -1,0 +1,8 @@
+In breadth-first search, vertices are dequeued in the order that they're
+encountered. This means that vertices closest to the source are explored before
+further vertices are explored.
+
+If a stack is used, this order is reversed. All vertices furthest away from the
+source are explored first before the rest of the closer vertices are explored.
+So, when a stack is used in breadth-first search, it no longer computes the
+shortest path. Maybe it computes the longest path?
