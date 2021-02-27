@@ -60,6 +60,15 @@ public class Util
         return a;
     }
 
+    public static String toString(int[] a)
+    {
+        StringBuilder sb = new StringBuilder();
+        for(int cnt = 0; cnt < a.length; cnt++)
+            sb.append(a[cnt] + ", ");
+        if(sb.length() > 0) sb.setLength(sb.length() - 2);
+        return sb.toString();
+    }
+
     public static String toString(Object[] a)
     {
         String ret = Util.toString(a, 0, a.length);

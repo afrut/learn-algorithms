@@ -2,7 +2,6 @@ package mylibs;
 
 import java.io.FileNotFoundException;
 import java.util.LinkedList;
-
 import mylibs.Util;
 
 public class GraphPathsBFS
@@ -12,6 +11,7 @@ public class GraphPathsBFS
     private boolean[] marked;   // marked[v] indicates if v is connected to source
     private int N;              // number of vertices connected to source
     private int[] edgeTo;
+    private int[] distTo;
 
     public GraphPathsBFS(Graph graph, int s)
     {this(graph, s, false);}
@@ -23,9 +23,14 @@ public class GraphPathsBFS
         N = 0;
         marked = new boolean[graph.V()];
         edgeTo = new int[graph.V()];
+        distTo = new int[graph.V()];
         for(int cnt = 0; cnt < edgeTo.length; cnt++)
+        {
             edgeTo[cnt] = -1;
+            distTo[cnt] = -1;
+        }
         edgeTo[source] = source;
+        distTo[source] = 0;
 
         if(!trace) bfs(source);
         else bfsTrace(source);
@@ -41,6 +46,7 @@ public class GraphPathsBFS
     {
         LinkedList<Integer> ll = new LinkedList<Integer>();
         ll.add(v);
+        int dist = 1;
         while(ll.size() > 0)
         {
             v = ll.poll();
@@ -51,9 +57,11 @@ public class GraphPathsBFS
                     N++;
                     edgeTo[x] = v;
                     ll.add(x);
+                    distTo[x] = dist;
                     marked[x] = true;
                 }
             }
+            dist++;
         }
     }
 
@@ -67,18 +75,22 @@ public class GraphPathsBFS
         while(ll.size() > 0)
         {
             v = ll.poll();
-            System.out.println("visiting " + v + ". connected and unvisited vertices: ");
+            String indent = "";
+            for(int cnt = 0; cnt < distTo[v]; cnt++)
+                indent = indent + "  ";
+            System.out.println(indent + "visiting " + v);
             for(int x : graph.adj(v))
             {
                 if(!marked[x])
                 {
-                    System.out.println("  " + x);
                     N++;
                     edgeTo[x] = v;
                     ll.add(x);
+                    distTo[x] = distTo[v] + 1;
                     marked[x] = true;
                 }
             }
+            indent = indent + " ";
         }
     }
 
@@ -97,6 +109,7 @@ public class GraphPathsBFS
         }
         return ret;
     }
+    public int distTo(int v) {return distTo[v];}
 
     public static void main(String[] args) throws FileNotFoundException
     {
@@ -113,16 +126,14 @@ public class GraphPathsBFS
             a[cnt] = Integer.parseInt(in[cnt]);
         Graph graph = new Graph(a, false, false);
         int source = 0;
-        GraphPathsBFS dfs = new GraphPathsBFS(graph, source, trace);
-        if(dfs.hasPathTo(10))
+        GraphPathsBFS bfs = new GraphPathsBFS(graph, source, trace);
+        if(bfs.hasPathTo(10))
         {
-            Iterable<Integer> ll = dfs.pathTo(10);
+            Iterable<Integer> ll = bfs.pathTo(10);
             System.out.println("Path to 10: " + ll.toString());
-            StringBuilder sb = new StringBuilder();
-            for(int x : dfs.edgeTo)
-                sb.append(x + ", ");
-            if(sb.length() > 0) sb.setLength(sb.length() - 2);
-            System.out.println("edgeTo[]: " + sb.toString());
+            System.out.println("Distance to 10: " + bfs.distTo(10));
         }
+        System.out.println("edgeTo[]: " + Util.toString(bfs.edgeTo));
+        System.out.println("distTo[]: " + Util.toString(bfs.distTo));
     }
 }
