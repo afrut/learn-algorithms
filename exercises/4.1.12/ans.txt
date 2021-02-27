@@ -1,0 +1,7 @@
+See 4.1.11 for the tree.
+
+In a BFS tree, the distance between v and w, when neither is the root, is the
+number of vertices on a path from v to w. The path from v to w can be
+constructed by starting from v, going up the tree until a parent common to v and
+w are found, then going down the tree to w. All vertices along this tree
+traversal constitutes the path from v to w.
