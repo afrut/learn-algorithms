@@ -12,6 +12,8 @@ public class GraphPathsBFS
     private int N;              // number of vertices connected to source
     private int[] edgeTo;
     private int[] distTo;
+    private int maxDist;
+    private int maxDistV;
 
     public GraphPathsBFS(Graph graph, int s)
     {this(graph, s, false);}
@@ -31,6 +33,8 @@ public class GraphPathsBFS
         }
         edgeTo[source] = source;
         distTo[source] = 0;
+        maxDist = -1;
+        maxDistV = -1;
 
         if(!trace) bfs(source);
         else bfsTrace(source);
@@ -46,7 +50,8 @@ public class GraphPathsBFS
     {
         LinkedList<Integer> ll = new LinkedList<Integer>();
         ll.add(v);
-        int dist = 1;
+        marked[v] = true;
+        edgeTo[v] = v;
         while(ll.size() > 0)
         {
             v = ll.poll();
@@ -57,11 +62,15 @@ public class GraphPathsBFS
                     N++;
                     edgeTo[x] = v;
                     ll.add(x);
-                    distTo[x] = dist;
+                    distTo[x] = distTo[v] + 1;
+                    if(distTo[x] > maxDist)
+                    {
+                        maxDist = distTo[x];
+                        maxDistV = x;
+                    }
                     marked[x] = true;
                 }
             }
-            dist++;
         }
     }
 
@@ -87,10 +96,14 @@ public class GraphPathsBFS
                     edgeTo[x] = v;
                     ll.add(x);
                     distTo[x] = distTo[v] + 1;
+                    if(distTo[x] > maxDist)
+                    {
+                        maxDist = distTo[x];
+                        maxDistV = x;
+                    }
                     marked[x] = true;
                 }
             }
-            indent = indent + " ";
         }
     }
 
@@ -110,6 +123,8 @@ public class GraphPathsBFS
         return ret;
     }
     public int distTo(int v) {return distTo[v];}
+    public int maxDist() {return maxDist;}
+    public int maxDistV() {return maxDistV;}
 
     public static void main(String[] args) throws FileNotFoundException
     {

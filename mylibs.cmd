@@ -61,6 +61,7 @@ cls
 ::javac src\main\java\mylibs\GraphSearchRecursiveDFS.java -d .\
 ::javac src\main\java\mylibs\GraphPathsRecursiveDFS.java -d .\
 ::javac src\main\java\mylibs\GraphPathsBFS.java -d .\
+::javac src\main\java\mylibs\GraphProperties.java -d .\
 ::
 :::: Create a jar in .\jar\ from bytecode .class files in .\mylibs
 ::del .\jar\mylibs.jar
@@ -127,6 +128,8 @@ cls
 ::java -ea mylibs.GraphPathsRecursiveDFS src\main\resources\tinyGex2.txt -trace
 ::java -ea mylibs.GraphPathsBFS src\main\resources\myMediumG.txt
 ::java -ea mylibs.GraphPathsBFS src\main\resources\tinyGex2.txt -trace
+::java -ea mylibs.GraphProperties src\main\resources\myMediumG.txt
+::java -ea mylibs.GraphProperties src\main\resources\tinyGex2.txt
 
 :: Clean
 del /s .\mylibs\*.class
