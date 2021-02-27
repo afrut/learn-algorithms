@@ -23,6 +23,8 @@ public class GraphPathsRecursiveDFS
         N = -1; // the first call, dfs(source), unnecessarily increments
         marked = new boolean[graph.V()];
         edgeTo = new int[graph.V()];
+        for(int cnt = 0; cnt < edgeTo.length; cnt++)
+            edgeTo[cnt] = -1;
         edgeTo[source] = source;
 
         if(!trace) dfs(source);
@@ -72,11 +74,14 @@ public class GraphPathsRecursiveDFS
     public Iterable<Integer> pathTo(int v)
     {
         LinkedList<Integer> ret = new LinkedList<Integer>();
-        ret.push(v);
-        while(v != source)
+        if(this.hasPathTo(v))
         {
-            ret.push(edgeTo[v]);
-            v = edgeTo[v];
+            ret.push(v);
+            while(v != source)
+            {
+                ret.push(edgeTo[v]);
+                v = edgeTo[v];
+            }
         }
         return ret;
     }
@@ -97,10 +102,15 @@ public class GraphPathsRecursiveDFS
         Graph graph = new Graph(a, false, false);
         int source = 0;
         GraphPathsRecursiveDFS dfs = new GraphPathsRecursiveDFS(graph, source, trace);
-        if(dfs.hasPathTo(8))
+        if(dfs.hasPathTo(10))
         {
-            Iterable<Integer> ll = dfs.pathTo(8);
-            System.out.println(ll.toString());
+            Iterable<Integer> ll = dfs.pathTo(10);
+            System.out.println("Path to 10: " + ll.toString());
+            StringBuilder sb = new StringBuilder();
+            for(int x : dfs.edgeTo)
+                sb.append(x + ", ");
+            if(sb.length() > 0) sb.setLength(sb.length() - 2);
+            System.out.println("edgeTo[]: " + sb.toString());
         }
     }
 }
