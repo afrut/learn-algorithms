@@ -2,14 +2,14 @@ package mylibs;
 
 import java.io.FileNotFoundException;
 
-public class GraphConnectDFS
+public class GraphConnectRecursiveDFS
 {
     private Graph graph;        // the Graph object passed in
     private boolean[] marked;   // see if a vertex has already been visited
     private int[] id;           // id of component that the vertex belongs to
     private int N;              // number of components
 
-    public GraphConnectDFS(Graph graph)
+    public GraphConnectRecursiveDFS(Graph graph, boolean trace)
     {
         this.graph = graph;
         marked = new boolean[graph.V()];
@@ -21,7 +21,8 @@ public class GraphConnectDFS
         {
             if(!marked[v])
             {
-                dfs(v);
+                if(!trace) dfs(v);
+                else dfs(v, "");
                 N++;
             }
         }
@@ -34,6 +35,20 @@ public class GraphConnectDFS
         id[v] = N;
         for(int x : graph.adj(v))
             if(!marked[x]) dfs(x);
+    }
+
+    // recursive depth-first search with tracing
+    private void dfs(int v, String indent)
+    {
+        marked[v] = true;
+        System.out.println(indent + "dfs(" + v + ")");
+        id[v] = N;
+        for(int x : graph.adj(v))
+        {
+            if(!marked[x]) dfs(x, indent + "| ");
+            else System.out.println(indent + "| check " + x);
+        }
+        System.out.println(indent + "done " + v);
     }
 
     // check if two vertices are connected
@@ -50,12 +65,19 @@ public class GraphConnectDFS
 
     public static void main(String[] args) throws FileNotFoundException
     {
+        boolean trace = false;
+        String filename = "";
+        for(int cnt = 0; cnt < args.length; cnt++)
+        {
+            if(args[cnt].equals("-trace")) trace = true;
+            else filename = args[cnt];
+        }
         String[] in = Util.fromFile(args[0]);
         Integer[] a = new Integer[in.length];
         for(int cnt = 0; cnt < in.length; cnt++)
             a[cnt] = Integer.parseInt(in[cnt]);
         Graph graph = new Graph(a, false, false);
-        GraphConnectDFS gcd = new GraphConnectDFS(graph);
+        GraphConnectRecursiveDFS gcd = new GraphConnectRecursiveDFS(graph, trace);
         System.out.println("Number of components: " + gcd.count());
         System.out.println("Component of 10 is " + gcd.id(10));
 

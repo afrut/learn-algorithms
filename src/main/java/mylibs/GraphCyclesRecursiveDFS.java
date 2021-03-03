@@ -4,13 +4,13 @@ import java.io.FileNotFoundException;
 import mylibs.Util;
 import java.util.LinkedList;
 
-public class GraphCyclesDFS
+public class GraphCyclesRecursiveDFS
 {
     private Graph graph;
     private boolean[] marked;
     private boolean hasCycle;
 
-    public GraphCyclesDFS(Graph graph)
+    public GraphCyclesRecursiveDFS(Graph graph)
     {
         this.graph = graph;
         marked = new boolean[graph.V()];
@@ -42,7 +42,7 @@ public class GraphCyclesDFS
         for(int cnt = 0; cnt < in.length; cnt++)
             a[cnt] = Integer.parseInt(in[cnt]);
         Graph graph = new Graph(a, false, false);
-        GraphCyclesDFS gcd = new GraphCyclesDFS(graph);
+        GraphCyclesRecursiveDFS gcd = new GraphCyclesRecursiveDFS(graph);
         System.out.println("Graph has cycles? " + gcd.hasCycle());
     }
 }

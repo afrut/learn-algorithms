@@ -62,9 +62,9 @@ cls
 ::javac src\main\java\mylibs\GraphPathsRecursiveDFS.java -d .\
 ::javac src\main\java\mylibs\GraphPathsBFS.java -d .\
 ::javac src\main\java\mylibs\GraphProperties.java -d .\
-::javac src\main\java\mylibs\GraphConnectDFS.java -d .\
-::javac src\main\java\mylibs\GraphCyclesDFS.java -d .\
-javac src\main\java\mylibs\GraphCyclesBFS.java -d .\
+javac src\main\java\mylibs\GraphConnectRecursiveDFS.java -d .\
+::javac src\main\java\mylibs\GraphCyclesRecursiveDFS.java -d .\
+::javac src\main\java\mylibs\GraphCyclesBFS.java -d .\
 ::
 :::: Create a jar in .\jar\ from bytecode .class files in .\mylibs
 ::del .\jar\mylibs.jar
@@ -133,12 +133,12 @@ javac src\main\java\mylibs\GraphCyclesBFS.java -d .\
 ::java -ea mylibs.GraphPathsBFS src\main\resources\tinyGex2.txt -trace
 ::java -ea mylibs.GraphProperties src\main\resources\myMediumG.txt
 ::java -ea mylibs.GraphProperties src\main\resources\tinyGex2.txt
-::java -ea mylibs.GraphConnectDFS src\main\resources\myMediumG.txt
-::java -ea mylibs.GraphConnectDFS src\main\resources\tinyGex2.txt
-::java -ea mylibs.GraphCyclesDFS src\main\resources\myMediumG.txt
-::java -ea mylibs.GraphCyclesDFS src\main\resources\tinyGex2.txt
-java -ea mylibs.GraphCyclesBFS src\main\resources\myMediumG.txt
-java -ea mylibs.GraphCyclesBFS src\main\resources\tinyGex2.txt
+java -ea mylibs.GraphConnectRecursiveDFS src\main\resources\myMediumG.txt
+java -ea mylibs.GraphConnectRecursiveDFS src\main\resources\tinyGex2.txt -trace
+::java -ea mylibs.GraphCyclesRecursiveDFS src\main\resources\myMediumG.txt
+::java -ea mylibs.GraphCyclesRecursiveDFS src\main\resources\tinyGex2.txt
+::java -ea mylibs.GraphCyclesBFS src\main\resources\myMediumG.txt
+::java -ea mylibs.GraphCyclesBFS src\main\resources\tinyGex2.txt
 
 :: Clean
 del /s .\mylibs\*.class

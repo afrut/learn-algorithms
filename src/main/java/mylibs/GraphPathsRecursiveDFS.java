@@ -56,7 +56,7 @@ public class GraphPathsRecursiveDFS
     {
         N++;
         marked[v] = true;
-        System.out.println(indent + "visiting " + v);
+        System.out.println(indent + "dfs(" + v + ")");
         for(int x : graph.adj(v))
         {
             if(!marked[x])
@@ -65,9 +65,9 @@ public class GraphPathsRecursiveDFS
                 dfs(x, indent + "| ");
             }
             else
-            System.out.println(indent + "| already visited " + x);
+            System.out.println(indent + "| check " + x);
         }
-        System.out.println(indent + "returning from " + v);
+        System.out.println(indent + "done " + v);
     }
 
     public boolean hasPathTo(int v) {return marked[v];}

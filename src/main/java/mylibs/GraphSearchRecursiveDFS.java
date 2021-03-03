@@ -43,7 +43,7 @@ public class GraphSearchRecursiveDFS
     {
         N++;
         marked[v] = true;
-        System.out.println(indent + "visiting " + v);
+        System.out.println(indent + "dfs(" + v + ")");
         for(int x : graph.adj(v))
         {
             if(!marked[x])
@@ -51,9 +51,9 @@ public class GraphSearchRecursiveDFS
                 dfs(x, indent + "| ");
             }
             else
-            System.out.println(indent + "| already visited " + x);
+            System.out.println(indent + "| check " + x);
         }
-        System.out.println(indent + "returning from " + v);
+        System.out.println(indent + "done " + v);
     }
 
     public boolean marked(int v) {return marked[v];}
