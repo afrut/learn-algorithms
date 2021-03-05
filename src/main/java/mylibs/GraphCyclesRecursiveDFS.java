@@ -19,8 +19,11 @@ public class GraphCyclesRecursiveDFS
         marked = new boolean[graph.V()];
         for(int v = 0; v < graph.V(); v++)
         {
-            if(trace) dfs(v, v, "");
-            else dfs(v, v);
+            if(!marked[v])
+            {
+                if(trace) dfs(v, v, "");
+                else dfs(v, v);
+            }
         }
     }
 

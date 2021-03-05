@@ -63,8 +63,9 @@ cls
 ::javac src\main\java\mylibs\GraphPathsBFS.java -d .\
 ::javac src\main\java\mylibs\GraphProperties.java -d .\
 ::javac src\main\java\mylibs\GraphConnectRecursiveDFS.java -d .\
-javac src\main\java\mylibs\GraphCyclesRecursiveDFS.java -d .\
+::javac src\main\java\mylibs\GraphCyclesRecursiveDFS.java -d .\
 ::javac src\main\java\mylibs\GraphCyclesBFS.java -d .\
+javac src\main\java\mylibs\GraphTwoColorRecursiveDFS.java -d .\
 ::
 :::: Create a jar in .\jar\ from bytecode .class files in .\mylibs
 ::del .\jar\mylibs.jar
@@ -135,10 +136,12 @@ javac src\main\java\mylibs\GraphCyclesRecursiveDFS.java -d .\
 ::java -ea mylibs.GraphProperties src\main\resources\tinyGex2.txt
 ::java -ea mylibs.GraphConnectRecursiveDFS src\main\resources\myMediumG.txt
 ::java -ea mylibs.GraphConnectRecursiveDFS src\main\resources\tinyGex2.txt -trace
-java -ea mylibs.GraphCyclesRecursiveDFS src\main\resources\myMediumG.txt
-java -ea mylibs.GraphCyclesRecursiveDFS src\main\resources\tinyGex2.txt -trace
+::java -ea mylibs.GraphCyclesRecursiveDFS src\main\resources\myMediumG.txt
+::java -ea mylibs.GraphCyclesRecursiveDFS src\main\resources\tinyGex2.txt -trace
 ::java -ea mylibs.GraphCyclesBFS src\main\resources\myMediumG.txt
 ::java -ea mylibs.GraphCyclesBFS src\main\resources\tinyGex2.txt
+java -ea mylibs.GraphTwoColorRecursiveDFS src\main\resources\myMediumG.txt
+java -ea mylibs.GraphTwoColorRecursiveDFS src\main\resources\tinyGex2.txt -trace
 
 :: Clean
 del /s .\mylibs\*.class
