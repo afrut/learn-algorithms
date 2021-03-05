@@ -1,1 +1,10 @@
 See mylibs.GraphCyclesRecursiveDFS.
+
+To determine the order of growth of depth-first search for cycle detection, 
+accesses to the array marked[] can be counted. For a graph with no
+parallel edges and self-loops, the program loops through the adjacency list for
+every vertex. At worst, all V vertices are connected by edges. In this
+situation, the adjacency list for any vertex v will have V - 1 entries (since
+it is connected to every other vertex). This means there will be V - 1 accesses
+to marked for every vertex. There are V vertices so, at worst, there will be
+V(V - 1) accesses to marked. This is O(n2).
