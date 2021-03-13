@@ -1,1 +1,13 @@
 Same as 4.1.20. See mylibs.GraphTwoColorRecursiveDFS.
+
+The constructor accesses each vertex once so there are at least V accesses to
+marked[].
+
+When processing each vertex v, depth-first search checks marked[] yet again for
+every vertex w adjacent to v. In other words, dfs accesses marked for each
+edge connected to v.
+
+In the worst case, every vertex is connected by an edge to every other vertex
+so that the order of growth is V * (V - 1) or O(V2). This can be avoided by
+breaking early as soon as isBipartite is set to false by using an explicit
+stack as opposed to using the system stack via recursion.
