@@ -65,7 +65,8 @@ cls
 ::javac src\main\java\mylibs\GraphConnectRecursiveDFS.java -d .\
 ::javac src\main\java\mylibs\GraphCyclesRecursiveDFS.java -d .\
 ::javac src\main\java\mylibs\GraphCyclesBFS.java -d .\
-javac src\main\java\mylibs\GraphTwoColorRecursiveDFS.java -d .\
+::javac src\main\java\mylibs\GraphTwoColorRecursiveDFS.java -d .\
+javac src\main\java\mylibs\SymbolGraph.java -d .\
 ::
 :::: Create a jar in .\jar\ from bytecode .class files in .\mylibs
 ::del .\jar\mylibs.jar
@@ -140,8 +141,11 @@ javac src\main\java\mylibs\GraphTwoColorRecursiveDFS.java -d .\
 ::java -ea mylibs.GraphCyclesRecursiveDFS src\main\resources\tinyGex2.txt -trace
 ::java -ea mylibs.GraphCyclesBFS src\main\resources\myMediumG.txt
 ::java -ea mylibs.GraphCyclesBFS src\main\resources\tinyGex2.txt
-java -ea mylibs.GraphTwoColorRecursiveDFS src\main\resources\myMediumG.txt
-java -ea mylibs.GraphTwoColorRecursiveDFS src\main\resources\tinyGex2.txt -trace
+::java -ea mylibs.GraphTwoColorRecursiveDFS src\main\resources\myMediumG.txt
+::java -ea mylibs.GraphTwoColorRecursiveDFS src\main\resources\tinyGex2.txt -trace
+
+::java -ea mylibs.SymbolGraph algs4-data\routes.txt " " -trace
+java -ea mylibs.SymbolGraph algs4-data\movies.txt "/" -trace
 
 :: Clean
 del /s .\mylibs\*.class
