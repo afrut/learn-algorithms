@@ -1,0 +1,623 @@
+621 Actors/Actresses not connected to Kevin Bacon:
+
+    Abrikosov, Andrei
+    Yershov, Vladimir
+    Rogozhin, Naum
+    Fenin, Lev
+    Klyukvin, Ivan
+    Aparin, N.
+    Odinokov, Fyodor
+    Lagutin, Ivan
+    Okhlopkov, Nikolai
+    Blinnikov, Sergei
+    Iudov, Leonid
+    Lyan-Kun
+    Novikov, Vasili
+    Arsky, Nikolai
+    Pashkov, Pavel
+    Orlov, Dmitri (III)
+    Cherkasov, Nikolai
+    Danilova, Aleksandra
+    Ivashova, Vera
+    Massalitinova, Varvara
+    Dikinciler, Yetkin
+    Tekindor, Çetin
+    Gökgöz, Mahmut
+    Tanman, Ege
+    Tosun, Erdal
+    Ergenç, Halit
+    Kuskan, Fikret
+    Sen, Bilge
+    Kaya, Binnur
+    Hümeyra
+    Özberk, Özge
+    Büyüküstün, Tuba
+    Çorakçi, Nergis
+    Sezer, Serif
+    Chaharian, Ali
+    Maleki, Qolamreza
+    Maleki, Hadi
+    Haj-Amini, Siamak
+    Feyzabadi, Navid
+    Ahamdloo, Hossein
+    Mortavazi, Mohammad Hossein
+    Haj-Amini, Soheil
+    Haj-Hosseini, Mohammad
+    Farrokh Hashemian, Amir
+    Peykarnegar, Kambiz
+    Roohparvari, Hasan
+    Oskooi, Mohammad
+    Dehghan, Reza
+    Mirkarimi, Kamal
+    Kazemi, Javad
+    Shahidi, Mohammad-Hossein
+    Mokhtari, Dariush
+    Hosseinian, Mohammad-Hasan
+    Naji, Mohammad Amir
+    Mokhber, Ahmad
+    Alikhani, Seyed Karym
+    Kazemi, Amir-Ali
+    Shams, Davud
+    Zadeh, Pasha Shoja
+    Salimi, Haj-Ali
+    Asqarpoor, Kazem
+    Seyfollahi, Jafar
+    Roomandi, Abbas-Ali
+    Yusefi, Jamshid
+    Kharazchi, Rahman
+    Tavakkoli, Amir Hossein
+    Noi, Azade Qale
+    Safarizadeh, Faramarz
+    Hosseini, Seyd-Ali
+    Nejad, Moshen Qadiri
+    Safari, Mash-Ebrahim
+    Rafi, Behzad
+    Mirzai, Zahra
+    Dair, Masume
+    Seddiqi, Bahare
+    Sarabandi, Fereshte
+    Jafar-Mohammadi, Nafise
+    Zamani, Sara
+    Tariqat, Golnaz
+    Ryoo, Jong-hwa
+    Shin, Tae-suk
+    Moon, Sung-hyuk
+    Kim, Han (II)
+    Kang, Sung-hoon
+    Jang, Jae-yong
+    Kim, Maeng-sung
+    Lee, Dah-hae
+    Choi, Jeong-ho
+    Lee, Ju-seok
+    Jang, Hoon
+    Kim, Hyung-suk
+    Park, Jee-ah
+    Lee, Hong-suk
+    Jang, Seok-bin
+    Jung, Sung-hoon
+    Lee, Jong-su
+    Park, Nam-min
+    Lee, Hyun-kyoon
+    Kwon, Hyuk-ho
+    Jang, Ji-yong
+    Park, Dong-jin
+    Lee, Seung-yeon
+    Lee, Mi-suk (II)
+    Lee, Ui-soo
+    Park, Se-jin
+    Gomorov, Mikhail
+    Uralsky, Vladimir
+    Marusov
+    Zerenin
+    Korobei
+    Bobrov, Ivan
+    Feldman, Konstantin
+    Antonov, Aleksandr
+    Eisenstein, Sergei M.
+    Fajt, Andrei
+    Brodsky
+    Aleksandrov, Grigori
+    Barsky, Vladimir
+    Protopopov
+    Ahola-Valo, Aleksanteri
+    Levshin, Aleksandr
+    Glauberman, A.
+    Eisenstein, Julia
+    Repnikova
+    Prokopenko
+    Vitoldi, Beatrice
+    Poltavseva, N.
+    Magana, Benito Suárez
+    López, Orlando 'Cachaíto'
+    Torres, Barbarito
+    Barzaga, Luis
+    Ochoa, Eliades
+    Licea, Manuel 'Puntillita'
+    Mirabal, Manuel 'Guajiro'
+    González, Rubén (VII)
+    Ferrer, Ibrahim
+    de Marcos González, Juan
+    Cooder, Joachim
+    Valdés, Amadito
+    Labrada, Salvador Repilado
+    Cooder, Ry
+    Sánchez, Julienne Oviedo
+    González, Carlos (VI)
+    Leyva, Pío
+    Valdés, Alberto 'Virgilio'
+    Villa, Lázaro
+    Segundo, Compay
+    Fernández, Julio Alberto
+    Portuondo, Omara
+    Lens, Bob
+    Laime, André
+    Belvaux, Rémy
+    Kuys, Andre
+    Chenut, Jean-Marc
+    Maschetti, Jean-Claude
+    Merveille, Vincent (I)
+    Goisse, Patrick
+    Van De Waele, Willy
+    Belvaux, Bruno
+    Piscopo, Franco
+    Craeynest, Josephs
+    Mariage, Benoît
+    Vandenbroeck, Willy
+    Cotica, Olivier
+    Cotica, Ricardo
+    Engels, Marcel
+    Gouyon, David
+    François, Alain
+    Geets, Jean-Paul
+    Bottemanne, Paul
+    Fostier, Aldo
+    Tavier, Vincent
+    Cavillot, Jean-Pol
+    Oppezzi, Alain
+    Vanderwarren, Pol
+    Francois, Clotilde
+    Tavier, Hughes
+    Tobolik, Zoltan
+    Poikov, Venelin
+    Poelvoorde, Benoît
+    Hologne, Alain
+    Blasband, Philippe
+    Chapelot, Antoine
+    Lebrun, Pascal
+    Tavier, Bertrand
+    Pappaert, Hector
+    Dubois, Fernaud
+    Bonzel, André
+    Artels, Steven
+    D'Hondt, Laurence
+    Miranda, Carlos Campo
+    Madou, Malou
+    Tursh, Daniel
+    Vanbraekel, Pierre
+    Aubier, Stéphane
+    Aubier, Stephanie
+    Drye, Jenny
+    Bada, Emmanuelle
+    Szomolanyiova, Annamaria
+    Hologne, Micheline
+    Fandango, Alexandra
+    Nologne, Anny
+    LaGrange, Anne
+    Le Merdy, Édith
+    Gilissen, Irene
+    Travier, Marie
+    Godé, Sylviane
+    Leonard, Elaine
+    Poelvoorde-Pappaert, Jacqueline
+    Cotica, Gina
+    Deman, Rachel
+    Parent, Valérie
+    Tavier, Sabine
+    Pappaert, Nelly
+    Belvaux, Lucien
+    Crumb, Maxon
+    Donahue, Don
+    Hughes, Robert (I)
+    Crumb, Robert (I)
+    Griffith, Bill (I)
+    Muller, Martin
+    Crumb, Jesse
+    Rodriguez, Spain
+    Crumb, Charles
+    Goodell, Kathy
+    Crumb, Sophie
+    Crumb, Beatrice
+    Crumb, Dana
+    Hanson, Dian
+    Orenstein, Peggy
+    English, Deirdre
+    Kominsky, Aline
+    Robbins, Trina
+    Tasgal, Bill (I)
+    Tabor, Eron
+    Pace, Richard (I)
+    Kleemann, Gunter
+    Nichols, Anthony (I)
+    Agami, Isaac
+    Zarchi, Terry
+    Haviv, Ronit
+    Magnotti, Alexis
+    Keaton, Camille
+    Zarchi, Tammy
+    Ferrante, Traci
+    Munzuk, Maksim
+    Volkov, Nikolai (I)
+    Kremena, Vladimir
+    Pyatkov, Aleksandr
+    Bychkov, Mikhail
+    Korshikov, Dmitri
+    Chokmorov, Suimenkul
+    Khorulev, B.
+    Dzhumadylov, Sovetbek
+    Solomin, Yuri
+    Danilchenko, Svetlana
+    Zamfirescu, Florin
+    Calinescu, Florin
+    Florea Vizante, Marius
+    Niculescu, Ovidiu
+    Caranfil, Nae
+    Diaconu, Mircea
+    Dinica, Gheorghe
+    Popescu, Valentin
+    Voda, Viorica
+    Ghiuta, Monica
+    Nicolescu, Mara
+    Robert, Frank
+    Nilsen, Rolf Just
+    Maurstad, Toralv
+    Kolstad, Henki
+    Haugen, Per Theodor
+    Reiss, Helge
+    Juster, Leif
+    Heide-Steen Jr., Harald
+    Foss, Wenche
+    Simonsen, Kari
+    Eggleston, Ralph
+    Yilmaz, Cem
+    Günaydin, Engin
+    Gögen, Coskun
+    Günaydin, Muhittin
+    Ugur, Özkan
+    Sezer, Safak
+    Guven, Ozan
+    Oztekin, Rasim
+    Baskin, Cezmi
+    Elmas, Naz
+    Güder, Tugçe
+    Serbest, Dilek
+    Firat, Idil
+    Chin, Cub
+    Png, Pierre
+    Wu, Tian Nan
+    Annuar, Wisarup
+    Kuntipan, Wirasinee
+    Yung, Wai-Ho
+    Jim, Pui Ho
+    Chen, Edmund
+    Chou, Lawrence
+    Duriensuk, Sopol
+    Poon, Ming
+    Sombatruksasuk, Nonlaporn
+    Yip, Wilson
+    Lee, Hing Kim
+    Cummee, Sungwen
+    Leung, Tao
+    Chin, Wing-Wai
+    Thrasarchoti, Wasarat
+    Leelanukul, Somchai
+    Mahachanok, Vuanna
+    Yuen, Ben
+    Hongrattanaporn, Pornchai
+    Sawadee, Dampongongtrakul
+    Duangtoy, Jinda
+    Damrongwiseeatpanich
+    So, Yut Lai
+    Chotphan, Ousinthorn
+    Jeamsakol, Panpimol
+    Rujinanon, Chutcha
+    Suthornrat, Nittaya
+    Lau, Yuk Ha
+    Lau, Mylio
+    Wang, Sue Yuen
+    Junjiamrat, Narongsak
+    Lee, Angelica
+    Wong, Yuet Siu
+    Ko, Yin Ping
+    Aeamsamang, Kanta
+    Wu, Florence
+    Thongtiw, Busarn
+    Ho, Si Won
+    Nuntasapee, Tassanana
+    Lo, Candy
+    Akçatepe, Sitki
+    Akçatepe, Halit
+    Gürses, Muharrem
+    Karabey, Hayri
+    Oztuna, Akil
+    Ergüvenç, Kemal
+    Akan, Tarik
+    Karadayi, Hakki
+    Bilda, Ertugrul
+    Sunal, Kemal
+    Özkul, Münir
+    Feridun, Savli
+    Aridogan, Kerem
+    Gürdap, Cem
+    Ariman, Ahmet
+    Nasit, Adile
+    Manayev, Vladimir
+    Domrachyov, Vasili
+    Merkuryev, Pyotr
+    Tilicheyev, Yevgeni
+    Slivnikov, Anatoli
+    Velts, G.
+    Shapko, Oleg
+    Bagdonas, Vladas
+    Rabetsky, Kazimir
+    Lisichenok, N.
+    Lumiste, Juris
+    Matytsky, G.
+    Berda, Aleksandr
+    Vasilyev, V. (III)
+    Lauciavicius, Liubomiras
+    Kryzhanovsky, Ye.
+    Lorents, Viktor
+    Matyullin, Takhir
+    Yelkin, G.
+    Gnevashev, Igor (I)
+    Strokov, Georgi
+    Kravchenko, Aleksei
+    Mishatkin, Valentin
+    Polyakova, Yevgeniya
+    Shestakova, Tatyana
+    Mironova, Olga
+    Branchu, Jacques
+    Faccetti, Germano
+    Hanich, Davos
+    Joffroy, Pierre
+    Heinrich, André
+    Ledoux, Jacques
+    Becker, Étienne
+    Négroni, Jean
+    Klein, William (I)
+    von Lifchitz, Philbert
+    Klein, Janine
+    Chatelain, Hélène
+    Branice, Ligia
+    Ràfols, Mingo
+    Joan, Joel
+    Amado, Chisco
+    Vilches, Jordi
+    Sánchez, Jordi (I)
+    Yebra, Eloi
+    Durà, Pau
+    Ramallo, Fernando
+    Garay, Jesús
+    González, Eduardo (VI)
+    Nubiola, Esther
+    Orozco, Marieta
+    Gracia, Ana (I)
+    Mézières, Myriam
+    Poulavec, Gaelle
+    Alcañiz, Muntsa
+    Glaenzel, Mònica
+    Reynolds, John (I)
+    Warren, Hal
+    Cavender, George
+    Rosenblum, Bernie
+    Jennings, William Bryan
+    Neyman, Tom
+    Nielson, Stephanie
+    Redd, Robin
+    Mahree, Diane
+    Proctor, Sherry
+    Coburn, Pat (I)
+    Hall, Jay
+    Molleur, Joyce
+    Sullivan, Pat (V)
+    Hansard, Lelanie
+    Neyman, Jackey
+    Burns, Bettie
+    Lujano, Bob
+    Cavill, Keith
+    Orr, Kevin (II)
+    Soares, Joe
+    Hogsett, Scott
+    Cohn, Andy
+    Bishop, Joe (III)
+    Igoe, Christopher
+    Willsie, Dave
+    Zupan, Mark
+    Nelson, Michael J.
+    Murphy, Kevin (II)
+    Mallon, Jim
+    Brady, John (VIII)
+    Beaulieu, Trace
+    Haref Harati, Mohamad
+    Ghorbandi, Gol Rahman
+    Nader Khadjeh, Mohamad
+    Herati, Arif
+    Nader, Khwaja
+    Refah, Hamida
+    Sahar, Zubaida
+    Golbahari, Marina
+    Sullivan, David (IX)
+    Bradshaw, Keith (I)
+    Tapia, Juan
+    Blagg, Brandon
+    De Soualhat, Eric
+    Carruth, Chip
+    Carruth, Shane
+    Carruth, John
+    Cook, Jon (I)
+    Upadhyaya, Anand
+    Upadhyaya, Ashok
+    Butler, Jay (II)
+    Joyner, David (II)
+    Gooden, Casey
+    Pyland, Jack
+    Crawford, Carrie
+    Thomson, Samantha
+    Price, Delaney
+    Warren, Ashley
+    Park, Jung-gi
+    Jeon, Jin-bae
+    Lee, Eol
+    Jong-Gil, Lee
+    Seo, Seung-won
+    Kim, Gul-seon
+    Young, Oh
+    Sae-Jin, Yook
+    Taek-Ki, Shin
+    Jung, In-gi
+    Hyun-Min, Kwon
+    Jae-Ik, Yoo
+    Gyun-Ho, Im
+    Han, Yeo-reum
+    Kwak, Ji-min
+    Jo, Jae-hyeon
+    Kim, Yoosuk
+    Jang, Hang-Seon
+    Seo, Won (II)
+    Suh, Jung
+    Park, Sung-hee
+    Kim, Yeo-jin
+    Durukan, Oktar
+    Sezer, Mete
+    Zobu, Bilge
+    Orbey, Ergin
+    Sen, Sener
+    Ar, Müjde
+    Feray, Günfer
+    Gruda, Aysen
+    Mackey, Brendan (I)
+    Yates, Simon
+    Aaron, Nicholas
+    Hawking, Richard
+    Ryall, Ollie
+    Simpson, Joe (II)
+    Dickenson, Tim
+    Andriolo, Jacob
+    Jenkins, Rob
+    Sheriff, Brad
+    McKay, Mungo
+    Doran, Rob (II)
+    Guthrie, Paul (II)
+    King, William John
+    Hunter, Dirk
+    Whitcomb, David (I)
+    Sheridan, Noel (II)
+    Mensforth, Peter
+    Grieg, Steve
+    Jozinovic, Robert
+    Aked, Chintamani
+    O'Donnell, Steven (III)
+    Stillman, Eleanor
+    Arakelian, Francesca
+    Salter, Kyan Marie
+    Potter-Cowie, Georgia
+    Maric, Kristijana
+    Moore, Robyn (I)
+    Steel, Michele
+    Cunningham, Lisa (II)
+    McGowan, Kathleen (I)
+    Randall, Emma
+    Mason, Felicity (II)
+    Wensley, Gaynor
+    Depierre
+    Brunnet
+    Kelm
+    Méliès, Georges
+    André, Victor
+    Delannoy, Henri
+    Farjaut
+    d'Alcy, Jeanne
+    Bernon, Bleuette
+    Dobronravov, Ivan
+    Garin, Vladimir (I)
+    Lavronenko, Konstantin
+    Dubovik, Lazar
+    Suknovalov, Aleksei
+    Sumin, Andrei
+    Petrova, Galina (I)
+    Kazakova, Lyubov
+    Aleksandrova, Yelizaveta
+    Vdovina, Natalya
+    Mel, Li
+    Wanlu, Wu
+    Mingshan, Zhang
+    Xinmin, Fu
+    Gao, Enman
+    Zhanqing, Xu
+    Huimin, Rong
+    Tian, Zhenda
+    Zhang, Huike
+    Zhang, Yichang
+    Li, Fanfan
+    Sun, Zhimei
+    Ru, Liu
+    Guolin, Ma
+    Lingyu, Li
+    Jie, Jiao
+    Xuewei, Tian
+    Shulan, Wang
+    Liu, Hanzhi
+    Wei, Minzhi
+    Xinhong, Ming
+    Feng, Yuying
+    Zhiwei, Sun
+    Bai, Mei
+    Chang, Jonathan (I)
+    Congsheng, Tang
+    Chen, Hsi-Sheng
+    Ogata, Issei
+    Chen, Yiwen
+    Wu, Nien-Jen
+    Ko, Yue-Lin
+    Hsu, Shu-Yuan
+    Yu, Pang Chang
+    Jin, Elaine
+    Lee, Kelly (II)
+    Tang, Ru-Yun
+    Tseng, Hsin-Yi
+    Lin, Adriene
+    Ko, Su-Yun
+    Hsiao, Shu-shen
+    Johann
+    Famille Ponte
+    Jonathan (VIII)
+    Guillaume (IV)
+    Famille Dujardin
+    Famille Thouvenin
+    Julien (I)
+    Jérome
+    Kevin (VIII)
+    Olivier (II)
+    Famille Garrido
+    Valentin (VI)
+    Famille Lacombe
+    Thomas (XVII)
+    Valentin (III)
+    Famille Chanimbaud
+    Axel (II)
+    Famille Rochès
+    Franck (II)
+    Famille Olléon
+    Lopez, Georges
+    Johan (I)
+    Famille Jeune
+    Jeannot (II)
+    Nathalie (VII)
+    Léa (I)
+    Jessie (II)
+    Alizé
+    Marie-Elizabeth
+    Laura (III)
+    Océane (I)
+    Létitia
+    Magali (III)

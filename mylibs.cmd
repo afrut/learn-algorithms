@@ -143,7 +143,6 @@ cls
 ::java -ea mylibs.GraphCyclesBFS src\main\resources\tinyGex2.txt
 ::java -ea mylibs.GraphTwoColorRecursiveDFS src\main\resources\myMediumG.txt
 ::java -ea mylibs.GraphTwoColorRecursiveDFS src\main\resources\tinyGex2.txt -trace
-::java -ea mylibs.SymbolGraph algs4-data\routes.txt " "
 ::java -ea mylibs.SymbolGraph algs4-data\movies.txt "/"
 
 :: Clean

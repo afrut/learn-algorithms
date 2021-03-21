@@ -20,8 +20,7 @@ public class Graph
         for (int v = 0; v < V; v++)         // Initialize all lists to empty.
             adj[v] = new Bag<Integer>();
     }
-    public Graph(Integer[] a)
-    {this(a, true, true);}
+    public Graph(Integer[] a) {this(a, true, true);}
     public Graph(Integer[] a, boolean allowParallelEdges, boolean allowSelfLoops)
     {
         this(a[0]);             // Read V and initialize each list in the array of lists.
@@ -64,7 +63,7 @@ public class Graph
     public int E() { return E; }    // return number of edges
 
     // add an edge by providing the two vertices connected by it
-    private void addEdge(int v, int w)
+    public void addEdge(int v, int w)
     {
         if(!allowParallelEdges && adj[v].contains(w)) {}
         else if((!allowSelfLoops && v == w)) {}
