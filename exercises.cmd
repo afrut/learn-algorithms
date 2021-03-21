@@ -167,9 +167,13 @@ cls
 ::javac SeparateChainingHashST_3401.java
 ::java SeparateChainingHashST_3401 input.txt
 
-cd exercises\3.4.04
-javac PerfectHashFunction.java
-java PerfectHashFunction input.txt
+::cd exercises\3.4.04
+::javac PerfectHashFunction.java
+::java PerfectHashFunction input.txt
+
+cd exercises\4.1.22
+javac BaconNumber.java
+java BaconNumber ..\..\algs4-data\movies.txt "/"
 
 
 
