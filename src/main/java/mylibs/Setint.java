@@ -298,8 +298,8 @@ public class Setint
         else if(key > node.key)
         {
             node.right = put(node.right, key);
-            if(node.left == null && isRed(node.right)) node = rotateLeft(node);
             if(isRed(node.left) && isRed(node.right)) node = passUpRed(node);
+            else if(isRed(node.right)) node = rotateLeft(node);
             updateNodeN(node);
             return node;
         }

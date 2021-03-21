@@ -352,8 +352,8 @@ public class RedBlackBST<Key extends Comparable<Key>, Value>
         else if(res > 0)
         {
             node.right = put(node.right, key, value);
-            if(node.left == null && isRed(node.right)) node = rotateLeft(node);
             if(isRed(node.left) && isRed(node.right)) node = passUpRed(node);
+            else if(isRed(node.right)) node = rotateLeft(node);
             updateNodeN(node);
             return node;
         }
