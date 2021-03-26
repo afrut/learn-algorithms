@@ -65,7 +65,7 @@ cls
 ::javac src\main\java\mylibs\GraphConnectRecursiveDFS.java -d .\
 ::javac src\main\java\mylibs\GraphCyclesRecursiveDFS.java -d .\
 ::javac src\main\java\mylibs\GraphCyclesBFS.java -d .\
-::javac src\main\java\mylibs\GraphTwoColorRecursiveDFS.java -d .\
+javac src\main\java\mylibs\GraphTwoColorRecursiveDFS.java -d .\
 ::javac src\main\java\mylibs\SymbolGraph.java -d .\
 ::
 :::: Create a jar in .\jar\ from bytecode .class files in .\mylibs
@@ -124,25 +124,25 @@ cls
 ::java -ea mylibs.SequentialSearchSet .\src\main\resources\STSampleInput.txt
 ::java -ea mylibs.BinarySearchSet -test
 ::java -ea mylibs.BinarySearchSet .\src\main\resources\STSampleInput.txt
-::java -ea mylibs.Graph -test src\main\resources\myMediumG.txt
-::java -ea mylibs.Graph src\main\resources\myMediumG.txt
-::java -ea mylibs.GraphSearchUF src\main\resources\myMediumG.txt
-::java -ea mylibs.GraphSearchRecursiveDFS src\main\resources\myMediumG.txt
-::java -ea mylibs.GraphSearchRecursiveDFS src\main\resources\tinyGex2.txt -trace
-::java -ea mylibs.GraphPathsRecursiveDFS src\main\resources\myMediumG.txt
-::java -ea mylibs.GraphPathsRecursiveDFS src\main\resources\tinyGex2.txt -trace
-::java -ea mylibs.GraphPathsBFS src\main\resources\myMediumG.txt
-::java -ea mylibs.GraphPathsBFS src\main\resources\tinyGex2.txt -trace
-::java -ea mylibs.GraphProperties src\main\resources\myMediumG.txt
-::java -ea mylibs.GraphProperties src\main\resources\tinyGex2.txt
-::java -ea mylibs.GraphConnectRecursiveDFS src\main\resources\myMediumG.txt
-::java -ea mylibs.GraphConnectRecursiveDFS src\main\resources\tinyGex2.txt -trace
-::java -ea mylibs.GraphCyclesRecursiveDFS src\main\resources\myMediumG.txt
-::java -ea mylibs.GraphCyclesRecursiveDFS src\main\resources\tinyGex2.txt -trace
-::java -ea mylibs.GraphCyclesBFS src\main\resources\myMediumG.txt
-::java -ea mylibs.GraphCyclesBFS src\main\resources\tinyGex2.txt
-::java -ea mylibs.GraphTwoColorRecursiveDFS src\main\resources\myMediumG.txt
-::java -ea mylibs.GraphTwoColorRecursiveDFS src\main\resources\tinyGex2.txt -trace
+::java -ea mylibs.Graph -test src\main\resources\myMediumG.txt " "
+::java -ea mylibs.Graph src\main\resources\myMediumG.txt " "
+::java -ea mylibs.GraphSearchUF src\main\resources\myMediumG.txt " "
+::java -ea mylibs.GraphSearchRecursiveDFS src\main\resources\myMediumG.txt " "
+::java -ea mylibs.GraphSearchRecursiveDFS src\main\resources\tinyGex2.txt " " -trace
+::java -ea mylibs.GraphPathsRecursiveDFS src\main\resources\myMediumG.txt " "
+::java -ea mylibs.GraphPathsRecursiveDFS src\main\resources\tinyGex2.txt " " -trace
+::java -ea mylibs.GraphPathsBFS src\main\resources\myMediumG.txt " "
+::java -ea mylibs.GraphPathsBFS src\main\resources\tinyGex2.txt " " -trace
+::java -ea mylibs.GraphProperties src\main\resources\myMediumG.txt " "
+::java -ea mylibs.GraphProperties src\main\resources\tinyGex2.txt " "
+::java -ea mylibs.GraphConnectRecursiveDFS src\main\resources\myMediumG.txt " "
+::java -ea mylibs.GraphConnectRecursiveDFS src\main\resources\tinyGex2.txt " " -trace
+::java -ea mylibs.GraphCyclesRecursiveDFS src\main\resources\myMediumG.txt " "
+::java -ea mylibs.GraphCyclesRecursiveDFS src\main\resources\tinyGex2.txt " "
+::java -ea mylibs.GraphCyclesBFS src\main\resources\myMediumG.txt " "
+::java -ea mylibs.GraphCyclesBFS src\main\resources\tinyGex2.txt " "
+java -ea mylibs.GraphTwoColorRecursiveDFS src\main\resources\myMediumG.txt " "
+java -ea mylibs.GraphTwoColorRecursiveDFS src\main\resources\tinyGex2.txt " " -trace
 ::java -ea mylibs.SymbolGraph algs4-data\movies.txt "/"
 
 :: Clean
