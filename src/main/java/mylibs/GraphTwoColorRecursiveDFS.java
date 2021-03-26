@@ -74,16 +74,17 @@ public class GraphTwoColorRecursiveDFS
     {
         boolean trace = false;
         String filename = "";
+        String delim = " ";
         for(int cnt = 0; cnt < args.length; cnt++)
         {
             if(args[cnt].equals("-trace")) trace = true;
-            else filename = args[cnt];
+            else
+            {
+                filename = args[cnt++];
+                delim = args[cnt];
+            }
         }
-        String[] in = Util.fromFile(filename);
-        Integer[] a = new Integer[in.length];
-        for(int cnt = 0; cnt < in.length; cnt++)
-            a[cnt] = Integer.parseInt(in[cnt]);
-        Graph graph = new Graph(a, false, false);
+        Graph graph = new Graph(filename, delim, false, false);
         int source = 0;
         GraphTwoColorRecursiveDFS dfs = new GraphTwoColorRecursiveDFS(graph, trace);
         System.out.println("Is graph bipartite? " + dfs.isBipartite());

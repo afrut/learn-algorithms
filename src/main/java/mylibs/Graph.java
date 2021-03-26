@@ -1,7 +1,10 @@
 package mylibs;
+import java.io.File;
 import java.io.FileNotFoundException;
-
+import java.util.Scanner;
+import mylibs.Set;
 import mylibs.Util;
+import java.util.LinkedList;
 
 public class Graph
 {
@@ -13,14 +16,16 @@ public class Graph
     private Bag<Integer>[] adj; // adjacency lists
     private boolean allowParallelEdges;
     private boolean allowSelfLoops;
+
     public Graph(int V)
     {
-        this.V = V; this.E = 0;
-        adj = (Bag<Integer>[]) new Bag[V];  // Create array of lists.
-        for (int v = 0; v < V; v++)         // Initialize all lists to empty.
-            adj[v] = new Bag<Integer>();
+        this.V = V;
+        this.E = 0;
+        init();
     }
-    public Graph(Integer[] a) {this(a, true, true);}
+
+    public Graph(Integer[] a) {this(a, false, false);}
+
     public Graph(Integer[] a, boolean allowParallelEdges, boolean allowSelfLoops)
     {
         this(a[0]);             // Read V and initialize each list in the array of lists.
@@ -38,6 +43,7 @@ public class Graph
             addEdge(v, w);      // add the edge represented by both vertices
         }
     }
+
     public Graph(Graph othergraph)
     {
         // Initialize every list in the array of lists based on othergraph's
@@ -59,6 +65,50 @@ public class Graph
                 thisbag.add(x);
         }
     }
+
+    public Graph(String filename, String delim
+        ,boolean allowParallelEdges
+        ,boolean allowSelfLoops) throws FileNotFoundException
+    {
+        // Each line should represent an edge separated by delim.
+        // It is assumed that vertices are numbered starting from 0 and ending in max.
+        // Any vertex that does not show up between 0 and max is assumed to not be connected.
+        Set<Integer> vertices = new Set<Integer>();
+        Scanner sc = new Scanner(new File(filename));
+        LinkedList<Integer> v1 = new LinkedList<Integer>();
+        LinkedList<Integer> v2 = new LinkedList<Integer>();
+        while(sc.hasNextLine())
+        {
+            String[] line = sc.nextLine().split(delim);
+            Integer i1 = Integer.parseInt(line[0]);
+            Integer i2 = Integer.parseInt(line[1]);
+            v1.add(i1);
+            v2.add(i2);
+            vertices.add(i1);
+            vertices.add(i2);
+        }
+        this.V = vertices.max() + 1;
+        this.E = 0;
+        init();
+
+        this.allowParallelEdges = allowParallelEdges;
+        this.allowSelfLoops = allowSelfLoops;
+
+        // Empty the queues to add edges.
+        while(!v1.isEmpty())
+            this.addEdge(v1.poll(), v2.poll());
+    }
+
+    public Graph(String filename, String delim) throws FileNotFoundException
+    {this(filename, delim, false, false);}
+
+    private void init()
+    {
+        adj = (Bag<Integer>[]) new Bag[V];  // Create array of lists.
+        for (int v = 0; v < V; v++)         // Initialize all lists to empty.
+            adj[v] = new Bag<Integer>();
+    }
+
     public int V() { return V; }    // return number of vertices
     public int E() { return E; }    // return number of edges
 
@@ -145,37 +195,26 @@ public class Graph
     {
         // process arguments
         String filename = "";
+        String delim = " ";
         boolean test = false;
-        if(args.length == 1)
-            filename = args[0];
-        else
+        for(int i = 0; i < args.length; i++)
         {
-            for(int i = 0; i < args.length; i++)
+            // check if tests are to be performed
+            if(args[i].compareTo("-test") == 0)
+                test = true;
+            else
             {
-                // check if tests are to be performed
-                if(args[i].compareTo("-test") == 0)
-                {
-                    filename = args[i + 1];
-                    test = true;
-                    break;
-                }
+                filename = args[i];
+                if(i + 1 < args.length) delim = args[i + 1];
+                break;
             }
         }
-        
+
         // perform tests
         if(test)
         {
-            String[] in = Util.fromFile(filename);
-            Integer[] a = new Integer[in.length];
-
             System.out.println("Executing basic tests");
-            int cnt = 0;
-            while(cnt < a.length)
-            {
-                a[cnt] = Integer.parseInt(in[cnt]);
-                cnt++;
-            }
-            Graph graph = new Graph(a);
+            Graph graph = new Graph(filename, delim, true, true);
 
             // test degree() function
             int[] degrees = {21,10,9,8,11,10,11,13,14,7,5,12,12,8,7,16,11,9,7,10,10,10,6,8,13,5,11,10,11,10,17,5,17,6,6,9,6,8,6,8,10,11,10,12,20,9,4,9,11,17,12,9,10,10,6,11,8,14,15,11,6,6,11,5,13,17,6,7,13,3,11,14,10,6,5,9,8,13,11,12,13,8,11,8,12,6,8,6,6,9,5,12,7,17,7,7,5,18,7,7,8,14,9,7,12,8,10,7,14,13,16,4,9,10,17,8,9,9,12,11,9,11,13,5,10,11,5,2,10,10,7,7,5,6,10,7,6,14,15,12,7,7,13,13,17,12,13,11,11,12,11,12,14,8,7,11,15,13,9,8,15,9,5,12,11,10,7,4,14,8,12,13,13,4,11,7,16,9,6,14,8,15,12,7,14,13,9,13,15,11,9,16,8,7,11,6,11,12,11,5,8,11,19,10,20,13,5,16,11,14,15,12,18,10,17,7,4,10,9,15,13,14,19,13,7,19,13,9,7,8,14,15,11,8,6,10,7,4,9,10,14,7,9,9,13,4,12,7,16,11};
@@ -211,7 +250,7 @@ public class Graph
 
             System.out.println("Executing tests disallowing self-loops and parallel edges:");
             int vertex, deg;
-            graph = new Graph(a, false, false);
+            graph = new Graph(filename, delim);
             vertex = 109; deg = Graph.degree(graph, vertex); assert(deg == 12) : String.format("Degree of vertex %d is not %d but should be %d", vertex, deg, 12);
             vertex = 38; deg = Graph.degree(graph, vertex); assert(deg == 5) : String.format("Degree of vertex %d is not %d but should be %d", vertex, deg, 5);
             vertex = 174; deg = Graph.degree(graph, vertex); assert(deg == 10) : String.format("Degree of vertex %d is not %d but should be %d", vertex, deg, 10);
@@ -225,15 +264,7 @@ public class Graph
         }
         else
         {
-            String[] in = Util.fromFile(filename);
-            Integer[] a = new Integer[in.length];
-            int cnt = 0;
-            while(cnt < a.length)
-            {
-                a[cnt] = Integer.parseInt(in[cnt]);
-                cnt++;
-            }
-            Graph graph = new Graph(a);
+            Graph graph = new Graph(filename, delim);
             System.out.println(graph.toString());
         }
     }

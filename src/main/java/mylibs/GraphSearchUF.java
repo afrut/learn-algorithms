@@ -29,16 +29,7 @@ public class GraphSearchUF
 
     public static void main(String[] args) throws FileNotFoundException
     {
-        String[] in = Util.fromFile(args[0]);
-        Integer[] a = new Integer[in.length];
-
-        int cnt = 0;
-        while(cnt < a.length)
-        {
-            a[cnt] = Integer.parseInt(in[cnt]);
-            cnt++;
-        }
-        Graph graph = new Graph(a, false, false);
+        Graph graph = new Graph(args[0], args[1], false, false);
         GraphSearchUF gsu = new GraphSearchUF(graph, 0);
 
         StringBuilder sb = new StringBuilder();

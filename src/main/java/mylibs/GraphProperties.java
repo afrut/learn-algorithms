@@ -73,11 +73,7 @@ public class GraphProperties
 
     public static void main(String[] args) throws FileNotFoundException
     {
-        String[] in = Util.fromFile(args[0]);
-        Integer[] a = new Integer[in.length];
-        for(int cnt = 0; cnt < in.length; cnt++)
-            a[cnt] = Integer.parseInt(in[cnt]);
-        Graph graph = new Graph(a, false, false);
+        Graph graph = new Graph(args[0], args[1], false, false);
         GraphProperties gp = new GraphProperties(graph);
         System.out.println("eccentricity(10): " + gp.eccentricity(10));
         System.out.println("diameter(): " + gp.diameter());

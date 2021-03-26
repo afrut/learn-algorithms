@@ -64,11 +64,7 @@ public class GraphCyclesBFS
 
     public static void main(String[] args) throws FileNotFoundException
     {
-        String[] in = Util.fromFile(args[0]);
-        Integer[] a = new Integer[in.length];
-        for(int cnt = 0; cnt < in.length; cnt++)
-            a[cnt] = Integer.parseInt(in[cnt]);
-        Graph graph = new Graph(a, false, false);
+        Graph graph = new Graph(args[0], args[1], false, false);
         GraphCyclesBFS gcb = new GraphCyclesBFS(graph);
         System.out.println("Graph has cycles? " + gcb.hasCycle());
         System.out.println("girth = " + gcb.girth());
