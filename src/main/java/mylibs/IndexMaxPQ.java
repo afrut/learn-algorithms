@@ -3,7 +3,6 @@
     a binary heap according to the API specified by Sedgewick 4ed.
 */
 package mylibs;
-import edu.princeton.cs.algs4.In;
 import mylibs.Util;
 import java.io.FileNotFoundException;
 
