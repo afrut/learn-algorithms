@@ -41,5 +41,6 @@
 	<classpathentry kind="src" path="exercises/3.4.01"/>
 	<classpathentry kind="src" path="exercises/3.4.04"/>
 	<classpathentry kind="src" path="exercises/4.1.22"/>
+	<classpathentry kind="src" path="exercises/4.1.24"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
