@@ -14,20 +14,20 @@ public class SymbolGraph
 
     public SymbolGraph(String filename, String delim) throws FileNotFoundException
     {
-        Scanner sc = new Scanner(new File(filename), "utf-8");
+        Scanner sc = new Scanner(new File(filename));
 
         // iterate all through elements, get unique elements, and
         // store in a bag for iteration later on
-        Bag<String[]> lines = new Bag<String[]>();
+        Bag<String[]> edges = new Bag<String[]>();
         index = new RedBlackBST<String, Integer>();
         int idx = 0;
         while(sc.hasNextLine())
         {
-            String[] line = sc.nextLine().split(delim);
-            for(String key : line)
+            String[] edge = sc.nextLine().split(delim);
+            for(String key : edge)
                 if(!index.contains(key))
                     index.put(key, idx++);
-            lines.add(line);
+            edges.add(edge);
         }
         sc.close();
 
@@ -36,14 +36,9 @@ public class SymbolGraph
         for(String key : index.keys()) name[index.get(key)] = key;
 
         // loop through all entries again to build the graph
-        // first element of every line is a move
         graph = new Graph(index.size());
-        for(String[] line : lines)
-        {
-            int movie = index.get(line[0]);
-            for(int i = 1; i < line.length; i++)
-                graph.addEdge(movie, index.get(line[i]));
-        }
+        for(String[] edge : edges)
+            graph.addEdge(index.get(edge[0]), index.get(edge[1]));
     }
 
     public boolean contains(String key) {return index.contains(key);}
