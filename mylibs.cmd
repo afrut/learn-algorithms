@@ -62,11 +62,12 @@ cls
 ::javac src\main\java\mylibs\GraphPathsRecursiveDFS.java -d .\
 ::javac src\main\java\mylibs\GraphPathsBFS.java -d .\
 ::javac src\main\java\mylibs\GraphProperties.java -d .\
+javac src\main\java\mylibs\GraphConnectDFS.java -d .\
 ::javac src\main\java\mylibs\GraphConnectRecursiveDFS.java -d .\
 ::javac src\main\java\mylibs\GraphCyclesRecursiveDFS.java -d .\
 ::javac src\main\java\mylibs\GraphCyclesBFS.java -d .\
 ::javac src\main\java\mylibs\GraphTwoColorRecursiveDFS.java -d .\
-javac src\main\java\mylibs\SymbolGraph.java -d .\
+::javac src\main\java\mylibs\SymbolGraph.java -d .\
 ::javac src\main\java\mylibs\ProcessMovies.java -d .\
 ::
 :::: Create a jar in .\jar\ from bytecode .class files in .\mylibs
@@ -136,6 +137,8 @@ javac src\main\java\mylibs\SymbolGraph.java -d .\
 ::java -ea mylibs.GraphPathsBFS src\main\resources\tinyGex2.txt " " -trace
 ::java -ea mylibs.GraphProperties src\main\resources\myMediumG.txt " "
 ::java -ea mylibs.GraphProperties src\main\resources\tinyGex2.txt " "
+java -ea mylibs.GraphConnectDFS src\main\resources\myMediumG.txt " "
+::java -ea mylibs.GraphConnectDFS src\main\resources\tinyGex2.txt " " -trace
 ::java -ea mylibs.GraphConnectRecursiveDFS src\main\resources\myMediumG.txt " "
 ::java -ea mylibs.GraphConnectRecursiveDFS src\main\resources\tinyGex2.txt " " -trace
 ::java -ea mylibs.GraphCyclesRecursiveDFS src\main\resources\myMediumG.txt " "
@@ -144,7 +147,7 @@ javac src\main\java\mylibs\SymbolGraph.java -d .\
 ::java -ea mylibs.GraphCyclesBFS src\main\resources\tinyGex2.txt " "
 ::java -ea mylibs.GraphTwoColorRecursiveDFS src\main\resources\myMediumG.txt " "
 ::java -ea mylibs.GraphTwoColorRecursiveDFS src\main\resources\tinyGex2.txt " " -trace
-java -ea mylibs.SymbolGraph src\main\resources\moviesStringEdges.txt "/"
+::java -ea mylibs.SymbolGraph src\main\resources\moviesStringEdges.txt "/"
 ::java -ea mylibs.ProcessMovies algs4-data\movies.txt "/"
 
 :: Clean
