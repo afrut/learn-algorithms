@@ -84,10 +84,6 @@ public class GraphConnectRecursiveDFS
                 delim = args[cnt];
             }
         }
-        String[] in = Util.fromFile(args[0]);
-        Integer[] a = new Integer[in.length];
-        for(int cnt = 0; cnt < in.length; cnt++)
-            a[cnt] = Integer.parseInt(in[cnt]);
         Graph graph = new Graph(filename, delim, false, false);
         GraphConnectRecursiveDFS gcd = new GraphConnectRecursiveDFS(graph, trace);
         System.out.println("Number of components: " + gcd.count());
