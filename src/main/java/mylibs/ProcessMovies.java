@@ -31,11 +31,13 @@ public class ProcessMovies
             String[] line = sc.nextLine().split(delim);
             lines.add(line);
             String movie = line[0];
-            index.put(movie, idx++);
+            if(!index.contains(movie))
+                index.put(movie, idx++);
             for(int i = 1; i < line.length; i++)
             {
+                if(!index.contains(line[i]))
+                    index.put(line[i], idx++);
                 writer.write(movie + delim + line[i] + "\n");
-                index.put(line[i], idx++);
             }
         }
         sc.close();
@@ -46,9 +48,11 @@ public class ProcessMovies
         for(String[] line : lines)
         {
             int idxMovie = index.get(line[0]);
-            for(int i = 0; i < line.length; i++)
+            for(int i = 1; i < line.length; i++)
                 writer.write(idxMovie + " " + index.get(line[i]) + "\n");
         }
         writer.close();
+
+        //System.out.println(String.format("name of %d = %s", 1, sg.name(1)));
     }
 }
