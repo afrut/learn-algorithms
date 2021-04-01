@@ -32,25 +32,28 @@ public class GraphCyclesBFS
         while(!queue.isEmpty())
         {
             int v = queue.poll();
-            marked[v] = true;
-            for(int w : graph.adj(v))
+            if(!marked[v])
             {
-                if(!marked[w])
+                marked[v] = true;
+                for(int w : graph.adj(v))
                 {
-                    queue.add(w);
-                    edgeTo[w] = v;
-                    distTo[w] = distTo[v] + 1;
-                }
-                else if(edgeTo[v] != s && w == s)
-                {
-                    hasCycle = true;
-                    if(girth == -1) girth = distTo[v] + 1;
-                    else if(distTo[v] + 1 < girth)
+                    if(!marked[w])
                     {
-                        girth = distTo[v] + 1;
+                        queue.add(w);
+                        edgeTo[w] = v;
+                        distTo[w] = distTo[v] + 1;
                     }
-                }
-            }          
+                    else if(edgeTo[v] != s && w == s)
+                    {
+                        hasCycle = true;
+                        if(girth == -1) girth = distTo[v] + 1;
+                        else if(distTo[v] + 1 < girth)
+                        {
+                            girth = distTo[v] + 1;
+                        }
+                    }
+                }          
+            }
         }
     }
 
@@ -69,24 +72,27 @@ public class GraphCyclesBFS
         while(!queue.isEmpty())
         {
             int v = queue.poll();
-            marked[v] = true;
-            for(int w : graph.adj(v))
+            if(!marked[v])
             {
-                if(!marked[w])
+                marked[v] = true;
+                for(int w : graph.adj(v))
                 {
-                    queue.add(w);
-                    edgeTo[w] = v;
-                    distTo[w] = distTo[v] + 1;
-                }
-                else if(edgeTo[v] != s && w == s)
-                {
-                    if(ret == -1) ret = distTo[v] + 1;
-                    else if(distTo[v] + 1 < ret)
+                    if(!marked[w])
                     {
-                        ret = distTo[v] + 1;
+                        queue.add(w);
+                        edgeTo[w] = v;
+                        distTo[w] = distTo[v] + 1;
                     }
-                }
-            }          
+                    else if(edgeTo[v] != s && w == s)
+                    {
+                        if(ret == -1) ret = distTo[v] + 1;
+                        else if(distTo[v] + 1 < ret)
+                        {
+                            ret = distTo[v] + 1;
+                        }
+                    }
+                }          
+            }
         }
         return ret;
     }
