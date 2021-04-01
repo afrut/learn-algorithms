@@ -18,7 +18,7 @@ public class GraphCyclesBFS
         for(int v = 0; v < graph.V(); v++)
             bfs(v);
     }
-    
+
     public void bfs(int s)
     {
         boolean[] marked = new boolean[graph.V()];
@@ -43,15 +43,52 @@ public class GraphCyclesBFS
                 }
                 else if(edgeTo[v] != s && w == s)
                 {
+                    hasCycle = true;
                     if(girth == -1) girth = distTo[v] + 1;
                     else if(distTo[v] + 1 < girth)
                     {
                         girth = distTo[v] + 1;
-                        hasCycle = true;
                     }
                 }
             }          
         }
+    }
+
+    // compute the girth of the component that s belongs to
+    public static int girth(Graph graph, int s)
+    {
+        boolean[] marked = new boolean[graph.V()];
+        int[] edgeTo = new int[graph.V()];
+        int[] distTo = new int[graph.V()];
+        LinkedList<Integer>queue = new LinkedList<Integer>();
+        queue.add(s);
+        edgeTo[s] = s;
+        distTo[s] = 0;
+        int ret = -1;
+        
+        while(!queue.isEmpty())
+        {
+            int v = queue.poll();
+            marked[v] = true;
+            for(int w : graph.adj(v))
+            {
+                if(!marked[w])
+                {
+                    queue.add(w);
+                    edgeTo[w] = v;
+                    distTo[w] = distTo[v] + 1;
+                }
+                else if(edgeTo[v] != s && w == s)
+                {
+                    if(ret == -1) ret = distTo[v] + 1;
+                    else if(distTo[v] + 1 < ret)
+                    {
+                        ret = distTo[v] + 1;
+                    }
+                }
+            }          
+        }
+        return ret;
     }
 
     // return if graph is acyclic
@@ -68,5 +105,6 @@ public class GraphCyclesBFS
         GraphCyclesBFS gcb = new GraphCyclesBFS(graph);
         System.out.println("Graph has cycles? " + gcb.hasCycle());
         System.out.println("girth = " + gcb.girth());
+        System.out.println("girth(0) = " + GraphCyclesBFS.girth(graph, 0));
     }
 }
