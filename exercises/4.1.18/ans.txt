@@ -1,1 +1,1 @@
-See mylibs.GraphCyclesBFS.
+See mylibs.GraphProperties.

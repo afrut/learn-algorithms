@@ -12,6 +12,8 @@ public class GraphProperties
     private int[] ecc;
     private int rad;
     private LinkedList<Integer> ctrs;
+    private boolean[] marked;
+    private int girth;
 
     public GraphProperties(Graph graph)
     {
@@ -22,6 +24,18 @@ public class GraphProperties
         diam = -1;
         rad = -1;
         ctrs = new LinkedList<Integer>();
+
+        marked = new boolean[graph.V()];
+        girth = -1;
+        for(int v = 0; v < graph.V(); v++)
+        {
+            if(!marked[v])
+            {
+                int ret = girth(v, marked);
+                if(girth < 0) girth = ret;
+                else if(ret < girth) girth = ret;
+            }
+        }
     }
 
     // length of shortest path from v to the furthest vertex from v
@@ -107,11 +121,20 @@ public class GraphProperties
         return ctrs.peek();
     }
 
-    // length of the shortest cycle in the component of v
+    // length of the shortest cycle for the whole graph
+    public int girth() {return girth;}
+
+    // length of the shortest cycle in the component of v for client code
     public int girth(int v)
     {
+        boolean[] localmarked = new boolean[graph.V()];
+        return girth(v, localmarked);
+    }
+
+    // length of the shortest cycle in the component of v
+    private int girth(int v, boolean[] marked)
+    {
         int ret = -1;
-        boolean[] marked = new boolean[graph.V()];
         LinkedList<Integer> queue = new LinkedList<Integer>();
         int[] edgeTo = new int[graph.V()];
         int[] distTo = new int[graph.V()];
@@ -156,6 +179,7 @@ public class GraphProperties
         System.out.println("radius(): " + gp.radius());
         System.out.println("center(): " + gp.center());
         System.out.println("eccentricity(" + gp.center() + ") = " + gp.eccentricity(gp.center()));
+        System.out.println("girth(): " + gp.girth());
         System.out.println("girth(0): " + gp.girth(0));
     }
 }
