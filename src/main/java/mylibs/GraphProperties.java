@@ -24,6 +24,7 @@ public class GraphProperties
         ctrs = new LinkedList<Integer>();
     }
 
+    // length of shortest path from v to the furthest vertex from v
     public int eccentricity(int v)
     {
         if(ecc[v] < 0)
@@ -35,6 +36,7 @@ public class GraphProperties
         return ecc[v];
     }
 
+    // largest eccentricity of any vertex
     public int diameter()
     {
         if(diam < 0)
@@ -45,7 +47,7 @@ public class GraphProperties
         return diam;
     }
 
-    // diameter of v's component
+    // largest eccentricity of v's component
     public int diameter(int v)
     {
         LinkedList<Integer> toMark = new LinkedList<Integer>();
@@ -64,6 +66,7 @@ public class GraphProperties
         return ret;
     }
 
+    // smallest eccentricity of any vertex
     public int radius()
     {
         if(rad < 0)
@@ -93,6 +96,7 @@ public class GraphProperties
         return ret;
     }
 
+    // a vertex whose eccentricity is the radius
     public int center()
     {
         if(rad < 0) {int ret = radius();}
@@ -101,6 +105,46 @@ public class GraphProperties
                 if(ecc[v] == rad)
                     ctrs.add(v);
         return ctrs.peek();
+    }
+
+    // length of the shortest cycle in the component of v
+    public int girth(int v)
+    {
+        int ret = -1;
+        boolean[] marked = new boolean[graph.V()];
+        LinkedList<Integer> queue = new LinkedList<Integer>();
+        int[] edgeTo = new int[graph.V()];
+        int[] distTo = new int[graph.V()];
+        marked[v] = true;
+        queue.add(v);
+        edgeTo[v] = v;
+        distTo[v] = 0;
+
+        while(!queue.isEmpty())
+        {
+            v = queue.poll();
+            for(int w : graph.adj(v))
+            {
+                if(!marked[w])
+                {
+                    marked[w] = true;
+                    queue.add(w);
+                    edgeTo[w] = v;
+                    distTo[w] = distTo[v] + 1;
+                }
+                else
+                {
+                    if(edgeTo[v] != w)
+                    {
+                        int girth = distTo[v] + distTo[w] + 1;
+                        //System.out.println("distTo[" + v + "] = " + distTo[v] + ", distTo[w] = " + distTo[w]);
+                        if(ret < 0) ret = girth;
+                        else if(girth < ret) ret = girth;
+                    }
+                }
+            }
+        }
+        return ret;
     }
 
     public static void main(String[] args) throws FileNotFoundException
@@ -112,5 +156,6 @@ public class GraphProperties
         System.out.println("radius(): " + gp.radius());
         System.out.println("center(): " + gp.center());
         System.out.println("eccentricity(" + gp.center() + ") = " + gp.eccentricity(gp.center()));
+        System.out.println("girth(0): " + gp.girth(0));
     }
 }
