@@ -1,3 +1,5 @@
+// TODO: re-examine BFS for this
+// TODO: move girth from here to GraphProperties
 package mylibs;
 
 import java.io.FileNotFoundException;
@@ -8,109 +10,83 @@ public class GraphCyclesBFS
 {
     private Graph graph;
     private boolean hasCycle;
-    private int girth;
-    
+    boolean[] marked;
+
     public GraphCyclesBFS(Graph graph)
+    {this(graph, false);}
+    
+    public GraphCyclesBFS(Graph graph, boolean trace)
     {
         this.graph = graph;
         hasCycle = false;
-        girth = -1;
+        marked = new boolean[graph.V()];
+
+        // every vertex called belongs to a different component
         for(int v = 0; v < graph.V(); v++)
-            bfs(v);
+            if(!marked[v]) bfs(v, trace);
     }
 
-    public void bfs(int s)
+    public void bfs(int s, boolean trace)
     {
-        boolean[] marked = new boolean[graph.V()];
+        LinkedList<Integer> queue = new LinkedList<Integer>();
         int[] edgeTo = new int[graph.V()];
         int[] distTo = new int[graph.V()];
-        LinkedList<Integer>queue = new LinkedList<Integer>();
+        marked[s] = true;
         queue.add(s);
         edgeTo[s] = s;
         distTo[s] = 0;
-        
         while(!queue.isEmpty())
         {
             int v = queue.poll();
-            if(!marked[v])
+            if(trace)
+                System.out.println("checking adjacent to " + v);
+            for(int w : graph.adj(v))
             {
-                marked[v] = true;
-                for(int w : graph.adj(v))
+                if(!marked[w])
                 {
-                    if(!marked[w])
+                    if(trace) System.out.println("  marking " + w);
+                    marked[w] = true;
+                    queue.add(w);
+                    edgeTo[w] = v;
+                    distTo[w] = distTo[v] + 1;
+                }
+                else
+                {
+                    if(trace) System.out.println("  found marked " + w);
+
+                    // check if w is the vertex used to reach this vertex v
+                    if(edgeTo[v] != w)
                     {
-                        queue.add(w);
-                        edgeTo[w] = v;
-                        distTo[w] = distTo[v] + 1;
-                    }
-                    else if(edgeTo[v] != s && w == s)
-                    {
+                        if(trace)
+                            System.out.println("    " + w + " is not used to reach " + v + ", cycle exists");
+                        // it is not, a cycle exists
                         hasCycle = true;
-                        if(girth == -1) girth = distTo[v] + 1;
-                        else if(distTo[v] + 1 < girth)
-                        {
-                            girth = distTo[v] + 1;
-                        }
                     }
-                }          
+                }
             }
         }
-    }
-
-    // compute the girth of the component that s belongs to
-    public static int girth(Graph graph, int s)
-    {
-        boolean[] marked = new boolean[graph.V()];
-        int[] edgeTo = new int[graph.V()];
-        int[] distTo = new int[graph.V()];
-        LinkedList<Integer>queue = new LinkedList<Integer>();
-        queue.add(s);
-        edgeTo[s] = s;
-        distTo[s] = 0;
-        int ret = -1;
-        
-        while(!queue.isEmpty())
-        {
-            int v = queue.poll();
-            if(!marked[v])
-            {
-                marked[v] = true;
-                for(int w : graph.adj(v))
-                {
-                    if(!marked[w])
-                    {
-                        queue.add(w);
-                        edgeTo[w] = v;
-                        distTo[w] = distTo[v] + 1;
-                    }
-                    else if(edgeTo[v] != s && w == s)
-                    {
-                        if(ret == -1) ret = distTo[v] + 1;
-                        else if(distTo[v] + 1 < ret)
-                        {
-                            ret = distTo[v] + 1;
-                        }
-                    }
-                }          
-            }
-        }
-        return ret;
     }
 
     // return if graph is acyclic
     public boolean hasCycle()
     {return hasCycle;}
 
-    // length of shortest cycle
-    public int girth()
-    {return girth;}
-
     public static void main(String[] args) throws FileNotFoundException
     {
-        Graph graph = new Graph(args[0], args[1], false, false);
-        GraphCyclesBFS gcb = new GraphCyclesBFS(graph);
+        boolean trace = false;
+        String filename = "";
+        String delim = "";
+        for(int i = 0; i < args.length; i++)
+        {
+            if(args[i].compareTo("-trace") == 0) trace = true;
+            else
+            {
+                filename = args[i++];
+                delim = args[i];
+            }
+        }
+        Graph graph = new Graph(filename, delim, false, false);
+        GraphCyclesBFS gcb = new GraphCyclesBFS(graph, trace);
         System.out.println("Graph has cycles? " + gcb.hasCycle());
-        System.out.println("girth = " + gcb.girth());
-        System.out.println("girth(0) = " + GraphCyclesBFS.girth(graph, 0));
     }
 }
