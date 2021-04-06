@@ -171,9 +171,13 @@ cls
 ::javac PerfectHashFunction.java
 ::java PerfectHashFunction input.txt
 
-cd exercises\4.1.22
-javac BaconNumber.java
-java BaconNumber ..\..\algs4-data\movies.txt "/"
+::cd exercises\4.1.22
+::javac BaconNumber.java
+::java BaconNumber ..\..\algs4-data\movies.txt "/"
+
+cd exercises\4.1.24
+javac MoviesProperties.java
+java MoviesProperties ..\..\src\main\resources\moviesStringEdges.txt "/"
 
 
 
