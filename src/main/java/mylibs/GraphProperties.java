@@ -33,7 +33,7 @@ public class GraphProperties
             {
                 int ret = girth(v, marked);
                 if(girth < 0) girth = ret;
-                else if(ret < girth) girth = ret;
+                else if(ret < girth && ret > 0) girth = ret;
             }
         }
     }
@@ -87,7 +87,7 @@ public class GraphProperties
         {
             rad = eccentricity(0);
             for(int v = 0; v < graph.V(); v++)
-                if(eccentricity(v) < rad) rad = eccentricity(v);
+                if(eccentricity(v) < rad || rad == 0) rad = eccentricity(v);
         }
         return rad;
     }
