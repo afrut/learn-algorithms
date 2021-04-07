@@ -69,6 +69,7 @@ javac src\main\java\mylibs\GraphCyclesBFS.java -d .\
 javac src\main\java\mylibs\GraphTwoColorRecursiveDFS.java -d .\
 javac src\main\java\mylibs\SymbolGraph.java -d .\
 javac src\main\java\mylibs\ProcessMovies.java -d .\
+javac src\main\java\mylibs\Digraph.java -d .\
 
 :: Create a jar in .\jar\ from bytecode .class files in .\mylibs
 del .\jar\mylibs.jar
@@ -150,6 +151,8 @@ jar cvf .\jar\mylibs.jar .\mylibs\*.class
 ::java -ea mylibs.GraphTwoColorRecursiveDFS src\main\resources\tinyGex2.txt " " -trace
 ::java -ea mylibs.SymbolGraph src\main\resources\moviesStringEdges.txt "/"
 ::java -ea mylibs.ProcessMovies algs4-data\movies.txt "/"
+java -ea mylibs.Digraph src\main\resources\tinyDG.txt " "
+java -ea mylibs.Digraph src\main\resources\tinyDG.txt " " -test
 
 :: Clean
 del /s .\mylibs\*.class
