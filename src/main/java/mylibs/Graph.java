@@ -24,26 +24,6 @@ public class Graph
         init();
     }
 
-    public Graph(Integer[] a) {this(a, false, false);}
-
-    public Graph(Integer[] a, boolean allowParallelEdges, boolean allowSelfLoops)
-    {
-        this(a[0]);             // Read V and initialize each list in the array of lists.
-        this.allowParallelEdges = allowParallelEdges;
-        this.allowSelfLoops = allowSelfLoops;
-        
-        // Loop through the source array a starting with the third element.
-        // This loop reads integers two at a time, 2 vertices at a time, which
-        // define an edge.
-        int N = a.length;
-        for (int i = 2; i < N; i = i + 2)
-        {
-            int v = a[i];       // read vertex 1 of the edge
-            int w = a[i + 1];   // read vertex 2 of the edge
-            addEdge(v, w);      // add the edge represented by both vertices
-        }
-    }
-
     public Graph(Graph othergraph)
     {
         // Initialize every list in the array of lists based on othergraph's
