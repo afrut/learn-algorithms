@@ -186,7 +186,6 @@ public class Digraph
             }
         }
 
-        System.out.println(test);
         // perform tests
         if(test)
         {
