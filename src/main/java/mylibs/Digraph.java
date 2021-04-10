@@ -151,7 +151,15 @@ public class Digraph
         return false;
     }
 
-    // Returns the number of parallel edges in the graph
+    // Return a digraph where direction of all edges is reversed
+    public Digraph reverse()
+    {
+        Digraph ret = new Digraph(this.V());
+        for(int v = 0; v < this.V(); v++)
+            for(int w : this.adj(v))
+                ret.addEdge(w, v);
+        return ret;
+    }
 
     // Return string representation of the graph
     public String toString()
@@ -190,43 +198,52 @@ public class Digraph
         if(test)
         {
             System.out.println("Executing basic tests");
-            Digraph graph = new Digraph(filename, delim, false, false);
+            Digraph digraph = new Digraph(filename, delim, false, false);
 
             // test outDegree() function
             int[] outDegrees = {2, 0, 2, 2, 2, 1, 3, 2, 2, 2, 1, 2, 1};
-            for(int v = 0; v < graph.V(); v++)
+            for(int v = 0; v < digraph.V(); v++)
             {
                 // test Digraph
-                int outDegree = Digraph.outDegree(graph, v);
+                int outDegree = Digraph.outDegree(digraph, v);
                 assert(outDegree == outDegrees[v]) :
                 String.format("Degree of vertex %d is not %d but is %d", v, outDegree, outDegrees[v]);
             }
 
             // test number of edges counting
-            int numEdges = graph.E();
+            int numEdges = digraph.E();
             assert(numEdges == 22) : String.format("Number of edges is not %d should be %d", numEdges, 2558);
             
             // test maxOutDegree() function
-            int maxOutDegree = Digraph.maxOutDegree(graph);
+            int maxOutDegree = Digraph.maxOutDegree(digraph);
             assert(maxOutDegree == 3) : String.format("Maximum outDegree is not %d", maxOutDegree);
             
             // test the avgDegree() function
-            int avgDegree = Digraph.avgDegree(graph);
+            int avgDegree = Digraph.avgDegree(digraph);
             assert(avgDegree == (int)(22/13)) : String.format("Average outDegree is not %d", avgDegree);
             
             // test the numberOfSelfLoops() function
-            int numberOfSelfLoops = Digraph.numberOfSelfLoops(graph);
+            int numberOfSelfLoops = Digraph.numberOfSelfLoops(digraph);
             assert(numberOfSelfLoops == 0) : String.format("Number of self loops is not %d", numberOfSelfLoops);
 
             // test hasEdge() function
-            assert(graph.hasEdge(9, 11)) : String.format("Digraph has edge 9->11");
-            assert(!graph.hasEdge(12, 5)) : String.format("Digraph does not have edge 12->5");
+            assert(digraph.hasEdge(9, 11)) : String.format("Digraph has edge 9->11");
+            assert(!digraph.hasEdge(12, 5)) : String.format("Digraph does not have edge 12->5");
+            
+            // test reverse() function
+            Digraph rev = digraph.reverse();
+            for(int v = 0; v < digraph.V(); v++)
+                for(int w : digraph.adj(v))
+                    assert(rev.hasEdge(w, v)) : String.format("Reverse of digraph does not have edge " + v + "->" + w);
+
             System.out.println("PASS");
         }
         else
         {
-            Digraph graph = new Digraph(filename, delim);
-            System.out.println(graph.toString());
+            Digraph digraph = new Digraph(filename, delim);
+            System.out.println(digraph.toString());
+            Digraph reverse = digraph.reverse();
+            System.out.println(reverse.toString());
         }
     }
 }
