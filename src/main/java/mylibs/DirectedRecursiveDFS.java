@@ -4,73 +4,54 @@ import java.util.LinkedList;
 import java.util.ArrayList;
 import mylibs.Digraph;
 
-public class DirectedDFS
+public class DirectedRecursiveDFS
 {
     private Digraph digraph;
     private boolean[] marked;
+    private boolean trace;
+    StringBuilder indent;
 
-    public DirectedDFS(Digraph digraph, int s){this(digraph, s, false);}
-    public DirectedDFS(Digraph digraph, Iterable<Integer> sources) {this(digraph, sources, false);}
+    public DirectedRecursiveDFS(Digraph digraph, int s){this(digraph, s, false);}
+    public DirectedRecursiveDFS(Digraph digraph, Iterable<Integer> sources) {this(digraph, sources, false);}
 
     // find vertices in G that are reachable from s
-    public DirectedDFS(Digraph digraph, int s, boolean trace)
+    public DirectedRecursiveDFS(Digraph digraph, int s, boolean trace)
     {
         this.digraph = digraph;
         marked = new boolean[digraph.V()];
-        dfs(s, marked, trace);
+        this.trace = trace;
+        indent = new StringBuilder();
+        dfs(s);
     }
 
     // find vertices in G that are reachable from sources
-    public DirectedDFS(Digraph digraph, Iterable<Integer> sources, boolean trace)
+    public DirectedRecursiveDFS(Digraph digraph, Iterable<Integer> sources, boolean trace)
     {
         this.digraph = digraph;
         marked = new boolean[digraph.V()];
-        dfs(sources, marked, trace);
+        this.trace = trace;
+        indent = new StringBuilder();
+        dfs(sources);
     }
 
-    private void dfs(int s, boolean[] marked, boolean trace)
+    private void dfs(int v)
     {
-        // queue to store the vertices to explore at each vertex
-        LinkedList<Integer>[] toMark = (LinkedList<Integer>[])new LinkedList[digraph.V()];
-        for(int i = 0; i < toMark.length; i++)
-            toMark[i] = new LinkedList<Integer>();
-
-        // stack to keep track of path in Tremaux exploration
-        LinkedList<Integer> stack = new LinkedList<Integer>();
-
-        int v = s;
-        StringBuilder indent = new StringBuilder();
-        while(true)
+        if(trace) System.out.println(indent + "marking " + v);
+        indent.append("|  ");
+        marked[v] = true;
+        for(int w : digraph.adj(v))
         {
-            if(!marked[v])
+            if(trace) System.out.println(indent + "checking " + w);
+            if(!marked[w])
             {
-                if(trace) System.out.println(indent + "marking " + v);
-                marked[v] = true;
-                for(Integer w : digraph.adj(v))
-                if(!marked[w])
-                {
-                    toMark[v].add(w);
-                    if(trace) System.out.println(indent + "|  adding " + w);
-                }
-            }
-            
-            if(!toMark[v].isEmpty())
-            {
-                stack.push(v);
-                indent.append("|  ");
-                v = toMark[v].poll();
-            }
-            else if(!stack.isEmpty())
-            {
-                v = stack.pop();
+                dfs(w);
                 indent.setLength(indent.length() - 3);
             }
-            else break;
         }
     }
 
-    private void dfs(Iterable<Integer> sources, boolean[] marked, boolean trace)
-    {for(int v : sources) if(!marked[v]) dfs(v, marked, trace);}
+    private void dfs(Iterable<Integer> sources)
+    {for(int v : sources) if(!marked[v]) dfs(v);}
 
     public boolean marked(int v) {return marked[v];}
 
@@ -93,7 +74,7 @@ public class DirectedDFS
         {
             Digraph digraph = new Digraph(filename, delim);
             int s = 0;
-            DirectedDFS ddfs = new DirectedDFS(digraph, s, false);
+            DirectedRecursiveDFS ddfs = new DirectedRecursiveDFS(digraph, s, false);
             ArrayList<Integer> connected = new ArrayList<Integer>();
             for(int v = 0; v < digraph.V(); v++)
                 if(ddfs.marked(v)) connected.add(v);
@@ -108,7 +89,7 @@ public class DirectedDFS
             ArrayList<Integer> sources = new ArrayList<Integer>(digraph.V());
             sources.add(0);
             sources.add(6);
-            DirectedDFS ddfss = new DirectedDFS(digraph, sources, false);
+            DirectedRecursiveDFS ddfss = new DirectedRecursiveDFS(digraph, sources, false);
             connected.clear();
             for(int v = 0; v < digraph.V(); v++)
                 if(ddfss.marked(v)) connected.add(v);
@@ -132,7 +113,7 @@ public class DirectedDFS
             Digraph digraph = new Digraph(filename, delim);
             int s = 0;
             System.out.println("Exploring starting from " + s);
-            DirectedDFS ddfs = new DirectedDFS(digraph, s, true);
+            DirectedRecursiveDFS ddfs = new DirectedRecursiveDFS(digraph, s, true);
             System.out.println("Enumerating connected vertices:");
             for(int v = 0; v < digraph.V(); v++)
                 if(ddfs.marked(v)) System.out.println("  " + v);
@@ -142,7 +123,7 @@ public class DirectedDFS
             sources.add(0);
             sources.add(6);
             System.out.println("Exploring starting from the following sources: " + sources.toString());
-            DirectedDFS ddfss = new DirectedDFS(digraph, sources, true);
+            DirectedRecursiveDFS ddfss = new DirectedRecursiveDFS(digraph, sources, true);
             System.out.println("Enumerating connected vertices:");
             for(int v = 0; v < digraph.V(); v++)
                 if(ddfss.marked(v)) System.out.println("  " + v);
