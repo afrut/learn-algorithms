@@ -71,6 +71,7 @@ javac src\main\java\mylibs\SymbolGraph.java -d .\
 javac src\main\java\mylibs\ProcessMovies.java -d .\
 javac src\main\java\mylibs\Digraph.java -d .\
 javac src\main\java\mylibs\DirectedDFS.java -d .\
+javac src\main\java\mylibs\DirectedRecursiveDFS.java -d .\
 
 :: Create a jar in .\jar\ from bytecode .class files in .\mylibs
 del .\jar\mylibs.jar
@@ -156,6 +157,8 @@ jar cvf .\jar\mylibs.jar .\mylibs\*.class
 ::java -ea mylibs.Digraph src\main\resources\tinyDG.txt " " -test
 ::java -ea mylibs.DirectedDFS src\main\resources\tinyDG.txt " "
 ::java -ea mylibs.DirectedDFS src\main\resources\tinyDG.txt " " -test
+::java -ea mylibs.DirectedRecursiveDFS src\main\resources\tinyDG.txt " "
+::java -ea mylibs.DirectedRecursiveDFS src\main\resources\tinyDG.txt " " -test
 
 :: Clean
 del /s .\mylibs\*.class

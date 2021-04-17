@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry including="mylibs/" kind="src" path="src/main/java"/>
 	<classpathentry excluding="Package*.java" kind="src" path="src/main/java/templates"/>
+	<classpathentry excluding="templates/" kind="src" path="src/main/java"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER">
 		<attributes>
 			<attribute name="module" value="true"/>
