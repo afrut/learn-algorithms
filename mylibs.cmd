@@ -23,6 +23,9 @@ cls
 javac src\main\java\mylibs\CountingTechniques.java -d .\
 javac src\main\java\mylibs\Util.java -d .\
 javac src\main\java\mylibs\Bag.java -d .\
+javac src\main\java\mylibs\BagResizingArray.java -d .\
+javac src\main\java\mylibs\Stack.java -d .\
+javac src\main\java\mylibs\StackResizingArray.java -d .\
 javac src\main\java\mylibs\List.java -d .\
 javac src\main\java\mylibs\Pair.java -d .\
 javac src\main\java\mylibs\MaxPQ.java -d .\
@@ -72,6 +75,7 @@ javac src\main\java\mylibs\ProcessMovies.java -d .\
 javac src\main\java\mylibs\Digraph.java -d .\
 javac src\main\java\mylibs\DirectedDFS.java -d .\
 javac src\main\java\mylibs\DirectedRecursiveDFS.java -d .\
+javac src\main\java\mylibs\DirectedCycle.java -d .\
 
 :: Create a jar in .\jar\ from bytecode .class files in .\mylibs
 del .\jar\mylibs.jar
@@ -80,7 +84,14 @@ jar cvf .\jar\mylibs.jar .\mylibs\*.class
 :::: Try running the main() function
 ::java -ea mylibs.CountingTechniques
 ::java -ea mylibs.Util .\src\main\resources\PQSampleInput.txt
-::java -ea mylibs.Bag
+java -ea mylibs.Bag src\main\resources\8KInts.txt
+java -ea mylibs.Bag src\main\resources\8KInts.txt -test
+java -ea mylibs.BagResizingArray src\main\resources\8KInts.txt
+java -ea mylibs.BagResizingArray src\main\resources\8KInts.txt -test
+java -ea mylibs.Stack src\main\resources\8KInts.txt
+java -ea mylibs.Stack src\main\resources\8KInts.txt -test
+java -ea mylibs.StackResizingArray src\main\resources\8KInts.txt
+java -ea mylibs.StackResizingArray src\main\resources\8KInts.txt -test
 ::java -ea mylibs.List
 ::java -ea mylibs.Pair
 ::java -ea mylibs.MaxPQ .\src\main\resources\PQSampleInput.txt
@@ -159,6 +170,8 @@ jar cvf .\jar\mylibs.jar .\mylibs\*.class
 ::java -ea mylibs.DirectedDFS src\main\resources\tinyDG.txt " " -test
 ::java -ea mylibs.DirectedRecursiveDFS src\main\resources\tinyDG.txt " "
 ::java -ea mylibs.DirectedRecursiveDFS src\main\resources\tinyDG.txt " " -test
+::java -ea mylibs.DirectedCycle src\main\resources\tinyDG.txt " "
+::java -ea mylibs.DirectedCycle src\main\resources\tinyDG.txt " " -test
 
 :: Clean
 del /s .\mylibs\*.class
