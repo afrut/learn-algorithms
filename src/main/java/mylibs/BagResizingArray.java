@@ -1,69 +1,48 @@
 package mylibs;
+import mylibs.Util;
+
 import java.io.FileNotFoundException;
 import java.util.Iterator;
 
-public class Bag<T> implements Iterable<T>
+public class BagResizingArray<Item> implements Iterable<Item>
 {
-    private class Node
+    private class BagIterator implements Iterator<Item>
     {
-        T value;
-        Node next;
+        private int num;
+        public BagIterator() {num = 0;}
+
+        public boolean hasNext() {return num < N;}
+        public Item next() {return array[num++];}
+        public void remove() {}
     }
 
-    private class BagIterator implements Iterator<T>
-    {
-        private Node node;
-
-        public BagIterator() {node = root;}
-        public boolean hasNext() {return node.next != null;}
-        public T next()
-        {
-            node = node.next;
-            return node.value;
-        }
-    }
-    
-    Node root;
+    private Item[] array;
     private int N;
-    
-    public Bag()
+
+    public BagResizingArray()
     {
-        root = new Node();
         N = 0;
+        array = (Item[]) new Object[1];
     }
 
-    public void add(T t)
+    public void add(Item p)
     {
-        root.value = t;
-        Node node = new Node();
-        node.next = root;
-        root = node;
-        //System.out.println(node.next.value);
-        N++;
+        array[N++] = p;
+        if(N > (int)(array.length / 2)) resize(array.length * 2);
     }
 
     public boolean isEmpty() {return N == 0;}
     public int size() {return N;}
-    public boolean contains(T p)
+
+    private void resize(int newN)
     {
-        for(T t : this)
-            if(p.equals(t)) return true;
-        return false;
+        Item[] newArray = (Item[]) new Object[newN];
+        for(int cnt = 0; cnt < N; cnt++)
+            newArray[cnt] = array[cnt];
+        array = newArray;
     }
-    public Iterator<T> iterator() {return new BagIterator();}
-    public String toString()
-    {
-        StringBuilder sb = new StringBuilder();
-        Node node = root;
-        while(node.next != null)
-        {
-            node = node.next;
-            sb.append(node.value.toString() + ", ");
-        }
-        if(N > 0)
-            sb.setLength(sb.length() - 2);
-        return sb.toString();
-    }
+
+    public Iterator<Item> iterator() {return new BagIterator();}
 
     public static void main(String[] args) throws FileNotFoundException
     {
@@ -80,7 +59,7 @@ public class Bag<T> implements Iterable<T>
 
         if(test)
         {
-            Bag<String> bag = new Bag<String>();
+            BagResizingArray<String> bag = new BagResizingArray<String>();
             assert(bag.isEmpty()) : "Bag should be empty";
             assert(bag.size() == 0) : "Bag should not have elements yet";
             for(int cnt = 0; cnt < elems.length; cnt++)
@@ -94,7 +73,7 @@ public class Bag<T> implements Iterable<T>
         }
         else
         {
-            Bag<String> bag = new Bag<String>();
+            BagResizingArray<String> bag = new BagResizingArray<String>();
             for(int cnt = 0; cnt < elems.length; cnt++)
                 bag.add(elems[cnt]);
             System.out.println("Is bag empty? " + bag.isEmpty());
@@ -108,4 +87,5 @@ public class Bag<T> implements Iterable<T>
             }
         }
     }
+
 }
