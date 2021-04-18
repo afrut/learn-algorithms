@@ -26,6 +26,8 @@ javac src\main\java\mylibs\Bag.java -d .\
 javac src\main\java\mylibs\BagResizingArray.java -d .\
 javac src\main\java\mylibs\Stack.java -d .\
 javac src\main\java\mylibs\StackResizingArray.java -d .\
+javac src\main\java\mylibs\Queue.java -d .\
+javac src\main\java\mylibs\QueueResizingArray.java -d .\
 javac src\main\java\mylibs\List.java -d .\
 javac src\main\java\mylibs\Pair.java -d .\
 javac src\main\java\mylibs\MaxPQ.java -d .\
@@ -92,6 +94,10 @@ java -ea mylibs.Stack src\main\resources\8KInts.txt
 java -ea mylibs.Stack src\main\resources\8KInts.txt -test
 java -ea mylibs.StackResizingArray src\main\resources\8KInts.txt
 java -ea mylibs.StackResizingArray src\main\resources\8KInts.txt -test
+java -ea mylibs.Queue src\main\resources\8KInts.txt
+java -ea mylibs.Queue src\main\resources\8KInts.txt -test
+java -ea mylibs.QueueResizingArray src\main\resources\8KInts.txt
+java -ea mylibs.QueueResizingArray src\main\resources\8KInts.txt -test
 ::java -ea mylibs.List
 ::java -ea mylibs.Pair
 ::java -ea mylibs.MaxPQ .\src\main\resources\PQSampleInput.txt
