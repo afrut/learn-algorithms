@@ -18,11 +18,12 @@ public class Queue<Item> implements Iterable<Item>
             node = first;
         }
 
-        public boolean hasNext() {return node.next != null;}
+        public boolean hasNext() {return node != last;}
         public Item next()
         {
+            Item ret = node.value;
             node = node.next;
-            return node.value;
+            return ret;
         }
         public void remove() {}
     }
@@ -84,7 +85,7 @@ public class Queue<Item> implements Iterable<Item>
             int numElems = 0;
             for(String str : queue)
                 numElems++;
-            assert(queue.size() == numElems) : "Iterator did not return the expected number of elements " + queue.size();
+            assert(queue.size() == numElems) : "Iterator did not return the expected number of elements " + queue.size() + ", returned " + numElems;
             for(int cnt = 0; cnt < elems.length; cnt++)
                 assert(elems[cnt].compareTo(queue.dequeue()) == 0) : "Element " + cnt + " " + elems[cnt] + " did not match corresponding queue element";
             assert(queue.size() == 0) : "Queue should not have elements at this point";
