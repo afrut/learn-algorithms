@@ -1,9 +1,9 @@
 package mylibs;
 import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.Stack;
 import java.io.FileNotFoundException;
 import mylibs.Util;
+import mylibs.Queue;
 
 public class BST<Key extends Comparable<Key>, Value>
 {
@@ -547,17 +547,17 @@ public class BST<Key extends Comparable<Key>, Value>
         if(root == null) {}
         else
         {
-            LinkedList<Node> queue = new LinkedList<Node>();
-            queue.add(root);
+            Queue<Node> queue = new Queue<Node>();
+            queue.enqueue(root);
             int cnt;
             while(queue.size() > 0)
             {
                 cnt = queue.size();
                 for(int i = cnt; i > 0; i--)
                 {
-                    Node node = queue.remove();
-                    if(node.left != null) queue.add(node.left);
-                    if(node.right != null) queue.add(node.right);
+                    Node node = queue.dequeue();
+                    if(node.left != null) queue.enqueue(node.left);
+                    if(node.right != null) queue.enqueue(node.right);
                 }
                 ret++;
             }

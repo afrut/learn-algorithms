@@ -1,12 +1,10 @@
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.LinkedList;
-import edu.princeton.cs.algs4.In;
-import edu.princeton.cs.algs4.StdRandom;
 import mylibs.MaxPQ;
 import mylibs.Util;
 import mylibs.CountingTechniques;
+import mylibs.Queue;
 
 // This program will run an experiment. Elements of an array of size N will be
 // inserted into a maximum-oriented priority queue. The array of the queue can
@@ -24,7 +22,7 @@ public class MaxPQClient_2407
             a[cnt] = cnt;
 
         // obtain allthe permutations of the array
-        LinkedList<Integer[]> permutations =
+        Queue<Integer[]> permutations =
             CountingTechniques.<Integer>P(a, N, false);
 
         // for all permutations of the array; insert into a maximum-oriented
@@ -37,7 +35,7 @@ public class MaxPQClient_2407
             System.out.println("There are " + numP + " permutations.");
             for(int cnt = 0; cnt < numP; cnt++)
             {
-                Integer[] b = permutations.poll();
+                Integer[] b = permutations.dequeue();
                 MaxPQ<Integer> mpq = new MaxPQ<Integer>();
                 for(int cnt2 = 0; cnt2 < N; cnt2++)
                 {

@@ -3,13 +3,8 @@
     Quick.sort() that the largest item can be exchanged, for an array of length
     N ?
 */
-import java.util.LinkedList;
-import java.lang.Math;
-import edu.princeton.cs.algs4.In;
-import edu.princeton.cs.algs4.StdOut;
-import edu.princeton.cs.algs4.StdRandom;
 import mylibs.CountingTechniques;
-import mylibs.Util;
+import mylibs.Queue;
 public class QuickSortMEE
 {
     // QuickSort repeatedly puts elements in their final position using
@@ -186,7 +181,7 @@ public class QuickSortMEE
             // find the number of exchanges involving the maximum
 
             // create a linked list of all the possible permutations of the array
-            LinkedList<Comparable[]> permutations =
+            Queue<Comparable[]> permutations =
                 CountingTechniques.<Comparable>P(a, N, false);
             int numP = permutations.size();
 
@@ -194,7 +189,7 @@ public class QuickSortMEE
             // number of exchanges
             for(int cnt = 0; cnt < numP; cnt++)
             {
-                Comparable[] perm = permutations.poll();
+                Comparable[] perm = permutations.dequeue();
                 sort(perm);
                 if(numExch > maxNumExch)
                     maxNumExch = numExch;

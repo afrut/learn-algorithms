@@ -1,6 +1,4 @@
 import java.util.Iterator;
-import java.util.LinkedList;
-import mylibs.SymbolTable;
 import mylibs.LinkedListSequentialSearchST;
 import java.lang.reflect.Array;
 import mylibs.Pair;

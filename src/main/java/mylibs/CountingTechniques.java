@@ -1,13 +1,13 @@
 // Contains various functions related to counting techniques.
 package mylibs;
 import java.util.HashSet;
-import java.util.LinkedList;
 import java.lang.reflect.Array; // use reflection since java does not allow generic array creation
+import mylibs.Queue;
 public class CountingTechniques
 {
     // Generate all possible permutations of elements in a
     // taken r at a time, with or without repetition.
-    public static<Item> LinkedList<Item[]> P(Item[] a , int r)
+    public static<Item> Queue<Item[]> P(Item[] a , int r)
     {
         int N = a.length;
         if(N < 1) return null;
@@ -15,14 +15,14 @@ public class CountingTechniques
         return(P(a, r, repeat));
     }
 
-    public static<Item> LinkedList<Item[]> P(Item[] a , int r, boolean repeat)
+    public static<Item> Queue<Item[]> P(Item[] a , int r, boolean repeat)
     {
 
         int N = a.length;
         if(N < 1) return null;
         Item temp[] = (Item[])Array.newInstance(a.getClass().getComponentType(), r);
         HashSet<Integer> hs = new HashSet<Integer>();
-        LinkedList<Item[]> ls = new LinkedList<Item[]>();
+        Queue<Item[]> ls = new Queue<Item[]>();
         P(a, r, 0, 0, N - 1, repeat, hs, ls, temp);
         return ls;
     }
@@ -34,7 +34,7 @@ public class CountingTechniques
         , int hi
         , boolean repeat
         , HashSet<Integer> hs
-        , LinkedList<Item[]> ls
+        , Queue<Item[]> ls
         , Item[] temp)
     {
         if(level < r)
@@ -61,23 +61,23 @@ public class CountingTechniques
         else
         {
             //System.out.println(toString(temp));
-            ls.add(temp.clone());
+            ls.enqueue(temp.clone());
         }
     }
 
     // Generate all possible combinations of elements in a
     // taken r at a time.
-    public static<Item> LinkedList<Item[]> C(Item[] a, int r)
+    public static<Item> Queue<Item[]> C(Item[] a, int r)
     {
         int N = a.length;
         if(r > N) return null;
         Item temp[] = (Item[])Array.newInstance(a.getClass().getComponentType(), r);
-        LinkedList<Item[]> ls = new LinkedList<Item[]>();
+        Queue<Item[]> ls = new Queue<Item[]>();
         C(a, r, 0, 0, N - 1, ls, temp);
         return ls;
     }
 
-    private static<Item> void C(Item[] a, int r, int level, int lo, int hi, LinkedList<Item[]> ls, Item[] temp)
+    private static<Item> void C(Item[] a, int r, int level, int lo, int hi, Queue<Item[]> ls, Item[] temp)
     {
         if(level < r - 1)
         {
@@ -92,7 +92,7 @@ public class CountingTechniques
             for(int i = lo; i <= hi; i++)
             {
                 temp[level] = a[i];
-                ls.add(temp.clone());
+                ls.enqueue(temp.clone());
                 //System.out.println(toString(temp));
             }
         }
@@ -123,19 +123,19 @@ public class CountingTechniques
         for(int cnt = 0; cnt < N; cnt++)
         { a[cnt] = cnt; }
 
-        LinkedList<Integer[]> lspr = CountingTechniques.<Integer>P(a, r);
+        Queue<Integer[]> lspr = CountingTechniques.<Integer>P(a, r);
         System.out.println("Number of permutations with no repetition: " + lspr.size());
         for(Integer[] obj : lspr)
             System.out.println(toString(obj));
         System.out.println("");
 
-        LinkedList<Integer[]> lsp = CountingTechniques.<Integer>P(a, r, true);
+        Queue<Integer[]> lsp = CountingTechniques.<Integer>P(a, r, true);
         System.out.println("Number of permutations with repetition: " + lsp.size());
         for(Integer[] obj : lsp)
             System.out.println(toString(obj));
         System.out.println("");
 
-        LinkedList<Integer[]> lsc = CountingTechniques.<Integer>C(a, r);
+        Queue<Integer[]> lsc = CountingTechniques.<Integer>C(a, r);
         System.out.println("Number of combinations: " + lsc.size());
         for(Integer[] obj : lsc)
             System.out.println(toString(obj));

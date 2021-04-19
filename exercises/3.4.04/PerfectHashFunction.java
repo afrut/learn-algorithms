@@ -1,6 +1,5 @@
 import java.io.FileNotFoundException;
-import java.util.LinkedList;
-
+import mylibs.Set;
 import mylibs.Util;
 
 public class PerfectHashFunction
@@ -49,7 +48,7 @@ public class PerfectHashFunction
     		{
                 for(int i = 1; i < 999; i++)
     			{
-                    LinkedList<Integer> ll = new LinkedList<Integer>();
+                    Set<Integer> ll = new Set<Integer>();
                     collision = false;
                     for(String letter : a)
                     {
