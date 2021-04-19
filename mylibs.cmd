@@ -86,18 +86,18 @@ jar cvf .\jar\mylibs.jar .\mylibs\*.class
 :::: Try running the main() function
 ::java -ea mylibs.CountingTechniques
 ::java -ea mylibs.Util .\src\main\resources\PQSampleInput.txt
-java -ea mylibs.Bag src\main\resources\8KInts.txt
-java -ea mylibs.Bag src\main\resources\8KInts.txt -test
-java -ea mylibs.BagResizingArray src\main\resources\8KInts.txt
-java -ea mylibs.BagResizingArray src\main\resources\8KInts.txt -test
-java -ea mylibs.Stack src\main\resources\8KInts.txt
-java -ea mylibs.Stack src\main\resources\8KInts.txt -test
-java -ea mylibs.StackResizingArray src\main\resources\8KInts.txt
-java -ea mylibs.StackResizingArray src\main\resources\8KInts.txt -test
-java -ea mylibs.Queue src\main\resources\8KInts.txt
-java -ea mylibs.Queue src\main\resources\8KInts.txt -test
-java -ea mylibs.QueueResizingArray src\main\resources\8KInts.txt
-java -ea mylibs.QueueResizingArray src\main\resources\8KInts.txt -test
+::java -ea mylibs.Bag src\main\resources\8KInts.txt
+::java -ea mylibs.Bag src\main\resources\8KInts.txt -test
+::java -ea mylibs.BagResizingArray src\main\resources\8KInts.txt
+::java -ea mylibs.BagResizingArray src\main\resources\8KInts.txt -test
+::java -ea mylibs.Stack src\main\resources\8KInts.txt
+::java -ea mylibs.Stack src\main\resources\8KInts.txt -test
+::java -ea mylibs.StackResizingArray src\main\resources\8KInts.txt
+::java -ea mylibs.StackResizingArray src\main\resources\8KInts.txt -test
+::java -ea mylibs.Queue src\main\resources\8KInts.txt
+::java -ea mylibs.Queue src\main\resources\8KInts.txt -test
+::java -ea mylibs.QueueResizingArray src\main\resources\8KInts.txt
+::java -ea mylibs.QueueResizingArray src\main\resources\8KInts.txt -test
 ::java -ea mylibs.List
 ::java -ea mylibs.Pair
 ::java -ea mylibs.MaxPQ .\src\main\resources\PQSampleInput.txt

@@ -54,14 +54,9 @@ public class Bag<T> implements Iterable<T>
     public String toString()
     {
         StringBuilder sb = new StringBuilder();
-        Node node = root;
-        while(node.next != null)
-        {
-            node = node.next;
-            sb.append(node.value.toString() + ", ");
-        }
-        if(N > 0)
-            sb.setLength(sb.length() - 2);
+        for(T item : this)
+            sb.append(item.toString() + ", ");
+        if(sb.length() > 1) sb.setLength(sb.length() - 2);
         return sb.toString();
     }
 
@@ -90,6 +85,7 @@ public class Bag<T> implements Iterable<T>
             for(String str : bag)
                 numElems++;
             assert(bag.size() == numElems) : "Iterator did not return the expected number of elements " + bag.size();
+            assert(bag.toString().length() > 0) : "Cannot properly represent as a string " + bag.toString();
             System.out.println("PASS");
         }
         else
@@ -106,6 +102,7 @@ public class Bag<T> implements Iterable<T>
                 System.out.println("    " + str);
                 if(++cntElem >= 10) break;
             }
+            System.out.println(bag.toString());
         }
     }
 }

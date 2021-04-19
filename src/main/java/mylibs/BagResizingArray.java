@@ -44,6 +44,15 @@ public class BagResizingArray<Item> implements Iterable<Item>
 
     public Iterator<Item> iterator() {return new BagIterator();}
 
+    public String toString()
+    {
+        StringBuilder sb = new StringBuilder();
+        for(Item item : this)
+            sb.append(item.toString() + ", ");
+        if(sb.length() > 1) sb.setLength(sb.length() - 2);
+        return sb.toString();
+    }
+
     public static void main(String[] args) throws FileNotFoundException
     {
         String filename = "";
@@ -69,6 +78,7 @@ public class BagResizingArray<Item> implements Iterable<Item>
             for(String str : bag)
                 numElems++;
             assert(bag.size() == numElems) : "Iterator did not return the expected number of elements " + bag.size();
+            assert(bag.toString().length() > 0) : "Cannot properly represent as a string " + bag.toString();
             System.out.println("PASS");
         }
         else
@@ -85,6 +95,7 @@ public class BagResizingArray<Item> implements Iterable<Item>
                 System.out.println("    " + str);
                 if(++cntElem >= 10) break;
             }
+            System.out.println(bag.toString());
         }
     }
 

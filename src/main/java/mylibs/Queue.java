@@ -61,6 +61,15 @@ public class Queue<Item> implements Iterable<Item>
 
     public Iterator<Item> iterator() {return new QueueIterator();}
 
+    public String toString()
+    {
+        StringBuilder sb = new StringBuilder();
+        for(Item item : this)
+            sb.append(item.toString() + ", ");
+        if(sb.length() > 1) sb.setLength(sb.length() - 2);
+        return sb.toString();
+    }
+
     public static void main(String[] args) throws FileNotFoundException
     {
         String filename = "";
@@ -86,6 +95,7 @@ public class Queue<Item> implements Iterable<Item>
             for(String str : queue)
                 numElems++;
             assert(queue.size() == numElems) : "Iterator did not return the expected number of elements " + queue.size() + ", returned " + numElems;
+            assert(queue.toString().length() > 0) : "Cannot properly represent as a string " + queue.toString();
             for(int cnt = 0; cnt < elems.length; cnt++)
                 assert(elems[cnt].compareTo(queue.dequeue()) == 0) : "Element " + cnt + " " + elems[cnt] + " did not match corresponding queue element";
             assert(queue.size() == 0) : "Queue should not have elements at this point";
@@ -107,7 +117,7 @@ public class Queue<Item> implements Iterable<Item>
                 cntElem++;
             }
             System.out.println("Queue has " + queue.size() + " items remaining");
-
+            System.out.println(queue.toString());
         }
     }
 }

@@ -61,6 +61,15 @@ public class Stack<Item> implements Iterable<Item>
 
     public Iterator<Item> iterator() {return new StackIterator();}
 
+    public String toString()
+    {
+        StringBuilder sb = new StringBuilder();
+        for(Item item : this)
+            sb.append(item.toString() + ", ");
+        if(sb.length() > 1) sb.setLength(sb.length() - 2);
+        return sb.toString();
+    }
+
     public static void main(String[] args) throws FileNotFoundException
     {
         String filename = "";
@@ -86,6 +95,7 @@ public class Stack<Item> implements Iterable<Item>
             for(String str : stack)
                 numElems++;
             assert(stack.size() == numElems) : "Iterator did not return the expected number of elements " + stack.size();
+            assert(stack.toString().length() > 0) : "Cannot properly represent as a string";
             for(int cnt = elems.length - 1; cnt >= 0; cnt--)
                 assert(elems[cnt].compareTo(stack.pop()) == 0) : "Element " + cnt + " " + elems[cnt] + " did not match corresponding stack element";
             assert(stack.size() == 0) : "Stack should not have elements at this point";
@@ -107,7 +117,7 @@ public class Stack<Item> implements Iterable<Item>
                 cntElem++;
             }
             System.out.println("Stack has " + stack.size() + " items remaining");
-
+            System.out.println(stack.toString());
         }
     }
 }
