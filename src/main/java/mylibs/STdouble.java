@@ -1,7 +1,6 @@
 package mylibs;
 
 import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.Scanner;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -48,24 +47,24 @@ public class STdouble<Value>
     {
         private class KeysIterator implements Iterator<Double>
         {
-            private LinkedList<Double> ll;
+            private Queue<Double> ll;
             private Double next;
             private int cnt;
             private int totalN;
 
             private KeysIterator()
             {
-                ll = new LinkedList<Double>(); // initialize list of keys
+                ll = new Queue<Double>(); // initialize list of keys
                 f(root);                        // recursive call to add all keys to list
                 totalN = ll.size();
-                next = ll.poll();               // initialize the next key to be returned
+                next = ll.dequeue();               // initialize the next key to be returned
                 cnt = 1;
             }
 
             public Double next()
             {
                 Double ret = next;
-                next = ll.poll();
+                next = ll.dequeue();
                 cnt++;
                 return ret;
             }
@@ -76,7 +75,7 @@ public class STdouble<Value>
             {
                 if(node == null) return;
                 f(node.left);
-                ll.add(node.key);
+                ll.enqueue(node.key);
                 f(node.right);
             }
         }
@@ -91,17 +90,17 @@ public class STdouble<Value>
 
         private class KeysIterator implements Iterator<Double>
         {
-            private LinkedList<Double> ll;
+            private Queue<Double> ll;
             private Double next;
             private int totalN;
             private int cnt;
 
             public KeysIterator()
             {
-                ll = new LinkedList<Double>();
+                ll = new Queue<Double>();
                 f(root);
                 totalN = ll.size();
-                next = ll.poll();
+                next = ll.dequeue();
                 cnt = 1;
             }
 
@@ -109,7 +108,7 @@ public class STdouble<Value>
             public Double next()
             {
                 Double ret = next;
-                next = ll.poll();
+                next = ll.dequeue();
                 cnt++;
                 return ret;
             }
@@ -120,7 +119,7 @@ public class STdouble<Value>
                 if(node == null) return;
                 f(node.left);
                 if(node.key >= from && node.key <= to)
-                    ll.add(node.key);
+                    ll.enqueue(node.key);
                 f(node.right);
             }
         }

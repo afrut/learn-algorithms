@@ -2,7 +2,6 @@
 package mylibs;
 import java.util.Random;
 import java.util.Arrays;
-import java.util.LinkedList;
 import java.lang.reflect.Array;
 import java.util.Scanner;
 import java.io.File;
@@ -27,12 +26,12 @@ public class Util
     {
         Arrays.sort(a);
         int N = a.length;
-        LinkedList<Item> ll = new LinkedList<Item>();
+        Queue<Item> ll = new Queue<Item>();
         int cnt1 = 0;
         int cnt2 = 0;
         for(cnt1 = 0; cnt1 < N; cnt1++)
         {
-            ll.add(a[cnt1]);
+            ll.enqueue(a[cnt1]);
             for(cnt2 = cnt1 + 1; cnt2 < N; cnt2++)
             {
                 if(a[cnt1].compareTo(a[cnt2]) != 0)
@@ -46,7 +45,7 @@ public class Util
         Item[] ret = (Item[])Array.newInstance(a.getClass().getComponentType(), ll.size());
         cnt1 = 0;
         while(ll.size() > 0)
-            ret[cnt1++] = ll.poll();
+            ret[cnt1++] = ll.dequeue();
         return ret;
     }
 
@@ -94,15 +93,17 @@ public class Util
     {
         // read in strings from input
         Scanner sc = new Scanner(new File(filepath));
-        LinkedList<String> ll = new LinkedList<String>();
+        Queue<String> ll = new Queue<String>();
         if(pattern.length() == 0)
         	while(sc.hasNext())
-                ll.add(sc.next());
+                ll.enqueue(sc.next());
         else
 	        while(sc.hasNext(pattern))
-	            ll.add(sc.next(pattern));
+	            ll.enqueue(sc.next(pattern));
         String[] a = new String[ll.size()];
-        a = ll.toArray(a);
+        int cnt = 0;
+        for(String str : ll)
+            a[cnt++] = str;
         return a;
     }
 
@@ -149,8 +150,6 @@ public class Util
 
         // test fromFile
         String[] s = Util.fromFile(args[0]);
-        System.out.println(Util.toString(s));
-        s = Util.fromFile(args[1]);
         System.out.println(Util.toString(s));
     }
 }

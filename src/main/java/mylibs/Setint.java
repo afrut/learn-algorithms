@@ -46,24 +46,24 @@ public class Setint
     {
         private class KeysIterator implements Iterator<Integer>
         {
-            private LinkedList<Integer> ll;
+            private Queue<Integer> ll;
             private Integer next;
             private int cnt;
             private int totalN;
 
             private KeysIterator()
             {
-                ll = new LinkedList<Integer>(); // initialize list of keys
+                ll = new Queue<Integer>(); // initialize list of keys
                 f(root);                        // recursive call to add all keys to list
                 totalN = ll.size();
-                next = ll.poll();               // initialize the next key to be returned
+                next = ll.dequeue();               // initialize the next key to be returned
                 cnt = 1;
             }
 
             public Integer next()
             {
                 Integer ret = next;
-                next = ll.poll();
+                next = ll.dequeue();
                 cnt++;
                 return ret;
             }
@@ -74,7 +74,7 @@ public class Setint
             {
                 if(node == null) return;
                 f(node.left);
-                ll.add(node.key);
+                ll.enqueue(node.key);
                 f(node.right);
             }
         }
@@ -89,17 +89,17 @@ public class Setint
 
         private class KeysIterator implements Iterator<Integer>
         {
-            private LinkedList<Integer> ll;
+            private Queue<Integer> ll;
             private Integer next;
             private int totalN;
             private int cnt;
 
             public KeysIterator()
             {
-                ll = new LinkedList<Integer>();
+                ll = new Queue<Integer>();
                 f(root);
                 totalN = ll.size();
-                next = ll.poll();
+                next = ll.dequeue();
                 cnt = 1;
             }
 
@@ -107,7 +107,7 @@ public class Setint
             public Integer next()
             {
                 Integer ret = next;
-                next = ll.poll();
+                next = ll.dequeue();
                 cnt++;
                 return ret;
             }
@@ -118,7 +118,7 @@ public class Setint
                 if(node == null) return;
                 f(node.left);
                 if(node.key >= from && node.key <= to)
-                    ll.add(node.key);
+                    ll.enqueue(node.key);
                 f(node.right);
             }
         }

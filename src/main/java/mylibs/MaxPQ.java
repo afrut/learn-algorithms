@@ -3,9 +3,7 @@
     to the API specified by Sedgewick 4ed.
 */
 package mylibs;
-import mylibs.Util;
 import java.util.Scanner;
-import java.util.LinkedList;
 import java.io.File;
 import java.io.FileNotFoundException;
 
@@ -158,18 +156,15 @@ public class MaxPQ<Key extends Comparable<Key>>
     {
         // read in strings from input
         Scanner sc = new Scanner(new File(args[0]));
-        LinkedList<String> ll = new LinkedList<String>();
+        Queue<String> queue = new Queue<String>();
         while(sc.hasNext())
-            ll.add(sc.next("."));
-        String[] a = new String[ll.size()];
-        a = ll.toArray(a);
-        System.out.println(Util.toString(a));
+            queue.enqueue(sc.next("."));
+        System.out.println(queue.toString());
 
         // create a priority queue and insert
-        int Nstring = a.length;
         MaxPQ<String> mpq = new MaxPQ<String>();
-        for(int cnt = 0; cnt < a.length; cnt++)
-            mpq.insert(a[cnt]);
+        for(String str : queue)
+            mpq.insert(str);
 
         // print out contents of array that represents the heap
         System.out.println(mpq.toString());
@@ -181,7 +176,7 @@ public class MaxPQ<Key extends Comparable<Key>>
 
         // pop all elements off to test resizing of array
         System.out.println("Popping all elements");
-        for(int cnt = 0; cnt < Nstring; cnt++)
+        for(int cnt = 0; cnt < queue.size(); cnt++)
         {
             System.out.print(mpq.pop() + " ");
             assert(mpq.isHeap());

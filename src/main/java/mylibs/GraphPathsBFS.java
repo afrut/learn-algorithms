@@ -1,8 +1,6 @@
 package mylibs;
 
 import java.io.FileNotFoundException;
-import java.util.LinkedList;
-import mylibs.Util;
 
 public class GraphPathsBFS
 {
@@ -48,20 +46,20 @@ public class GraphPathsBFS
     // recursive depth-first search
     private void bfs(int v)
     {
-        LinkedList<Integer> ll = new LinkedList<Integer>();
-        ll.add(v);
+        Queue<Integer> ll = new Queue<Integer>();
+        ll.enqueue(v);
         marked[v] = true;
         edgeTo[v] = v;
         while(ll.size() > 0)
         {
-            v = ll.poll();
+            v = ll.dequeue();
             for(int x : graph.adj(v))
             {
                 if(!marked[x])
                 {
                     N++;
                     edgeTo[x] = v;
-                    ll.add(x);
+                    ll.enqueue(x);
                     distTo[x] = distTo[v] + 1;
                     if(distTo[x] > maxDist)
                     {
@@ -77,13 +75,13 @@ public class GraphPathsBFS
     // recursive depth first search with trace logs
     private void bfsTrace(int v)
     {
-        LinkedList<Integer> ll = new LinkedList<Integer>();
-        ll.add(v);
+        Queue<Integer> ll = new Queue<Integer>();
+        ll.enqueue(v);
         marked[v] = true;
         edgeTo[v] = v;
         while(ll.size() > 0)
         {
-            v = ll.poll();
+            v = ll.dequeue();
             String indent = "";
             for(int cnt = 0; cnt < distTo[v]; cnt++)
                 indent = indent + "  ";
@@ -94,7 +92,7 @@ public class GraphPathsBFS
                 {
                     N++;
                     edgeTo[x] = v;
-                    ll.add(x);
+                    ll.enqueue(x);
                     distTo[x] = distTo[v] + 1;
                     if(distTo[x] > maxDist)
                     {
@@ -110,7 +108,7 @@ public class GraphPathsBFS
     public boolean hasPathTo(int v) {return marked[v];}
     public Iterable<Integer> pathTo(int v)
     {
-        LinkedList<Integer> ret = new LinkedList<Integer>();
+        Stack<Integer> ret = new Stack<Integer>();
         if(this.hasPathTo(v))
         {
             ret.push(v);

@@ -4,7 +4,7 @@ import java.io.FileNotFoundException;
 import java.util.Scanner;
 import mylibs.Set;
 import mylibs.Util;
-import java.util.LinkedList;
+import mylibs.Queue;
 
 public class Graph
 {
@@ -55,15 +55,15 @@ public class Graph
         // Any vertex that does not show up between 0 and max is assumed to not be connected.
         Set<Integer> vertices = new Set<Integer>();
         Scanner sc = new Scanner(new File(filename));
-        LinkedList<Integer> v1 = new LinkedList<Integer>();
-        LinkedList<Integer> v2 = new LinkedList<Integer>();
+        Queue<Integer> v1 = new Queue<Integer>();
+        Queue<Integer> v2 = new Queue<Integer>();
         while(sc.hasNextLine())
         {
             String[] line = sc.nextLine().split(delim);
             Integer i1 = Integer.parseInt(line[0]);
             Integer i2 = Integer.parseInt(line[1]);
-            v1.add(i1);
-            v2.add(i2);
+            v1.enqueue(i1);
+            v2.enqueue(i2);
             vertices.add(i1);
             vertices.add(i2);
         }
@@ -76,7 +76,7 @@ public class Graph
 
         // Empty the queues to add edges.
         while(!v1.isEmpty())
-            this.addEdge(v1.poll(), v2.poll());
+            this.addEdge(v1.dequeue(), v2.dequeue());
     }
 
     public Graph(String filename, String delim) throws FileNotFoundException

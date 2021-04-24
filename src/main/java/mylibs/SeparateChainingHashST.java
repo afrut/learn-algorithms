@@ -1,6 +1,5 @@
 package mylibs;
 import java.util.Iterator;
-import java.util.LinkedList;
 import mylibs.Pair;
 import java.io.FileNotFoundException;
 import java.lang.reflect.Array;
@@ -441,8 +440,8 @@ public class SeparateChainingHashST<Key extends Comparable<Key>, Value>
             String pf;
             pf = "fail"; if(st.size() == 10674) pf = "pass"; System.out.println("    " + pf + " - Number of keys added: " + st.size());
 
-            LinkedList<String> ls = new LinkedList<String>();
-            for(String key : st.keys()) ls.add(key);
+            Queue<String> ls = new Queue<String>();
+            for(String key : st.keys()) ls.enqueue(key);
             for(String key : ls) st.delete(key);
             pf = "fail"; if(st.size() == 0) pf = "pass"; System.out.println("    " + pf + " - Number of keys after deletion: " + st.size());
         }

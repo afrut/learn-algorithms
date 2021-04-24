@@ -3,7 +3,6 @@ package mylibs;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.io.FileNotFoundException;
-import mylibs.Util;
 
 // --------------------------------------------------------------------------------
 //
@@ -108,20 +107,20 @@ public class RedBlackBST<Key extends Comparable<Key>, Value>
     {
         private class KeysIterator implements Iterator<Key>
         {
-            private LinkedList<Key> ll;
+            private Queue<Key> ll;
             private Key next;
 
             private KeysIterator()
             {
-                ll = new LinkedList<Key>();     // initialize list of keys
+                ll = new Queue<Key>();     // initialize list of keys
                 f(root);                        // recursive call to add all keys to list
-                next = ll.poll();               // initialize the next key to be returned
+                next = ll.dequeue();               // initialize the next key to be returned
             }
 
             public Key next()
             {
                 Key ret = next;
-                next = ll.poll();
+                next = ll.dequeue();
                 return ret;
             }
             public boolean hasNext() {return next != null;}
@@ -131,7 +130,7 @@ public class RedBlackBST<Key extends Comparable<Key>, Value>
             {
                 if(node == null) return;
                 f(node.left);
-                ll.add(node.key);
+                ll.enqueue(node.key);
                 f(node.right);
             }
         }
@@ -146,21 +145,21 @@ public class RedBlackBST<Key extends Comparable<Key>, Value>
 
         private class KeysIterator implements Iterator<Key>
         {
-            private LinkedList<Key> ll;
+            private Queue<Key> ll;
             private Key next;
 
             public KeysIterator()
             {
-                ll = new LinkedList<Key>();
+                ll = new Queue<Key>();
                 f(root);
-                next = ll.poll();
+                next = ll.dequeue();
             }
 
             public boolean hasNext() {return next != null;}
             public Key next()
             {
                 Key ret = next;
-                next = ll.poll();
+                next = ll.dequeue();
                 return ret;
             }
             public void remove() {}
@@ -170,7 +169,7 @@ public class RedBlackBST<Key extends Comparable<Key>, Value>
                 if(node == null) return;
                 f(node.left);
                 if(node.key.compareTo(from) >= 0 && node.key.compareTo(to) <= 0)
-                    ll.add(node.key);
+                    ll.enqueue(node.key);
                 f(node.right);
             }
         }

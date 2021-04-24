@@ -1,10 +1,8 @@
 // Non-recursive version that counts the number of connected components in a
 // graph.
 package mylibs;
-import java.util.LinkedList;
 import java.io.FileNotFoundException;
 import java.util.Iterator;
-import mylibs.Graph;
 
 public class GraphConnectDFS
 {
@@ -25,9 +23,9 @@ public class GraphConnectDFS
     private int N;                                      // number of components
     private int[] sz;                                   // size of each component
     private boolean trace;                              // print messages to console during depth-first search
-    private LinkedList<LinkedList<Integer>> memberslist;// list of members of each component as dfs progresses
-    private LinkedList<Integer> current;                // current list of component members
-    private LinkedList<Integer>[] members;              // final array of component members
+    private Queue<Queue<Integer>> memberslist;          // list of members of each component as dfs progresses
+    private Queue<Integer> current;                     // current list of component members
+    private Queue<Integer>[] members;                   // final array of component members
 
     public GraphConnectDFS(Graph graph) {this(graph, false);}
 
@@ -39,9 +37,8 @@ public class GraphConnectDFS
         id = new int[graph.V()];
         sz = new int[graph.V()];
         N = 0;
-        memberslist = new LinkedList<LinkedList<Integer>>();
-        memberslist.add(new LinkedList<Integer>());
-        current = memberslist.get(N);
+        memberslist = new Queue<Queue<Integer>>();
+        current = new Queue<Integer>();
 
         // inspect ever vertex and see if it is connected
         for(int v = 0; v < graph.V(); v++)
@@ -50,15 +47,15 @@ public class GraphConnectDFS
             {
                 dfs(v);
                 N++;
-                memberslist.add(new LinkedList<Integer>());
-                current = memberslist.get(N);
+                memberslist.enqueue(current);
+                current = new Queue<Integer>();
             }
         }
 
         // create array of final members list
-        members = (LinkedList<Integer>[])new LinkedList[N];
+        members = (Queue<Integer>[])new Queue[N];
         for(int cnt = 0; cnt < N; cnt++)
-            members[cnt] = memberslist.get(cnt);
+            members[cnt] = memberslist.dequeue();
     }
 
     // recursive depth-first search with tracing
@@ -68,21 +65,21 @@ public class GraphConnectDFS
         StringBuilder indent = new StringBuilder();
 
         // stack to keep track of the "ball of string" in Tremaux exploration
-        LinkedList<Integer> stack = new LinkedList<Integer>();
+        Stack<Integer> stack = new Stack<Integer>();
 
         // array of queues; toVisit[v] represents the list of vertices adjacent
         // to v that have not yet been visited/marked at the time that v
         // was processed
-        LinkedList<Integer>[] toVisit = new LinkedList[graph.V()];
+        Queue<Integer>[] toVisit = new Queue[graph.V()];
         for(int i = 0; i < graph.V(); i++)
-            toVisit[i] = new LinkedList<Integer>();
+            toVisit[i] = new Queue<Integer>();
 
         while(!marked[v])
         {
             marked[v] = true;   // mark current vertex
             id[v] = N;          // set component id of current vertex
             sz[N]++;            // increment size of current vertex's component
-            current.add(v);     // add this vertex to the current component's members' list
+            current.enqueue(v); // add this vertex to the current component's members' list
 
             if(trace) System.out.println(indent + "dfs(" + v + ")");
 
@@ -90,7 +87,7 @@ public class GraphConnectDFS
             for(int w : graph.adj(v))
                 // if a vertex adjacent to v is not yet marked,
                 // add it to the queue of v's vertices to visit
-                if(!marked[w]) toVisit[v].add(w);
+                if(!marked[w]) toVisit[v].enqueue(w);
 
             while(true)
             {
@@ -119,19 +116,18 @@ public class GraphConnectDFS
 
                     // the next vertex adjacent to the current vertex
                     // has already been visited. remove from list
-                    int x = toVisit[v].peek();
-                    if(marked[x])
+                    int w = toVisit[v].dequeue();
+                    if(marked[w])
                     {
                         if(trace)
-                            System.out.println(indent + "| check " + x);
-                        toVisit[v].poll();
+                            System.out.println(indent + "| check " + w);
                     }
                     else
                     {
                         // the next vertex adjacent to the current vertex
                         // has not yet been visited. visit it in next iteration
                         stack.push(v);
-                        v = toVisit[v].poll();
+                        v = w;
                         indent.append("| ");
                         break;
                     }

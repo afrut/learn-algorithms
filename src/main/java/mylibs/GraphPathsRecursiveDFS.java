@@ -1,9 +1,6 @@
 package mylibs;
 
 import java.io.FileNotFoundException;
-import java.util.LinkedList;
-
-import mylibs.Util;
 
 public class GraphPathsRecursiveDFS
 {
@@ -73,7 +70,7 @@ public class GraphPathsRecursiveDFS
     public boolean hasPathTo(int v) {return marked[v];}
     public Iterable<Integer> pathTo(int v)
     {
-        LinkedList<Integer> ret = new LinkedList<Integer>();
+        Stack<Integer> ret = new Stack<Integer>();
         if(this.hasPathTo(v))
         {
             ret.push(v);

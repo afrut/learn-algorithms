@@ -1,10 +1,6 @@
-// TODO: re-examine BFS for this
-// TODO: move girth from here to GraphProperties
 package mylibs;
 
 import java.io.FileNotFoundException;
-import java.util.LinkedList;
-import mylibs.Util;
 
 public class GraphCyclesBFS
 {
@@ -28,16 +24,16 @@ public class GraphCyclesBFS
 
     public void bfs(int s, boolean trace)
     {
-        LinkedList<Integer> queue = new LinkedList<Integer>();
+        Queue<Integer> queue = new Queue<Integer>();
         int[] edgeTo = new int[graph.V()];
         int[] distTo = new int[graph.V()];
         marked[s] = true;
-        queue.add(s);
+        queue.enqueue(s);
         edgeTo[s] = s;
         distTo[s] = 0;
         while(!queue.isEmpty())
         {
-            int v = queue.poll();
+            int v = queue.dequeue();
             if(trace)
                 System.out.println("checking adjacent to " + v);
             for(int w : graph.adj(v))
@@ -46,7 +42,7 @@ public class GraphCyclesBFS
                 {
                     if(trace) System.out.println("  marking " + w);
                     marked[w] = true;
-                    queue.add(w);
+                    queue.enqueue(w);
                     edgeTo[w] = v;
                     distTo[w] = distTo[v] + 1;
                 }

@@ -2,8 +2,6 @@ package mylibs;
 
 import java.io.FileNotFoundException;
 import java.util.LinkedList;
-import mylibs.Util;
-import mylibs.GraphPathsBFS;
 
 public class GraphProperties
 {
@@ -11,7 +9,7 @@ public class GraphProperties
     private int diam;
     private int[] ecc;
     private int rad;
-    private LinkedList<Integer> ctrs;
+    private Queue<Integer> ctrs;
     private boolean[] marked;
     private int girth;
 
@@ -23,7 +21,7 @@ public class GraphProperties
             ecc[v] = -1;
         diam = -1;
         rad = -1;
-        ctrs = new LinkedList<Integer>();
+        ctrs = new Queue<Integer>();
 
         marked = new boolean[graph.V()];
         girth = -1;
@@ -64,17 +62,17 @@ public class GraphProperties
     // largest eccentricity of v's component
     public int diameter(int v)
     {
-        LinkedList<Integer> toMark = new LinkedList<Integer>();
+        Queue<Integer> toMark = new Queue<Integer>();
         boolean[] marked = new boolean[graph.V()];
-        toMark.add(v);
+        toMark.enqueue(v);
         int ret = -1;
         while(!toMark.isEmpty())
         {
-            v = toMark.poll();
+            v = toMark.dequeue();
             marked[v] = true;
             if(eccentricity(v) > ret) ret = eccentricity(v);
             for(Integer w : graph.adj(v))
-                if(!marked[w]) toMark.add(w);
+                if(!marked[w]) toMark.enqueue(w);
                 
         }
         return ret;
@@ -95,17 +93,17 @@ public class GraphProperties
     // radius of v's component
     public int radius(int v)
     {
-        LinkedList<Integer> toMark = new LinkedList<Integer>();
+        Queue<Integer> toMark = new Queue<Integer>();
         boolean[] marked = new boolean[graph.V()];
-        toMark.add(v);
+        toMark.enqueue(v);
         int ret = eccentricity(v);
         while(!toMark.isEmpty())
         {
-            v = toMark.poll();
+            v = toMark.dequeue();
             marked[v] = true;
             if(eccentricity(v) < ret) ret = eccentricity(v);
             for(Integer w : graph.adj(v))
-                if(!marked[w]) toMark.add(w);
+                if(!marked[w]) toMark.enqueue(w);
         }
         return ret;
     }
@@ -117,8 +115,14 @@ public class GraphProperties
         if(ctrs.size() < 1)
             for(int v = 0; v < graph.V(); v++)
                 if(ecc[v] == rad)
-                    ctrs.add(v);
-        return ctrs.peek();
+                    ctrs.enqueue(v);
+        int c = -1;
+        for(Integer ctr : ctrs)
+        {
+            c = ctr;
+            break;
+        }
+        return c;
     }
 
     // length of the shortest cycle for the whole graph
@@ -135,23 +139,23 @@ public class GraphProperties
     private int girth(int v, boolean[] marked)
     {
         int ret = -1;
-        LinkedList<Integer> queue = new LinkedList<Integer>();
+        Queue<Integer> queue = new Queue<Integer>();
         int[] edgeTo = new int[graph.V()];
         int[] distTo = new int[graph.V()];
         marked[v] = true;
-        queue.add(v);
+        queue.enqueue(v);
         edgeTo[v] = v;
         distTo[v] = 0;
 
         while(!queue.isEmpty())
         {
-            v = queue.poll();
+            v = queue.dequeue();
             for(int w : graph.adj(v))
             {
                 if(!marked[w])
                 {
                     marked[w] = true;
-                    queue.add(w);
+                    queue.enqueue(w);
                     edgeTo[w] = v;
                     distTo[w] = distTo[v] + 1;
                 }

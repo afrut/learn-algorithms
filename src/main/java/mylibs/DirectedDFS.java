@@ -1,8 +1,8 @@
 package mylibs;
 import java.io.FileNotFoundException;
-import java.util.LinkedList;
 import java.util.ArrayList;
-import mylibs.Digraph;
+import mylibs.Queue;
+import mylibs.Stack;
 
 public class DirectedDFS
 {
@@ -31,12 +31,12 @@ public class DirectedDFS
     private void dfs(int s, boolean[] marked, boolean trace)
     {
         // queue to store the vertices to explore at each vertex
-        LinkedList<Integer>[] toMark = (LinkedList<Integer>[])new LinkedList[digraph.V()];
+        Queue<Integer>[] toMark = (Queue<Integer>[])new Queue[digraph.V()];
         for(int i = 0; i < toMark.length; i++)
-            toMark[i] = new LinkedList<Integer>();
+            toMark[i] = new Queue<Integer>();
 
         // stack to keep track of path in Tremaux exploration
-        LinkedList<Integer> stack = new LinkedList<Integer>();
+        Stack<Integer> stack = new Stack<Integer>();
 
         int v = s;
         StringBuilder indent = new StringBuilder();
@@ -49,7 +49,7 @@ public class DirectedDFS
                 for(Integer w : digraph.adj(v))
                 if(!marked[w])
                 {
-                    toMark[v].add(w);
+                    toMark[v].enqueue(w);
                     if(trace) System.out.println(indent + "|  adding " + w);
                 }
             }
@@ -58,7 +58,7 @@ public class DirectedDFS
             {
                 stack.push(v);
                 indent.append("|  ");
-                v = toMark[v].poll();
+                v = toMark[v].dequeue();
             }
             else if(!stack.isEmpty())
             {
