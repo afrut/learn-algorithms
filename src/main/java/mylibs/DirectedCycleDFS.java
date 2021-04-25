@@ -6,7 +6,7 @@ import java.util.LinkedList;
 import mylibs.Queue;
 import mylibs.Stack;
 
-public class DirectedCycle
+public class DirectedCycleDFS
 {
 	private Digraph digraph;
 	private boolean[] marked;
@@ -18,9 +18,9 @@ public class DirectedCycle
 	private boolean[] onStack;
 	private Queue<Stack<Integer>> cycles;
 
-	public DirectedCycle(Digraph digraph) {this(digraph, false);}
+	public DirectedCycleDFS(Digraph digraph) {this(digraph, false);}
 
-	public DirectedCycle(Digraph digraph, boolean trace)
+	public DirectedCycleDFS(Digraph digraph, boolean trace)
 	{
 		this.digraph = digraph;
 		this.trace = trace;
@@ -130,7 +130,7 @@ public class DirectedCycle
 		Digraph digraph = new Digraph(filename, delim);
 		if (test)
 		{
-			DirectedCycle dc = new DirectedCycle(digraph, false);
+			DirectedCycleDFS dc = new DirectedCycleDFS(digraph, false);
 			assert (dc.hasCycle()) : "Digraph has a cycle [5, 4, 3, 5]";
 			Iterable<Integer> cycle = dc.cycle();
 			int v = -1;
@@ -157,7 +157,7 @@ public class DirectedCycle
 		}
 		else
 		{
-			DirectedCycle dc = new DirectedCycle(digraph, true);
+			DirectedCycleDFS dc = new DirectedCycleDFS(digraph, true);
 			System.out.println("has cycle? " + dc.hasCycle());
 			System.out.println("sample cycle: " + dc.cycle().toString());
 		}

@@ -20,7 +20,7 @@ public class DirectedOrderDFS
     public DirectedOrderDFS(Digraph digraph, boolean trace)
     {
         this.digraph = digraph;
-        DirectedCycle dc = new DirectedCycle(digraph, false);
+        DirectedCycleDFS dc = new DirectedCycleDFS(digraph, false);
         if(!dc.hasCycle())
         {
             marked = new boolean[digraph.V()];
