@@ -78,6 +78,7 @@ javac src\main\java\mylibs\Digraph.java -d .\
 javac src\main\java\mylibs\DirectedDFS.java -d .\
 javac src\main\java\mylibs\DirectedRecursiveDFS.java -d .\
 javac src\main\java\mylibs\DirectedCycle.java -d .\
+javac src\main\java\mylibs\DirectedDepthFirstOrder.java -d .\
 
 :: Create a jar in .\jar\ from bytecode .class files in .\mylibs
 del .\jar\mylibs.jar
@@ -178,6 +179,7 @@ jar cvf .\jar\mylibs.jar .\mylibs\*.class
 ::java -ea mylibs.DirectedRecursiveDFS src\main\resources\tinyDG.txt " " -test
 ::java -ea mylibs.DirectedCycle src\main\resources\tinyDG.txt " "
 ::java -ea mylibs.DirectedCycle src\main\resources\tinyDG.txt " " -test
+::java -ea mylibs.DirectedDepthFirstOrder src\main\resources\tinyDAG.txt " " -trace
 
 :: Clean
 del /s .\mylibs\*.class
