@@ -75,10 +75,12 @@ javac src\main\java\mylibs\GraphTwoColorRecursiveDFS.java -d .\
 javac src\main\java\mylibs\SymbolGraph.java -d .\
 javac src\main\java\mylibs\ProcessMovies.java -d .\
 javac src\main\java\mylibs\Digraph.java -d .\
+javac src\main\java\mylibs\SymbolDigraph.java -d .\
 javac src\main\java\mylibs\DirectedDFS.java -d .\
 javac src\main\java\mylibs\DirectedRecursiveDFS.java -d .\
 javac src\main\java\mylibs\DirectedCycleDFS.java -d .\
-javac src\main\java\mylibs\DirectedDepthFirstOrder.java -d .\
+javac src\main\java\mylibs\DirectedOrderDFS.java -d .\
+javac src\main\java\mylibs\DirectedTopological.java -d .\
 
 :: Create a jar in .\jar\ from bytecode .class files in .\mylibs
 del .\jar\mylibs.jar
@@ -173,6 +175,7 @@ jar cvf .\jar\mylibs.jar .\mylibs\*.class
 ::java -ea mylibs.ProcessMovies algs4-data\movies.txt "/"
 ::java -ea mylibs.Digraph src\main\resources\tinyDG.txt " "
 ::java -ea mylibs.Digraph src\main\resources\tinyDG.txt " " -test
+::java -ea mylibs.SymbolDigraph algs4-data\jobs.txt "/"
 ::java -ea mylibs.DirectedDFS src\main\resources\tinyDG.txt " "
 ::java -ea mylibs.DirectedDFS src\main\resources\tinyDG.txt " " -test
 ::java -ea mylibs.DirectedRecursiveDFS src\main\resources\tinyDG.txt " "
@@ -180,6 +183,7 @@ jar cvf .\jar\mylibs.jar .\mylibs\*.class
 ::java -ea mylibs.DirectedCycleDFS src\main\resources\tinyDG.txt " "
 ::java -ea mylibs.DirectedCycleDFS src\main\resources\tinyDG.txt " " -test
 ::java -ea mylibs.DirectedDepthFirstOrder src\main\resources\tinyDAG.txt " " -trace
+java -ea mylibs.DirectedTopological algs4-data\jobs.txt "/"
 
 :: Clean
 del /s .\mylibs\*.class

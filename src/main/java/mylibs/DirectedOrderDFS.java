@@ -30,7 +30,7 @@ public class DirectedOrderDFS
             post = new Queue<Integer>();
             reversePost = new Stack<Integer>();
             this.trace = trace;
-            if(trace) indent = new StringBuilder();
+            indent = new StringBuilder();
             for(int v = 0; v < digraph.V(); v++)
                 if(!marked[v]) dfs(v, trace);
         }
@@ -62,7 +62,7 @@ public class DirectedOrderDFS
                 int w = queues[v].dequeue();
                 stack.push(v);
                 v = w;
-                System.out.println(indent + "checking " + v);
+                if(trace) System.out.println(indent + "checking " + v);
             }
             else if(!stack.isEmpty())
             {
@@ -76,7 +76,7 @@ public class DirectedOrderDFS
             else 
             {
                 indent.setLength(0);
-                System.out.println(indent + "finished " + v);
+                if(trace) System.out.println(indent + "finished " + v);
                 post.enqueue(v);
                 reversePost.push(v);
                 break;
