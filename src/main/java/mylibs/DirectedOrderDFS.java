@@ -20,20 +20,16 @@ public class DirectedOrderDFS
     public DirectedOrderDFS(Digraph digraph, boolean trace)
     {
         this.digraph = digraph;
-        DirectedCycleDFS dc = new DirectedCycleDFS(digraph, false);
-        if(!dc.hasCycle())
-        {
-            marked = new boolean[digraph.V()];
-            stack = new Stack<Integer>();
-            queues = (Queue<Integer>[]) new Queue[digraph.V()];
-            pre = new Queue<Integer>();
-            post = new Queue<Integer>();
-            reversePost = new Stack<Integer>();
-            this.trace = trace;
-            indent = new StringBuilder();
-            for(int v = 0; v < digraph.V(); v++)
-                if(!marked[v]) dfs(v, trace);
-        }
+        marked = new boolean[digraph.V()];
+        stack = new Stack<Integer>();
+        queues = (Queue<Integer>[]) new Queue[digraph.V()];
+        pre = new Queue<Integer>();
+        post = new Queue<Integer>();
+        reversePost = new Stack<Integer>();
+        this.trace = trace;
+        indent = new StringBuilder();
+        for(int v = 0; v < digraph.V(); v++)
+            if(!marked[v]) dfs(v, trace);
     }
 
     private void dfs(int v, boolean trace)
@@ -60,9 +56,14 @@ public class DirectedOrderDFS
             if(!queues[v].isEmpty())
             {
                 int w = queues[v].dequeue();
-                stack.push(v);
-                v = w;
-                if(trace) System.out.println(indent + "checking " + v);
+                while(!queues[v].isEmpty() && marked[w])
+                    w = queues[v].dequeue();
+                if(!marked[w])
+                {
+                    stack.push(v);
+                    v = w;
+                    if(trace) System.out.println(indent + "checking " + v);
+                }
             }
             else if(!stack.isEmpty())
             {

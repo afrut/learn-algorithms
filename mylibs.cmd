@@ -182,8 +182,9 @@ jar cvf .\jar\mylibs.jar .\mylibs\*.class
 ::java -ea mylibs.DirectedRecursiveDFS src\main\resources\tinyDG.txt " " -test
 ::java -ea mylibs.DirectedCycleDFS src\main\resources\tinyDG.txt " "
 ::java -ea mylibs.DirectedCycleDFS src\main\resources\tinyDG.txt " " -test
-::java -ea mylibs.DirectedDepthFirstOrder src\main\resources\tinyDAG.txt " " -trace
-java -ea mylibs.DirectedTopological algs4-data\jobs.txt "/"
+java -ea mylibs.DirectedOrderDFS src\main\resources\tinyDAG.txt " " -trace
+java -ea mylibs.DirectedOrderDFS src\main\resources\tinyDG.txt " " -trace
+::java -ea mylibs.DirectedTopological algs4-data\jobs.txt "/"
 
 :: Clean
 del /s .\mylibs\*.class
