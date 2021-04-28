@@ -9,8 +9,12 @@ public class DirectedTopological
     public DirectedTopological(Digraph digraph)
     {
         this.digraph = digraph;
-        DirectedOrderDFS dod = new DirectedOrderDFS(digraph);
-        order = dod.reversePost();
+        DirectedCycleDFS dcd = new DirectedCycleDFS(this.digraph);
+        if(!dcd.hasCycle())
+        {
+            DirectedOrderDFS dod = new DirectedOrderDFS(digraph);
+            order = dod.reversePost();
+        }
     }
 
     public Iterable<Integer> order() {return order;}
