@@ -80,7 +80,9 @@ javac src\main\java\mylibs\DirectedDFS.java -d .\
 javac src\main\java\mylibs\DirectedRecursiveDFS.java -d .\
 javac src\main\java\mylibs\DirectedCycleDFS.java -d .\
 javac src\main\java\mylibs\DirectedOrderDFS.java -d .\
+javac src\main\java\mylibs\DirectedOrderRecursiveDFS.java -d .\
 javac src\main\java\mylibs\DirectedTopological.java -d .\
+javac src\main\java\mylibs\DirectedComponents.java -d .\
 
 :: Create a jar in .\jar\ from bytecode .class files in .\mylibs
 del .\jar\mylibs.jar
@@ -184,7 +186,10 @@ jar cvf .\jar\mylibs.jar .\mylibs\*.class
 ::java -ea mylibs.DirectedCycleDFS src\main\resources\tinyDG.txt " " -test
 ::java -ea mylibs.DirectedOrderDFS src\main\resources\tinyDAG.txt " " -trace
 ::java -ea mylibs.DirectedOrderDFS src\main\resources\tinyDG.txt " " -trace
+::java -ea mylibs.DirectedOrderRecursiveDFS src\main\resources\tinyDAG.txt " " -trace
+::java -ea mylibs.DirectedOrderRecursiveDFS src\main\resources\tinyDG.txt " " -trace
 ::java -ea mylibs.DirectedTopological algs4-data\jobs.txt "/"
+::java -ea mylibs.DirectedComponents src\main\resources\tinyDG.txt " " -trace
 
 :: Clean
 del /s .\mylibs\*.class
