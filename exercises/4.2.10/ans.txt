@@ -1,0 +1,7 @@
+Computing the reverse postorder of a digraph using depth-first search always
+results in a topological order. That is, it always places source vertices before
+destination vertices. Given this property, there cannot be a topological order
+that does not result from DFS-based algorithm as the algorithm FORCES the
+ordering of source vertices before destination vertices. All variations of
+topological orders can be derived from using DFS and varying the order in which
+vertices are visited.
