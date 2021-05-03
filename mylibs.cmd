@@ -85,6 +85,7 @@ javac src\main\java\mylibs\DirectedTopological.java -d .\
 javac src\main\java\mylibs\DirectedComponents.java -d .\
 javac src\main\java\mylibs\DirectedTransitiveClosure.java -d .\
 javac src\main\java\mylibs\DirectedPathsDFS.java -d .\
+javac src\main\java\mylibs\DirectedPathsRecursiveDFS.java -d .\
 
 :: Create a jar in .\jar\ from bytecode .class files in .\mylibs
 del .\jar\mylibs.jar
@@ -194,8 +195,10 @@ jar cvf .\jar\mylibs.jar .\mylibs\*.class
 ::java -ea mylibs.DirectedComponents src\main\resources\tinyDG.txt " " -trace
 ::java -ea mylibs.DirectedTransitiveClosure src\main\resources\tinyDAG.txt " " -trace
 ::java -ea mylibs.DirectedTransitiveClosure src\main\resources\tinyDG.txt " " -trace
-java -ea mylibs.DirectedPathsDFS src\main\resources\tinyDAG.txt " " -trace
-java -ea mylibs.DirectedPathsDFS src\main\resources\tinyDG.txt " " -trace
+::java -ea mylibs.DirectedPathsDFS src\main\resources\tinyDAG.txt " " -trace
+::java -ea mylibs.DirectedPathsDFS src\main\resources\tinyDG.txt " " -trace
+::java -ea mylibs.DirectedPathsRecursiveDFS src\main\resources\tinyDAG.txt " " -trace
+::java -ea mylibs.DirectedPathsRecursiveDFS src\main\resources\tinyDG.txt " " -trace
 
 :: Clean
 del /s .\mylibs\*.class
