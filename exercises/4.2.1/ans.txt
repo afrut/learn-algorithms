@@ -1,0 +1,16 @@
+The maximum number of edges for V vertices with no parallel edges is V * (V - 1).
+Vertices, Maximum Edges
+1, 0
+2, 2
+3, 6
+4, 12
+5, 20
+6, 30
+7, 42
+8, 56
+9, 72
+10, 90
+11, 110
+
+The minimum number of edges for V vertices so that none of the vertices are
+isolated is V - 1 vertices.
