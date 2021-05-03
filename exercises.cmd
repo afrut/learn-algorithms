@@ -175,9 +175,13 @@ cls
 ::javac BaconNumber.java
 ::java BaconNumber ..\..\algs4-data\movies.txt "/"
 
-cd exercises\4.1.24
-javac MoviesProperties.java
-java MoviesProperties ..\..\src\main\resources\moviesStringEdges.txt "/"
+::cd exercises\4.1.24
+::javac MoviesProperties.java
+::java MoviesProperties ..\..\src\main\resources\moviesStringEdges.txt "/"
+
+cd exercises\4.2.2
+javac TestDigraph.java
+java TestDigraph ..\..\src\main\resources\tinyDGex2.txt " "
 
 
 
