@@ -90,6 +90,21 @@ public class DirectedOrderDFS
     public Iterable<Integer> post() {return post;}
     public Iterable<Integer> reversePost() {return reversePost;}
 
+    public static boolean isTopological(Digraph digraph, Iterable<Integer> order)
+    {
+        Set<Integer> set = new Set<Integer>();
+        for(Integer v : order)
+        {
+            for(Integer w : digraph.adj(v))
+            {
+                if(set.contains(w))
+                    return false;
+            }
+            set.add(v);
+        }
+        return true;
+    }
+
     public static void main(String[] args) throws FileNotFoundException
     {
         String filename = "";
@@ -112,5 +127,8 @@ public class DirectedOrderDFS
         System.out.println("Preorder: " + ddfo.pre().toString());
         System.out.println("Postorder: " + ddfo.post().toString());
         System.out.println("Reverse postorder: " + ddfo.reversePost().toString());
+        System.out.println("Is preorder topological sort? " + DirectedOrderDFS.isTopological(digraph, ddfo.pre()));
+        System.out.println("Is postorder topological sort? " + DirectedOrderDFS.isTopological(digraph, ddfo.post()));
+        System.out.println("Is reverse postorder topological sort? " + DirectedOrderDFS.isTopological(digraph, ddfo.reversePost()));
     }
 }
