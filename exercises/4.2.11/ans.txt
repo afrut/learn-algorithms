@@ -1,0 +1,3 @@
+Say there is a directed cycle 0 -> 1 -> 2 -> 3 -> 4 -> 0. This is a sparse graph
+as the outdegree and indegree of every vertex is 1. Say we double the number of
+edges by repeating each edge.
