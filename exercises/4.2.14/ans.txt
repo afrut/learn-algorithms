@@ -1,0 +1,8 @@
+A strongly connected component in the directec graph G are vertices that are
+part of a general directed cycle.
+
+In GR, the direction of the general directed cycle would be reversed. But, the
+general directed cycle would still be present and would still connect the same
+vertices.
+
+Thus, the strong component in G would be the same strong component in GR.
