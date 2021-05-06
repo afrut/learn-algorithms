@@ -1,0 +1,7 @@
+True. Consider the following simple path:
+0 -> 1 -> 2 -> 3 -> 4
+postorder: 4, 3, 2, 1, 0
+
+Reverse: 4 -> 3 -> 2 -> 1 -> 0
+postorder: 0, 1, 2, 3, 4
+reverse postorder: 4, 3, 2, 1, 0
