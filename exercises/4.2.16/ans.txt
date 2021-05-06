@@ -1,0 +1,3 @@
+Running Kosaraju's algorithm on a DAG will result in starting at a sink. When
+depth-first search is run on every vertex in Kosaraju's order, none of the other
+vertices will be reachable.
