@@ -1,0 +1,2 @@
+There are no strong components in a directed acyclic cycle. This is because a
+general directed cycle is required to form a strong component.
