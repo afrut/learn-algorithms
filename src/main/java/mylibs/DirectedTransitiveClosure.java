@@ -6,6 +6,7 @@ public class DirectedTransitiveClosure
     private boolean trace;
     private Digraph digraph;
     private DirectedDFS[] reachable;
+    private Digraph tc;
 
     public DirectedTransitiveClosure(Digraph digraph) {this(digraph, false);}
     public DirectedTransitiveClosure(Digraph digraph, boolean trace)
@@ -14,8 +15,14 @@ public class DirectedTransitiveClosure
         reachable = new DirectedDFS[digraph.V()];
         for(int v = 0; v < digraph.V(); v++)
             reachable[v] = new DirectedDFS(digraph, v, false);
+        tc = new Digraph(digraph.V());
+        for(int v = 0; v < digraph.V(); v++)
+            for(int w = 0; w < digraph.V(); w++)
+                if(reachable[v].marked(w)) tc.addEdge(v, w);
     }
+
     public boolean reachable(int v, int w) {return reachable[v].marked(w);}
+    public Digraph transitiveClosure() {return tc;}
 
     public static void main(String[] args) throws FileNotFoundException
     {
@@ -36,5 +43,7 @@ public class DirectedTransitiveClosure
         for(int v = 0; v < digraph.V(); v++)
             for(int w = 0; w < digraph.V(); w++)
                 System.out.println(String.format("Is %d reachable from %d? %s", w, v, dtc.reachable(v, w)));
+        System.out.println("Transitive closure:");
+        System.out.println(dtc.transitiveClosure());
     }
 }

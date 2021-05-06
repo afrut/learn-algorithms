@@ -22,6 +22,16 @@ public class Digraph
         init();
     }
 
+    public Digraph(int V, boolean allowParallelEdges, boolean allowSelfLoops)
+    {
+        this.V = V;
+        this.E = 0;
+        this.allowParallelEdges = allowParallelEdges;
+        this.allowSelfLoops = allowSelfLoops;
+        init();
+    }
+
+
     public Digraph(Digraph othergraph)
     {
         // Initialize every list in the array of lists based on othergraph's
