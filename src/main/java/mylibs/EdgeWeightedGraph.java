@@ -9,9 +9,7 @@ public class EdgeWeightedGraph
     private final int V;            // number of vertices
     private int E;                  // number of edges
     private Bag<Edge>[] adj;        // adjacency lists
-    private Set<Edge> edges;
-    boolean allowParallelEdges;
-    boolean allowSelfLoops;
+    private Queue<Edge> edges;
 
     public EdgeWeightedGraph(int V)
     {
@@ -27,16 +25,11 @@ public class EdgeWeightedGraph
             this.addEdge(edge);
     }
 
-    private EdgeWeightedGraph(String filename, String delim
-        ,boolean allowParallelEdges
-        ,boolean allowSelfLoops) throws FileNotFoundException
+    private EdgeWeightedGraph(String filename, String delim) throws FileNotFoundException
     {
-        this.allowParallelEdges = false;
-        this.allowSelfLoops = false;
-
         // Each line in filename should represent an edge separated by delim.
         Scanner sc = new Scanner(new File(filename));
-        edges = new Set<Edge>();
+        edges = new Queue<Edge>();
         Set<Integer> vertices = new Set<Integer>();
         while(sc.hasNextLine())
         {
@@ -46,18 +39,15 @@ public class EdgeWeightedGraph
             Double weight = Double.parseDouble(line[2]);
             vertices.add(v1);
             vertices.add(v2);
-            edges.add(new Edge(v1, v2, weight));
+            edges.enqueue(new Edge(v1, v2, weight));
         }
 
         this.V = vertices.size();
         this.E = 0;
         init();
-        for(Edge edge : edges.keys())
+        for(Edge edge : edges)
             this.addEdge(edge);
     }
-
-    public EdgeWeightedGraph(String filename, String delim) throws FileNotFoundException
-    {this(filename, delim, false, false);}
 
     private void init()
     {
@@ -76,7 +66,7 @@ public class EdgeWeightedGraph
         E++;
     }
     public Iterable<Edge> adj(int v) { return adj[v]; }
-    public Iterable<Edge> edges() { return edges.keys(); }
+    public Iterable<Edge> edges() { return edges; }
 
     public static void main(String[] args) throws FileNotFoundException
     {
