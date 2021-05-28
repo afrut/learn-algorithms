@@ -25,7 +25,7 @@ public class EdgeWeightedGraph
             this.addEdge(edge);
     }
 
-    private EdgeWeightedGraph(String filename, String delim) throws FileNotFoundException
+    public EdgeWeightedGraph(String filename, String delim) throws FileNotFoundException
     {
         // Each line in filename should represent an edge separated by delim.
         Scanner sc = new Scanner(new File(filename));
