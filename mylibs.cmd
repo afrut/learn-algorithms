@@ -89,6 +89,7 @@ javac src\main\java\mylibs\DirectedPathsRecursiveDFS.java -d .\
 javac src\main\java\mylibs\DirectedPathsBFS.java -d .\
 javac src\main\java\mylibs\DirectedDegree.java -d .\
 javac src\main\java\mylibs\Edge.java -d .\
+javac src\main\java\mylibs\EdgeWeightedGraph.java -d .\
 
 :: Create a jar in .\jar\ from bytecode .class files in .\mylibs
 del .\jar\mylibs.jar
@@ -206,7 +207,8 @@ jar cvf .\jar\mylibs.jar .\mylibs\*.class
 ::java -ea mylibs.DirectedPathsBFS src\main\resources\tinyDG.txt " " -trace
 ::java -ea mylibs.DirectedDegree src\main\resources\tinyDAG.txt " "
 ::java -ea mylibs.DirectedDegree src\main\resources\tinyDG.txt " "
-javac src\main\java\mylibs\Edge.java -d .\
+::javac src\main\java\mylibs\Edge.java -d .\
+java -ea mylibs.EdgeWeightedGraph src\main\resources\tinyEWG.txt
 
 :: Clean
 del /s .\mylibs\*.class
