@@ -1,20 +1,19 @@
 /*
-    This class implements a maximum priority queue that supports indexing using
+    This class implements a minimum priority queue that supports indexing using
     a binary heap according to the API specified by Sedgewick 4ed.
 */
 package mylibs;
-import mylibs.Util;
 import java.io.FileNotFoundException;
 
 // generics - allow any subclass of Comparable to be use
-public class IndexMaxPQ<Key extends Comparable<Key>>
+public class IndexMinPQ<Key extends Comparable<Key>>
 {
     private int N;
     private Key[] vals;         // vals[i] gives the value associated with index value i
     private Integer[] heap;     // heap of index values; the heap is maintained by comparing vals[heap[i]]
     private Integer[] pos;      // position of index value in heap; pos[i] gives x such that heap[x] = i
 
-    public IndexMaxPQ(int max)
+    public IndexMinPQ(int max)
     {
         vals = (Key[]) new Comparable[max];
         heap = new Integer[max + 1];
@@ -162,7 +161,7 @@ public class IndexMaxPQ<Key extends Comparable<Key>>
 
     private boolean less(Key a, Key b)
     {
-        return a.compareTo(b) < 0;
+        return a.compareTo(b) > 0;
     }
 
     public String toString()
@@ -192,7 +191,7 @@ public class IndexMaxPQ<Key extends Comparable<Key>>
         System.out.println(Util.toString(a) + "\n");
 
         // create a priority queue and insert
-        IndexMaxPQ<String> impq = new IndexMaxPQ<String>(2 * Nstring);
+        IndexMinPQ<String> impq = new IndexMinPQ<String>(2 * Nstring);
         for(int cnt = 0; cnt < Nstring; cnt++)
             impq.insert(cnt, a[cnt]);
         System.out.println("Heap Array Contents:");

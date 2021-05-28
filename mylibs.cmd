@@ -33,6 +33,7 @@ javac src\main\java\mylibs\Pair.java -d .\
 javac src\main\java\mylibs\MaxPQ.java -d .\
 javac src\main\java\mylibs\MinPQ.java -d .\
 javac src\main\java\mylibs\IndexMaxPQ.java -d .\
+javac src\main\java\mylibs\IndexMinPQ.java -d .\
 javac src\main\java\mylibs\QuickFindUF.java -d .\
 javac src\main\java\mylibs\QuickUnionUF.java -d .\
 javac src\main\java\mylibs\WeightedQuickUnionUF.java -d .\
@@ -90,6 +91,7 @@ javac src\main\java\mylibs\DirectedPathsBFS.java -d .\
 javac src\main\java\mylibs\DirectedDegree.java -d .\
 javac src\main\java\mylibs\Edge.java -d .\
 javac src\main\java\mylibs\EdgeWeightedGraph.java -d .\
+javac src\main\java\mylibs\MSTLazyPrim.java -d .\
 
 :: Create a jar in .\jar\ from bytecode .class files in .\mylibs
 del .\jar\mylibs.jar
@@ -114,7 +116,8 @@ jar cvf .\jar\mylibs.jar .\mylibs\*.class
 ::java -ea mylibs.Pair
 ::java -ea mylibs.MaxPQ .\src\main\resources\PQSampleInput.txt
 ::java -ea mylibs.MinPQ .\src\main\resources\PQSampleInput.txt
-::java -ea mylibs.IndexMaxPQ .\src\main\resources\PQSampleInput.txt
+java -ea mylibs.IndexMaxPQ .\src\main\resources\PQSampleInput.txt
+java -ea mylibs.IndexMinPQ .\src\main\resources\PQSampleInput.txt
 ::java -ea mylibs.QuickFindUF .\src\main\resources\UnionFindSampleInput.txt
 ::java -ea mylibs.QuickUnionUF .\src\main\resources\UnionFindSampleInput.txt
 ::java -ea mylibs.WeightedQuickUnionUF .\src\main\resources\UnionFindSampleInput.txt
@@ -207,8 +210,9 @@ jar cvf .\jar\mylibs.jar .\mylibs\*.class
 ::java -ea mylibs.DirectedPathsBFS src\main\resources\tinyDG.txt " " -trace
 ::java -ea mylibs.DirectedDegree src\main\resources\tinyDAG.txt " "
 ::java -ea mylibs.DirectedDegree src\main\resources\tinyDG.txt " "
-::javac src\main\java\mylibs\Edge.java -d .\
-java -ea mylibs.EdgeWeightedGraph src\main\resources\tinyEWG.txt
+::java -ea mylibs.Edge
+::java -ea mylibs.EdgeWeightedGraph src\main\resources\tinyEWG.txt
+::java -ea mylibs.MSTLazyPrim src\main\resources\tinyEWG.txt " " -trace
 
 :: Clean
 del /s .\mylibs\*.class
