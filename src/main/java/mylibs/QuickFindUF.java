@@ -16,6 +16,14 @@ import java.io.FileNotFoundException;
 // - check if the parent of each vertex is the parent of p; id[v] == id[p]?
 // - if true, then set the parent of the vertex to the parent of q; id[v] = id[q]
 
+// Consider the following calls:
+// union(0, 1), O(N)
+// union(0, 2), O(N)
+// union(0, 3), O(N)
+// ...
+// union(0, N), O(N)
+// After N union operations, the worst-case performance is O(N2).
+
 public class QuickFindUF
 {
     private int[] id;       // for a vertex v, id[p] gives the parent vertex of v
@@ -41,7 +49,7 @@ public class QuickFindUF
     public boolean connected(int p, int q) {return find(p) == find(q);}
 
     // connect p and q
-    // linear operation: at least 2 + N + 1, at most 2 + N + N - 1
+    // linear operation: at best 2 + N + 1, at worst 2 + N + N - 1
     public void union(int p, int q)
     {
         int pID = find(p);      // 1 array access
@@ -55,7 +63,7 @@ public class QuickFindUF
         // This is the inner loop of quick find. Linear in time.
         for (int i = 0; i < id.length; i++)
             if(id[i] == pID)    // N array accesses
-                id[i] = qID;    // at least 1 array access. at most, N - 1
+                id[i] = qID;    // at best 1 array access. at worst, N - 1
         count--;
     }
 
