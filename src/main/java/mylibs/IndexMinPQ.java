@@ -1,8 +1,9 @@
 /*
-    This class implements a minimum priority queue that supports indexing using
+    This class implements a maximum priority queue that supports indexing using
     a binary heap according to the API specified by Sedgewick 4ed.
 */
 package mylibs;
+import mylibs.Util;
 import java.io.FileNotFoundException;
 
 // generics - allow any subclass of Comparable to be use
@@ -34,61 +35,46 @@ public class IndexMinPQ<Key extends Comparable<Key>>
     public void change(int k, Key val)
     {
         vals[k] = val;
-        // System.out.println(val + " " + vals[heap[pos[k / 2]]]);
-        if(less(val, vals[heap[pos[k] / 2]]))
-        {
-            // System.out.println("New value needs to sink");
-            sink(pos[k]);
-        }
-        else
-        {
-            // System.out.println("New value needs to swim");
-            swim(pos[k]);
-        }
+        swim(pos[k]);
+        sink(pos[k]);
     }
 
     public void delete(int k)
     {
-        heap[pos[k]] = heap[N];
-        heap[N] = null;
-        N--;
-        sink(pos[k]);
+        int n = pos[k];
+        heap[n] = heap[N];
+        heap[N--] = null;
         pos[k] = -1;
         vals[k] = null;
+        sink(n);
     }
-
-    public Key at(int k)
-    {
-        return vals[heap[pos[k]]];
-    }
-
-    public Key head()
-    { return vals[heap[1]]; }
-
-    public int headIndex()
-    {return heap[1];}
 
     public Key pop()
     {
+        // delete value and position of head heap[1]
         Key ret = vals[heap[1]];
         vals[heap[1]] = null;
         pos[heap[1]] = -1;
+
+        // move index of last element to head
         heap[1] = heap[N];
+        pos[heap[1]] = 1;
         heap[N--] = null;
+
+        // sink the first element
         sink(1);
         return ret;
     }
 
-    public boolean contains(int k)
-    {
-        return pos[k] > 0;
-    }
 
-    public boolean isEmpty()
-    {return N == 0;}
+    public Key at(int k) {return vals[heap[pos[k]]];}
+    public Key head() {return vals[heap[1]];}
+    public int headIndex() {return heap[1];}
+    public boolean contains(int k) {return pos[k] > 0;}
+    public boolean isEmpty() {return N == 0;}
+    public int size() {return N;}
 
-    public int size()
-    {return N;}
+    private boolean less(Key a, Key b) {return a.compareTo(b) > 0;}
 
     private void swim(int n)
     {
@@ -122,12 +108,9 @@ public class IndexMinPQ<Key extends Comparable<Key>>
         pos[heap[i]] = i;
     }
 
-    public boolean isHeap()
-    {
-        return isHeap(false);
-    }
+    private boolean isHeap() {return isHeap(false);}
 
-    public boolean isHeap(boolean debug)
+    private boolean isHeap(boolean debug)
     {
         int i = 1;
         boolean ret = true;
@@ -157,11 +140,6 @@ public class IndexMinPQ<Key extends Comparable<Key>>
             i++;
         }
         return ret;
-    }
-
-    private boolean less(Key a, Key b)
-    {
-        return a.compareTo(b) > 0;
     }
 
     public String toString()
