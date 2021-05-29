@@ -7,23 +7,24 @@ import java.io.FileNotFoundException;
 // The edge of minimum weight connecting both groups is in the minimum spanning tree.
 
 // Prim's Algorithm
-// - Start with any vertex. This will be the first vertex of the MST.
-// - This defines a cut between the MST (currently of one vertex).
-// - Examine edges connecting to it.
-// - Take the edge with minimum weight.
-// - Add the vertex connected by that edge to the primary group including the starting vertex.
-// - Examine all edges connected to the primary group.
-// - Select the edgge with minimum weight.
-// - Add the newly connected vertex to the primary group.
-// - Repeat.
-// - All selected edges comprise the minimum spanning tree.
+// - Start with any vertex. This will be the first vertex of the MST. The MST
+//   will grow as the algorithm progresses and vertices are added.
+// - This defines a cut - all vertices in the MST vs all vertices NOT in the MST.
+// - Examine edges connecting MST vertices to non-MST vertices.
+// - Take the minimum-weight edge.
+// - Grow the MST by adding the vertex connected by that minimum-weight edge.
+// - Repeat by examining all edges connecting MST vertices and non-MST vertices.
 
 public class MSTLazyPrim
 {
     private boolean[] marked;               // if marked[x] is true, then vertex x is already in the MST
     private Queue<Edge> mst;                // queue of edges in the MST
-    private MinPQ<Edge> pq;                 // minimum priority queue used to select the edge of minimum weight
-    private double weight;
+    private double weight;                  // weight of MST
+    private MinPQ<Edge> pq;                 // contains all edges connecting MST vertices to non-MST vertices
+    // In this lazy implementation, all edges in pq are not guaranteed to
+    // connect MST vertices to non-MST vertices. So, when popping the head of
+    // pq, it is necessary to check if the popped off edge connects an MST
+    // vertex and a non-MST vertex.
 
     public MSTLazyPrim(EdgeWeightedGraph ewg) {this(ewg, false);}
     public MSTLazyPrim(EdgeWeightedGraph ewg, boolean trace)
