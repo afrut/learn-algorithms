@@ -8,22 +8,12 @@ import java.io.FileNotFoundException;
 // - identify the component that a vertex belongs to
 // - check if two vertices are connected
 
-// The shortcoming of quick-union was that a tree could form such that every
-// the parent of every vertex is the vertex preceding it. The find operation
-// would then be linear for such a situation.
-
-// The weighted quick-union algorithm is a slight modification to the
-// quick-union algorithm. In the union operation of 2 vertices p and q, instead
-// of arbitrarily setting the parent of p's parent to be q's parent, this
-// algorithm sets the parent of the smaller tree to be the parent of the larger
-// tree. If p's tree is smaller, the parent of p's parent is set to be q's
-// parent.
-
-// This modification solves the shortcoming of quick-union. Under this new
-// scheme, the height of the tree increases only when two trees of similar
-// height are connected. The trees formed by weighted quick-union have maximum
-// heights that are lg(n), where n is the number of vertices in that tree. This
-// improves the time complexity of the find operation from linear to logarithmic.
+// With the union-find data structures, vertices form trees. Trees with smaller
+// heights result in faster performance. In weighted quick union, the smaller
+// tree was always appended to the root of the larger tree. This guarantees that
+// the height of the tree is at most lg N if there are N vertices present. To
+// further flatten tree structure, every vertex visited by the find
+// operation can be attached to the root of that tree.
 
 // Consider the following calls:
 // union(0, 1), O(N)
@@ -33,13 +23,13 @@ import java.io.FileNotFoundException;
 // union(0, N), O(N)
 // After N union operations, the worst-case performance is O(N2).
 
-public class WeightedQuickUnionUF
+public class WeightedQuickUnionPCUF
 {
     private int[] id;   // id[p] is the parent of p
     private int[] sz;   // sz[p] is the size of top-level parent p
     private int count;  // number of components
 
-    public WeightedQuickUnionUF(int N)
+    public WeightedQuickUnionPCUF(int N)
     {
         count = N;
         id = new int[N];
@@ -61,10 +51,20 @@ public class WeightedQuickUnionUF
 
     // return the id of component of p
     // With guarantee on tree structure, at worst, this is (2 * lg N) + 1.
+    // Path compression adds (3 * lg N) + 1. In total, 5lgN + 2. Still logarithmic.
     private int find(int p)
     {
+        int origp = p;
         while (p != id[p])
             p = id[p];
+        int root = p;
+        p = origp;
+        while(p != id[p])
+        {
+            int parent = id[p];
+            id[p] = root;
+            p = parent;
+        }
         return p;
     }
 
@@ -113,7 +113,7 @@ public class WeightedQuickUnionUF
         int N = Integer.parseInt(a[cnt++]); // Read number of sites.
 
         // Initialize N components.
-        WeightedQuickUnionUF uf = new WeightedQuickUnionUF(N);
+        WeightedQuickUnionPCUF uf = new WeightedQuickUnionPCUF(N);
         while (cnt < N)
         {
             int p = Integer.parseInt(a[cnt++]);

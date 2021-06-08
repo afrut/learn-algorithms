@@ -36,8 +36,7 @@ javac src\main\java\mylibs\IndexMaxPQ.java -d .\
 javac src\main\java\mylibs\IndexMinPQ.java -d .\
 javac src\main\java\mylibs\QuickFindUF.java -d .\
 javac src\main\java\mylibs\QuickUnionUF.java -d .\
-javac src\main\java\mylibs\WeightedQuickUnionUF.java -d .\
-javac src\main\java\mylibs\QuickUnionPCUF.java -d .\
+javac src\main\java\mylibs\WeightedQuickUnionPCUF.java -d .\
 javac src\main\java\mylibs\Heapsort.java -d .\
 javac src\main\java\mylibs\BinarySearch.java -d .\
 javac src\main\java\mylibs\SymbolTable.java -d .\
@@ -122,7 +121,7 @@ jar cvf .\jar\mylibs.jar .\mylibs\*.class
 ::java -ea mylibs.QuickFindUF .\src\main\resources\UnionFindSampleInput.txt
 ::java -ea mylibs.QuickUnionUF .\src\main\resources\UnionFindSampleInput.txt
 ::java -ea mylibs.WeightedQuickUnionUF .\src\main\resources\UnionFindSampleInput.txt
-::java -ea mylibs.QuickUnionPCUF .\src\main\resources\UnionFindSampleInput.txt
+::java -ea mylibs.WeightedQuickUnionPCUF .\src\main\resources\UnionFindSampleInput.txt
 ::java -ea mylibs.Heapsort
 ::java -ea mylibs.BinarySearch
 ::java -ea mylibs.LinkedListSequentialSearchST -test
@@ -214,7 +213,7 @@ jar cvf .\jar\mylibs.jar .\mylibs\*.class
 ::java -ea mylibs.Edge
 ::java -ea mylibs.EdgeWeightedGraph src\main\resources\tinyEWG.txt
 ::java -ea mylibs.MSTLazyPrim src\main\resources\tinyEWG.txt " " -trace
-java -ea mylibs.MSTPrim .\src\main\resources\tinyEWG.txt " " -trace
+::java -ea mylibs.MSTPrim .\src\main\resources\tinyEWG.txt " " -trace
 
 :: Clean
 del /s .\mylibs\*.class
