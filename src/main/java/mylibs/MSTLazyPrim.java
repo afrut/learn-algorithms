@@ -34,63 +34,40 @@ public class MSTLazyPrim
         mst = new Queue<Edge>();
         pq = new MinPQ<Edge>();
 
-        int v = 0;                          // the next vertex to add to the MST, start at vertex 0
-        int w = 0;
-        do
+        // initially, visit vertex 0
+        visit(ewg, 0);
+
+        while(!pq.isEmpty())
         {
-            if(!marked[v])
-            {
-                if(trace) System.out.println("marking " + v);
-                marked[v] = true;
-                for(Edge edge : ewg.adj(v))
-                    if(!marked[edge.other(v)])  // if other vertex is not in MST
-                        pq.insert(edge);        // insert this edge into priority queue
-            }
+            // priority queue of edges is not empty
+            // get the edge with minimum weight
+            Edge edge = pq.pop();
 
-            Edge edge = pq.pop();           // pop an edge from the priority queue
-            v = edge.either();              // get both vertices of the edge
-            w = edge.other(v);              // get the other vertex
-            // One of v or w must be in the MST.
-            // One of v or w must NOT be in the MST.
-            // ergo (marked[v] || marked[w]) == true
-            // if(marked[v]) == true, then marked[w] == false
-            // if(marked[w]) == true, then marked[v] = false
+            // get the two vertices; one of the two vertices must be in the MST
+            int v = edge.either();
+            int w = edge.other(v);
 
-            if(trace) System.out.println("checking edge " + edge);
+            // both vertices are already in MST, continue to next edge
+            if(marked[v] && marked[w]) continue;
 
-            // Check which vertex is not in the MST.
-            // Update v so that it is the unvisited vertex.
-            // On the next loop iteration, v will be the next vertex to visit.
-            if(!marked[v])
-            {
-                weight += edge.weight();
-                mst.enqueue(edge);
-                if(trace)
-                {
-                    System.out.println("    vertex not in mst " + v);
-                    System.out.println("    adding edge to mst " + edge);
-                }
-            }
-            else if(!marked[w])
-            {
-                v = w;
-                weight += edge.weight();
-                mst.enqueue(edge);
-                if(trace)
-                {
-                    System.out.println("    vertex not in mst " + v);
-                    System.out.println("    adding edge to mst " + edge);
-                }
-            }
-            else if(trace)
-                System.out.println("    edge vertices already in mst");
-
-            // marked[w] == true means the other vertex is in the MST.
-            // Don't update the next vertex to visit.
-            // Continue the loop and keep popping edges off and checking for a
-            // vertex that is not in the MST.
+            // one of the vertices is not in the MST visiting it
+            weight += edge.weight();
+            mst.enqueue(edge);
+            if(!marked[v]) visit(ewg, v);
+            else if(!marked[w]) visit(ewg, w);
         }
-        while(!pq.isEmpty());
+    }
+
+    // visit a vertex v
+    private void visit(EdgeWeightedGraph ewg, int v)
+    {
+        marked[v] = true;
+        // check edges connecting to v
+        for(Edge edge : ewg.adj(v))
+            // check if the other vertex is in the MST
+            if(!marked[edge.other(v)])
+                // not in the MST, add to priority queue
+                pq.insert(edge);
     }
 
     public Iterable<Edge> edges() {return mst;}
