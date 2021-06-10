@@ -28,65 +28,60 @@ import java.io.FileNotFoundException;
 public class MSTPrim
 {
     private boolean[] marked;               // if marked[v] is true, then vertex v is on the MST
-    private Edge[] edgeTo;                  // edgeTo[v] contains the minimum-weight edge connecting the primary group to vertex v
-    private Queue<Edge> mst;                // queue of edges in the MST
-    private IndexMinPQ<Edge> pq;            // minimum priority queue used to select the edge of minimum weight
-    private double weight;
+    private IndexMinPQ<Double> pq;          // minimum priority queue used to select the edge of minimum weight
+    private double weight;                  // running total of MST's weight
+    private double[] distTo;                // distTo[w] contains the minimum distance from the MST to w
+    private Edge[] edgeTo;                  // edgeTo[w] contains the Edge with the shortest distance to the non-MST vertex w from the MST
+    private Queue<Edge> mst;                // contains the list of edges in the MST
 
     public MSTPrim(EdgeWeightedGraph ewg) {this(ewg, false);}
     public MSTPrim(EdgeWeightedGraph ewg, boolean trace)
     {
-        // initialize
-        marked = new boolean[ewg.V()];
-        edgeTo = new Edge[ewg.V()];
+        int N = ewg.V();
+        marked = new boolean[N];
+        pq = new IndexMinPQ<Double>(N);
+        distTo = new double[N];
+        edgeTo = new Edge[N];
         mst = new Queue<Edge>();
-        pq = new IndexMinPQ<Edge>(ewg.V());
+        for(int cnt = 0; cnt < N; cnt++)
+            distTo[cnt] = Double.POSITIVE_INFINITY;
 
-        int v = 0;                                              // the next vertex to add to the MST, start at vertex 0
-        int w = 0;
-        do
+        // initially, visit vertex 0
+        visit(ewg, 0);
+
+        // get the next non-MST vertex with the lowest distance
+        while(!pq.isEmpty())
         {
-            if(!marked[v])
+            int w = pq.headIndex();
+            weight += pq.pop();
+            mst.enqueue(edgeTo[w]);
+            visit(ewg, w);
+        }
+    }
+
+    // visit a vertex v and add it to the MST
+    private void visit(EdgeWeightedGraph ewg, int v)
+    {
+        marked[v] = true;
+        // check edges connecting to v
+        for(Edge edge : ewg.adj(v))
+        {
+            // check if the other vertex is in the MST
+            int w = edge.other(v);
+            if(!marked[w])
             {
-                marked[v] = true;
-                if(trace) System.out.println("marking " + v);
-                for(Edge edge : ewg.adj(v))
+                if(edge.weight() < distTo[w])
                 {
-                    w = edge.other(v);                          // w is the non-MST vertex that edge connects to the MST
-                    if(marked[w]) continue;
-                    if(edgeTo[w] == null)                       // w is not on the MST and does not yet have a potential minimum-weight edge connecting it to the MST
-                    {
-                        edgeTo[w] = edge;                       // keep track of the edge, since it does not yet have an edge
-                        pq.insert(w, edge);
-                    }
-                    else
-                    {
-                        if(edge.compareTo(edgeTo[w]) < 0)       // check to update minimum-weight edge connecting w to MST
-                        {
-                            edgeTo[w] = edge;                   // update minimum-weight edge connecting w to MST
-                            pq.change(w, edge);
-                        }
-                    }
+                    // check if in priority queue
+                    // if not, add. if yes, change
+                    distTo[w] = edge.weight();
+                    edgeTo[w] = edge;
+                    
+                    if(pq.contains(w)) pq.change(w, edge.weight());
+                    else pq.insert(w, edge.weight());
                 }
             }
-
-            Edge edge = pq.pop();           // Pop an edge from the priority queue.
-                                            // edge is not guaranteed to be connected to the recently visited vertex v.
-            mst.enqueue(edge);              // However, edge is guaranteed to be a minimum-weight edge.
-            weight += edge.weight();
-            if(trace) System.out.println("adding edge to mst " + edge);
-
-            v = edge.either();              // get both vertices of the edge
-            w = edge.other(v);
-            // One of v or w must be in the MST.
-            // One of v or w must NOT be in the MST.
-            // ergo (marked[v] || marked[w]) == true
-            // if(marked[v]) == true, then marked[w] == false
-            // if(marked[w]) == true, then marked[v] = false
-
-            if(marked[v]) v = w;            // visit the unmarked vertex w in next loop iteration
         }
-        while(!pq.isEmpty());
     }
 
     public Iterable<Edge> edges() {return mst;}
