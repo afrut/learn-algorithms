@@ -92,6 +92,7 @@ javac src\main\java\mylibs\Edge.java -d .\
 javac src\main\java\mylibs\EdgeWeightedGraph.java -d .\
 javac src\main\java\mylibs\MSTLazyPrim.java -d .\
 javac src\main\java\mylibs\MSTPrim.java -d .\
+javac src\main\java\mylibs\MSTKruskal.java -d .\
 
 :: Create a jar in .\jar\ from bytecode .class files in .\mylibs
 del .\jar\mylibs.jar
@@ -214,6 +215,7 @@ jar cvf .\jar\mylibs.jar .\mylibs\*.class
 ::java -ea mylibs.EdgeWeightedGraph src\main\resources\tinyEWG.txt
 ::java -ea mylibs.MSTLazyPrim src\main\resources\tinyEWG.txt " " -trace
 ::java -ea mylibs.MSTPrim .\src\main\resources\tinyEWG.txt " " -trace
+java -ea mylibs.Kruskal .\src\main\resources\tinyEWG.txt " " -trace
 
 :: Clean
 del /s .\mylibs\*.class
