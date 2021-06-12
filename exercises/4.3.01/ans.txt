@@ -1,0 +1,17 @@
+Modifications of weights don't affect the MST as long as the inequality
+relationships between the edges remain unchanged. In other words, if edge a < b
+before modifications, then the MST remains unchanged if a < b after
+modifications. Similarly, if a <= b or a == b after modifications, then a <= b
+or a == b after modifications.
+
+Adding a positive constant or multiplying a positive constant maintains these
+equality relationships. If x is a positive constant, then ax < bx if a < b.
+Similarly ax <= bx and ax == bx if a <= b and a == b.
+
+Adding a positive constant x also maintains the relationships:
+if a < b then a + x < b + x, x > 0
+if a <= b then a + x <= b, x > 0
+if a == b then a + x == b, x > 0
+
+So, adding or multiplying all edge weights by a positive constant does not
+change the MST.
