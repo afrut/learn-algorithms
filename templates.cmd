@@ -8,6 +8,7 @@
 :: directory .\
 ::
 :: --------------------------------------------------------------------------------
+cls
 
 cd src\main\java\templates
 
@@ -33,7 +34,7 @@ javac -d . Package1Class.java
 java package1.Package1Class
 
 :: Compile into a different directory and invoke the program in a package located
-:: in another directory using the CLASSPATH environment variabl.e
+:: in another directory using the CLASSPATH environment variable.
 :: NOTE: CLASSPATH must include the absolute path of the ..\bin\ directory!
 :: NOTE: The package2 directory is created in ..\bin\
 javac -d ..\..\..\..\bin\ Package2Class.java

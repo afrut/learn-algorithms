@@ -11,6 +11,16 @@ public class GenericClass<T1, T2>
         this.v2 = t2;
     }
 
+    public String someMethod(String str1, String str2)
+    {
+        StringBuilder sb = new StringBuilder();
+        sb.append(v1.toString() + ", ");
+        sb.append(v2.toString() + ", ");
+        sb.append(str1.toString() + ", ");
+        sb.append(str2.toString());
+        return sb.toString();
+    }
+
     public static void main(String[] args)
     {
         GenericClass<Integer, String> a = new GenericClass<Integer, String>(10, "hello");
